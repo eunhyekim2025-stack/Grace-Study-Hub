@@ -1,0 +1,23 @@
+# =====================================================================
+# Allowlist: publish ONLY the Quartz site + the wiki notes it renders.
+# Everything else (personal course files, pipeline tooling) stays local.
+# =====================================================================
+
+# 1) Ignore everything at the top level by default
+/*
+
+# 2) Allow the Quartz site folder.
+#    (grace-study-hub/.gitignore still drops node_modules/, public/, etc.)
+!/grace-study-hub
+
+# 3) Inside llm-wiki, allow ONLY the wiki notes — not graph/raw/scripts/.obsidian
+!/llm-wiki
+/llm-wiki/*
+!/llm-wiki/wiki
+
+# 4) Keep this allowlist + the Vercel build config tracked
+!/.gitignore
+!/vercel.json
+
+# 5) Never commit OS cruft anywhere in the tree
+.DS_Store

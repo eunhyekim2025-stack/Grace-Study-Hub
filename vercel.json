@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "cd grace-study-hub && npm install",
+  "buildCommand": "cd grace-study-hub && npx quartz build",
+  "outputDirectory": "grace-study-hub/public"
+}
