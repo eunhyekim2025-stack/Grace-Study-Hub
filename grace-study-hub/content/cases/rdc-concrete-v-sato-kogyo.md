@@ -75,7 +75,7 @@ Even where there is a breach, there is **no automatic termination**. The cases i
 
 - The innocent party can always claim damages for breach **as of right**, **whether or not it is entitled to terminate, and even if entitled, whether or not it does** (*Raineri v Miles*). The cl 8 differential claim is a separate right not premised on termination (the core of issue (b) here). [para 40, 41, 114]
 
-### 5. Distinguishing force majeure clauses from frustration [para 53–66] → [[law-concepts/frustration]]
+### 5. Distinguishing force majeure clauses from frustration [para 53–66] → [[law-concepts/part4-discharge-and-remedies/frustration]]
 
 - A force majeure clause is a contractual allocation of risk for **foreseeable** events, whereas frustration is the common-law doctrine for **unforeseeable** external events. [para 56]
 - But the principles of the doctrine of frustration (beyond control, not self-induced) generally apply **to the construction** of a force majeure clause too. For a force majeure clause to exclude frustration, **clear and unequivocal wording** is required. [para 57, 63]
@@ -89,7 +89,7 @@ Even where there is a breach, there is **no automatic termination**. The cases i
 ## Exam points / significance
 
 - **The four-Situations table is the skeleton of an answer** — in a discharge-by-breach question, examine in the order Situation 1 (express termination clause) → Situation 2 (renunciation) → Situation 3(a) (condition) → Situation 3(b) (*Hongkong Fir*). Applying 3(a) **first** is the exam point.
-- The condition/warranty/innominate-term distinction connects directly to [[law-concepts/terms]]. A condition is "important regardless of consequence", an innominate term "looks at the consequences".
+- The condition/warranty/innominate-term distinction connects directly to [[law-concepts/part2-terms/terms]]. A condition is "important regardless of consequence", an innominate term "looks at the consequences".
 - Force majeure ≠ frustration: the difference in the nature of the remedy (suspension vs automatic termination), the specific-pleading requirement, and proof of the duty to avoid/mitigate are the key points.
 - The later case [[cases/sports-connection-v-deuter]] refines this four-Situation framework (especially the fate of warranty and the intermediate term), and [[cases/man-financial-v-wong]] adds factors for identifying a condition.
 
@@ -97,6 +97,6 @@ Even where there is a breach, there is **no automatic termination**. The cases i
 
 | Topic | Claim A (1 sentence) | Claim B (1 sentence) | Verdict | Evidence |
 |---|---|---|---|---|
-| Mechanism of termination on breach | A breach alone does not automatically terminate the contract; the innocent party must elect to terminate under one of the four Situations. | Wiki [[law-concepts/discharge]]: "breach alone is not automatic termination — the innocent party elects", adopting RDC's four Situations as is. | Convergence (the wiki cites this case as the source of truth) | A: law/cases/(7a) RDC… [para 90, 111]; B: [[law-concepts/discharge]] |
+| Mechanism of termination on breach | A breach alone does not automatically terminate the contract; the innocent party must elect to terminate under one of the four Situations. | Wiki [[law-concepts/part4-discharge-and-remedies/discharge]]: "breach alone is not automatic termination — the innocent party elects", adopting RDC's four Situations as is. | Convergence (the wiki cites this case as the source of truth) | A: law/cases/(7a) RDC… [para 90, 111]; B: [[law-concepts/part4-discharge-and-remedies/discharge]] |
 | Ranking of condition-warranty vs Hongkong Fir | Apply condition-warranty (3a) first, and if not a condition, additionally examine the breach's consequences under Hongkong Fir (3b). | (Alternative view) Apply the Hongkong Fir approach first as the general rule and look only at the consequences of the breach. | Divergence (CA expressly adopted the 3(a)-first ranking, rejecting consequence-first) | A: same source [para 106–112]; B: same source [para 105, 108] (the rejected alternative) |
-| Relationship between force majeure and frustration | A force majeure clause allocates risk contractually, and when it applies the obligations are merely suspended, not automatically terminated as in frustration. | Wiki [[law-concepts/frustration]]: frustration is the common-law doctrine that automatically discharges a contract through an unforeseeable external event. | Convergence (consistent: force majeure = contractual risk allocation, frustration = common-law automatic termination) | A: same source [para 56, 60–61]; B: [[law-concepts/frustration]] |
+| Relationship between force majeure and frustration | A force majeure clause allocates risk contractually, and when it applies the obligations are merely suspended, not automatically terminated as in frustration. | Wiki [[law-concepts/part4-discharge-and-remedies/frustration]]: frustration is the common-law doctrine that automatically discharges a contract through an unforeseeable external event. | Convergence (consistent: force majeure = contractual risk allocation, frustration = common-law automatic termination) | A: same source [para 56, 60–61]; B: [[law-concepts/part4-discharge-and-remedies/frustration]] |

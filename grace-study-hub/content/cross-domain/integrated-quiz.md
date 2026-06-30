@@ -49,7 +49,7 @@ Capy Furnishings (Singapore) imports high-end furniture from the overseas suppli
 
 **Issue**: Handling purchase, freight, and purchase discount under FOB Shipping Point + perpetual inventory
 
-**Method** ([[fa-concepts/inventory]]): Under FOB Shipping Point, **the buyer recognizes inventory at shipment (pickup)**. Freight-in is added to inventory cost; purchase discounts are deducted from inventory.
+**Method** ([[fa-concepts/w05-inventory/inventory]]): Under FOB Shipping Point, **the buyer recognizes inventory at shipment (pickup)**. Freight-in is added to inventory cost; purchase discounts are deducted from inventory.
 
 **Application**:
 - Pickup date: **title transfers to Capy immediately upon pickup** ← decisive fact
@@ -72,7 +72,7 @@ Monthly furniture demand is Normal(μ=100, σ=20). Simulation random number r = 
 
 **Issue**: Generating one demand value from a normal-distribution random number
 
-**Method** ([[da-concepts/simulation]]): `Demand = µ + zσ`
+**Method** ([[da-concepts/ch12-simulation/simulation]]): `Demand = µ + zσ`
 
 **Application**:
 - r = 0.8531 > 0.5 → **z = +1.05 (above the mean)** ← decisive fact
@@ -96,7 +96,7 @@ GreenBuild wants to raise funds to expand its factory. There are two options. **
 
 A single financing decision flows through three stages: **accounting treatment (💰) → quantitative comparison (📊) → legal effect (⚖️)**.
 
-**① 💰 Bond issue price [FA]** — [[fa-concepts/bonds-payable]], [[fa-concepts/time-value-of-money]]
+**① 💰 Bond issue price [FA]** — [[fa-concepts/w09-time-value-and-bonds/bonds-payable]], [[fa-concepts/w09-time-value-and-bonds/time-value-of-money]]
 Issue price = PV of principal + PVA of coupons, **always discounted at the market yield**.
 - **coupon 5% < market 6% → issued at a discount** ← decisive fact
 - PV(principal) = 100,000 × 0.558 = 55,800
@@ -104,13 +104,13 @@ Issue price = PV of principal + PVA of coupons, **always discounted at the marke
 - Issue price = 55,800 + 36,800 = **$92,600**, discount = $7,400 (contra-liability)
 - Entry: DR Cash 92,600 / DR Discount on B/P 7,400 / CR Bonds Payable 100,000
 
-**② 📊 Bonds vs loan expected cost [DA]** — [[da-concepts/simulation]]
+**② 📊 Bonds vs loan expected cost [DA]** — [[da-concepts/ch12-simulation/simulation]]
 Use `EV = Σ(probability × outcome)` to compare the uncertain loan rate with the bond's fixed rate.
 - EV(loan rate) = 0.3(5%) + 0.5(6%) + 0.2(7%) = **5.9%** ← decisive calculation
 - The bond is **fixed at 6%**, the loan is expected at 5.9% but carries the risk of rising to 7%
 - → The expected cost is slightly lower for the loan, but **if risk-averse, choose the fixed-6% bond**. Don't decide on EV alone.
 
-**③ ⚖️ Economic duress on the guarantee [LAW]** — [[law-concepts/duress]]
+**③ ⚖️ Economic duress on the guarantee [LAW]** — [[law-concepts/part3-vitiating-factors/duress]]
 Economic duress requires ① **illegitimate pressure**, ② the absence of a reasonable alternative, ③ causation.
 - **The bank threatened to unlawfully breach a lawful existing contract** ← decisive fact → illegitimate pressure
 - The 1-hour deadline → no reasonable alternative; the pressure was the cause of the signature
@@ -120,7 +120,7 @@ Economic duress requires ① **illegitimate pressure**, ② the absence of a rea
 
 > **Exam tip**:
 > - 💰 coupon < market → discount (< par). Read the PV/PVA tables at the **market yield** (not the coupon rate).
-> - 📊 EV is a weighted average, but even when lower, consider the **risk (variance)** too — same as the "mean + P(loss)" principle in [[da-concepts/simulation-quiz-problems]].
+> - 📊 EV is a weighted average, but even when lower, consider the **risk (variance)** too — same as the "mean + P(loss)" principle in [[da-concepts/ch12-simulation/simulation-quiz-problems]].
 > - ⚖️ "Threatening a lawful act" (e.g. refusing a new loan) is usually not duress. The boundary line is an "**unlawful threat** (breaching an existing contract)."
 
 </details>
@@ -157,7 +157,7 @@ The company reissues 10,000 treasury shares it holds (cost $20) to the designer 
 
 **Issue**: Handling a treasury-share reissue above cost
 
-**Method** ([[fa-concepts/shareholders-equity]]): Reissue price > acquisition cost → the difference is credited to **APIC-Treasury**. Not routed through profit or loss.
+**Method** ([[fa-concepts/w10-equity-and-dividends/shareholders-equity]]): Reissue price > acquisition cost → the difference is credited to **APIC-Treasury**. Not routed through profit or loss.
 
 **Application**:
 - **Reissue price $25 > acquisition cost $20** ← decisive fact → APIC-Treasury created
@@ -177,7 +177,7 @@ You want to assign the remaining 4 designers 1:1 to 4 projects to minimize total
 
 **Issue**: Identify the problem type for a 1:1 resource assignment at minimum cost
 
-**Method** ([[da-concepts/Assignment Problem]]): Worker-task 1:1 correspondence, minimize total cost → **Assignment Problem** (a special case of binary-variable LP, [[da-concepts/Linear Programming]]).
+**Method** ([[da-concepts/ch06-networks/Assignment Problem]]): Worker-task 1:1 correspondence, minimize total cost → **Assignment Problem** (a special case of binary-variable LP, [[da-concepts/ch02-lp/Linear Programming]]).
 
 **Application**:
 - **Each designer to exactly 1 project, each project to exactly 1 person** ← decisive structure → assignment problem
@@ -185,7 +185,7 @@ You want to assign the remaining 4 designers 1:1 to 4 projects to minimize total
 
 **Conclusion**: Model as an **Assignment Problem** (each variable 0/1, row and column sums = 1).
 
-> **Exam tip**: "1:1 correspondence + cost minimization" → Assignment. If the supply/demand quantities are not 1, it is a general [[da-concepts/Transportation Problem]].
+> **Exam tip**: "1:1 correspondence + cost minimization" → Assignment. If the supply/demand quantities are not 1, it is a general [[da-concepts/ch06-networks/Transportation Problem]].
 
 </details>
 
@@ -201,7 +201,7 @@ A defect was found in the sofas Capy sold to WHY Co. The sales contract contains
 
 **Issue**: Incorporation, interpretation, and UCTA control of the exemption clause
 
-**Rule** ([[law-concepts/exemption-clause]], UCTA): An exemption clause must ① be incorporated, ② pass interpretation (contra proferentem), and ③ satisfy **UCTA reasonableness**. Liability for death/injury caused by negligence **cannot be excluded**; other losses are subject to a reasonableness test.
+**Rule** ([[law-concepts/part2-terms/exemption-clause]], UCTA): An exemption clause must ① be incorporated, ② pass interpretation (contra proferentem), and ③ satisfy **UCTA reasonableness**. Liability for death/injury caused by negligence **cannot be excluded**; other losses are subject to a reasonableness test.
 
 **Application**:
 - **"Bears no liability whatsoever" is a blanket exclusion subject to the UCTA reasonableness test** ← decisive fact
@@ -219,7 +219,7 @@ A defect was found in the sofas Capy sold to WHY Co. The sales contract contains
 
 **Issue**: The two pairs of entries for a reusable return
 
-**Method** ([[fa-concepts/inventory]]): A sales return is contra-revenue + (if reusable) reversal of inventory and COGS.
+**Method** ([[fa-concepts/w05-inventory/inventory]]): A sales return is contra-revenue + (if reusable) reversal of inventory and COGS.
 
 **Application**:
 - **Return + reusable** ← decisive fact → two pairs of entries
@@ -240,7 +240,7 @@ Distribution of defects per batch: 0(0.5), 1(0.3), 2(0.15), 3(0.05). Random numb
 
 **Issue**: Cumulative-interval mapping in a discrete distribution
 
-**Method** ([[da-concepts/simulation-quiz-problems]]): Build the interval table by cumulative probability, then map r.
+**Method** ([[da-concepts/ch12-simulation/simulation-quiz-problems]]): Build the interval table by cumulative probability, then map r.
 
 **Application**:
 | Defects | Probability | Interval |
@@ -269,7 +269,7 @@ Apex's ledger cash balance does not match the bank statement. A customer cheque 
 
 **Issue**: Where to adjust for the NSF cheque
 
-**Method** ([[fa-concepts/bank-reconciliation]]): NSF is a **ledger-side** adjustment (with an entry) — since cash was not received, A/R is re-recognized.
+**Method** ([[fa-concepts/w04-bank-reconciliation/bank-reconciliation]]): NSF is a **ledger-side** adjustment (with an entry) — since cash was not received, A/R is re-recognized.
 
 **Application**:
 - **NSF = a dishonor the company was unaware of → deducted from the ledger** ← decisive fact
@@ -289,7 +289,7 @@ The manager's (agent's) approval limit is $50,000, but he concluded a purchase c
 
 **Issue**: Whether, where actual authority is exceeded, the principal is bound by apparent authority
 
-**Rule** ([[law-concepts/agency]]): If the principal's representation leads a third party reasonably to rely on the agent's authority, the principal is bound by **apparent authority** even where actual authority is exceeded. But it fails if the third party knew of the limit.
+**Rule** ([[law-concepts/part6-agency/agency]]): If the principal's representation leads a third party reasonably to rely on the agent's authority, the principal is bound by **apparent authority** even where actual authority is exceeded. But it fails if the third party knew of the limit.
 
 **Application**:
 - Apex held him out as head of purchasing + **the supplier did not know of the limit and relied** ← decisive fact
@@ -309,13 +309,13 @@ Choose between (A) an immediate dividend with the surplus cash, or (B) investing
 
 **Issue**: Comparing the expected value of an uncertain investment option
 
-**Method** ([[da-concepts/simulation]]): Evaluate the investment with `EV = Σ p×outcome`, then compare with the certain alternative.
+**Method** ([[da-concepts/ch12-simulation/simulation]]): Evaluate the investment with `EV = Σ p×outcome`, then compare with the certain alternative.
 
 **Application**:
 - EV(investment) = 0.4(0) + 0.6(30,000) = **$18,000** ← decisive calculation
 - A dividend is a cash outflow (FCF), and if the investment EV is positive and exceeds the cost of capital, the investment is superior
 
-**Conclusion**: EV $18,000 > 0 → if risk-tolerant, **invest**; if stability-preferring, dividend. (If a dividend is chosen, [[fa-concepts/dividends]] entry; the cash flow is a **financing-activity (FCF)** outflow in [[fa-concepts/statement-of-cash-flows]])
+**Conclusion**: EV $18,000 > 0 → if risk-tolerant, **invest**; if stability-preferring, dividend. (If a dividend is chosen, [[fa-concepts/w10-equity-and-dividends/dividends]] entry; the cash flow is a **financing-activity (FCF)** outflow in [[fa-concepts/w11-cash-flows/statement-of-cash-flows]])
 
 > **Exam tip**: Use EV to gauge superiority, but also weigh the dividend's accounting treatment (FCF) and risk preference. EV is the starting point, not the end point.
 
@@ -349,4 +349,4 @@ Choose between (A) an immediate dividend with the surplus cash, or (B) investing
 
 - 🗺️ [[cross-domain/business-lifecycle]] — three-subject cross-map
 - ⚖️ [[law-concepts/quiz-methodology]] — common design methodology
-- 📊 [[da-concepts/simulation-quiz-problems]] · 💰 [[fa-concepts/financial-accounting]]
+- 📊 [[da-concepts/ch12-simulation/simulation-quiz-problems]] · 💰 [[fa-concepts/financial-accounting]]

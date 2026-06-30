@@ -192,5 +192,5 @@ System time(i) = Completion time(i) − Arrival time(i)
 
 ## Connected Concepts
 
-- [[da-concepts/simulation-quiz]] ← practice problems and calculation drills
-- [[da-concepts/Waiting Line Models]] ← Chapter 11 waiting-line formulas (analytic solution)
+- [[da-concepts/ch12-simulation/simulation-quiz]] ← practice problems and calculation drills
+- [[da-concepts/ch11-waiting-lines/Waiting Line Models]] ← Chapter 11 waiting-line formulas (analytic solution)

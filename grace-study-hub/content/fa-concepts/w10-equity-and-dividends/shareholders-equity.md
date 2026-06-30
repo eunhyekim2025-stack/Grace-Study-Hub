@@ -14,7 +14,7 @@ community: 2
 
 Components of shareholders' equity: in addition to Retained Earnings (accumulated profit), Net Profit, and Dividends, this week covers **share issuance and treasury shares**.
 
-> Distributions (dividends) are on a separate page: [[fa-concepts/dividends]].
+> Distributions (dividends) are on a separate page: [[fa-concepts/w10-equity-and-dividends/dividends]].
 
 ---
 
@@ -80,5 +80,5 @@ Shares the company **repurchases of its own previously issued shares**. **Contra
 ## Related Concepts
 
 - [[fa-concepts/financial-accounting]] ← concept map (MOC)
-- [[fa-concepts/dividends]] ← equity distributions (cash, share, cumulative preference)
-- [[fa-concepts/statement-of-cash-flows]] ← share issuance and treasury share repurchases are financing activities (FCF)
+- [[fa-concepts/w10-equity-and-dividends/dividends]] ← equity distributions (cash, share, cumulative preference)
+- [[fa-concepts/w11-cash-flows/statement-of-cash-flows]] ← share issuance and treasury share repurchases are financing activities (FCF)

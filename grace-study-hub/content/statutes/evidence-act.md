@@ -31,7 +31,7 @@ community: 0
 |---|---|---|
 | **s 93** | Evidence where contract terms are reduced to a document | Where the terms of a contract, grant, or disposition of property have been reduced by agreement to a document, or are required by law to be in writing, **no evidence of those terms may be given other than the document itself (or admissible secondary evidence).** (Best Evidence aspect) |
 | **s 94** | Exclusion of evidence of oral agreement | Where terms have been proved under s 93, **evidence of any oral agreement or oral statement for the purpose of contradicting, varying, adding to, or subtracting from those terms, as between the parties, is not admissible.** Subject to the **provisos** (a)–(f). |
-| s 94(a) | Invalidating grounds | Facts that invalidate the document or entitle a party to relief — fraud, intimidation, illegality, want of due execution, **want of capacity**, mistake as to date, **want or failure of consideration**, mistake of fact or law — may be proved. → An exit that preserves all [[law-concepts/vitiating-factor]]s. |
+| s 94(a) | Invalidating grounds | Facts that invalidate the document or entitle a party to relief — fraud, intimidation, illegality, want of due execution, **want of capacity**, mistake as to date, **want or failure of consideration**, mistake of fact or law — may be proved. → An exit that preserves all [[law-concepts/part3-vitiating-factors/vitiating-factor]]s. |
 | s 94(b) | Separate oral agreement | A separate oral agreement on a matter on which the document is silent and **not inconsistent** with its terms may be proved (the court considers the degree of formality of the document). |
 | s 94(c) | Condition precedent | A separate oral agreement that is a **condition precedent** to the attaching of any obligation may be proved. |
 | s 94(d) | Subsequent variation/rescission | A *subsequent* separate oral agreement that **rescinds or varies** the document may be proved (except where the law requires writing or where it has been registered). |
@@ -43,15 +43,15 @@ community: 0
 
 ## Role in Contract Law
 
-- **Primacy of the written contract**: once a contract is reduced to writing, oral promises from the negotiation stage or other documents cannot override that writing — securing the **certainty** and finality of the transaction. This is the statutory basis for the wiki's [[law-concepts/terms]] (express vs implied terms, what forms part of the contract).
-- **But vitiating factors are preserved**: because s 94(a) expressly excepts fraud, mistake, duress, **capacity, and want of consideration**, the parol evidence rule does not bar claims of [[law-concepts/misrepresentation]], [[law-concepts/mistake]], [[law-concepts/duress]], [[law-concepts/capacity]], or [[law-concepts/consideration]]. That is, you cannot dispute the *content of the terms*, but you can dispute the *formation and validity of the contract*.
+- **Primacy of the written contract**: once a contract is reduced to writing, oral promises from the negotiation stage or other documents cannot override that writing — securing the **certainty** and finality of the transaction. This is the statutory basis for the wiki's [[law-concepts/part2-terms/terms]] (express vs implied terms, what forms part of the contract).
+- **But vitiating factors are preserved**: because s 94(a) expressly excepts fraud, mistake, duress, **capacity, and want of consideration**, the parol evidence rule does not bar claims of [[law-concepts/part3-vitiating-factors/misrepresentation]], [[law-concepts/part3-vitiating-factors/mistake]], [[law-concepts/part3-vitiating-factors/duress]], [[law-concepts/part1-formation/capacity]], or [[law-concepts/part1-formation/consideration]]. That is, you cannot dispute the *content of the terms*, but you can dispute the *formation and validity of the contract*.
 - **Distinguishing interpretation from variation**: ss 95-100 distinguish extrinsic evidence that "*reveals the meaning*" of the document (contextual interpretation) from evidence that "*varies*" the document. Since *Zurich Insurance v B-Gold* [2008] SGCA 27, Singapore has adopted the **contextual approach**, operating the s 94 provisos (especially (f)) and the interpretation provisions broadly — this point can be expanded separately from the textbook/case law.
 - **Contract interpretation and case law**: [[cases/gay-choon-ing-v-loh]], in deciding whether a settlement contract was formed, objectively interpreted the **whole course of negotiations**, which — as the task of fixing the *meaning* of a documented agreement by context — lies on the same plane as the interpretive dimension of the parol evidence rule (s 94(f), ss 97-100).
 
 ## Related Concepts and Cases
 
-- [[law-concepts/terms]] — evidential control over what is recognised as a contractual term.
-- [[law-concepts/vitiating-factor]] / [[law-concepts/misrepresentation]] / [[law-concepts/mistake]] / [[law-concepts/duress]] / [[law-concepts/capacity]] / [[law-concepts/consideration]] — all preserved by the s 94(a) exception.
+- [[law-concepts/part2-terms/terms]] — evidential control over what is recognised as a contractual term.
+- [[law-concepts/part3-vitiating-factors/vitiating-factor]] / [[law-concepts/part3-vitiating-factors/misrepresentation]] / [[law-concepts/part3-vitiating-factors/mistake]] / [[law-concepts/part3-vitiating-factors/duress]] / [[law-concepts/part1-formation/capacity]] / [[law-concepts/part1-formation/consideration]] — all preserved by the s 94(a) exception.
 - [[cases/gay-choon-ing-v-loh]] — objective, contextual interpretation of a documented agreement.
 - [[statutes/electronic-transactions-act]] — admissibility of electronic records (Evidence Act s 69(2) treats electronic signatures to which the ETA applies separately).
 

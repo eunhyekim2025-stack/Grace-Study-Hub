@@ -21,7 +21,7 @@ community: 0
 
 ## Purpose and Scope
 
-Governs the **apportionment of damages** where the claimant's own fault has **partly contributed** to the harm. At common law, contributory negligence was a *complete defence*, so a claimant with even the slightest fault lost their entire claim. This Act abolishes that "all-or-nothing" rule and replaces it with **reduction in proportion to responsibility** (governs the defence/remedy aspects of [[law-concepts/negligence]], linked to [[law-concepts/remedies]]).
+Governs the **apportionment of damages** where the claimant's own fault has **partly contributed** to the harm. At common law, contributory negligence was a *complete defence*, so a claimant with even the slightest fault lost their entire claim. This Act abolishes that "all-or-nothing" rule and replaces it with **reduction in proportion to responsibility** (governs the defence/remedy aspects of [[law-concepts/part5-tort/negligence]], linked to [[law-concepts/part4-discharge-and-remedies/remedies]]).
 
 - **Definition of "fault"** (s.2): negligence, breach of statutory duty, or any act or omission that *gives rise to tortious liability or would, apart from this Act, give rise to the defence of contributory negligence*. → Pure breach of contract is not, in principle, included.
 - **"damage"** (s.2): includes death and personal injury.
@@ -40,19 +40,19 @@ Governs the **apportionment of damages** where the claimant's own fault has **pa
 
 ## Role in Contract Law / Tort Law
 
-The centre of gravity of this Act is in **tort — especially [[law-concepts/negligence]]**. The key operation in a Business Law context is:
+The centre of gravity of this Act is in **tort — especially [[law-concepts/part5-tort/negligence]]**. The key operation in a Business Law context is:
 
-1. **Establish the defendant's liability → assess the claimant's contributory negligence → reduce proportionately** (it intervenes directly at the damages-assessment stage of [[law-concepts/remedies]]).
+1. **Establish the defendant's liability → assess the claimant's contributory negligence → reduce proportionately** (it intervenes directly at the damages-assessment stage of [[law-concepts/part4-discharge-and-remedies/remedies]]).
 2. Contributory negligence is now a *ground for reduction*, not a *defence*. So in exam answers, you conclude not with "claim dismissed because the claimant was partly at fault" but with "claimant X% responsible → damages reduced by X%."
-3. Because of **s.3(2)**, *contractual* defences (e.g., a valid [[law-concepts/exemption-clause]]) survive — i.e., this Act does not break contractual defences.
+3. Because of **s.3(2)**, *contractual* defences (e.g., a valid [[law-concepts/part2-terms/exemption-clause]]) survive — i.e., this Act does not break contractual defences.
 
 > [!uncertain] Whether the contributory negligence doctrine applies to *breach of contract* claims is contested at common law (the three-category analysis in the UK case Vesta v Butcher). Like the FCA, this Act's definition of "fault" is tort-centred, and extension to pure contract claims should be treated with caution.
 
 ## Related Concepts and Cases
 
-- [[law-concepts/negligence]] — governed by this Act (contributory negligence defence and apportionment).
-- [[law-concepts/remedies]] — operates directly as a *reduction mechanism* for the damages amount.
-- [[law-concepts/exemption-clause]] — s.3(2)/s.3(3) recognise that contractual limitations of liability still operate as a cap even after apportionment.
+- [[law-concepts/part5-tort/negligence]] — governed by this Act (contributory negligence defence and apportionment).
+- [[law-concepts/part4-discharge-and-remedies/remedies]] — operates directly as a *reduction mechanism* for the damages amount.
+- [[law-concepts/part2-terms/exemption-clause]] — s.3(2)/s.3(3) recognise that contractual limitations of liability still operate as a cap even after apportionment.
 - Civil Law Act (Cap. 43) s.10/s.20/s.21 — linked to death and dependants' claims (s.3(5)).
 
 ## Conflict Table
@@ -62,4 +62,4 @@ The centre of gravity of this Act is in **tort — especially [[law-concepts/neg
 | When the claimant is at fault | Common law: contributory negligence is a complete defence → total loss of claim | s.3(1): the claim survives and only damages are reduced proportionately | Divergence | s.3(1) [source: (9d) Contributory Negligence and Personal Injuries Act.pdf:p.2] — the statute abolishes the all-or-nothing common law rule |
 | Employee injured by a colleague's negligence | Common law: the common employment defence exempts the employer | s.5(1): the common employment defence is abolished and exclusion clauses are void | Divergence | s.5 [source: (9d) Contributory Negligence and Personal Injuries Act.pdf:p.3] |
 
-> Consistent with the existing wiki — expands the [[law-concepts/negligence]] stub's "contributory negligence apportionment" role at the section level.
+> Consistent with the existing wiki — expands the [[law-concepts/part5-tort/negligence]] stub's "contributory negligence apportionment" role at the section level.

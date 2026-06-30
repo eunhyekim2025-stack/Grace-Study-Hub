@@ -47,17 +47,17 @@ On which ground may the declaration of trust be set aside — (a) misrepresentat
 
 ## Law (Ratio / Core Doctrine)
 
-### 1. Misrepresentation [para 89–91] → [[law-concepts/misrepresentation]]
+### 1. Misrepresentation [para 89–91] → [[law-concepts/part3-vitiating-factors/misrepresentation]]
 
 - Elements of fraudulent misrepresentation (not disputed): (a) a representation of fact by word or conduct, (b) intent that the other party act on it, (c) the plaintiff actually acting on it, (d) damage, and (e) making the representation **knowing it to be false**. [para 89]
 - The wife caused the husband to rely on the representation that "the DOT only takes effect on death" **knowing it to be false** — the recorded conversation of 2015-02-12 ("if you don't sign, leave the house") was decisive. All elements satisfied → the DOT may be set aside on this ground alone. [para 74–75, 91]
 
-### 2. Mistake (mistake in a voluntary disposition) [para 90–92] → [[law-concepts/mistake]]
+### 2. Mistake (mistake in a voluntary disposition) [para 90–92] → [[law-concepts/part3-vitiating-factors/mistake]]
 
 - Adopting *Pitt v Holt* [2013] (via *BMM v BMN*): equity may set aside a voluntary disposition where there is (1) a **causative mistake** (as to the legal character of the transaction, or as to a fact or matter of law basic to the transaction) that is (2) **so serious that it would be unconscionable to refuse relief**. [para 90]
 - The husband's mistake ("the DOT only takes effect on death") was causative, lay at the heart of a transaction that immediately stripped him of his entire estate, and had grave consequences → set aside. [para 92]
 
-### 3. Undue Influence [para 94–113] → [[law-concepts/undue-influence]]
+### 3. Undue Influence [para 94–113] → [[law-concepts/part3-vitiating-factors/undue-influence]]
 
 **Two categories** [para 101]:
 - **Class 1 (actual)**: the plaintiff proves (i) capacity to influence, (ii) exercise of influence, (iii) that the exercise was undue, and (iv) that it brought about the transaction. [para 101(a)]
@@ -72,7 +72,7 @@ On which ground may the declaration of trust be set aside — (a) misrepresentat
 **Class 2A — not made out** [para 108–113]:
 - The trial court held there was an **implied retainer** between spouses giving rise to a presumed relationship of trust, but the Court of Appeal reversed. Under the **domestic-context** doctrine of *Balfour v Balfour*, it would be wrong to deem a solicitor–client relationship merely because a legally knowledgeable spouse gave advice. → no implied retainer, Class 2A not made out (though the possibility is left open in extremely rare cases). [para 109–113]
 
-### 4. Unconscionability — adoption and refinement of the narrow doctrine [para 114–156] → [[law-concepts/unconscionability]]
+### 4. Unconscionability — adoption and refinement of the narrow doctrine [para 114–156] → [[law-concepts/part3-vitiating-factors/unconscionability]]
 
 **(a) The two senses of "unconscionability"** [para 117–122]:
 - **Unconscionability as a rationale** — the spirit of justice and fairness underlying existing doctrines such as undue influence and duress ("one must not unfairly exploit the weak party's plight"). This *cannot itself be a doctrine*. [para 118–119]

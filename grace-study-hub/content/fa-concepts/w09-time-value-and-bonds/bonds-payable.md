@@ -56,7 +56,7 @@ Example: $100,000, 10 years, 5% annual coupon, 5% market yield.
 ## Issued At Discount
 
 If the market yield (6%) > coupon (5%), the bond is issued **below face value** to compensate for the lower coupon.
-The issue price is computed using the tables in [[fa-concepts/time-value-of-money]], **always using the market yield**:
+The issue price is computed using the tables in [[fa-concepts/w09-time-value-and-bonds/time-value-of-money]], **always using the market yield**:
 
 ```
 PV of Principal : 100,000 × PV factor   = 55,800
@@ -96,5 +96,5 @@ The discount is amortised to bring the carrying value up to face value at maturi
 ## Related Concepts
 
 - [[fa-concepts/financial-accounting]] ← concept map (MOC)
-- [[fa-concepts/time-value-of-money]] ← issue price = PV(principal) + PVA(coupons)
-- [[fa-concepts/statement-of-cash-flows]] ← treatment of interest expense and removal of early-redemption gains/losses (indirect method Steps 2 & 3)
+- [[fa-concepts/w09-time-value-and-bonds/time-value-of-money]] ← issue price = PV(principal) + PVA(coupons)
+- [[fa-concepts/w11-cash-flows/statement-of-cash-flows]] ← treatment of interest expense and removal of early-redemption gains/losses (indirect method Steps 2 & 3)

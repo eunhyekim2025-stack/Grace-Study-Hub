@@ -12,27 +12,27 @@ kind: 주제
 ## Content — Legal Concepts (law-concepts/)
 | Page | Description |
 |------|-------------|
-| [[law-concepts/offer]] | Offer — 3 principles, 4 ITT types, contract types, termination |
-| [[law-concepts/acceptance]] | Acceptance — 4 principles, postal/communication/silence, ETA |
-| [[law-concepts/consideration]] | Consideration — benefit-detriment, 3 requirements, promissory estoppel |
-| [[law-concepts/iclr]] | Intention to Create Legal Relations (ICLR) — social/commercial presumptions |
-| [[law-concepts/capacity]] | Capacity — minors, mental incapacity, corporations |
-| [[law-concepts/terms]] | Terms — term vs representation, implied terms |
-| [[law-concepts/exemption-clause]] | Exemption Clause — incorporation, construction, UCTA |
-| [[law-concepts/misrepresentation]] | Misrepresentation — 4 elements, 3 types |
-| [[law-concepts/mistake]] | Mistake — common/mutual/unilateral/non est factum |
-| [[law-concepts/duress]] | Duress — to person/goods/economic |
-| [[law-concepts/undue-influence]] | Undue Influence — Class 1/2A/2B |
-| [[law-concepts/unconscionability]] | Unconscionability — BOM v BOK |
-| [[law-concepts/illegality]] | Illegality — statutory/common-law/intermediate |
-| [[law-concepts/restraint-of-trade]] | Restraint of Trade — reasonableness, blue pencil |
-| [[law-concepts/privity]] | Privity — CRTPA, common-law exceptions |
-| [[law-concepts/discharge]] | Discharge — RDC v Sato Kogyo 4 situations |
-| [[law-concepts/frustration]] | Frustration — grounds & limits, FCA |
-| [[law-concepts/remedies]] | Remedies — 4 damages principles, equitable remedies |
-| [[law-concepts/negligence]] | Negligence — Spandeck 2-stage test |
-| [[law-concepts/agency]] | Agency — creation, effect, termination |
-| [[law-concepts/vitiating-factor]] | Vitiating factor (umbrella) — is-a parent, subtypes via inference |
+| [[law-concepts/part1-formation/offer]] | Offer — 3 principles, 4 ITT types, contract types, termination |
+| [[law-concepts/part1-formation/acceptance]] | Acceptance — 4 principles, postal/communication/silence, ETA |
+| [[law-concepts/part1-formation/consideration]] | Consideration — benefit-detriment, 3 requirements, promissory estoppel |
+| [[law-concepts/part1-formation/iclr]] | Intention to Create Legal Relations (ICLR) — social/commercial presumptions |
+| [[law-concepts/part1-formation/capacity]] | Capacity — minors, mental incapacity, corporations |
+| [[law-concepts/part2-terms/terms]] | Terms — term vs representation, implied terms |
+| [[law-concepts/part2-terms/exemption-clause]] | Exemption Clause — incorporation, construction, UCTA |
+| [[law-concepts/part3-vitiating-factors/misrepresentation]] | Misrepresentation — 4 elements, 3 types |
+| [[law-concepts/part3-vitiating-factors/mistake]] | Mistake — common/mutual/unilateral/non est factum |
+| [[law-concepts/part3-vitiating-factors/duress]] | Duress — to person/goods/economic |
+| [[law-concepts/part3-vitiating-factors/undue-influence]] | Undue Influence — Class 1/2A/2B |
+| [[law-concepts/part3-vitiating-factors/unconscionability]] | Unconscionability — BOM v BOK |
+| [[law-concepts/part3-vitiating-factors/illegality]] | Illegality — statutory/common-law/intermediate |
+| [[law-concepts/part3-vitiating-factors/restraint-of-trade]] | Restraint of Trade — reasonableness, blue pencil |
+| [[law-concepts/part4-discharge-and-remedies/privity]] | Privity — CRTPA, common-law exceptions |
+| [[law-concepts/part4-discharge-and-remedies/discharge]] | Discharge — RDC v Sato Kogyo 4 situations |
+| [[law-concepts/part4-discharge-and-remedies/frustration]] | Frustration — grounds & limits, FCA |
+| [[law-concepts/part4-discharge-and-remedies/remedies]] | Remedies — 4 damages principles, equitable remedies |
+| [[law-concepts/part5-tort/negligence]] | Negligence — Spandeck 2-stage test |
+| [[law-concepts/part6-agency/agency]] | Agency — creation, effect, termination |
+| [[law-concepts/part3-vitiating-factors/vitiating-factor]] | Vitiating factor (umbrella) — is-a parent, subtypes via inference |
 
 ## Cases (cases/)
 | Page | Description |
@@ -67,7 +67,7 @@ kind: 주제
 ## Quizzes (law-concepts/)
 | Page | Description |
 |------|-------------|
-| [[law-concepts/mistake-quiz]] | Chapter 8 Mistake quiz cards — 23 questions, case comparison table, scenarios |
-| [[law-concepts/mistake-quiz-scenarios]] | Chapter 8 Mistake PQ-style scenarios — 13 questions, IRAC model answers, issue-spotting checklist |
-| [[law-concepts/mistake-quiz-irac]] | Chapter 8 Mistake IRAC drill — 8 questions, key-facts vs holding table, boundary cases |
+| [[law-concepts/part3-vitiating-factors/mistake-quiz]] | Chapter 8 Mistake quiz cards — 23 questions, case comparison table, scenarios |
+| [[law-concepts/part3-vitiating-factors/mistake-quiz-scenarios]] | Chapter 8 Mistake PQ-style scenarios — 13 questions, IRAC model answers, issue-spotting checklist |
+| [[law-concepts/part3-vitiating-factors/mistake-quiz-irac]] | Chapter 8 Mistake IRAC drill — 8 questions, key-facts vs holding table, boundary cases |
 | [[law-concepts/quiz-methodology]] | IRAC drill design methodology — 4 design principles, chapter boundary-case pairs, /quiz skill |

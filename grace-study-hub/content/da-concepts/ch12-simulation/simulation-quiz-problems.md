@@ -13,7 +13,7 @@ community: 2
 # Simulation (Chapter 12) — Textbook Problem Quiz
 
 Exam-prep cards built on the **end-of-chapter problems** of Chapter 12 of the Anderson/Sweeney/Williams textbook.
-The worked-example (PortaCom/Butler/Black Sheep) drills are in [[da-concepts/simulation-quiz]]; this file covers the **practice problems with changed numbers**.
+The worked-example (PortaCom/Butler/Black Sheep) drills are in [[da-concepts/ch12-simulation/simulation-quiz]]; this file covers the **practice problems with changed numbers**.
 
 Design principle: in each card, one **bolded decisive fact** changes the conclusion. A pair where the same technique produces a made-out/not-made-out (or split-value) result is placed together.
 Not IRAC — a 4-part **Issue / Method / Application / Conclusion** structure. (Methodology borrowed from: [[law-concepts/quiz-methodology]])
@@ -398,6 +398,6 @@ Choose the option with the maximum **mean profit** — neither the highest win p
 
 ## Connected Concepts
 
-- [[da-concepts/simulation]] ← Chapter 12 concept summary (model structure, examples)
-- [[da-concepts/simulation-quiz]] ← worked-example (PortaCom/Butler/Black Sheep) calculation drills
+- [[da-concepts/ch12-simulation/simulation]] ← Chapter 12 concept summary (model structure, examples)
+- [[da-concepts/ch12-simulation/simulation-quiz]] ← worked-example (PortaCom/Butler/Black Sheep) calculation drills
 - [[law-concepts/quiz-methodology]] ← the decisive-fact→conclusion pair design methodology (common across subjects)

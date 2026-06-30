@@ -25,7 +25,7 @@ The signals are adoption rates at law firms and in-house legal teams, regulatory
 
 ## What to revisit when it fires (triggers)
 When the strength crosses the threshold, revisit the following knowledge:
-- [[law-concepts/exemption-clause]] — are limitation-of-liability and exemption clauses for AI review output enforceable?
+- [[law-concepts/part2-terms/exemption-clause]] — are limitation-of-liability and exemption clauses for AI review output enforceable?
 - [[cross-domain/business-lifecycle]] — does the integrated Law × DA × FA analysis of the contracting stage change under AI assumptions?
 
 ## Final cause (telos) — why we monitor this

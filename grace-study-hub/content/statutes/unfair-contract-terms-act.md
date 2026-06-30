@@ -47,18 +47,18 @@ community: 0
 
 ## Role in Contract Law
 
-- **Statutory framework for controlling exemption clauses**: the common law controls exemption clauses through **incorporation** and **construction (contra proferentem)** but cannot control the fairness of the *content itself*. UCTA fills that gap — some are wholly void, the rest subject to the reasonableness test — introducing **substantive control**. → the final gate in the three-stage analysis of [[law-concepts/exemption-clause]] (incorporation → construction → UCTA).
+- **Statutory framework for controlling exemption clauses**: the common law controls exemption clauses through **incorporation** and **construction (contra proferentem)** but cannot control the fairness of the *content itself*. UCTA fills that gap — some are wholly void, the rest subject to the reasonableness test — introducing **substantive control**. → the final gate in the three-stage analysis of [[law-concepts/part2-terms/exemption-clause]] (incorporation → construction → UCTA).
 - **The asymmetry of consumer protection**: s 12's "consumer/non-consumer" distinction sets the intensity of control — against a consumer, an exclusion of the SOGA implied terms is *wholly void* (s 6(2)), while against a non-consumer (B2B) it is subject to the *reasonableness test* (s 6(3)). This asymmetry is a frequent issue in exam answers.
-- **Separate treatment of negligence (s 2)**: an exclusion of liability for death or personal injury is **wholly void** regardless of reasonableness — the limit on avoiding [[law-concepts/negligence]] liability. Only exclusions of liability for property or economic loss are subject to the reasonableness test.
+- **Separate treatment of negligence (s 2)**: an exclusion of liability for death or personal injury is **wholly void** regardless of reasonableness — the limit on avoiding [[law-concepts/part5-tort/negligence]] liability. Only exclusions of liability for property or economic loss are subject to the reasonableness test.
 - **Reversal of the burden of proof (ss 11(5), 12(3))**: the party relying on the exemption clause must prove its *reasonableness* — unlike common-law implied-term analysis, the burden lies on the party asserting the exemption.
 
 ## Related Concepts & Cases
 
-- [[law-concepts/exemption-clause]] — UCTA is the final stage of substantive control.
-- [[law-concepts/terms]] — control over an express exemption clause as a contract term.
-- [[law-concepts/negligence]] — the limits of excluding s 2 negligence liability.
+- [[law-concepts/part2-terms/exemption-clause]] — UCTA is the final stage of substantive control.
+- [[law-concepts/part2-terms/terms]] — control over an express exemption clause as a contract term.
+- [[law-concepts/part5-tort/negligence]] — the limits of excluding s 2 negligence liability.
 - [[statutes/sales-of-goods-act]] — s 6 directly governs the exclusion of SOGA ss 12-15 implied terms (mutual dependence).
-- [[law-concepts/misrepresentation]] — UCTA s 11(1) also sets the reasonableness standard for Misrepresentation Act s 3 (linked to control of misrepresentation exemption clauses).
+- [[law-concepts/part3-vitiating-factors/misrepresentation]] — UCTA s 11(1) also sets the reasonableness standard for Misrepresentation Act s 3 (linked to control of misrepresentation exemption clauses).
 
 ## Conflict Table
 
@@ -66,4 +66,4 @@ community: 0
 |---|---|---|---|---|
 | Validity of a clause excluding negligence liability for personal injury | UCTA s 2(1): an exclusion of negligence liability for death or personal injury is wholly void (regardless of reasonableness). | Under freedom of contract, a clearly agreed exemption clause is valid (caveat emptor). | Contradiction (s 2(1) overrides freedom of contract as a mandatory rule) | A: law/statutes/(4d) UCTA s 2(1); B: general freedom-of-contract argument |
 | Exclusion of SOGA quality implied terms against a consumer | UCTA s 6(2): against a consumer, exclusion of SOGA ss 13-15 is wholly void. | SOGA s 55: implied terms may be excluded or varied by express agreement. | Contradiction (in consumer transactions UCTA limits SOGA s 55) | A: same source s 6(2); B: [[statutes/sales-of-goods-act]] s 55 |
-| Mode of controlling B2B exemption clauses | UCTA s 6(3): against a non-consumer, exclusion of ss 13-15 is valid if reasonable. | Common law: an exemption clause that passes incorporation and construction is not controlled as to content. | Divergence (common law = procedural control, UCTA = adds substantive reasonableness) | A: same source s 6(3), s 11; B: [[law-concepts/exemption-clause]] |
+| Mode of controlling B2B exemption clauses | UCTA s 6(3): against a non-consumer, exclusion of ss 13-15 is valid if reasonable. | Common law: an exemption clause that passes incorporation and construction is not controlled as to content. | Divergence (common law = procedural control, UCTA = adds substantive reasonableness) | A: same source s 6(3), s 11; B: [[law-concepts/part2-terms/exemption-clause]] |

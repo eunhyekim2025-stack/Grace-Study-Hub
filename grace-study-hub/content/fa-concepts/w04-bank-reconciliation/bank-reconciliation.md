@@ -81,4 +81,4 @@ Cash ledger ending balance
 ## Related Concepts
 
 - [[fa-concepts/financial-accounting]] ← concept map (MOC)
-- [[fa-concepts/statement-of-cash-flows]] ← the adjusted cash balance is the starting point of cash flow analysis
+- [[fa-concepts/w11-cash-flows/statement-of-cash-flows]] ← the adjusted cash balance is the starting point of cash flow analysis

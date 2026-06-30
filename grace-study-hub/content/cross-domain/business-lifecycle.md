@@ -25,12 +25,12 @@ This page connects those intersection points, serving as a bridge for applying a
 
 | Business event | ⚖️ Law | 📊 Decision Analysis | 💰 Financial Accounting |
 |--------------|--------|---------------------|------------------------|
-| **Entering a supply contract** | Whether offer/acceptance is formed [[law-concepts/offer]] · [[law-concepts/acceptance]] | Order quantity decision under uncertain demand [[da-concepts/simulation]] | Purchase/inventory entry, FOB [[fa-concepts/inventory]] |
-| **Defect/fault dispute** | Exemption clause/misrepresentation [[law-concepts/exemption-clause]] · [[law-concepts/misrepresentation]] | Defect-rate simulation [[da-concepts/simulation-quiz-problems]] | Sales returns entry [[fa-concepts/inventory]] |
-| **Equipment investment/financing** | Duress in a guarantee [[law-concepts/duress]] | Expected-value comparison of financing options [[da-concepts/Linear Programming]] | Bond issuance at a discount/present value [[fa-concepts/bonds-payable]] · [[fa-concepts/time-value-of-money]] |
-| **Departure of key personnel** | Reasonableness of restraint of trade [[law-concepts/restraint-of-trade]] | Personnel assignment optimization [[da-concepts/Assignment Problem]] | Reissuance of treasury shares [[fa-concepts/shareholders-equity]] |
-| **Breach/remedies** | Damages/termination [[law-concepts/remedies]] · [[law-concepts/discharge]] | Expected value of litigation vs settlement | Provisions/cash-flow impact [[fa-concepts/statement-of-cash-flows]] |
-| **Profit distribution** | Agent's authority [[law-concepts/agency]] | EV of dividends vs reinvestment | Dividend entry/cumulative preference [[fa-concepts/dividends]] |
+| **Entering a supply contract** | Whether offer/acceptance is formed [[law-concepts/part1-formation/offer]] · [[law-concepts/part1-formation/acceptance]] | Order quantity decision under uncertain demand [[da-concepts/ch12-simulation/simulation]] | Purchase/inventory entry, FOB [[fa-concepts/w05-inventory/inventory]] |
+| **Defect/fault dispute** | Exemption clause/misrepresentation [[law-concepts/part2-terms/exemption-clause]] · [[law-concepts/part3-vitiating-factors/misrepresentation]] | Defect-rate simulation [[da-concepts/ch12-simulation/simulation-quiz-problems]] | Sales returns entry [[fa-concepts/w05-inventory/inventory]] |
+| **Equipment investment/financing** | Duress in a guarantee [[law-concepts/part3-vitiating-factors/duress]] | Expected-value comparison of financing options [[da-concepts/ch02-lp/Linear Programming]] | Bond issuance at a discount/present value [[fa-concepts/w09-time-value-and-bonds/bonds-payable]] · [[fa-concepts/w09-time-value-and-bonds/time-value-of-money]] |
+| **Departure of key personnel** | Reasonableness of restraint of trade [[law-concepts/part3-vitiating-factors/restraint-of-trade]] | Personnel assignment optimization [[da-concepts/ch06-networks/Assignment Problem]] | Reissuance of treasury shares [[fa-concepts/w10-equity-and-dividends/shareholders-equity]] |
+| **Breach/remedies** | Damages/termination [[law-concepts/part4-discharge-and-remedies/remedies]] · [[law-concepts/part4-discharge-and-remedies/discharge]] | Expected value of litigation vs settlement | Provisions/cash-flow impact [[fa-concepts/w11-cash-flows/statement-of-cash-flows]] |
+| **Profit distribution** | Agent's authority [[law-concepts/part6-agency/agency]] | EV of dividends vs reinvestment | Dividend entry/cumulative preference [[fa-concepts/w10-equity-and-dividends/dividends]] |
 
 ---
 
@@ -69,6 +69,6 @@ The quiz cards across all three subjects use the **same design principle** — [
 ## Connection hub
 
 - ⚖️ [[law-concepts/quiz-methodology]] — common quiz design methodology
-- 📊 [[da-concepts/simulation]] — DA core concept
+- 📊 [[da-concepts/ch12-simulation/simulation]] — DA core concept
 - 💰 [[fa-concepts/financial-accounting]] — FA concept map
 - 🎯 [[cross-domain/integrated-quiz]] — three-subject integrated quiz
