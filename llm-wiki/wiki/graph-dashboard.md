@@ -17,7 +17,7 @@ updated: 2026-06-24
 
 | 상태 | Driver | 강도 | Horizon | 발화 대상 (triggers) |
 |---|---|---|---|---|
-| 🟡 WATCH | [[drivers/ai-contract-review]] | 2.16 | H2 | [[law-concepts/exemption-clause]], [[cross-domain/business-lifecycle]] |
+| 🟡 WATCH | [[drivers/ai-contract-review]] | 2.16 | H2 | [[law-concepts/part2-terms/exemption-clause]], [[cross-domain/business-lifecycle]] |
 | 🟢 dormant | [[drivers/ai-legal-automation]] | 0.98 | H3 | — |
 
 ---
@@ -113,9 +113,9 @@ updated: 2026-06-24
 
 ### 타입 포섭 (subsumption — 어떤 개념의 모든 하위유형)
 
-- **[[law-concepts/vitiating-factor]]** ⊇ [[law-concepts/misrepresentation]]
-- **[[law-concepts/vitiating-factor]]** ⊇ [[law-concepts/duress]]
-- **[[law-concepts/vitiating-factor]]** ⊇ [[law-concepts/undue-influence]]
+- **[[law-concepts/part3-vitiating-factors/vitiating-factor]]** ⊇ [[law-concepts/part3-vitiating-factors/misrepresentation]]
+- **[[law-concepts/part3-vitiating-factors/vitiating-factor]]** ⊇ [[law-concepts/part3-vitiating-factors/duress]]
+- **[[law-concepts/part3-vitiating-factors/vitiating-factor]]** ⊇ [[law-concepts/part3-vitiating-factors/undue-influence]]
 
 ---
 
@@ -177,15 +177,15 @@ updated: 2026-06-24
 | 페이지 | 제목 | PageRank |
 |---|---|---|
 | [[da-concepts/LLM Wiki MOC]] | LLM Wiki MOC — Decision Analysis | 0.0514 |
-| [[law-concepts/remedies]] | Remedies (구제 수단) | 0.0406 |
-| [[law-concepts/misrepresentation]] | Misrepresentation (부실표시) | 0.0359 |
-| [[law-concepts/discharge]] | Discharge of Contract (계약의 종료) | 0.0305 |
-| [[law-concepts/terms]] | Terms of Contract (계약 조항) | 0.0305 |
-| [[da-concepts/Linear Programming]] | Linear Programming | 0.0258 |
+| [[law-concepts/part4-discharge-and-remedies/remedies]] | Remedies (구제 수단) | 0.0406 |
+| [[law-concepts/part3-vitiating-factors/misrepresentation]] | Misrepresentation (부실표시) | 0.0359 |
+| [[law-concepts/part4-discharge-and-remedies/discharge]] | Discharge of Contract (계약의 종료) | 0.0305 |
+| [[law-concepts/part2-terms/terms]] | Terms of Contract (계약 조항) | 0.0305 |
+| [[da-concepts/ch02-lp/Linear Programming]] | Linear Programming | 0.0258 |
 | [[fa-concepts/financial-accounting]] | Financial Accounting (ACCT101) — 개념 맵 | 0.0256 |
-| [[law-concepts/consideration]] | Consideration (대가) | 0.0254 |
-| [[law-concepts/offer]] | Offer (청약) | 0.0245 |
-| [[law-concepts/frustration]] | Frustration (이행 불능) | 0.0237 |
+| [[law-concepts/part1-formation/consideration]] | Consideration (대가) | 0.0254 |
+| [[law-concepts/part1-formation/offer]] | Offer (청약) | 0.0245 |
+| [[law-concepts/part4-discharge-and-remedies/frustration]] | Frustration (이행 불능) | 0.0237 |
 
 ---
 
@@ -197,11 +197,11 @@ updated: 2026-06-24
 | [[cross-domain/business-lifecycle]] | 비즈니스 라이프사이클 — 3과목 교차 맵 | 0.0539 |
 | [[drivers/ai-contract-review]] | 생성형 AI가 1차 계약 검토를 대체한다 | 0.0360 |
 | [[graph-dashboard]] | Graph Dashboard | 0.0346 |
-| [[law-concepts/terms]] | Terms of Contract (계약 조항) | 0.0331 |
+| [[law-concepts/part2-terms/terms]] | Terms of Contract (계약 조항) | 0.0331 |
 | [[index]] | index | 0.0285 |
-| [[law-concepts/exemption-clause]] | Exemption Clause (면책 조항) | 0.0221 |
+| [[law-concepts/part2-terms/exemption-clause]] | Exemption Clause (면책 조항) | 0.0221 |
 | [[cases/gay-choon-ing-v-loh]] | Gay Choon Ing v Loh Sze Ti Terence Peter [2009] SGCA 3 | 0.0219 |
-| [[law-concepts/negligence]] | Negligence (과실) | 0.0199 |
+| [[law-concepts/part5-tort/negligence]] | Negligence (과실) | 0.0199 |
 | [[statutes/unfair-contract-terms-act]] | Unfair Contract Terms Act (UCTA, Cap 396) | 0.0190 |
 
 ---
@@ -215,10 +215,10 @@ updated: 2026-06-24
 | [[da-concepts/LLM Wiki MOC]] | LLM Wiki MOC — Decision Analysis | 0.2153 |
 | [[decision-analysis]] | 📊 Decision Analysis | 0.2057 |
 | [[cross-domain/business-lifecycle]] | 비즈니스 라이프사이클 — 3과목 교차 맵 | 0.2032 |
-| [[law-concepts/misrepresentation]] | Misrepresentation (부실표시) | 0.1807 |
-| [[law-concepts/remedies]] | Remedies (구제 수단) | 0.1679 |
-| [[da-concepts/Linear Programming]] | Linear Programming | 0.1637 |
-| [[law-concepts/terms]] | Terms of Contract (계약 조항) | 0.1588 |
+| [[law-concepts/part3-vitiating-factors/misrepresentation]] | Misrepresentation (부실표시) | 0.1807 |
+| [[law-concepts/part4-discharge-and-remedies/remedies]] | Remedies (구제 수단) | 0.1679 |
+| [[da-concepts/ch02-lp/Linear Programming]] | Linear Programming | 0.1637 |
+| [[law-concepts/part2-terms/terms]] | Terms of Contract (계약 조항) | 0.1588 |
 | [[cases/gay-choon-ing-v-loh]] | Gay Choon Ing v Loh Sze Ti Terence Peter [2009] SGCA 3 | 0.1508 |
 
 ---

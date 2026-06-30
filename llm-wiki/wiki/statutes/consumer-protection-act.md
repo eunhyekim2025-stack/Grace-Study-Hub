@@ -21,7 +21,7 @@ community: 0
 
 ## Purpose and Scope
 
-Two pillars of consumer protection: **(1) regulation of unfair practices** (Part II), and **(2) additional rights for non-conforming goods = Lemon Law** (Part III). False and misleading dealings are a *statutory extension* of [[law-concepts/misrepresentation]], while one-sided/oppressive terms and undue pressure are the consumer-law counterparts of [[law-concepts/unconscionability]] and [[law-concepts/undue-influence]].
+Two pillars of consumer protection: **(1) regulation of unfair practices** (Part II), and **(2) additional rights for non-conforming goods = Lemon Law** (Part III). False and misleading dealings are a *statutory extension* of [[law-concepts/part3-vitiating-factors/misrepresentation]], while one-sided/oppressive terms and undue pressure are the consumer-law counterparts of [[law-concepts/part3-vitiating-factors/unconscionability]] and [[law-concepts/part3-vitiating-factors/undue-influence]].
 
 - **"consumer"** (s.2): an **individual** who receives (or has the right to receive, or is liable to pay for) goods or services *otherwise than exclusively in the course of business*. → Pure B2B transactions are excluded.
 - **"supplier" / "goods" / "services"** (s.2): a supplier is a person who supplies, manufactures, or promotes goods/services in the course of business. "goods" includes residential property, vouchers, and even financial products.
@@ -66,22 +66,22 @@ Introduced in 2012. Provides tiered remedies where, **at the time of delivery, g
 
 ## Role in Contract Law
 
-The CPFTA **extends and strengthens** common law [[law-concepts/misrepresentation]] in the consumer sphere:
+The CPFTA **extends and strengthens** common law [[law-concepts/part3-vitiating-factors/misrepresentation]] in the consumer sphere:
 
 1. **Captures omissions and "taking advantage"** (s.4(a),(c)) — common law misrepresentation requires a positive false statement, but the CPFTA treats even *omissions* that mislead the consumer and the *exploitation* of vulnerability as unfair practices.
-2. **Diversifies remedies** (s.7(4)) — in addition to damages, restitution, specific performance, and variation. This broadens the menu of [[law-concepts/remedies]].
+2. **Diversifies remedies** (s.7(4)) — in addition to damages, restitution, specific performance, and variation. This broadens the menu of [[law-concepts/part4-discharge-and-remedies/remedies]].
 3. **Limits freedom of contract** (s.13 mandatory, s.17 abolition of parol evidence, s.18 contra proferentem) — mandatory protection skewed against the supplier.
 4. **Lemon Law** (Part III) — operationalises the implied conditions of the Sale of Goods Act into a clear remedial ladder of *repair → replace → reduction/rescission* and reverses the burden of proof for six months.
 
-Second Schedule §11 (unconscionable terms) and §12 (undue pressure) **codify** [[law-concepts/unconscionability]] and [[law-concepts/undue-influence]] **as statutory unfair practices** — i.e., common law vitiating factors become subject to administrative and civil enforcement in the consumer context.
+Second Schedule §11 (unconscionable terms) and §12 (undue pressure) **codify** [[law-concepts/part3-vitiating-factors/unconscionability]] and [[law-concepts/part3-vitiating-factors/undue-influence]] **as statutory unfair practices** — i.e., common law vitiating factors become subject to administrative and civil enforcement in the consumer context.
 
 ## Related Concepts and Cases
 
-- [[law-concepts/misrepresentation]] — governed by the CPFTA (extended into unfair practices).
-- [[law-concepts/unconscionability]] — codified by Second Schedule §11 (governs).
-- [[law-concepts/undue-influence]] — Second Schedule §12 ("undue pressure or undue influence").
-- [[law-concepts/remedies]] — s.7(4) and Part III expand the menu of remedies.
-- [[law-concepts/exemption-clause]] — s.13 (void waivers) and Part III, in conjunction with UCTA (Cap.396), constrain consumer exemption clauses.
+- [[law-concepts/part3-vitiating-factors/misrepresentation]] — governed by the CPFTA (extended into unfair practices).
+- [[law-concepts/part3-vitiating-factors/unconscionability]] — codified by Second Schedule §11 (governs).
+- [[law-concepts/part3-vitiating-factors/undue-influence]] — Second Schedule §12 ("undue pressure or undue influence").
+- [[law-concepts/part4-discharge-and-remedies/remedies]] — s.7(4) and Part III expand the menu of remedies.
+- [[law-concepts/part2-terms/exemption-clause]] — s.13 (void waivers) and Part III, in conjunction with UCTA (Cap.396), constrain consumer exemption clauses.
 - [[statutes/frustrated-contracts-act]] — both are statutes that supplement the common law with ex-post settlement and remedies.
 
 ## Conflict Table
@@ -92,4 +92,4 @@ Second Schedule §11 (unconscionable terms) and §12 (undue pressure) **codify**
 | Exemption/waiver terms | Freedom of contract: parties may waive rights by agreement | s.13: any waiver contrary to this Act is void (mandatory) | Contradiction | s.13(1)(2) [source: Consumer Protection (Fair Trading) Act.pdf:p.25] |
 | Proof of non-conforming goods | General principle: the claimant (consumer) bears the burden | s.12B(3): non-conformity within 6 months of delivery must be rebutted by the supplier | Divergence | s.12B(3) [source: Consumer Protection (Fair Trading) Act.pdf:p.21] — reversal of the burden of proof |
 
-> Consistent with the existing wiki — extends the [[law-concepts/exemption-clause]] stub's "consumer unfair-practice protection" role, correcting the governs targets to misrepresentation and unconscionability.
+> Consistent with the existing wiki — extends the [[law-concepts/part2-terms/exemption-clause]] stub's "consumer unfair-practice protection" role, correcting the governs targets to misrepresentation and unconscionability.

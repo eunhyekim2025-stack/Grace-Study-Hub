@@ -45,12 +45,12 @@ Appeal **allowed**. (a) The doctrine applies — the Termination Agreement is no
 
 ## Ratio (core doctrine)
 
-### 1. Threshold — does the restraint-of-trade doctrine apply to a settlement contract? [para 21–68] → [[law-concepts/illegality]]
+### 1. Threshold — does the restraint-of-trade doctrine apply to a settlement contract? [para 21–68] → [[law-concepts/part3-vitiating-factors/illegality]]
 
 - This Termination Agreement is **not a settlement** that compromises and resolves an existing dispute, but a **new, independent supplementary contract** governing the termination of the employment relationship (the restraint clauses were *fresh* clauses not in the original employment contract). The restraint-of-trade doctrine therefore applies in full. [para 23–25, 41]
 - (Obiter) Two public policies conflict: **Public Policy 1** (invalidating restraints of trade) vs **Public Policy 2** (respecting genuine settlements). For Public Policy 2 to override Public Policy 1, two requirements must be **cumulatively** satisfied: ① the settlement compromises an **existing contractual restraint-of-trade dispute** and ② it is **not tainted by any vitiating factor** (adopting *Panayiotou*). Here ① is not met (a new clause, not an existing dispute), so the doctrine applies in any event. [para 60–67]
 
-### 2. The Nordenfelt framework — two-limb reasonableness [para 69–78] → [[law-concepts/restraint-of-trade]]
+### 2. The Nordenfelt framework — two-limb reasonableness [para 69–78] → [[law-concepts/part3-vitiating-factors/restraint-of-trade]]
 
 - Every restraint of trade is **prima facie void** and valid **only if reasonable** (*Nordenfelt v Maxim Nordenfelt* [1894]). [para 69–70]
 - Reasonableness has **two separate, cumulative facets**: ① reasonableness as between the **interests of the parties** and ② reasonableness in the **interests of the public**. Following *Thomas Cowan v Orme* (Chua J), Singapore **clearly distinguishes** the two facets (England somewhat conflates them). The burden lies on the party relying on the clause. Reasonableness is assessed **at the time the contract is made**. [para 71–77]
@@ -72,7 +72,7 @@ Appeal **allowed**. (a) The doctrine applies — the Termination Agreement is no
 - **Reasonableness in the public interest**: consistent with Public Policy 2 (respecting the product of a settlement/negotiation). → C.1 passes both facets and is **valid**. [para 136, 145, 151]
 - (Note) Acknowledgment clauses such as C.4 ("this clause is reasonable and necessary"), or "read-down if void" clauses, **add nothing of substance** to the reasonableness inquiry — an unreasonable clause cannot be salvaged by such wording. [para 146–149]
 
-### 5. Consequences of breach — Clause C.1 is a condition [para 152–192] → [[law-concepts/discharge]], [[law-concepts/terms]]
+### 5. Consequences of breach — Clause C.1 is a condition [para 152–192] → [[law-concepts/part4-discharge-and-remedies/discharge]], [[law-concepts/part2-terms/terms]]
 
 - Citing the four Situations and their ranking from [[cases/rdc-concrete-v-sato-kogyo|RDC]]. C.1 is not Situation 1 or 2 → examine 3(a) (condition) first. [para 153–158, 175–177]
 - **Four factors for identifying a condition (added by this judgment to RDC)** [para 159–174]:
