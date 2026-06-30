@@ -14,7 +14,7 @@ const config: QuartzConfig = {
     enablePopovers: true,
     analytics: null,
     locale: "ko-KR",
-    baseUrl: "grace-study-hub.vercel.app",
+    baseUrl: "eunhyekim2025-stack.github.io/Grace-Study-Hub",
     ignorePatterns: ["private", "templates", ".obsidian", "log.md"],
     defaultDateType: "modified",
     theme: {
