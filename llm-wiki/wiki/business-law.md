@@ -1,7 +1,7 @@
 ---
 title: ⚖️ Business Law
 tags: [business-law, moc, index, singapore]
-updated: 2026-06-24
+updated: 2026-07-01
 kind: 주제
 ---
 
@@ -10,29 +10,25 @@ kind: 주제
 > [[index|← Subjects]] · Singapore contract & tort law — **Content (concepts) → Cases → Statutes → Quizzes**
 
 ## Content — Legal Concepts (law-concepts/)
-| Page | Description |
-|------|-------------|
-| [[law-concepts/part1-formation/offer]] | Offer — 3 principles, 4 ITT types, contract types, termination |
-| [[law-concepts/part1-formation/acceptance]] | Acceptance — 4 principles, postal/communication/silence, ETA |
-| [[law-concepts/part1-formation/consideration]] | Consideration — benefit-detriment, 3 requirements, promissory estoppel |
-| [[law-concepts/part1-formation/iclr]] | Intention to Create Legal Relations (ICLR) — social/commercial presumptions |
-| [[law-concepts/part1-formation/capacity]] | Capacity — minors, mental incapacity, corporations |
-| [[law-concepts/part2-terms/terms]] | Terms — term vs representation, implied terms |
-| [[law-concepts/part2-terms/exemption-clause]] | Exemption Clause — incorporation, construction, UCTA |
-| [[law-concepts/part3-vitiating-factors/misrepresentation]] | Misrepresentation — 4 elements, 3 types |
-| [[law-concepts/part3-vitiating-factors/mistake]] | Mistake — common/mutual/unilateral/non est factum |
-| [[law-concepts/part3-vitiating-factors/duress]] | Duress — to person/goods/economic |
-| [[law-concepts/part3-vitiating-factors/undue-influence]] | Undue Influence — Class 1/2A/2B |
-| [[law-concepts/part3-vitiating-factors/unconscionability]] | Unconscionability — BOM v BOK |
-| [[law-concepts/part3-vitiating-factors/illegality]] | Illegality — statutory/common-law/intermediate |
-| [[law-concepts/part3-vitiating-factors/restraint-of-trade]] | Restraint of Trade — reasonableness, blue pencil |
-| [[law-concepts/part4-discharge-and-remedies/privity]] | Privity — CRTPA, common-law exceptions |
-| [[law-concepts/part4-discharge-and-remedies/discharge]] | Discharge — RDC v Sato Kogyo 4 situations |
-| [[law-concepts/part4-discharge-and-remedies/frustration]] | Frustration — grounds & limits, FCA |
-| [[law-concepts/part4-discharge-and-remedies/remedies]] | Remedies — 4 damages principles, equitable remedies |
-| [[law-concepts/part5-tort/negligence]] | Negligence — Spandeck 2-stage test |
-| [[law-concepts/part6-agency/agency]] | Agency — creation, effect, termination |
-| [[law-concepts/part3-vitiating-factors/vitiating-factor]] | Vitiating factor (umbrella) — is-a parent, subtypes via inference |
+> Ordered by textbook chapter (SMU *The Law of Business*). Business Torts (Ch 6) + Law of Contract (Ch 7–18) + Agency (Ch 20).
+
+| Ch | Chapter | Page(s) |
+|----|---------|---------|
+| 6 | Negligence | [[law-concepts/ch06-negligence/negligence]] — Spandeck 2-stage test |
+| 7 | Offer and Acceptance | [[law-concepts/ch07-offer-acceptance/offer]] · [[law-concepts/ch07-offer-acceptance/acceptance]] |
+| 8 | Consideration & Intention (ICLR) | [[law-concepts/ch08-consideration-intention/consideration]] · [[law-concepts/ch08-consideration-intention/iclr]] |
+| 9 | Capacity and Privity | [[law-concepts/ch09-capacity-privity/capacity]] · [[law-concepts/ch09-capacity-privity/privity]] |
+| 10 | Terms of the Contract | [[law-concepts/ch10-terms/terms]] |
+| 11 | Exemption Clauses | [[law-concepts/ch11-exemption-clauses/exemption-clause]] |
+| 12 | Mistake | [[law-concepts/ch12-mistake/mistake]] |
+| 13 | Misrepresentation | [[law-concepts/ch13-misrepresentation/misrepresentation]] |
+| 14 | Duress, Undue Influence & Unconscionability | [[law-concepts/ch14-duress-undue-influence/duress]] · [[law-concepts/ch14-duress-undue-influence/undue-influence]] · [[law-concepts/ch14-duress-undue-influence/unconscionability]] |
+| 15 | Illegality and Public Policy | [[law-concepts/ch15-illegality/illegality]] · [[law-concepts/ch15-illegality/restraint-of-trade]] |
+| 16 | Performance and Breach | [[law-concepts/ch16-breach/discharge]] — RDC v Sato Kogyo 4 situations |
+| 17 | Frustration | [[law-concepts/ch17-frustration/frustration]] |
+| 18 | Remedies for Breach | [[law-concepts/ch18-remedies/remedies]] |
+| 20 | Agency | [[law-concepts/ch20-agency/agency]] |
+| — | *Cross-chapter umbrella* | [[law-concepts/vitiating-factor]] — Vitiating Factors (parent of Ch 12–15, subtypes via inference) |
 
 ## Cases (cases/)
 | Page | Description |
@@ -67,7 +63,7 @@ kind: 주제
 ## Quizzes (law-concepts/)
 | Page | Description |
 |------|-------------|
-| [[law-concepts/part3-vitiating-factors/mistake-quiz]] | Chapter 8 Mistake quiz cards — 23 questions, case comparison table, scenarios |
-| [[law-concepts/part3-vitiating-factors/mistake-quiz-scenarios]] | Chapter 8 Mistake PQ-style scenarios — 13 questions, IRAC model answers, issue-spotting checklist |
-| [[law-concepts/part3-vitiating-factors/mistake-quiz-irac]] | Chapter 8 Mistake IRAC drill — 8 questions, key-facts vs holding table, boundary cases |
+| [[law-concepts/ch12-mistake/mistake-quiz]] | Ch 12 Mistake quiz cards — 23 questions, case comparison table, scenarios |
+| [[law-concepts/ch12-mistake/mistake-quiz-scenarios]] | Ch 12 Mistake PQ-style scenarios — 13 questions, IRAC model answers, issue-spotting checklist |
+| [[law-concepts/ch12-mistake/mistake-quiz-irac]] | Ch 12 Mistake IRAC drill — 8 questions, key-facts vs holding table, boundary cases |
 | [[law-concepts/quiz-methodology]] | IRAC drill design methodology — 4 design principles, chapter boundary-case pairs, /quiz skill |

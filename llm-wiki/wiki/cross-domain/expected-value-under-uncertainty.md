@@ -21,8 +21,8 @@ Only the object (money, damages, cash flows) differs; the computational structur
 | Subject | Decision | Outcome | Probability/weight | Anchor |
 |------|------|------|-----------|------|
 | 📊 DA | Order quantity/investment option | Profit/cost | Scenario probability (simulation) | [[da-concepts/ch12-simulation/simulation]] |
-| ⚖️ Law | Litigation vs settlement | Damages/litigation cost | Probability of winning | [[law-concepts/part4-discharge-and-remedies/remedies]] |
-| 💰 FA | Investment/financing | Future cash flows | Discounting (time value) = conversion to certainty equivalent | [[fa-concepts/w09-time-value-and-bonds/time-value-of-money]] |
+| ⚖️ Law | Litigation vs settlement | Damages/litigation cost | Probability of winning | [[law-concepts/ch18-remedies/remedies]] |
+| 💰 FA | Investment/financing | Future cash flows | Discounting (time value) = conversion to certainty equivalent | [[fa-concepts/ch09-long-term-liabilities/time-value-of-money]] |
 
 > [[cross-domain/business-lifecycle]] already mentions the "**expected value** of litigation vs settlement" and the
 > "**expected-value** comparison of financing options" — this page pulls that common operation out as an explicit node.

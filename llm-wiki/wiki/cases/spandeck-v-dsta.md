@@ -17,7 +17,7 @@ community: 0
 # Spandeck Engineering v Defence Science & Technology Agency [2007] SGCA 37
 
 > **Court**: Court of Appeal (Chan Sek Keong CJ, Andrew Phang Boon Leong JA, V K Rajah JA) · **Decision**: 2007-08-08 · Judgment by: Chan Sek Keong CJ
-> The leading case establishing a **single universal test** for determining a **duty of care** in Singapore [[law-concepts/part5-tort/negligence|negligence]] law. It set out a **two-stage test (proximity → policy) plus a preliminary threshold of factual foreseeability** that applies regardless of the type of damage (pure economic loss vs physical damage).
+> The leading case establishing a **single universal test** for determining a **duty of care** in Singapore [[law-concepts/ch06-negligence/negligence|negligence]] law. It set out a **two-stage test (proximity → policy) plus a preliminary threshold of factual foreseeability** that applies regardless of the type of damage (pure economic loss vs physical damage).
 
 ## One-line Holding
 

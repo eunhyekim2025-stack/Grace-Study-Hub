@@ -12,7 +12,7 @@ community: 2
 
 # Dividends — Week 10
 
-Distribution of profit to shareholders. A sub-topic of [[fa-concepts/w10-equity-and-dividends/shareholders-equity]]; when cash goes out, it is shown under financing activities (FCF) in the [[fa-concepts/w11-cash-flows/statement-of-cash-flows]].
+Distribution of profit to shareholders. A sub-topic of [[fa-concepts/ch10-equity/shareholders-equity]]; when cash goes out, it is shown under financing activities (FCF) in the [[fa-concepts/ch11-cash-flows/statement-of-cash-flows]].
 
 ---
 
@@ -75,5 +75,5 @@ Distribution: DR Share Dividend Distributable   10,000
 ## Related Concepts
 
 - [[fa-concepts/financial-accounting]] ← concept map (MOC)
-- [[fa-concepts/w10-equity-and-dividends/shareholders-equity]] ← shares, APIC, treasury shares
-- [[fa-concepts/w11-cash-flows/statement-of-cash-flows]] ← cash dividend payments are financing (FCF) outflows
+- [[fa-concepts/ch10-equity/shareholders-equity]] ← shares, APIC, treasury shares
+- [[fa-concepts/ch11-cash-flows/statement-of-cash-flows]] ← cash dividend payments are financing (FCF) outflows

@@ -20,21 +20,21 @@ This insight connects the academic subjects (FA, Law) with the **systems-thinkin
 
 | Layer | Effect of time | Mechanism | Anchor |
 |--------|-------------|----------|------|
-| 💰 FA | Future value ↓ | Discounting (PV) | [[fa-concepts/w09-time-value-and-bonds/time-value-of-money]] |
+| 💰 FA | Future value ↓ | Discounting (PV) | [[fa-concepts/ch09-long-term-liabilities/time-value-of-money]] |
 | 🔄 Systems | Delayed reaction → overshoot | Feedback delay | [[systems/liability-disputes]] |
-| ⚖️ Law | Change/extinction of validity | Supervening circumstances/timing | [[law-concepts/part4-discharge-and-remedies/frustration]] · [[law-concepts/part4-discharge-and-remedies/discharge]] |
+| ⚖️ Law | Change/extinction of validity | Supervening circumstances/timing | [[law-concepts/ch17-frustration/frustration]] · [[law-concepts/ch16-breach/discharge]] |
 
 ## Unexpected connection — why they are the same
-The **discounting** in [[fa-concepts/w09-time-value-and-bonds/time-value-of-money]] and the **delay** in [[systems/liability-disputes]] are
+The **discounting** in [[fa-concepts/ch09-long-term-liabilities/time-value-of-money]] and the **delay** in [[systems/liability-disputes]] are
 two sides of the same coin — both mean "the effect arrives differently depending on the timing." The B-loop delay in
 [[systems/liability-disputes]] (disputes surfacing late) is the **same trap** as the
-"underestimation of the present value of future costs" warned about by [[fa-concepts/w09-time-value-and-bonds/time-value-of-money]], which is why
-adoption of [[drivers/ai-contract-review]] **overshoots**. [[law-concepts/part4-discharge-and-remedies/frustration]] and [[law-concepts/part4-discharge-and-remedies/discharge]] say
-"circumstances at time t change the validity of what came before t" — in [[law-concepts/part4-discharge-and-remedies/frustration]], time rearranges the direction of causation.
+"underestimation of the present value of future costs" warned about by [[fa-concepts/ch09-long-term-liabilities/time-value-of-money]], which is why
+adoption of [[drivers/ai-contract-review]] **overshoots**. [[law-concepts/ch17-frustration/frustration]] and [[law-concepts/ch16-breach/discharge]] say
+"circumstances at time t change the validity of what came before t" — in [[law-concepts/ch17-frustration/frustration]], time rearranges the direction of causation.
 
 ## Limits of the isomorphism
-[[fa-concepts/w09-time-value-and-bonds/time-value-of-money]] discounting is a deterministic formula, the [[systems/liability-disputes]]
-delay is a dynamic lag, and [[law-concepts/part4-discharge-and-remedies/discharge]] is a normative rupture — the way time *operates*
+[[fa-concepts/ch09-long-term-liabilities/time-value-of-money]] discounting is a deterministic formula, the [[systems/liability-disputes]]
+delay is a dynamic lag, and [[law-concepts/ch16-breach/discharge]] is a normative rupture — the way time *operates*
 differs. All that is shared is the meta-structure "timing changes the outcome."
 
 > The meeting point of probability weighting (EV) and time weighting (PV) is [[cross-domain/expected-value-under-uncertainty]].

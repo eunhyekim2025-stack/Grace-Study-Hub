@@ -85,7 +85,7 @@ An innocent party may claim damages **as of right** regardless of whether it has
 - A **refined version** of the RDC four situations: a clause that is not a condition is in principle treated as an intermediate term (irrebuttable presumption), but the narrow exception of a **"warranty expressly intended"** rebuts that presumption — the "mirror image" of Situation 1.
 - A model case for demonstrating, on the facts, the two-step application of **identify condition → if not, Hongkong Fir (actual consequences analysis)**. Use in an answer the reasons the Non-Competition Clause was not treated as a condition (acquiescence, true purpose = purchase incentive) and why the deprivation of benefit fell short.
 - The remedy treatment of unlawful termination + **mutual damages where both parties are in breach**.
-- Directly connected to [[law-concepts/part2-terms/terms]] (condition/warranty/innominate) and [[law-concepts/part4-discharge-and-remedies/discharge]] (termination by breach).
+- Directly connected to [[law-concepts/ch10-terms/terms]] (condition/warranty/innominate) and [[law-concepts/ch16-breach/discharge]] (termination by breach).
 
 ## Conflict Table
 

@@ -21,7 +21,7 @@ community: 0
 
 ## Purpose & Scope
 
-A statute that **adjusts** money and benefits already passed *after* a contract has been **frustrated** and both parties are discharged from further performance. *Whether* frustration has occurred is determined by the common law; the FCA governs only the **consequences of the post-frustration adjustment** once frustration is established ([[law-concepts/part4-discharge-and-remedies/frustration]] → [[law-concepts/part4-discharge-and-remedies/discharge]]).
+A statute that **adjusts** money and benefits already passed *after* a contract has been **frustrated** and both parties are discharged from further performance. *Whether* frustration has occurred is determined by the common law; the FCA governs only the **consequences of the post-frustration adjustment** once frustration is established ([[law-concepts/ch17-frustration/frustration]] → [[law-concepts/ch16-breach/discharge]]).
 
 - **When it applies**: contracts where the parties are relieved from performance by frustration (including impossibility) (s.2(1)). It applies to contracts whose "time of discharge" is on or after 1959-01-01 (s.3(1)). It applies to contracts to which the Government is a party in the same way as to private contracts (s.3(2)).
 - **Exclusions** (s.3(5)): (a) charterparties (other than time/demise charterparties) and contracts for the carriage of goods by sea; (b) contracts of insurance (subject to the s.2(6) exception); (c) sales of specific goods that perish, to which Sale of Goods Act s.7 applies, etc. In other words, **carriage by sea, insurance, and sales of specific goods that perish are left to the common law / other legislation.**
@@ -40,7 +40,7 @@ A statute that **adjusts** money and benefits already passed *after* a contract 
 
 ## Role in Contract Law
 
-Frustration is a mode of [[law-concepts/part4-discharge-and-remedies/discharge]] that automatically terminates the contract *prospectively*. The defect of the common law was that **loss lies where it falls** — prepayments could not be recovered, and money that had just become payable still had to be paid. The FCA corrects this in two steps:
+Frustration is a mode of [[law-concepts/ch16-breach/discharge]] that automatically terminates the contract *prospectively*. The defect of the common law was that **loss lies where it falls** — prepayments could not be recovered, and money that had just become payable still had to be paid. The FCA corrects this in two steps:
 
 1. **Reversing money** (s.2(2)–(3)): a *limited restitution* of prepayments plus a deduction for expenses incurred.
 2. **Compensating non-monetary benefits** (s.2(4)): if one party conferred value on the other through partial performance, that unjust enrichment is settled.
@@ -49,9 +49,9 @@ Key limitation: the FCA **does not define frustration.** The *threshold* of frus
 
 ## Related Concepts & Cases
 
-- [[law-concepts/part4-discharge-and-remedies/frustration]] — requirements for establishing frustration (governed by the FCA).
-- [[law-concepts/part4-discharge-and-remedies/discharge]] — one of the modes of discharge of a contract (governed by the FCA).
-- [[law-concepts/part4-discharge-and-remedies/remedies]] — the FCA's adjustment is a remedy in the nature of *restitution / unjust enrichment*, not damages.
+- [[law-concepts/ch17-frustration/frustration]] — requirements for establishing frustration (governed by the FCA).
+- [[law-concepts/ch16-breach/discharge]] — one of the modes of discharge of a contract (governed by the FCA).
+- [[law-concepts/ch18-remedies/remedies]] — the FCA's adjustment is a remedy in the nature of *restitution / unjust enrichment*, not damages.
 - Contrast: the FCA does not operate on other modes of discharge, such as discharge by agreement or by performance *before* frustration.
 
 ## Conflict Table
@@ -61,4 +61,4 @@ Key limitation: the FCA **does not define frustration.** The *threshold* of frus
 | Treatment of prepayments after frustration | Common law: loss lies where it falls (not recoverable) | FCA s.2(2): prepayments are recoverable | Divergence | s.2(2) [source: (7d) Frustrated Contracts Act.pdf:p.1] — the statute expressly replaces the common-law rule |
 | Statutory adjustment vs freedom of contract | The statutory adjustment in s.2 applies | s.3(3): an express provision such as force majeure prevails | Convergence | Not a conflict — s.3(3) sets the hierarchy (the parties' clause prevails, s.2 is supplementary) [source: (7d) Frustrated Contracts Act.pdf:p.3] |
 
-> Consistent with the existing wiki — the FCA directly extends the "adjustment on impossibility" role that the [[law-concepts/part4-discharge-and-remedies/frustration]] stub pointed to.
+> Consistent with the existing wiki — the FCA directly extends the "adjustment on impossibility" role that the [[law-concepts/ch17-frustration/frustration]] stub pointed to.

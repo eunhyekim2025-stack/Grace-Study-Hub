@@ -24,7 +24,7 @@ community: 0
 - **Long title**: an Act to consolidate the law relating to the sale of goods.
 - **Contract of sale (s 2)**: a contract by which the seller **transfers or agrees to transfer the property in goods** to the buyer for a *money consideration, the price*. If transfer is immediate it is a "sale"; if future or conditional it is an "agreement to sell" (s 2(4)-(5)).
 - It applies only to *goods* (movable property) — land, services, and choses in action are excluded. Barter and gifts, which are not an exchange of goods for a money price, fall outside SOGA.
-- **Preservation of common law (s 62(2))**: common-law rules on agency, fraud, **misrepresentation, duress, and mistake** and other vitiating factors continue to apply to the sale of goods so far as not inconsistent with SOGA → preserving [[law-concepts/part3-vitiating-factors/misrepresentation]], [[law-concepts/part3-vitiating-factors/mistake]], and [[law-concepts/part3-vitiating-factors/duress]].
+- **Preservation of common law (s 62(2))**: common-law rules on agency, fraud, **misrepresentation, duress, and mistake** and other vitiating factors continue to apply to the sale of goods so far as not inconsistent with SOGA → preserving [[law-concepts/ch13-misrepresentation/misrepresentation]], [[law-concepts/ch12-mistake/mistake]], and [[law-concepts/ch14-duress-undue-influence/duress]].
 
 ## Key Provisions (Summary of Main Sections)
 
@@ -52,22 +52,22 @@ community: 0
 - **Transfer of property (ss 16-20)**: specific goods pass at the time the parties *intend* (s 17), and where intention is unclear, by Rules 1-5 (s 18). Risk, as a rule, passes with property (s 20).
 - **Sale by a non-owner (ss 21-26)**: the *nemo dat quod non habet* principle (s 21) and its exceptions (voidable title s 23, seller/buyer in possession ss 24-25).
 - **Performance (ss 27-37)**: delivery and payment are concurrent conditions (s 28); errors in quantity delivered (s 30); acceptance (s 35) — linked to the conversion of a condition into a warranty on acceptance (s 11(3)).
-- **Remedies (ss 49-53)**: the seller's action for the price and damages (ss 49-50), the buyer's damages and specific performance (ss 51-52), and the remedy for breach of warranty (s 53). → [[law-concepts/part4-discharge-and-remedies/remedies]], [[law-concepts/part4-discharge-and-remedies/discharge]].
+- **Remedies (ss 49-53)**: the seller's action for the price and damages (ss 49-50), the buyer's damages and specific performance (ss 51-52), and the remedy for breach of warranty (s 53). → [[law-concepts/ch18-remedies/remedies]], [[law-concepts/ch16-breach/discharge]].
 
 ## Role in Contract Law
 
-- **Statutory source of implied terms**: it lays down terms that are automatically incorporated into a sale contract even where the parties do not express them — the leading example of *terms implied by statute* under the wiki's [[law-concepts/part2-terms/terms]] (express vs implied terms).
-- **Pivot of the condition/warranty dichotomy**: since SOGA characterises ss 12-15 all as **"conditions"**, a breach gives the buyer the right to *reject the goods and repudiate the contract* (s 11). This connects directly with [[law-concepts/part4-discharge-and-remedies/discharge]] (termination of performance for breach) — a breach of condition is the strongest category of termination ground under the *RDC Concrete* breach classification. cf. [[cases/rdc-concrete-v-sato-kogyo]].
+- **Statutory source of implied terms**: it lays down terms that are automatically incorporated into a sale contract even where the parties do not express them — the leading example of *terms implied by statute* under the wiki's [[law-concepts/ch10-terms/terms]] (express vs implied terms).
+- **Pivot of the condition/warranty dichotomy**: since SOGA characterises ss 12-15 all as **"conditions"**, a breach gives the buyer the right to *reject the goods and repudiate the contract* (s 11). This connects directly with [[law-concepts/ch16-breach/discharge]] (termination of performance for breach) — a breach of condition is the strongest category of termination ground under the *RDC Concrete* breach classification. cf. [[cases/rdc-concrete-v-sato-kogyo]].
 - **The mandatory core of consumer protection**: s 55 (freedom to exclude) is limited by UCTA, so the key implied terms in title and consumer transactions operate as *non-excludable mandatory rules* → a pair with [[statutes/unfair-contract-terms-act]].
-- **Capacity**: s 3 delegates capacity to sell to the general law of contract but provides that a minor or mentally incapacitated person who has been supplied with *necessaries* must pay a reasonable price → [[law-concepts/part1-formation/capacity]].
+- **Capacity**: s 3 delegates capacity to sell to the general law of contract but provides that a minor or mentally incapacitated person who has been supplied with *necessaries* must pay a reasonable price → [[law-concepts/ch09-capacity-privity/capacity]].
 
 ## Related Concepts & Cases
 
-- [[law-concepts/part2-terms/terms]] — the key source of terms implied by statute.
-- [[law-concepts/part4-discharge-and-remedies/discharge]] / [[cases/rdc-concrete-v-sato-kogyo]] — breach of condition = right to terminate, analysis of breach types.
-- [[law-concepts/part4-discharge-and-remedies/remedies]] — seller's and buyer's remedies (ss 49-53).
-- [[law-concepts/part1-formation/capacity]] — s 3 capacity to buy and necessaries.
-- [[law-concepts/part3-vitiating-factors/misrepresentation]] / [[law-concepts/part3-vitiating-factors/mistake]] — common-law vitiating factors preserved by s 62(2).
+- [[law-concepts/ch10-terms/terms]] — the key source of terms implied by statute.
+- [[law-concepts/ch16-breach/discharge]] / [[cases/rdc-concrete-v-sato-kogyo]] — breach of condition = right to terminate, analysis of breach types.
+- [[law-concepts/ch18-remedies/remedies]] — seller's and buyer's remedies (ss 49-53).
+- [[law-concepts/ch09-capacity-privity/capacity]] — s 3 capacity to buy and necessaries.
+- [[law-concepts/ch13-misrepresentation/misrepresentation]] / [[law-concepts/ch12-mistake/mistake]] — common-law vitiating factors preserved by s 62(2).
 - [[statutes/unfair-contract-terms-act]] — UCTA s 6 limits the s 55 freedom to exclude (mutual dependence).
 
 ## Conflict Table

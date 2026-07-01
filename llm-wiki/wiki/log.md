@@ -333,3 +333,11 @@ community: 1
 - 검증: 합성 오디오로 전사 파이프라인 통과(AUTO_NOTES=0, 토큰 0). launchd 에이전트 load 확인. 헤드리스 노트생성은 실제 녹음으로 첫 검증 예정.
 - 안전장치: 초안에 [!todo] 검수 배너, 전사본 raw 보존, 오디오·모델 git 제외 예정. 끄기 launchctl unload / AUTO_NOTES=0.
 - 신규 스킬 .claude/commands/ingest-lecture.md(수동) + CLAUDE.md "강의 녹음 자동화" 문서화.
+
+## [2026-07-01] reorg | Align FA + Law chapter folders to textbook TOC
+- Request: reorganize each subject's content by chapter, spine = textbook chapters (not lecture weeks/thematic parts); fix naming/numbering + navigation/hubs.
+- DA (da-concepts/): already ch01–ch15 = *Management Science* 14e TOC — no change.
+- FA (fa-concepts/): renamed week folders → Spiceland textbook chapters. w04→ch04-cash-controls (Cash & Internal Controls), w05→ch06-inventory (Inventory & COGS), w09→ch09-long-term-liabilities, w10→ch10-equity (Stockholders' Equity), w11→ch11-cash-flows.
+- Law (law-concepts/): split thematic parts → SMU *The Law of Business* chapters. part5→ch06-negligence, part1→ch07-offer-acceptance/ch08-consideration-intention/ch09-capacity-privity, part2→ch10-terms/ch11-exemption-clauses, part3→ch12-mistake/ch13-misrepresentation/ch14-duress-undue-influence/ch15-illegality, part4→ch16-breach(discharge)/ch17-frustration/ch18-remedies, part6→ch20-agency. privity moved part4→ch09 (matches textbook Ch 9 Capacity & Privity). vitiating-factor umbrella → law-concepts/ root (spans Ch 12–15).
+- All moves via git mv; 10 FA + 29 Law link references rewritten across vault (basenames preserved); 0 stale paths remain.
+- Hubs rebuilt: business-law.md + financial-accounting.md tables reordered by chapter with a Ch column; mistake-quiz labels Chapter 8→Ch 12.

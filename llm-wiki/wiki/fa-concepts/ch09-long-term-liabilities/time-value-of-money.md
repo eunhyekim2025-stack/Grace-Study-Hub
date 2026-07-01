@@ -15,7 +15,7 @@ community: 2
 "Time is money." A dollar today can earn interest (and, because of inflation) is worth more than a dollar tomorrow. → **Today > Tomorrow.**
 Converting a future amount into today's value is **discounting**.
 
-> This concept is used directly in computing the issue price in [[fa-concepts/w09-time-value-and-bonds/bonds-payable]].
+> This concept is used directly in computing the issue price in [[fa-concepts/ch09-long-term-liabilities/bonds-payable]].
 
 ---
 
@@ -67,7 +67,7 @@ Multiply by the pre-computed annuity factor.
 |------|------|
 | A **single** future amount | **PV** |
 | A **recurring** equal future amount | **PVA** |
-| Bond issue price = PV of principal + PVA of coupons | Both ([[fa-concepts/w09-time-value-and-bonds/bonds-payable]]) |
+| Bond issue price = PV of principal + PVA of coupons | Both ([[fa-concepts/ch09-long-term-liabilities/bonds-payable]]) |
 
 > **Exam tip**: If the period/rate is "not annual," convert r and n to the relevant period (12% monthly → r = 1%, n = 12). For bonds, **always read the PV/PVA tables at the market yield**.
 
@@ -76,4 +76,4 @@ Multiply by the pre-computed annuity factor.
 ## Related Concepts
 
 - [[fa-concepts/financial-accounting]] ← concept map (MOC)
-- [[fa-concepts/w09-time-value-and-bonds/bonds-payable]] ← bond issue price = PV(principal) + PVA(coupons)
+- [[fa-concepts/ch09-long-term-liabilities/bonds-payable]] ← bond issue price = PV(principal) + PVA(coupons)

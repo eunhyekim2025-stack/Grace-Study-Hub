@@ -70,7 +70,7 @@ The appeal on loss of dependency (CA 85/2007) is **allowed in part** (apportionm
 
 ## Exam points / significance
 
-- An authority that sets out the **mechanics of assessing loss of dependency** (multiplicand × multiplier × apportionment) and practical principles such as a *separate multiplier per dependant* and *life expectancy as at the date of accident*. Cited in [[law-concepts/part4-discharge-and-remedies/remedies]] damages-assessment questions.
+- An authority that sets out the **mechanics of assessing loss of dependency** (multiplicand × multiplier × apportionment) and practical principles such as a *separate multiplier per dependant* and *life expectancy as at the date of accident*. Cited in [[law-concepts/ch18-remedies/remedies]] damages-assessment questions.
 - The distinction between **grief vs a recognisable psychiatric illness**, and the argument for **avoiding double recovery with the bereavement claim**, are the key points.
 - A model of **the methodology of filtering a novel claim through the single [[cases/spandeck-v-dsta|Spandeck]] test** — applying foreseeability, proximity, policy, and remoteness in turn. The policy proposition that a child cannot be "replaced" is frequently cited in answers.
 - It clarifies that **the foreseeability of duty of care ≠ the foreseeability of remoteness** (a two-level distinction) — useful for separating issues in IRAC.

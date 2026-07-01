@@ -79,8 +79,8 @@ OCF + ICF + FCF = ending cash − beginning cash (B − A of the Cash T-account)
 ## Related Concepts
 
 - [[fa-concepts/financial-accounting]] ← concept map (MOC), links the three financial statements
-- [[fa-concepts/w05-inventory/inventory]] ← inventory/COGS changes = Step 4 working capital
-- [[fa-concepts/w09-time-value-and-bonds/bonds-payable]] ← interest expense (Step 3), early-redemption gains/losses (Step 2)
-- [[fa-concepts/w10-equity-and-dividends/dividends]] ← dividends paid = FCF outflow
-- [[fa-concepts/w10-equity-and-dividends/shareholders-equity]] ← share issuance, treasury shares = FCF
-- [[fa-concepts/w04-bank-reconciliation/bank-reconciliation]] ← the verified cash balance is the beginning/ending Cash
+- [[fa-concepts/ch06-inventory/inventory]] ← inventory/COGS changes = Step 4 working capital
+- [[fa-concepts/ch09-long-term-liabilities/bonds-payable]] ← interest expense (Step 3), early-redemption gains/losses (Step 2)
+- [[fa-concepts/ch10-equity/dividends]] ← dividends paid = FCF outflow
+- [[fa-concepts/ch10-equity/shareholders-equity]] ← share issuance, treasury shares = FCF
+- [[fa-concepts/ch04-cash-controls/bank-reconciliation]] ← the verified cash balance is the beginning/ending Cash

@@ -22,7 +22,7 @@ the result jumps **discretely**. They are studied separately, but the mental cir
 |------|-----------|------|-----------|------|
 | 📊 DA | Objective coefficient/RHS | End of the range of optimality/feasibility | Change in optimal solution/basis | [[da-concepts/ch03-sensitivity/Range of Optimality]] · [[da-concepts/ch03-sensitivity/Range of Feasibility]] · [[da-concepts/ch03-sensitivity/Shadow Price]] |
 | ⚖️ Law | Degree of the facts | "One decisive fact" | void ↔ voidable ↔ valid | [[law-concepts/quiz-methodology]] |
-| 💰 FA | Demand/timing | FOB delivery/holding condition (e.g., D≤Q) | Change in cost recognition/attribution | [[fa-concepts/w05-inventory/inventory]] |
+| 💰 FA | Demand/timing | FOB delivery/holding condition (e.g., D≤Q) | Change in cost recognition/attribution | [[fa-concepts/ch06-inventory/inventory]] |
 
 > [[da-concepts/ch03-sensitivity/Sensitivity Analysis]] is the tool in DA for quantifying this "slack up to the boundary."
 > Law's [[law-concepts/quiz-methodology]] also states the same design principle — "**one decisive fact**

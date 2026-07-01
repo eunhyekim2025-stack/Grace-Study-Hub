@@ -104,4 +104,4 @@ These determine when legal title transfers and who bears the freight cost.
 ## Related Concepts
 
 - [[fa-concepts/financial-accounting]] ← concept map (MOC)
-- [[fa-concepts/w11-cash-flows/statement-of-cash-flows]] ← COGS and inventory changes feed directly into operating cash flow (working capital)
+- [[fa-concepts/ch11-cash-flows/statement-of-cash-flows]] ← COGS and inventory changes feed directly into operating cash flow (working capital)

@@ -14,4 +14,4 @@ community: 0
 
 > [!stub] Summary stub — to be expanded when case law / statutory text is ingested.
 
-Exception to privity of contract — third-party rights. Related: [[law-concepts/part4-discharge-and-remedies/privity]].
+Exception to privity of contract — third-party rights. Related: [[law-concepts/ch09-capacity-privity/privity]].

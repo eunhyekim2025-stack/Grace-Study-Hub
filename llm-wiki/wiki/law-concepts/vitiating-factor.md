@@ -17,7 +17,7 @@ The umbrella concept for factors that, even after a contract is formed, render i
 
 Subtypes (the list below is for reference in the text; on the graph, each page declares `is-a`
 and inference derives the `has-subtype` edge):
-- [[law-concepts/part3-vitiating-factors/duress]] · [[law-concepts/part3-vitiating-factors/undue-influence]] · [[law-concepts/part3-vitiating-factors/misrepresentation]]
+- [[law-concepts/ch14-duress-undue-influence/duress]] · [[law-concepts/ch14-duress-undue-influence/undue-influence]] · [[law-concepts/ch13-misrepresentation/misrepresentation]]
 
 > This page is the parent node of the is-a hierarchy. The `/graph-analyze` inference automatically derives
 > all subtypes via `has-subtype` (the inverse relation) — an example of type subsumption.

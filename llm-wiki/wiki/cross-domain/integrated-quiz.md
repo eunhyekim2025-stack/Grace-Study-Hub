@@ -49,7 +49,7 @@ Capy Furnishings (Singapore) imports high-end furniture from the overseas suppli
 
 **Issue**: Handling purchase, freight, and purchase discount under FOB Shipping Point + perpetual inventory
 
-**Method** ([[fa-concepts/w05-inventory/inventory]]): Under FOB Shipping Point, **the buyer recognizes inventory at shipment (pickup)**. Freight-in is added to inventory cost; purchase discounts are deducted from inventory.
+**Method** ([[fa-concepts/ch06-inventory/inventory]]): Under FOB Shipping Point, **the buyer recognizes inventory at shipment (pickup)**. Freight-in is added to inventory cost; purchase discounts are deducted from inventory.
 
 **Application**:
 - Pickup date: **title transfers to Capy immediately upon pickup** ← decisive fact
@@ -96,7 +96,7 @@ GreenBuild wants to raise funds to expand its factory. There are two options. **
 
 A single financing decision flows through three stages: **accounting treatment (💰) → quantitative comparison (📊) → legal effect (⚖️)**.
 
-**① 💰 Bond issue price [FA]** — [[fa-concepts/w09-time-value-and-bonds/bonds-payable]], [[fa-concepts/w09-time-value-and-bonds/time-value-of-money]]
+**① 💰 Bond issue price [FA]** — [[fa-concepts/ch09-long-term-liabilities/bonds-payable]], [[fa-concepts/ch09-long-term-liabilities/time-value-of-money]]
 Issue price = PV of principal + PVA of coupons, **always discounted at the market yield**.
 - **coupon 5% < market 6% → issued at a discount** ← decisive fact
 - PV(principal) = 100,000 × 0.558 = 55,800
@@ -110,7 +110,7 @@ Use `EV = Σ(probability × outcome)` to compare the uncertain loan rate with th
 - The bond is **fixed at 6%**, the loan is expected at 5.9% but carries the risk of rising to 7%
 - → The expected cost is slightly lower for the loan, but **if risk-averse, choose the fixed-6% bond**. Don't decide on EV alone.
 
-**③ ⚖️ Economic duress on the guarantee [LAW]** — [[law-concepts/part3-vitiating-factors/duress]]
+**③ ⚖️ Economic duress on the guarantee [LAW]** — [[law-concepts/ch14-duress-undue-influence/duress]]
 Economic duress requires ① **illegitimate pressure**, ② the absence of a reasonable alternative, ③ causation.
 - **The bank threatened to unlawfully breach a lawful existing contract** ← decisive fact → illegitimate pressure
 - The 1-hour deadline → no reasonable alternative; the pressure was the cause of the signature
@@ -157,7 +157,7 @@ The company reissues 10,000 treasury shares it holds (cost $20) to the designer 
 
 **Issue**: Handling a treasury-share reissue above cost
 
-**Method** ([[fa-concepts/w10-equity-and-dividends/shareholders-equity]]): Reissue price > acquisition cost → the difference is credited to **APIC-Treasury**. Not routed through profit or loss.
+**Method** ([[fa-concepts/ch10-equity/shareholders-equity]]): Reissue price > acquisition cost → the difference is credited to **APIC-Treasury**. Not routed through profit or loss.
 
 **Application**:
 - **Reissue price $25 > acquisition cost $20** ← decisive fact → APIC-Treasury created
@@ -201,7 +201,7 @@ A defect was found in the sofas Capy sold to WHY Co. The sales contract contains
 
 **Issue**: Incorporation, interpretation, and UCTA control of the exemption clause
 
-**Rule** ([[law-concepts/part2-terms/exemption-clause]], UCTA): An exemption clause must ① be incorporated, ② pass interpretation (contra proferentem), and ③ satisfy **UCTA reasonableness**. Liability for death/injury caused by negligence **cannot be excluded**; other losses are subject to a reasonableness test.
+**Rule** ([[law-concepts/ch11-exemption-clauses/exemption-clause]], UCTA): An exemption clause must ① be incorporated, ② pass interpretation (contra proferentem), and ③ satisfy **UCTA reasonableness**. Liability for death/injury caused by negligence **cannot be excluded**; other losses are subject to a reasonableness test.
 
 **Application**:
 - **"Bears no liability whatsoever" is a blanket exclusion subject to the UCTA reasonableness test** ← decisive fact
@@ -219,7 +219,7 @@ A defect was found in the sofas Capy sold to WHY Co. The sales contract contains
 
 **Issue**: The two pairs of entries for a reusable return
 
-**Method** ([[fa-concepts/w05-inventory/inventory]]): A sales return is contra-revenue + (if reusable) reversal of inventory and COGS.
+**Method** ([[fa-concepts/ch06-inventory/inventory]]): A sales return is contra-revenue + (if reusable) reversal of inventory and COGS.
 
 **Application**:
 - **Return + reusable** ← decisive fact → two pairs of entries
@@ -269,7 +269,7 @@ Apex's ledger cash balance does not match the bank statement. A customer cheque 
 
 **Issue**: Where to adjust for the NSF cheque
 
-**Method** ([[fa-concepts/w04-bank-reconciliation/bank-reconciliation]]): NSF is a **ledger-side** adjustment (with an entry) — since cash was not received, A/R is re-recognized.
+**Method** ([[fa-concepts/ch04-cash-controls/bank-reconciliation]]): NSF is a **ledger-side** adjustment (with an entry) — since cash was not received, A/R is re-recognized.
 
 **Application**:
 - **NSF = a dishonor the company was unaware of → deducted from the ledger** ← decisive fact
@@ -289,7 +289,7 @@ The manager's (agent's) approval limit is $50,000, but he concluded a purchase c
 
 **Issue**: Whether, where actual authority is exceeded, the principal is bound by apparent authority
 
-**Rule** ([[law-concepts/part6-agency/agency]]): If the principal's representation leads a third party reasonably to rely on the agent's authority, the principal is bound by **apparent authority** even where actual authority is exceeded. But it fails if the third party knew of the limit.
+**Rule** ([[law-concepts/ch20-agency/agency]]): If the principal's representation leads a third party reasonably to rely on the agent's authority, the principal is bound by **apparent authority** even where actual authority is exceeded. But it fails if the third party knew of the limit.
 
 **Application**:
 - Apex held him out as head of purchasing + **the supplier did not know of the limit and relied** ← decisive fact
@@ -315,7 +315,7 @@ Choose between (A) an immediate dividend with the surplus cash, or (B) investing
 - EV(investment) = 0.4(0) + 0.6(30,000) = **$18,000** ← decisive calculation
 - A dividend is a cash outflow (FCF), and if the investment EV is positive and exceeds the cost of capital, the investment is superior
 
-**Conclusion**: EV $18,000 > 0 → if risk-tolerant, **invest**; if stability-preferring, dividend. (If a dividend is chosen, [[fa-concepts/w10-equity-and-dividends/dividends]] entry; the cash flow is a **financing-activity (FCF)** outflow in [[fa-concepts/w11-cash-flows/statement-of-cash-flows]])
+**Conclusion**: EV $18,000 > 0 → if risk-tolerant, **invest**; if stability-preferring, dividend. (If a dividend is chosen, [[fa-concepts/ch10-equity/dividends]] entry; the cash flow is a **financing-activity (FCF)** outflow in [[fa-concepts/ch11-cash-flows/statement-of-cash-flows]])
 
 > **Exam tip**: Use EV to gauge superiority, but also weigh the dividend's accounting treatment (FCF) and risk preference. EV is the starting point, not the end point.
 
