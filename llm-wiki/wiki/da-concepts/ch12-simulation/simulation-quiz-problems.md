@@ -5,7 +5,7 @@ sources: [da/Textbook.pdf, da/textbook-solutions/MS14E_chapter_12_Final.doc]
 updated: 2026-06-18
 pagerank: 0.0018
 betweenness: 0.0004
-eigenvector: 0.0582
+eigenvector: 0.0631
 degree: 6
 community: 2
 ---

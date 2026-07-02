@@ -3,9 +3,9 @@ title: Time Value of Money — PV & PVA (Week 9)
 tags: [financial-accounting, acct101, time-value-of-money, present-value, annuity]
 sources: [fa/guided-notes/Week 9 - Guided Notes.pdf]
 updated: 2026-06-18
-pagerank: 0.0090
+pagerank: 0.0089
 betweenness: 0.0004
-eigenvector: 0.0443
+eigenvector: 0.0414
 degree: 9
 community: 2
 ---

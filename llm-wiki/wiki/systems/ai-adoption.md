@@ -8,10 +8,10 @@ relations:
   amplifies: [systems/liability-disputes]
   see-also: [drivers/ai-contract-review]
 pagerank: 0.0060
-betweenness: 0.0098
-eigenvector: 0.0323
+betweenness: 0.0095
+eigenvector: 0.0320
 degree: 7
-community: 1
+community: 0
 ---
 
 # System Variable — AI Contract Review Adoption Rate (stock)

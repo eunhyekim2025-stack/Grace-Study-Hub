@@ -5,7 +5,7 @@ sources: [law/Textbook.pdf, da/Textbook.pdf, fa/Textbook.pdf]
 updated: 2026-06-18
 pagerank: 0.0017
 betweenness: 0.0006
-eigenvector: 0.1194
+eigenvector: 0.1171
 degree: 19
 community: 2
 ---

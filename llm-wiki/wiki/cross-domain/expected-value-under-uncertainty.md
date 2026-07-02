@@ -7,10 +7,10 @@ kind: 통찰
 relations:
   see-also: [da-concepts/simulation, law-concepts/remedies, fa-concepts/time-value-of-money]
 pagerank: 0.0017
-betweenness: 0.0023
-eigenvector: 0.0432
+betweenness: 0.0022
+eigenvector: 0.0405
 degree: 6
-community: 0
+community: 1
 ---
 
 # Insight — Expected Value (EV): the weighted sum of outcome × probability

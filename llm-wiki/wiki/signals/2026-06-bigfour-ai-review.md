@@ -10,9 +10,9 @@ relations:
   supports: [cross-domain/ai-disruption-thesis]
 pagerank: 0.0021
 betweenness: 0.0000
-eigenvector: 0.0247
+eigenvector: 0.0246
 degree: 3
-community: 1
+community: 0
 ---
 
 # Signal — Big Four, Firm-Wide AI Contract Review Adoption

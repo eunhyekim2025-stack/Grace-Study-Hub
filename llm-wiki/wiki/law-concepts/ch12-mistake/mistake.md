@@ -3,11 +3,11 @@ title: Mistake
 tags: [business-law, contract, mistake, vitiating-factor, singapore]
 sources: [law/prewriting/8. Monkey's Mistake.pdf]
 updated: 2026-06-17
-pagerank: 0.0206
-betweenness: 0.0075
-eigenvector: 0.1193
+pagerank: 0.0203
+betweenness: 0.0073
+eigenvector: 0.1014
 degree: 11
-community: 0
+community: 1
 ---
 
 # Mistake

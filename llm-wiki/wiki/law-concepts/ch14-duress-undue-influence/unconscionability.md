@@ -5,11 +5,11 @@ sources:
   - "law/cases/(11) BOM v BOK [2018] SGCA 83.txt"
   - "law/prewriting/11. Monkey's Unconscionability.pdf"
 updated: 2026-06-17
-pagerank: 0.0144
-betweenness: 0.0046
-eigenvector: 0.0750
+pagerank: 0.0143
+betweenness: 0.0044
+eigenvector: 0.0651
 degree: 9
-community: 0
+community: 1
 ---
 
 # Unconscionability

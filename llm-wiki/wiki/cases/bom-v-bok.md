@@ -8,11 +8,11 @@ updated: 2026-06-24
 relations:
   applies: [law-concepts/unconscionability, law-concepts/undue-influence, law-concepts/misrepresentation, law-concepts/mistake, law-concepts/vitiating-factor]
   see-also: [law-concepts/duress, cases/gay-choon-ing-v-loh]
-pagerank: 0.0056
-betweenness: 0.0020
-eigenvector: 0.0801
+pagerank: 0.0055
+betweenness: 0.0019
+eigenvector: 0.0692
 degree: 7
-community: 0
+community: 1
 ---
 
 # BOM v BOK [2018] SGCA 83

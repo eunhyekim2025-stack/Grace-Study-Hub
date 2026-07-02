@@ -5,11 +5,11 @@ sources: []
 updated: 2026-06-19
 relations:
   dampens: [systems/ai-adoption]
-pagerank: 0.0033
+pagerank: 0.0034
 betweenness: 0.0000
 eigenvector: 0.0256
 degree: 4
-community: 1
+community: 0
 ---
 
 # System Variable — Contract Review Unit Cost

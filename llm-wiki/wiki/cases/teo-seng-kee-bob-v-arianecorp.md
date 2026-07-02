@@ -9,11 +9,11 @@ relations:
   applies: [law-concepts/consideration, law-concepts/offer, law-concepts/acceptance]
   cites: [cases/gay-choon-ing-v-loh, cases/chwee-kin-keong-v-digilandmall]
   see-also: [law-concepts/terms, law-concepts/remedies]
-pagerank: 0.0080
-betweenness: 0.0044
-eigenvector: 0.0790
+pagerank: 0.0078
+betweenness: 0.0043
+eigenvector: 0.0686
 degree: 9
-community: 0
+community: 1
 ---
 
 # Teo Seng Kee Bob v Arianecorp Ltd [2008] SGHC 81

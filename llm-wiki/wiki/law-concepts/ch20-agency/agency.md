@@ -3,11 +3,11 @@ title: Agency
 tags: [business-law, agency, singapore]
 sources: [law/prewriting/20. Monkey's Agency.pdf]
 updated: 2026-06-17
-pagerank: 0.0050
-betweenness: 0.0047
-eigenvector: 0.0764
+pagerank: 0.0049
+betweenness: 0.0045
+eigenvector: 0.0681
 degree: 7
-community: 0
+community: 1
 ---
 
 # Agency

@@ -3,9 +3,9 @@ title: Dividends — Cash, Share & Cumulative Preference (Week 10)
 tags: [financial-accounting, acct101, dividends, preference-shares, retained-earnings]
 sources: [fa/guided-notes/Week 10 - Guided Notes.pdf]
 updated: 2026-06-18
-pagerank: 0.0113
+pagerank: 0.0112
 betweenness: 0.0000
-eigenvector: 0.0439
+eigenvector: 0.0395
 degree: 9
 community: 2
 ---

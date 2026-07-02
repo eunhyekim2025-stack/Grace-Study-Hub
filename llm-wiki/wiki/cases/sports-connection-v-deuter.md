@@ -8,11 +8,11 @@ relations:
   applies: [law-concepts/discharge, law-concepts/terms, law-concepts/remedies]
   refines: [cases/rdc-concrete-v-sato-kogyo]
   cites: [cases/man-financial-v-wong]
-pagerank: 0.0043
+pagerank: 0.0042
 betweenness: 0.0000
-eigenvector: 0.0668
+eigenvector: 0.0575
 degree: 7
-community: 0
+community: 1
 ---
 
 # Sports Connection Pte Ltd v Deuter Sports GmbH [2009] SGCA 22

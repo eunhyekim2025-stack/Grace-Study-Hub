@@ -5,11 +5,11 @@ sources: [law/prewriting/7. Monkey's Misrepresentation.pdf]
 updated: 2026-06-17
 relations:
   is-a: [law-concepts/vitiating-factor]
-pagerank: 0.0359
-betweenness: 0.0159
-eigenvector: 0.1807
+pagerank: 0.0355
+betweenness: 0.0154
+eigenvector: 0.1579
 degree: 19
-community: 0
+community: 1
 ---
 
 # Misrepresentation

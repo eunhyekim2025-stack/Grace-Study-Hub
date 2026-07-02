@@ -6,10 +6,10 @@ updated: 2025-11-20
 relations:
   part-of: [drivers/ai-contract-review]
 pagerank: 0.0032
-betweenness: 0.0032
-eigenvector: 0.0303
+betweenness: 0.0030
+eigenvector: 0.0300
 degree: 4
-community: 1
+community: 0
 ---
 
 # Signal — AI Drafting Error Dispute

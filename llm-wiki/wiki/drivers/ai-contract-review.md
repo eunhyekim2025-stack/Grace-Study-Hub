@@ -9,12 +9,12 @@ relations:
   triggers: [law-concepts/exemption-clause, cross-domain/business-lifecycle]
   serves: [cross-domain/business-lifecycle]
   part-of: [drivers/ai-legal-automation]
-pagerank: 0.0080
-betweenness: 0.0360
-eigenvector: 0.0600
+pagerank: 0.0081
+betweenness: 0.0347
+eigenvector: 0.0572
 degree: 8
-community: 1
-strength: 2.1592
+community: 0
+strength: 2.0867
 ---
 
 # Driver — Generative AI Replaces First-Pass Contract Review

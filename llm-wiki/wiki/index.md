@@ -1,8 +1,8 @@
 ---
-pagerank: 0.0020
-betweenness: 0.0203
-eigenvector: 0.0697
-degree: 8
+pagerank: 0.0073
+betweenness: 0.0366
+eigenvector: 0.0812
+degree: 12
 community: 0
 ---
 # Index
@@ -21,6 +21,8 @@ Study Hub — **pick a subject.** Inside each subject you drill down: *content �
 |------|----------|
 | [[cross-domain/business-lifecycle\|🔗 Cross-Domain]] | 3-subject integration — lifecycle hub · integrated quiz · insights |
 | [[ai-foresight\|🤖 AI · Foresight]] | LLM/AI wiki · early warning (drivers·signals) · systems thinking |
+| [[about-me\|👤 About Me]] | Personal profile · focus areas · what I build |
+| [[resume\|📄 Resume]] | Résumé source of truth (mirrors the resume site) |
 
 ---
 

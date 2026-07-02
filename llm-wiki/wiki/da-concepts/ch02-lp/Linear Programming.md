@@ -5,10 +5,10 @@ created: 2026-06-18
 source: Textbook.pdf (Management Science 14e, Ch.2)
 sources: [da/Textbook.pdf]
 updated: 2026-06-18
-pagerank: 0.0258
-betweenness: 0.0180
-eigenvector: 0.1637
-degree: 30
+pagerank: 0.0255
+betweenness: 0.0185
+eigenvector: 0.2149
+degree: 31
 community: 3
 ---
 

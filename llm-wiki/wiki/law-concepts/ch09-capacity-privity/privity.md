@@ -3,11 +3,11 @@ title: Privity of Contract
 tags: [business-law, contract, privity, crtpa, singapore]
 sources: [law/prewriting/15. Monkey's Privity.pdf]
 updated: 2026-06-17
-pagerank: 0.0112
-betweenness: 0.0095
-eigenvector: 0.0482
+pagerank: 0.0110
+betweenness: 0.0092
+eigenvector: 0.0420
 degree: 7
-community: 0
+community: 1
 ---
 
 # Privity of Contract

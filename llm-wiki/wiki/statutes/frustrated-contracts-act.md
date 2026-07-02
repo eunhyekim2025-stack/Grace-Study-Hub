@@ -8,11 +8,11 @@ updated: 2026-06-23
 relations:
   governs: [law-concepts/frustration, law-concepts/discharge]
   see-also: [law-concepts/remedies, statutes/consumer-protection-act]
-pagerank: 0.0072
+pagerank: 0.0071
 betweenness: 0.0002
-eigenvector: 0.0684
+eigenvector: 0.0593
 degree: 6
-community: 0
+community: 1
 ---
 
 # Frustrated Contracts Act (FCA)

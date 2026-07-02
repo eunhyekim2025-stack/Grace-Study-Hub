@@ -8,11 +8,11 @@ updated: 2026-06-23
 relations:
   governs: [law-concepts/exemption-clause, law-concepts/terms, law-concepts/negligence]
   see-also: [statutes/sales-of-goods-act, law-concepts/misrepresentation]
-pagerank: 0.0058
-betweenness: 0.0190
-eigenvector: 0.1130
+pagerank: 0.0057
+betweenness: 0.0185
+eigenvector: 0.0990
 degree: 10
-community: 0
+community: 1
 ---
 
 # Unfair Contract Terms Act (UCTA, Cap 396)

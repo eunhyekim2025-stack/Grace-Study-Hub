@@ -6,11 +6,11 @@ updated: 2026-06-19
 kind: 통찰
 relations:
   see-also: [fa-concepts/time-value-of-money, systems/liability-disputes, law-concepts/frustration, law-concepts/discharge]
-pagerank: 0.0018
-betweenness: 0.0006
-eigenvector: 0.0333
+pagerank: 0.0017
+betweenness: 0.0005
+eigenvector: 0.0299
 degree: 7
-community: 0
+community: 1
 ---
 
 # Insight — time is not neutral: discounting, delay, extinction

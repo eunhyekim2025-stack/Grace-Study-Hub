@@ -10,10 +10,10 @@ relations:
   governs: [statutes/unfair-contract-terms-act, statutes/evidence-act]
   see-also: [cases/raiffeisen-v-archer-daniels-midland, law-concepts/vitiating-factor]
 pagerank: 0.0023
-betweenness: 0.0020
-eigenvector: 0.0791
+betweenness: 0.0019
+eigenvector: 0.0687
 degree: 7
-community: 0
+community: 1
 ---
 
 # Orient Centre Investments Ltd v Societe Generale [2007] SGCA 24

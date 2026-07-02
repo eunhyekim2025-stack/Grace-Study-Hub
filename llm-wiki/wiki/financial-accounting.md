@@ -3,6 +3,11 @@ title: 💰 Financial Accounting
 tags: [financial-accounting, moc, index, acct101]
 updated: 2026-06-24
 kind: 주제
+pagerank: 0.0017
+betweenness: 0.0011
+eigenvector: 0.0379
+degree: 10
+community: 2
 ---
 
 # 💰 Financial Accounting (FA)

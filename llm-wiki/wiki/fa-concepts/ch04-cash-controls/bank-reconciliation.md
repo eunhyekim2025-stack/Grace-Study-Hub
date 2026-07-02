@@ -3,9 +3,9 @@ title: Bank Reconciliation (Week 4)
 tags: [financial-accounting, acct101, cash, bank-reconciliation, internal-control]
 sources: [fa/guided-notes/Week 4 - Guided Practice Notes.pdf]
 updated: 2026-06-18
-pagerank: 0.0079
+pagerank: 0.0078
 betweenness: 0.0000
-eigenvector: 0.0242
+eigenvector: 0.0213
 degree: 6
 community: 2
 ---

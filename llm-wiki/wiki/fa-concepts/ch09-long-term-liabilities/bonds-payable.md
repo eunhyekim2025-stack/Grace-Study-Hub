@@ -3,9 +3,9 @@ title: Liabilities & Bonds Payable (Week 9)
 tags: [financial-accounting, acct101, liabilities, bonds, discount, amortisation]
 sources: [fa/guided-notes/Week 9 - Guided Notes.pdf]
 updated: 2026-06-18
-pagerank: 0.0119
+pagerank: 0.0118
 betweenness: 0.0001
-eigenvector: 0.0440
+eigenvector: 0.0397
 degree: 9
 community: 2
 ---

@@ -8,11 +8,11 @@ relations:
   applies: [law-concepts/terms]
   cites: [cases/zurich-v-b-gold, statutes/evidence-act]
   see-also: [cases/zurich-v-b-gold, cases/rdc-concrete-v-sato-kogyo]
-pagerank: 0.0021
+pagerank: 0.0020
 betweenness: 0.0003
-eigenvector: 0.0637
+eigenvector: 0.0547
 degree: 6
-community: 0
+community: 1
 ---
 
 # Sembcorp Marine Ltd v PPL Holdings Pte Ltd and another and another appeal [2013] SGCA 43

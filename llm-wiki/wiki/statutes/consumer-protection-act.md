@@ -9,10 +9,10 @@ relations:
   governs: [law-concepts/misrepresentation, law-concepts/unconscionability]
   see-also: [law-concepts/remedies, law-concepts/undue-influence, law-concepts/exemption-clause]
 pagerank: 0.0043
-betweenness: 0.0033
-eigenvector: 0.0880
+betweenness: 0.0032
+eigenvector: 0.0765
 degree: 8
-community: 0
+community: 1
 ---
 
 # Consumer Protection (Fair Trading) Act (CPFTA)

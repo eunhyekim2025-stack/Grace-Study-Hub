@@ -5,9 +5,9 @@ sources: [law/prewriting/8. Monkey's Mistake.pdf, law/pq/(1) PQ 1C (For T2 AY202
 updated: 2026-06-17
 pagerank: 0.0015
 betweenness: 0.0000
-eigenvector: 0.0289
+eigenvector: 0.0251
 degree: 1
-community: 0
+community: 1
 ---
 
 # Chapter 8 · Mistake — Scenario Quiz (PQ Style)

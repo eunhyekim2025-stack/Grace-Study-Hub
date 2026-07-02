@@ -7,10 +7,10 @@ horizon: H3
 threshold: {watch: 2.0, act: 4.0}
 pagerank: 0.0021
 betweenness: 0.0001
-eigenvector: 0.0295
+eigenvector: 0.0291
 degree: 4
-community: 1
-strength: 0.9812
+community: 0
+strength: 0.9483
 ---
 
 # Driver — AI Legal Work Automation (broad trend)

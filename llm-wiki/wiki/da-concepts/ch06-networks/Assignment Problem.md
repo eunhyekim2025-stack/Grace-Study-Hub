@@ -5,9 +5,9 @@ created: 2026-06-18
 source: Textbook.pdf (Ch.6.3) + da/excel-solutions/Clark County Sheriff.xlsx
 sources: [da/Textbook.pdf, da/excel-solutions/Clark County Sheriff.xlsx]
 updated: 2026-06-18
-pagerank: 0.0066
-betweenness: 0.0085
-eigenvector: 0.0887
+pagerank: 0.0064
+betweenness: 0.0082
+eigenvector: 0.1030
 degree: 11
 community: 3
 ---

@@ -3,11 +3,11 @@ title: Exemption Clause
 tags: [business-law, contract, exemption-clause, ucta, singapore]
 sources: [law/prewriting/6. Monkey's Exemption Clause.pdf]
 updated: 2026-06-17
-pagerank: 0.0132
-betweenness: 0.0221
-eigenvector: 0.1336
+pagerank: 0.0131
+betweenness: 0.0214
+eigenvector: 0.1204
 degree: 14
-community: 0
+community: 1
 ---
 
 # Exemption Clause

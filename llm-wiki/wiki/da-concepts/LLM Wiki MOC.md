@@ -5,9 +5,9 @@ created: 2026-06-18
 source: Textbook.pdf (Anderson/Sweeney/Williams, Management Science 14e)
 sources: [da/Textbook.pdf]
 updated: 2026-06-18
-pagerank: 0.0514
-betweenness: 0.0914
-eigenvector: 0.2153
+pagerank: 0.0506
+betweenness: 0.0824
+eigenvector: 0.2598
 degree: 68
 community: 3
 ---

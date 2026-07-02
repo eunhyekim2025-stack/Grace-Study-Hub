@@ -10,11 +10,11 @@ relations:
   about: [law-concepts/mistake]
   cites: [statutes/electronic-transactions-act]
   see-also: [law-concepts/consideration, law-concepts/unconscionability, law-concepts/vitiating-factor, statutes/sales-of-goods-act]
-pagerank: 0.0029
+pagerank: 0.0028
 betweenness: 0.0007
-eigenvector: 0.0944
+eigenvector: 0.0816
 degree: 9
-community: 0
+community: 1
 ---
 
 # Chwee Kin Keong v Digilandmall.com Pte Ltd [2005] SGCA 2 (HC [2004] SGHC 71)

@@ -9,11 +9,11 @@ relations:
   applies: [law-concepts/consideration, law-concepts/offer, law-concepts/acceptance, law-concepts/iclr]
   cites: [cases/man-financial-v-wong, cases/teo-seng-kee-bob-v-arianecorp]
   see-also: [law-concepts/duress, law-concepts/remedies]
-pagerank: 0.0169
-betweenness: 0.0219
-eigenvector: 0.1508
+pagerank: 0.0167
+betweenness: 0.0213
+eigenvector: 0.1329
 degree: 19
-community: 0
+community: 1
 ---
 
 # Gay Choon Ing v Loh Sze Ti Terence Peter [2009] SGCA 3

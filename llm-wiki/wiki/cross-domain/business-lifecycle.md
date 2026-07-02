@@ -5,8 +5,8 @@ sources: [law/Textbook.pdf, da/Textbook.pdf, fa/Textbook.pdf]
 updated: 2026-06-18
 kind: 주제
 pagerank: 0.0059
-betweenness: 0.0539
-eigenvector: 0.2032
+betweenness: 0.0525
+eigenvector: 0.1912
 degree: 28
 community: 2
 ---

@@ -3,11 +3,11 @@ title: Intention to Create Legal Relations (ICLR)
 tags: [business-law, contract, iclr, singapore]
 sources: [law/prewriting/4. Monkey's ICLR.pdf]
 updated: 2026-06-17
-pagerank: 0.0078
+pagerank: 0.0077
 betweenness: 0.0000
-eigenvector: 0.0594
+eigenvector: 0.0517
 degree: 6
-community: 0
+community: 1
 ---
 
 # Intention to Create Legal Relations (ICLR)

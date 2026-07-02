@@ -7,9 +7,9 @@ relations:
   dampens: [systems/ai-adoption]
 pagerank: 0.0036
 betweenness: 0.0006
-eigenvector: 0.0307
+eigenvector: 0.0303
 degree: 6
-community: 1
+community: 0
 ---
 
 # System Variable — AI Review Liability Disputes

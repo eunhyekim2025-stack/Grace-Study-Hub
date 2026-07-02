@@ -5,9 +5,9 @@ created: 2026-06-18
 source: Textbook.pdf (Ch.4 Finance) + da/excel-solutions/Portfolio Selection.xlsx
 sources: [da/Textbook.pdf, da/excel-solutions/Portfolio Selection.xlsx]
 updated: 2026-06-18
-pagerank: 0.0075
+pagerank: 0.0074
 betweenness: 0.0001
-eigenvector: 0.0763
+eigenvector: 0.0954
 degree: 11
 community: 3
 ---

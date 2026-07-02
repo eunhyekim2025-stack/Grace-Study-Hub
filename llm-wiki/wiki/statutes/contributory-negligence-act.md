@@ -8,11 +8,11 @@ updated: 2026-06-23
 relations:
   governs: [law-concepts/negligence]
   see-also: [law-concepts/remedies]
-pagerank: 0.0027
-betweenness: 0.0014
-eigenvector: 0.0606
+pagerank: 0.0026
+betweenness: 0.0013
+eigenvector: 0.0529
 degree: 5
-community: 0
+community: 1
 ---
 
 # Contributory Negligence and Personal Injuries Act

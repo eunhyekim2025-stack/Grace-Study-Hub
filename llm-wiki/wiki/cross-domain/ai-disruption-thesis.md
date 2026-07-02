@@ -7,11 +7,11 @@ kind: 주장
 relations:
   about: [drivers/ai-legal-automation]
   extends: [cross-domain/business-lifecycle]
-pagerank: 0.0015
+pagerank: 0.0014
 betweenness: 0.0000
-eigenvector: 0.0206
+eigenvector: 0.0193
 degree: 3
-community: 1
+community: 0
 ---
 
 # Claim — AI Replacing Contract Review → Reshaping Exemption Clause Practice

@@ -3,11 +3,11 @@ title: Frustration
 tags: [business-law, contract, frustration, discharge, singapore]
 sources: [law/prewriting/17. Monkey's Frustration.pdf]
 updated: 2026-06-17
-pagerank: 0.0237
+pagerank: 0.0234
 betweenness: 0.0051
-eigenvector: 0.0991
+eigenvector: 0.0879
 degree: 11
-community: 0
+community: 1
 ---
 
 # Frustration

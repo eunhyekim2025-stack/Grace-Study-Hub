@@ -5,7 +5,7 @@ sources: [law/prewriting/8. Monkey's Mistake.pdf]
 updated: 2026-06-17
 pagerank: 0.0025
 betweenness: 0.0000
-eigenvector: 0.0630
+eigenvector: 0.0583
 degree: 5
 community: 2
 ---

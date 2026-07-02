@@ -9,9 +9,9 @@ relations:
   see-also: [cases/orient-centre-v-societe-generale, law-concepts/vitiating-factor]
 pagerank: 0.0019
 betweenness: 0.0000
-eigenvector: 0.0497
+eigenvector: 0.0430
 degree: 4
-community: 0
+community: 1
 ---
 
 # Raiffeisen Zentralbank Osterreich AG v Archer Daniels Midland Co [2006] SGHC 182

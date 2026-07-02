@@ -6,11 +6,11 @@ updated: 2026-06-19
 kind: 통찰
 relations:
   see-also: [da-concepts/Range of Optimality, da-concepts/Range of Feasibility, da-concepts/Shadow Price, da-concepts/Sensitivity Analysis, law-concepts/quiz-methodology, fa-concepts/inventory]
-pagerank: 0.0015
+pagerank: 0.0014
 betweenness: 0.0000
-eigenvector: 0.0465
+eigenvector: 0.0492
 degree: 7
-community: 3
+community: 2
 ---
 
 # Insight — a threshold flips the conclusion discretely

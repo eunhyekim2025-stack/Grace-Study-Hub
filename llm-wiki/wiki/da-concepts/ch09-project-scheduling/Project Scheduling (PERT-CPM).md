@@ -7,7 +7,7 @@ sources: [da/Textbook.pdf]
 updated: 2026-06-24
 pagerank: 0.0028
 betweenness: 0.0000
-eigenvector: 0.0552
+eigenvector: 0.0695
 degree: 6
 community: 3
 ---

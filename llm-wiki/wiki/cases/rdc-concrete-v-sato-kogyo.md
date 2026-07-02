@@ -7,11 +7,11 @@ updated: 2026-06-23
 relations:
   applies: [law-concepts/discharge, law-concepts/terms, law-concepts/remedies, law-concepts/frustration]
   see-also: [cases/sports-connection-v-deuter, cases/man-financial-v-wong]
-pagerank: 0.0112
-betweenness: 0.0069
-eigenvector: 0.0896
+pagerank: 0.0110
+betweenness: 0.0067
+eigenvector: 0.0757
 degree: 11
-community: 0
+community: 1
 ---
 
 # RDC Concrete Pte Ltd v Sato Kogyo (S) Pte Ltd [2007] SGCA 39

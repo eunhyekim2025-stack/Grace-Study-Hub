@@ -5,9 +5,9 @@ created: 2026-06-18
 source: Textbook.pdf (Ch.4 Marketing) + da/excel-solutions/Media Selection.xlsx
 sources: [da/Textbook.pdf, da/excel-solutions/Media Selection.xlsx]
 updated: 2026-06-18
-pagerank: 0.0065
+pagerank: 0.0064
 betweenness: 0.0000
-eigenvector: 0.0669
+eigenvector: 0.0838
 degree: 9
 community: 3
 ---

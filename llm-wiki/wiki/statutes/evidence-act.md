@@ -8,11 +8,11 @@ updated: 2026-06-23
 relations:
   governs: [law-concepts/terms]
   see-also: [cases/gay-choon-ing-v-loh, law-concepts/misrepresentation]
-pagerank: 0.0085
-betweenness: 0.0154
-eigenvector: 0.1303
+pagerank: 0.0084
+betweenness: 0.0149
+eigenvector: 0.1123
 degree: 14
-community: 0
+community: 1
 ---
 
 # Evidence Act (Cap 97) — Parol Evidence Rule

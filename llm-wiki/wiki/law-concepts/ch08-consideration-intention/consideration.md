@@ -6,11 +6,11 @@ updated: 2026-06-17
 relations:
   see-also: [law-concepts/offer, law-concepts/privity, law-concepts/duress]
   cites: [cases/gay-choon-ing-v-loh, cases/teo-seng-kee-bob-v-arianecorp]
-pagerank: 0.0254
-betweenness: 0.0181
-eigenvector: 0.1324
+pagerank: 0.0250
+betweenness: 0.0176
+eigenvector: 0.1168
 degree: 17
-community: 0
+community: 1
 ---
 
 # Consideration

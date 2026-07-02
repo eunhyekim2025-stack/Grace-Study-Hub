@@ -3,11 +3,11 @@ title: Offer
 tags: [business-law, contract, offer, singapore]
 sources: [law/prewriting/1. Monkey's Offer.pdf]
 updated: 2026-06-17
-pagerank: 0.0245
-betweenness: 0.0157
-eigenvector: 0.1447
+pagerank: 0.0242
+betweenness: 0.0153
+eigenvector: 0.1283
 degree: 18
-community: 0
+community: 1
 ---
 
 # Offer

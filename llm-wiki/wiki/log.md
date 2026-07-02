@@ -1,9 +1,9 @@
 ---
-pagerank: 0.0015
+pagerank: 0.0014
 betweenness: 0.0000
-eigenvector: 0.0058
-degree: 1
-community: 1
+eigenvector: 0.0123
+degree: 3
+community: 0
 ---
 # Log
 
@@ -341,3 +341,9 @@ community: 1
 - Law (law-concepts/): split thematic parts → SMU *The Law of Business* chapters. part5→ch06-negligence, part1→ch07-offer-acceptance/ch08-consideration-intention/ch09-capacity-privity, part2→ch10-terms/ch11-exemption-clauses, part3→ch12-mistake/ch13-misrepresentation/ch14-duress-undue-influence/ch15-illegality, part4→ch16-breach(discharge)/ch17-frustration/ch18-remedies, part6→ch20-agency. privity moved part4→ch09 (matches textbook Ch 9 Capacity & Privity). vitiating-factor umbrella → law-concepts/ root (spans Ch 12–15).
 - All moves via git mv; 10 FA + 29 Law link references rewritten across vault (basenames preserved); 0 stale paths remain.
 - Hubs rebuilt: business-law.md + financial-accounting.md tables reordered by chapter with a Ch column; mistake-quiz labels Chapter 8→Ch 12.
+
+## [2026-07-03] content | Add personal profile pages (about-me, resume)
+- Request: put my info into the wiki and connect an "about me" page to it.
+- Added [[resume]] — résumé source of truth (curated from a high-school extracurricular CV + LinkedIn, adapted for a 2nd-year university résumé; high-school grades/SAT/AP excluded). Mirrors ~/resume/data/*.yaml → resume site.
+- Added [[about-me]] — personal hub (kind 프로필) linking who I am to subjects studied and things built; relations: see-also → resume, business-law, financial-accounting, decision-analysis, ai-foresight.
+- Registered both in index.md (More table). Graph sync still to run to pull them into the graph DB.

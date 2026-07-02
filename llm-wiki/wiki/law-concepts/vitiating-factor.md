@@ -6,9 +6,9 @@ updated: 2026-06-19
 kind: 의미
 pagerank: 0.0024
 betweenness: 0.0002
-eigenvector: 0.0952
+eigenvector: 0.0850
 degree: 6
-community: 0
+community: 1
 ---
 
 # Vitiating Factors — Factors That Impair the Validity of a Contract (umbrella)

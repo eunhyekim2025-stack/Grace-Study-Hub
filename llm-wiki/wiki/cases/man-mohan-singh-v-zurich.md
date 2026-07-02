@@ -8,11 +8,11 @@ relations:
   applies: [law-concepts/negligence, law-concepts/remedies]
   cites: [cases/spandeck-v-dsta, cases/ngiam-kong-seng-v-lim]
   see-also: [law-concepts/negligence]
-pagerank: 0.0037
-betweenness: 0.0007
-eigenvector: 0.0487
+pagerank: 0.0036
+betweenness: 0.0006
+eigenvector: 0.0422
 degree: 5
-community: 0
+community: 1
 ---
 
 # Man Mohan Singh v Zurich Insurance (Singapore) Pte Ltd [2008] SGCA 24

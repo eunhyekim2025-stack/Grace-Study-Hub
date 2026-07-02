@@ -3,11 +3,11 @@ title: Illegality
 tags: [business-law, contract, illegality, public-policy, singapore]
 sources: [law/prewriting/12. Monkey's Illegality.pdf]
 updated: 2026-06-17
-pagerank: 0.0036
+pagerank: 0.0035
 betweenness: 0.0002
-eigenvector: 0.0548
+eigenvector: 0.0475
 degree: 5
-community: 0
+community: 1
 ---
 
 # Illegality
