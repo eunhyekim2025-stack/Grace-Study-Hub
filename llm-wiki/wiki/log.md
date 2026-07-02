@@ -347,3 +347,8 @@ community: 0
 - Added [[resume]] — résumé source of truth (curated from a high-school extracurricular CV + LinkedIn, adapted for a 2nd-year university résumé; high-school grades/SAT/AP excluded). Mirrors ~/resume/data/*.yaml → resume site.
 - Added [[about-me]] — personal hub (kind 프로필) linking who I am to subjects studied and things built; relations: see-also → resume, business-law, financial-accounting, decision-analysis, ai-foresight.
 - Registered both in index.md (More table). Graph sync still to run to pull them into the graph DB.
+
+## [2026-07-03] content | Remove résumé from site; add "Add Content" page
+- Request: résumé is unrelated to Grace's Study Hub — remove it; add a visible way to add recordings, new subjects, and files.
+- Deleted [[resume]] and its menu row; cleaned all [[resume]] links out of [[about-me]] (see-also + body); log history kept.
+- Added [[add-content]] (kind 절차) — a hub with the iCloud recording pipeline, GitHub web-editor buttons for notes/file uploads, and the /add-subject flow. Registered in index.md (More table).

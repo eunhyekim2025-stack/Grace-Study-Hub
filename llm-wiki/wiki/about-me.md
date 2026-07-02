@@ -4,7 +4,7 @@ tags: [profile, personal, moc]
 updated: 2026-07-03
 kind: 주제
 relations:
-  see-also: [resume, business-law, financial-accounting, decision-analysis, ai-foresight]
+  see-also: [business-law, financial-accounting, decision-analysis, ai-foresight]
 pagerank: 0.0019
 betweenness: 0.0067
 eigenvector: 0.0617
@@ -14,7 +14,7 @@ community: 0
 
 # 👤 About Me — Grace (Eunhye) Kim
 
-> [[index|← Subjects]] · Personal hub. The résumé lives in [[resume]]; this page connects
+> [[index|← Subjects]] · Personal hub — this page connects
 > who I am to what this wiki studies and the things I build.
 
 ## Snapshot
@@ -37,13 +37,11 @@ community: 0
 ## What I build
 - **This LLM knowledge wiki** — an Obsidian vault with an LLM pipeline (raw → graph → wiki),
   a driver/signal early-warning graph, and dashboards. See [[overview]].
-- **Résumé site** — a YAML-driven, multi-language résumé generator (Python) deployed on Vercel.
-  Source of truth: [[resume]].
 
 ## Background in brief
 Before SMU I led student organizations (Student Government President, Business Club founder,
 school-newspaper Main Editor), completed a data-research internship, tutored mathematics, and
-volunteered in translation and community service. Full detail in [[resume]].
+volunteered in translation and community service.
 
 ---
-*Related:* [[resume]] · [[index]] · [[overview]]
+*Related:* [[index]] · [[overview]]

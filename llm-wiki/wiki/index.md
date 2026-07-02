@@ -22,7 +22,7 @@ Study Hub — **pick a subject.** Inside each subject you drill down: *content �
 | [[cross-domain/business-lifecycle\|🔗 Cross-Domain]] | 3-subject integration — lifecycle hub · integrated quiz · insights |
 | [[ai-foresight\|🤖 AI · Foresight]] | LLM/AI wiki · early warning (drivers·signals) · systems thinking |
 | [[about-me\|👤 About Me]] | Personal profile · focus areas · what I build |
-| [[resume\|📄 Resume]] | Résumé source of truth (mirrors the resume site) |
+| [[add-content\|➕ Add Content]] | Add recordings · new subjects · files — all from here |
 
 ---
 
