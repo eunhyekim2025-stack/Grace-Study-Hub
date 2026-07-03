@@ -8,11 +8,11 @@ updated: 2026-06-23
 relations:
   governs: [law-concepts/offer, law-concepts/acceptance, law-concepts/terms]
   see-also: [statutes/evidence-act]
-pagerank: 0.0047
-betweenness: 0.0036
+pagerank: 0.0046
+betweenness: 0.0035
 eigenvector: 0.0766
 degree: 9
-community: 1
+community: 2
 ---
 
 # Electronic Transactions Act (ETA, Cap 88)

@@ -10,7 +10,7 @@ pagerank: 0.0017
 betweenness: 0.0022
 eigenvector: 0.0405
 degree: 6
-community: 1
+community: 4
 ---
 
 # Insight — Expected Value (EV): the weighted sum of outcome × probability

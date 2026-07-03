@@ -9,8 +9,8 @@ relations:
   triggers: [law-concepts/exemption-clause, cross-domain/business-lifecycle]
   serves: [cross-domain/business-lifecycle]
   part-of: [drivers/ai-legal-automation]
-pagerank: 0.0081
-betweenness: 0.0347
+pagerank: 0.0080
+betweenness: 0.0336
 eigenvector: 0.0572
 degree: 8
 community: 0

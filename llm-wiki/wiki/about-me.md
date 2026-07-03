@@ -5,11 +5,11 @@ updated: 2026-07-03
 kind: 주제
 relations:
   see-also: [business-law, financial-accounting, decision-analysis, ai-foresight]
-pagerank: 0.0019
-betweenness: 0.0067
+pagerank: 0.0023
+betweenness: 0.0130
 eigenvector: 0.0617
 degree: 8
-community: 0
+community: 1
 ---
 
 # 👤 About Me — Grace (Eunhye) Kim

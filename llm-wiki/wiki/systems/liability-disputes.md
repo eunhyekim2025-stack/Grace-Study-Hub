@@ -6,7 +6,7 @@ updated: 2026-06-19
 relations:
   dampens: [systems/ai-adoption]
 pagerank: 0.0036
-betweenness: 0.0006
+betweenness: 0.0005
 eigenvector: 0.0303
 degree: 6
 community: 0

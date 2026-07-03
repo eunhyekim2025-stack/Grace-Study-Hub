@@ -7,7 +7,7 @@ pagerank: 0.0035
 betweenness: 0.0002
 eigenvector: 0.0475
 degree: 5
-community: 1
+community: 2
 ---
 
 # Illegality

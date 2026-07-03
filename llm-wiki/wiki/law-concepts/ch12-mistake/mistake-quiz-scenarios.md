@@ -7,7 +7,7 @@ pagerank: 0.0015
 betweenness: 0.0000
 eigenvector: 0.0251
 degree: 1
-community: 1
+community: 2
 ---
 
 # Chapter 8 · Mistake — Scenario Quiz (PQ Style)

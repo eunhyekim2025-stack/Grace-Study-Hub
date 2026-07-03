@@ -5,11 +5,11 @@ sources: [law/prewriting/10. Monkey's Undue Influence.pdf]
 updated: 2026-06-17
 relations:
   is-a: [law-concepts/vitiating-factor]
-pagerank: 0.0149
-betweenness: 0.0025
+pagerank: 0.0147
+betweenness: 0.0024
 eigenvector: 0.1019
 degree: 11
-community: 1
+community: 2
 ---
 
 # Undue Influence

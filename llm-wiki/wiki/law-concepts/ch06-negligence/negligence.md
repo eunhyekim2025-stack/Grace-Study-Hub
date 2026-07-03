@@ -3,11 +3,11 @@ title: Negligence
 tags: [business-law, tort, negligence, singapore]
 sources: [law/prewriting/19. Monkey's Negligence.pdf]
 updated: 2026-06-17
-pagerank: 0.0055
-betweenness: 0.0193
+pagerank: 0.0054
+betweenness: 0.0187
 eigenvector: 0.0847
 degree: 9
-community: 1
+community: 2
 ---
 
 # Negligence

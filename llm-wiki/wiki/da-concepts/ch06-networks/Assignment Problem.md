@@ -6,7 +6,7 @@ source: Textbook.pdf (Ch.6.3) + da/excel-solutions/Clark County Sheriff.xlsx
 sources: [da/Textbook.pdf, da/excel-solutions/Clark County Sheriff.xlsx]
 updated: 2026-06-18
 pagerank: 0.0064
-betweenness: 0.0082
+betweenness: 0.0079
 eigenvector: 0.1030
 degree: 11
 community: 3

@@ -8,11 +8,11 @@ relations:
   applies: [law-concepts/negligence]
   cites: [cases/spandeck-v-dsta]
   see-also: [cases/man-mohan-singh-v-zurich]
-pagerank: 0.0047
+pagerank: 0.0046
 betweenness: 0.0000
 eigenvector: 0.0314
 degree: 4
-community: 1
+community: 2
 ---
 
 # Ngiam Kong Seng v Lim Chiew Hock [2008] SGCA 23

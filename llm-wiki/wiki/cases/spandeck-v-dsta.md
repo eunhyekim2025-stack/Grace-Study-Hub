@@ -7,11 +7,11 @@ updated: 2026-06-23
 relations:
   applies: [law-concepts/negligence]
   cites: [cases/teo-seng-kee-bob-v-arianecorp]
-pagerank: 0.0076
-betweenness: 0.0101
+pagerank: 0.0075
+betweenness: 0.0098
 eigenvector: 0.0376
 degree: 7
-community: 1
+community: 2
 ---
 
 # Spandeck Engineering v Defence Science & Technology Agency [2007] SGCA 37

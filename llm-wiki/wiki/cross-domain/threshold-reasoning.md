@@ -10,7 +10,7 @@ pagerank: 0.0014
 betweenness: 0.0000
 eigenvector: 0.0492
 degree: 7
-community: 2
+community: 4
 ---
 
 # Insight — a threshold flips the conclusion discretely

@@ -8,7 +8,7 @@ relations:
   part-of: [drivers/ai-contract-review]
   causes: [drivers/ai-contract-review]
   supports: [cross-domain/ai-disruption-thesis]
-pagerank: 0.0021
+pagerank: 0.0020
 betweenness: 0.0000
 eigenvector: 0.0246
 degree: 3

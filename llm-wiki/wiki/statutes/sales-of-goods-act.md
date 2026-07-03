@@ -8,11 +8,11 @@ updated: 2026-06-23
 relations:
   governs: [law-concepts/terms, law-concepts/capacity, law-concepts/remedies]
   see-also: [statutes/unfair-contract-terms-act, law-concepts/discharge]
-pagerank: 0.0100
-betweenness: 0.0154
+pagerank: 0.0099
+betweenness: 0.0149
 eigenvector: 0.1067
 degree: 13
-community: 1
+community: 2
 ---
 
 # Sale of Goods Act (SOGA, Cap 393)

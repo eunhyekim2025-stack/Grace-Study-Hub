@@ -3,11 +3,11 @@ title: Restraint of Trade
 tags: [business-law, contract, restraint-of-trade, public-policy, singapore]
 sources: [law/prewriting/13. Monkey's Restraint of Trade.pdf]
 updated: 2026-06-17
-pagerank: 0.0041
-betweenness: 0.0043
+pagerank: 0.0040
+betweenness: 0.0041
 eigenvector: 0.0607
 degree: 7
-community: 1
+community: 2
 ---
 
 # Restraint of Trade

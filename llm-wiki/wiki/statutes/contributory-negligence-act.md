@@ -12,7 +12,7 @@ pagerank: 0.0026
 betweenness: 0.0013
 eigenvector: 0.0529
 degree: 5
-community: 1
+community: 2
 ---
 
 # Contributory Negligence and Personal Injuries Act

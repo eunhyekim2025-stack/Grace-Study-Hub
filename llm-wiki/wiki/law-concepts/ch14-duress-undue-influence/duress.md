@@ -5,11 +5,11 @@ sources: [law/prewriting/9. Monkey's Duress.pdf]
 updated: 2026-06-17
 relations:
   is-a: [law-concepts/vitiating-factor]
-pagerank: 0.0186
-betweenness: 0.0072
+pagerank: 0.0184
+betweenness: 0.0070
 eigenvector: 0.1268
 degree: 14
-community: 1
+community: 2
 ---
 
 # Duress

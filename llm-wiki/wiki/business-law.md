@@ -3,11 +3,11 @@ title: ⚖️ Business Law
 tags: [business-law, moc, index, singapore]
 updated: 2026-07-01
 kind: 주제
-pagerank: 0.0018
-betweenness: 0.0170
+pagerank: 0.0019
+betweenness: 0.0207
 eigenvector: 0.3190
 degree: 50
-community: 1
+community: 2
 ---
 
 # ⚖️ Business Law

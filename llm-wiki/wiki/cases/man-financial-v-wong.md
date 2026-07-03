@@ -8,11 +8,11 @@ relations:
   applies: [law-concepts/restraint-of-trade, law-concepts/illegality, law-concepts/terms, law-concepts/discharge]
   cites: [cases/rdc-concrete-v-sato-kogyo]
   see-also: [cases/sports-connection-v-deuter, cases/gay-choon-ing-v-loh]
-pagerank: 0.0072
-betweenness: 0.0141
+pagerank: 0.0071
+betweenness: 0.0136
 eigenvector: 0.0751
 degree: 12
-community: 1
+community: 2
 ---
 
 # Man Financial (S) Pte Ltd v Wong Bark Chuan David [2007] SGCA 53

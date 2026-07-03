@@ -14,7 +14,7 @@ pagerank: 0.0028
 betweenness: 0.0007
 eigenvector: 0.0816
 degree: 9
-community: 1
+community: 2
 ---
 
 # Chwee Kin Keong v Digilandmall.com Pte Ltd [2005] SGCA 2 (HC [2004] SGHC 71)

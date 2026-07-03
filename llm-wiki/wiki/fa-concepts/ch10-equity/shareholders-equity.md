@@ -3,11 +3,11 @@ title: Shareholders' Equity — Shares & Treasury (Week 10)
 tags: [financial-accounting, acct101, equity, shares, apic, treasury-shares]
 sources: [fa/guided-notes/Week 10 - Guided Notes.pdf]
 updated: 2026-06-18
-pagerank: 0.0112
+pagerank: 0.0111
 betweenness: 0.0000
 eigenvector: 0.0395
 degree: 9
-community: 2
+community: 4
 ---
 
 # Shareholders' Equity — Shares & Treasury Shares (Week 10)

@@ -10,7 +10,7 @@ pagerank: 0.0017
 betweenness: 0.0005
 eigenvector: 0.0299
 degree: 7
-community: 1
+community: 0
 ---
 
 # Insight — time is not neutral: discounting, delay, extinction

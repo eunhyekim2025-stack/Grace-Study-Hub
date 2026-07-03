@@ -4,10 +4,10 @@ tags: [business-law, agency, singapore]
 sources: [law/prewriting/20. Monkey's Agency.pdf]
 updated: 2026-06-17
 pagerank: 0.0049
-betweenness: 0.0045
+betweenness: 0.0044
 eigenvector: 0.0681
 degree: 7
-community: 1
+community: 2
 ---
 
 # Agency

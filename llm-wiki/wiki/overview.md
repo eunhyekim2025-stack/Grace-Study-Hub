@@ -1,9 +1,9 @@
 ---
-pagerank: 0.0046
+pagerank: 0.0048
 betweenness: 0.0000
 eigenvector: 0.0123
 degree: 4
-community: 0
+community: 1
 ---
 # Study Hub
 

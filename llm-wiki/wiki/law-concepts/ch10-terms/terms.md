@@ -3,11 +3,11 @@ title: Terms of Contract
 tags: [business-law, contract, terms, singapore]
 sources: [law/prewriting/5. Monkey's Terms.pdf]
 updated: 2026-06-17
-pagerank: 0.0301
-betweenness: 0.0322
+pagerank: 0.0298
+betweenness: 0.0312
 eigenvector: 0.1377
 degree: 20
-community: 1
+community: 2
 ---
 
 # Terms of Contract

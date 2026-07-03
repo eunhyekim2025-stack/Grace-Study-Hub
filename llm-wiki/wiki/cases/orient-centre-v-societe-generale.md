@@ -9,11 +9,11 @@ relations:
   cites: [cases/gay-choon-ing-v-loh]
   governs: [statutes/unfair-contract-terms-act, statutes/evidence-act]
   see-also: [cases/raiffeisen-v-archer-daniels-midland, law-concepts/vitiating-factor]
-pagerank: 0.0023
+pagerank: 0.0022
 betweenness: 0.0019
 eigenvector: 0.0687
 degree: 7
-community: 1
+community: 2
 ---
 
 # Orient Centre Investments Ltd v Societe Generale [2007] SGCA 24

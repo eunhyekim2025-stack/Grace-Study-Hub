@@ -3,11 +3,11 @@ title: Contracts (Rights of Third Parties) Act (CRTPA)
 tags: [business-law, statute, privity]
 sources: [law/Textbook.pdf]
 updated: 2026-06-18
-pagerank: 0.0046
+pagerank: 0.0045
 betweenness: 0.0000
 eigenvector: 0.0284
 degree: 3
-community: 1
+community: 2
 ---
 
 # Contracts (Rights of Third Parties) Act (CRTPA)

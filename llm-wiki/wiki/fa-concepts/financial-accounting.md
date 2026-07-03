@@ -3,11 +3,11 @@ title: Financial Accounting (ACCT101) — Concept Map
 tags: [financial-accounting, acct101, moc, overview]
 sources: [fa/Textbook.pdf, fa/guided-notes/Week 4 - Guided Practice Notes.pdf, fa/guided-notes/Week 5 - Guided Practice Notes.pdf, fa/guided-notes/Week 9 - Guided Notes.pdf, fa/guided-notes/Week 10 - Guided Notes.pdf, fa/guided-notes/Week 11 - Guided Notes Final.pdf]
 updated: 2026-07-01
-pagerank: 0.0253
-betweenness: 0.0034
+pagerank: 0.0251
+betweenness: 0.0035
 eigenvector: 0.0690
 degree: 18
-community: 2
+community: 4
 ---
 
 # Financial Accounting (ACCT101) — Concept Map (MOC)

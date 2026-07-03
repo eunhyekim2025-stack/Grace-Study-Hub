@@ -8,7 +8,7 @@ relations:
   amplifies: [systems/liability-disputes]
   see-also: [drivers/ai-contract-review]
 pagerank: 0.0060
-betweenness: 0.0095
+betweenness: 0.0092
 eigenvector: 0.0320
 degree: 7
 community: 0

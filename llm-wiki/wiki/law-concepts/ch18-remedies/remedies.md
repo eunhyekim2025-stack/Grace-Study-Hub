@@ -3,11 +3,11 @@ title: Remedies
 tags: [business-law, contract, remedies, damages, singapore]
 sources: [law/prewriting/18. Monkey's Remedies.pdf]
 updated: 2026-06-17
-pagerank: 0.0401
-betweenness: 0.0090
+pagerank: 0.0397
+betweenness: 0.0087
 eigenvector: 0.1474
 degree: 19
-community: 1
+community: 2
 ---
 
 # Remedies

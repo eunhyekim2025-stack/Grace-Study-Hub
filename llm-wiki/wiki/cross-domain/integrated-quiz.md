@@ -7,7 +7,7 @@ pagerank: 0.0017
 betweenness: 0.0006
 eigenvector: 0.1171
 degree: 19
-community: 2
+community: 4
 ---
 
 # Integrated Quiz — Three-Subject Composite Scenario

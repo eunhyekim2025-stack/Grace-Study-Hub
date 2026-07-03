@@ -38,8 +38,8 @@ flowchart LR
   n_systems_review_cost["review-cost"]
   n_systems_ai_adoption -->|B:+| n_systems_liability_disputes
   n_systems_liability_disputes -->|B:−| n_systems_ai_adoption
-  n_systems_ai_adoption -->|R:−| n_systems_review_cost
   n_systems_review_cost -->|R:−| n_systems_ai_adoption
+  n_systems_ai_adoption -->|R:−| n_systems_review_cost
 ```
 
 ---

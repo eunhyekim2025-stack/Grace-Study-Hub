@@ -5,7 +5,7 @@ created: 2026-06-18
 source: Textbook.pdf (Management Science 14e, Ch.6.1)
 sources: [da/Textbook.pdf]
 updated: 2026-06-18
-pagerank: 0.0096
+pagerank: 0.0095
 betweenness: 0.0007
 eigenvector: 0.0991
 degree: 12

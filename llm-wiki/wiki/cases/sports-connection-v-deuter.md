@@ -12,7 +12,7 @@ pagerank: 0.0042
 betweenness: 0.0000
 eigenvector: 0.0575
 degree: 7
-community: 1
+community: 2
 ---
 
 # Sports Connection Pte Ltd v Deuter Sports GmbH [2009] SGCA 22

@@ -12,7 +12,7 @@ pagerank: 0.0020
 betweenness: 0.0003
 eigenvector: 0.0547
 degree: 6
-community: 1
+community: 2
 ---
 
 # Sembcorp Marine Ltd v PPL Holdings Pte Ltd and another and another appeal [2013] SGCA 43

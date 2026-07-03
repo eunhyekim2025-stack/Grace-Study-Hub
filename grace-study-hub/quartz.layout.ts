@@ -11,6 +11,9 @@ import { FileTrieNode } from "./quartz/util/fileTrie"
 //    같은 그룹으로 한 줄씩 추가한다. 등록을 빠뜨려도 폴더는 사라지지 않고 목록 맨 끝에
 //    원래 이름으로 표시된다(안전). 전체 절차는 CLAUDE.md "과목(Subject) 추가 규약" 참조.
 const explorerOptions = {
+  // 좌측 트리 목차: 제목을 달고 폴더를 펼친 상태로 기본 표시한다.
+  title: "📚 Contents",
+  folderDefaultState: "open" as const,
   // 폴더 표시명을 과목 라벨(이모지 + 한글)로 교체
   mapFn: (node: FileTrieNode) => {
     if (!node.isFolder) return
@@ -23,6 +26,8 @@ const explorerOptions = {
       "da-concepts": "📊 Decision Analysis (DA) · Notes & Quizzes",
       // 💰 Financial Accounting
       "fa-concepts": "💰 Financial Accounting (FA) · Notes",
+      // ⚙️ Operations Management
+      "ops-concepts": "⚙️ Operations Management · Notes",
       // 🔗 Cross-Domain
       "cross-domain": "🔗 Cross-Domain · 3-Subject Integration",
       // 🤖 LLM/AI Wiki
@@ -47,6 +52,7 @@ const explorerOptions = {
       statutes: 12,
       "da-concepts": 20,
       "fa-concepts": 30,
+      "ops-concepts": 35,
       "cross-domain": 40,
       concepts: 50,
       models: 51,

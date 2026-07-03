@@ -3,11 +3,11 @@ title: Inventory — Perpetual System (Week 5)
 tags: [financial-accounting, acct101, inventory, cogs, perpetual, fob]
 sources: [fa/guided-notes/Week 5 - Guided Practice Notes.pdf]
 updated: 2026-06-18
-pagerank: 0.0082
+pagerank: 0.0081
 betweenness: 0.0001
 eigenvector: 0.0403
 degree: 8
-community: 2
+community: 4
 ---
 
 # Inventory — Perpetual System (Week 5)

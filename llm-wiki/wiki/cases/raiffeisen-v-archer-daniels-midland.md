@@ -7,11 +7,11 @@ updated: 2026-06-23
 relations:
   applies: [law-concepts/misrepresentation, law-concepts/negligence, law-concepts/remedies]
   see-also: [cases/orient-centre-v-societe-generale, law-concepts/vitiating-factor]
-pagerank: 0.0019
+pagerank: 0.0018
 betweenness: 0.0000
 eigenvector: 0.0430
 degree: 4
-community: 1
+community: 2
 ---
 
 # Raiffeisen Zentralbank Osterreich AG v Archer Daniels Midland Co [2006] SGHC 182

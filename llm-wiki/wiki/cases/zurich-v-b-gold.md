@@ -13,7 +13,7 @@ pagerank: 0.0019
 betweenness: 0.0000
 eigenvector: 0.0491
 degree: 5
-community: 1
+community: 2
 ---
 
 # Zurich Insurance (Singapore) Pte Ltd v B-Gold Interior Design & Construction Pte Ltd [2008] SGCA 27

@@ -1,9 +1,9 @@
 ---
-pagerank: 0.0073
-betweenness: 0.0366
-eigenvector: 0.0812
-degree: 12
-community: 0
+pagerank: 0.0090
+betweenness: 0.0438
+eigenvector: 0.0817
+degree: 13
+community: 1
 ---
 # Index
 
@@ -15,6 +15,7 @@ Study Hub — **pick a subject.** Inside each subject you drill down: *content �
 | [[business-law\|⚖️ Business Law]] | Concepts · Cases · Statutes · Quizzes |
 | [[decision-analysis\|📊 Decision Analysis]] | Concepts 32 (LP · integer · nonlinear · networks · PERT · inventory · decision analysis · forecasting · simulation) · Quizzes · Sources |
 | [[financial-accounting\|💰 Financial Accounting]] | Concepts · Sources |
+| [[operations-management\|⚙️ Operations Management]] | Concepts · Sources |
 
 ## More
 | Area | Contents |

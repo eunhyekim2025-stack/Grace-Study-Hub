@@ -3,11 +3,11 @@ title: Capacity
 tags: [business-law, contract, capacity, singapore]
 sources: [law/prewriting/14. Monkey's Capacity.pdf]
 updated: 2026-06-17
-pagerank: 0.0087
-betweenness: 0.0075
+pagerank: 0.0086
+betweenness: 0.0073
 eigenvector: 0.0671
 degree: 8
-community: 1
+community: 2
 ---
 
 # Capacity

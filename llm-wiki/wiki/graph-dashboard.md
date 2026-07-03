@@ -6,7 +6,7 @@ updated: 2026-07-03
 
 # Graph Dashboard
 
-*2026-07-03 기준 | 노드: 121 | 링크: 608 | 타입 관계: 152*
+*2026-07-03 기준 | 노드: 123 | 링크: 612 | 타입 관계: 151*
 
 ---
 
@@ -38,8 +38,8 @@ updated: 2026-07-03
 
 | 노드 | 참여 루프 수 | Betweenness |
 |---|---|---|
-| [[systems/ai-adoption]] | 2 | 0.0095 |
-| [[systems/liability-disputes]] | 1 | 0.0006 |
+| [[systems/ai-adoption]] | 2 | 0.0092 |
+| [[systems/liability-disputes]] | 1 | 0.0005 |
 | [[systems/review-cost]] | 1 | 0.0000 |
 
 ---
@@ -86,20 +86,20 @@ updated: 2026-07-03
 
 | 규칙 (provenance) | 추론 엣지 수 |
 |---|---|
-| symmetric:see-also | 53 |
+| symmetric:see-also | 52 |
 | inverse:applies | 38 |
 | inverse:governs | 18 |
 | inverse:cites | 17 |
 | inverse:part-of | 7 |
-| inverse:dampens | 3 |
-| transitive:part-of | 3 |
 | inverse:is-a | 3 |
+| transitive:part-of | 3 |
+| inverse:dampens | 3 |
 | inverse:triggers | 2 |
 | inverse:about | 2 |
-| inverse:supports | 1 |
-| inverse:amplifies | 1 |
-| inverse:extends | 1 |
 | inverse:serves | 1 |
+| inverse:supports | 1 |
+| inverse:extends | 1 |
+| inverse:amplifies | 1 |
 | inverse:causes | 1 |
 | inverse:refines | 1 |
 
@@ -125,25 +125,27 @@ updated: 2026-07-03
 |---|---|
 | DAConcept | 36 |
 | LawConcept | 25 |
-| Page | 14 |
+| Page | 15 |
 | Case | 14 |
-| Statute | 8 |
 | FAConcept | 8 |
+| Statute | 8 |
 | CrossDomain | 6 |
 | Signal | 3 |
 | Driver | 2 |
-| Tool | 1 |
-| Model | 1 |
 | Concept | 1 |
+| OpsConcept | 1 |
 | Paper | 1 |
 | Prompt | 1 |
+| Tool | 1 |
+| Model | 1 |
 
 ### 노드 kind (인식론 역할, frontmatter 선언 — entity_type와 직교)
 
 | kind | 페이지 수 |
 |---|---|
-| 주제 | 7 |
+| 주제 | 8 |
 | 통찰 | 3 |
+| 절차 | 1 |
 | 사건 | 1 |
 | 의미 | 1 |
 | 주장 | 1 |
@@ -154,7 +156,7 @@ updated: 2026-07-03
 
 | 관계 | 엣지 수 |
 |---|---|
-| see-also | 59 |
+| see-also | 58 |
 | applies | 38 |
 | governs | 18 |
 | cites | 17 |
@@ -176,16 +178,16 @@ updated: 2026-07-03
 
 | 페이지 | 제목 | PageRank |
 |---|---|---|
-| [[da-concepts/LLM Wiki MOC]] | LLM Wiki MOC — Decision Analysis | 0.0506 |
-| [[law-concepts/ch18-remedies/remedies]] | Remedies | 0.0401 |
-| [[law-concepts/ch13-misrepresentation/misrepresentation]] | Misrepresentation | 0.0355 |
-| [[law-concepts/ch16-breach/discharge]] | Discharge of Contract | 0.0301 |
-| [[law-concepts/ch10-terms/terms]] | Terms of Contract | 0.0301 |
-| [[da-concepts/ch02-lp/Linear Programming]] | Linear Programming | 0.0255 |
-| [[fa-concepts/financial-accounting]] | Financial Accounting (ACCT101) — Concept Map | 0.0253 |
-| [[law-concepts/ch08-consideration-intention/consideration]] | Consideration | 0.0250 |
-| [[law-concepts/ch07-offer-acceptance/offer]] | Offer | 0.0242 |
-| [[law-concepts/ch17-frustration/frustration]] | Frustration | 0.0234 |
+| [[da-concepts/LLM Wiki MOC]] | LLM Wiki MOC — Decision Analysis | 0.0500 |
+| [[law-concepts/ch18-remedies/remedies]] | Remedies | 0.0397 |
+| [[law-concepts/ch13-misrepresentation/misrepresentation]] | Misrepresentation | 0.0352 |
+| [[law-concepts/ch16-breach/discharge]] | Discharge of Contract | 0.0298 |
+| [[law-concepts/ch10-terms/terms]] | Terms of Contract | 0.0298 |
+| [[da-concepts/ch02-lp/Linear Programming]] | Linear Programming | 0.0252 |
+| [[fa-concepts/financial-accounting]] | Financial Accounting (ACCT101) — Concept Map | 0.0251 |
+| [[law-concepts/ch08-consideration-intention/consideration]] | Consideration | 0.0248 |
+| [[law-concepts/ch07-offer-acceptance/offer]] | Offer | 0.0239 |
+| [[law-concepts/ch17-frustration/frustration]] | Frustration | 0.0232 |
 
 ---
 
@@ -193,16 +195,16 @@ updated: 2026-07-03
 
 | 페이지 | 제목 | Betweenness |
 |---|---|---|
-| [[da-concepts/LLM Wiki MOC]] | LLM Wiki MOC — Decision Analysis | 0.0824 |
-| [[cross-domain/business-lifecycle]] | Business Lifecycle — Cross-Map of Three Subjects | 0.0525 |
-| [[graph-dashboard]] | Graph Dashboard | 0.0423 |
-| [[index]] | index | 0.0366 |
-| [[drivers/ai-contract-review]] | Generative AI Replaces First-Pass Contract Review | 0.0347 |
-| [[law-concepts/ch10-terms/terms]] | Terms of Contract | 0.0322 |
-| [[law-concepts/ch11-exemption-clauses/exemption-clause]] | Exemption Clause | 0.0214 |
-| [[cases/gay-choon-ing-v-loh]] | Gay Choon Ing v Loh Sze Ti Terence Peter [2009] SGCA 3 | 0.0213 |
-| [[law-concepts/ch06-negligence/negligence]] | Negligence | 0.0193 |
-| [[statutes/unfair-contract-terms-act]] | Unfair Contract Terms Act (UCTA, Cap 396) | 0.0185 |
+| [[da-concepts/LLM Wiki MOC]] | LLM Wiki MOC — Decision Analysis | 0.0807 |
+| [[cross-domain/business-lifecycle]] | Business Lifecycle — Cross-Map of Three Subjects | 0.0514 |
+| [[graph-dashboard]] | Graph Dashboard | 0.0488 |
+| [[index]] | index | 0.0438 |
+| [[drivers/ai-contract-review]] | Generative AI Replaces First-Pass Contract Review | 0.0336 |
+| [[law-concepts/ch10-terms/terms]] | Terms of Contract | 0.0312 |
+| [[law-concepts/ch11-exemption-clauses/exemption-clause]] | Exemption Clause | 0.0207 |
+| [[cases/gay-choon-ing-v-loh]] | Gay Choon Ing v Loh Sze Ti Terence Peter [2009] SGCA 3 | 0.0207 |
+| [[business-law]] | ⚖️ Business Law | 0.0207 |
+| [[law-concepts/ch06-negligence/negligence]] | Negligence | 0.0187 |
 
 ---
 
@@ -211,10 +213,10 @@ updated: 2026-07-03
 | 페이지 | 제목 | Eigenvector |
 |---|---|---|
 | [[business-law]] | ⚖️ Business Law | 0.3190 |
-| [[decision-analysis]] | 📊 Decision Analysis | 0.2749 |
-| [[graph-dashboard]] | Graph Dashboard | 0.2608 |
+| [[decision-analysis]] | 📊 Decision Analysis | 0.2748 |
+| [[graph-dashboard]] | Graph Dashboard | 0.2609 |
 | [[da-concepts/LLM Wiki MOC]] | LLM Wiki MOC — Decision Analysis | 0.2598 |
-| [[da-concepts/ch02-lp/Linear Programming]] | Linear Programming | 0.2149 |
+| [[da-concepts/ch02-lp/Linear Programming]] | Linear Programming | 0.2148 |
 | [[cross-domain/business-lifecycle]] | Business Lifecycle — Cross-Map of Three Subjects | 0.1912 |
 | [[law-concepts/ch13-misrepresentation/misrepresentation]] | Misrepresentation | 0.1579 |
 | [[law-concepts/ch18-remedies/remedies]] | Remedies | 0.1474 |
@@ -227,10 +229,11 @@ updated: 2026-07-03
 
 | Community ID | 크기 | 대표 페이지 (PageRank 상위 3) |
 |---|---|---|
-| 1 | 49 | remedies, misrepresentation, discharge |
+| 2 | 47 | remedies, misrepresentation, discharge |
 | 3 | 36 | LLM Wiki MOC, Linear Programming, Sensitivity Analysis |
-| 0 | 22 | ai-contract-review, index, ai-adoption |
-| 2 | 14 | financial-accounting, statement-of-cash-flows, bonds-payable |
+| 0 | 17 | ai-contract-review, ai-adoption, graph-dashboard |
+| 4 | 15 | financial-accounting, statement-of-cash-flows, bonds-payable |
+| 1 | 8 | index, overview, operations-management |
 
 ---
 

@@ -12,7 +12,7 @@ pagerank: 0.0055
 betweenness: 0.0019
 eigenvector: 0.0692
 degree: 7
-community: 1
+community: 2
 ---
 
 # BOM v BOK [2018] SGCA 83

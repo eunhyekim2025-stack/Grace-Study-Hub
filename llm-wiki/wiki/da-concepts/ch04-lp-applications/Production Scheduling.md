@@ -5,9 +5,9 @@ created: 2026-06-18
 source: Textbook.pdf (Ch.4 Operations) + da/excel-solutions/Production Scheduling.xlsx
 sources: [da/Textbook.pdf, da/excel-solutions/Production Scheduling.xlsx]
 updated: 2026-06-18
-pagerank: 0.0060
+pagerank: 0.0059
 betweenness: 0.0002
-eigenvector: 0.0874
+eigenvector: 0.0873
 degree: 10
 community: 3
 ---

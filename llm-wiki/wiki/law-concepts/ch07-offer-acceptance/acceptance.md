@@ -3,11 +3,11 @@ title: Acceptance
 tags: [business-law, contract, acceptance, singapore]
 sources: [law/prewriting/2. Monkey's Acceptance.pdf]
 updated: 2026-06-17
-pagerank: 0.0122
-betweenness: 0.0059
+pagerank: 0.0121
+betweenness: 0.0057
 eigenvector: 0.0919
 degree: 13
-community: 1
+community: 2
 ---
 
 # Acceptance

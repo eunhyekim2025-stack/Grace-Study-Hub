@@ -3,11 +3,11 @@ title: Discharge of Contract
 tags: [business-law, contract, discharge, breach, singapore]
 sources: [law/prewriting/16. Monkey's Discharge.pdf]
 updated: 2026-06-17
-pagerank: 0.0301
-betweenness: 0.0117
+pagerank: 0.0298
+betweenness: 0.0113
 eigenvector: 0.1220
 degree: 16
-community: 1
+community: 2
 ---
 
 # Discharge of Contract

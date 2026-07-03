@@ -5,7 +5,7 @@ created: 2026-06-18
 source: Textbook.pdf (Ch.4 Operations) + da/excel-solutions/Workforce Assignment.xlsx
 sources: [da/Textbook.pdf, da/excel-solutions/Workforce Assignment.xlsx]
 updated: 2026-06-18
-pagerank: 0.0063
+pagerank: 0.0062
 betweenness: 0.0003
 eigenvector: 0.0816
 degree: 9

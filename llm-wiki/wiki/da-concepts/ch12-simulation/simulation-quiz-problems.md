@@ -7,7 +7,7 @@ pagerank: 0.0018
 betweenness: 0.0004
 eigenvector: 0.0631
 degree: 6
-community: 2
+community: 4
 ---
 
 # Simulation (Chapter 12) — Textbook Problem Quiz

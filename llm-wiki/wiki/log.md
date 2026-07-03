@@ -3,7 +3,7 @@ pagerank: 0.0014
 betweenness: 0.0000
 eigenvector: 0.0123
 degree: 3
-community: 0
+community: 1
 ---
 # Log
 
@@ -352,3 +352,9 @@ community: 0
 - Request: résumé is unrelated to Grace's Study Hub — remove it; add a visible way to add recordings, new subjects, and files.
 - Deleted [[resume]] and its menu row; cleaned all [[resume]] links out of [[about-me]] (see-also + body); log history kept.
 - Added [[add-content]] (kind 절차) — a hub with the iCloud recording pipeline, GitHub web-editor buttons for notes/file uploads, and the /add-subject flow. Registered in index.md (More table).
+
+## [2026-07-03] subject | Add Operations Management (⚙️, key `ops`)
+- Request: /add-subject "operations management at work".
+- Content folder `ops-concepts/` with seed [[ops-concepts/README]]; hub [[operations-management]] (kind 주제, Content → Sources — concepts only, no sources yet).
+- Registered across all three presentation layers: index.md Subjects row (after Financial Accounting), Explorer label + rank 35 in grace-study-hub/quartz.layout.ts (keeps it in the academic block between fa=30 and cross-domain=40), and ontology ENTITY_TYPES `ops-concepts`→`OpsConcept`.
+- graph-sync/analyze/viz/dashboard rerun; new pages picked up metrics. Explorer change needs a site restart to render.

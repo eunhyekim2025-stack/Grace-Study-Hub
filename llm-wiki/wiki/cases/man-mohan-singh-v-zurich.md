@@ -12,7 +12,7 @@ pagerank: 0.0036
 betweenness: 0.0006
 eigenvector: 0.0422
 degree: 5
-community: 1
+community: 2
 ---
 
 # Man Mohan Singh v Zurich Insurance (Singapore) Pte Ltd [2008] SGCA 24

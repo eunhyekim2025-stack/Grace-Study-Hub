@@ -3,8 +3,8 @@ title: 🤖 AI · Foresight
 tags: [moc, index, ai-impact]
 updated: 2026-06-24
 kind: 주제
-pagerank: 0.0017
-betweenness: 0.0016
+pagerank: 0.0018
+betweenness: 0.0022
 eigenvector: 0.0321
 degree: 15
 community: 0
