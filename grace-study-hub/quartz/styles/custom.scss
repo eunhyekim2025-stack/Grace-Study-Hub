@@ -1,3 +1,48 @@
 @use "./base.scss";
 
-// put your custom CSS here!
+// ─────────────────────────────────────────────────────────────
+// Grace's Study Hub — elegant academic theme
+// Navy (--dark/--secondary) + gold (--tertiary) + serif headings.
+// Matches the "GK" monogram design language.
+// ─────────────────────────────────────────────────────────────
+
+// Site title: refined serif with a touch of tracking
+.page-title {
+  font-family: var(--headerFont);
+  letter-spacing: 0.01em;
+  font-weight: 600;
+}
+
+// Major headings get a gold rule for a scholarly, printed feel
+article {
+  h1 {
+    border-bottom: 2px solid var(--tertiary);
+    padding-bottom: 0.25rem;
+  }
+  h2 {
+    border-bottom: 1px solid var(--lightgray);
+    padding-bottom: 0.2rem;
+  }
+}
+
+// Links settle into gold on hover (navy → gold)
+a:hover {
+  color: var(--tertiary);
+  text-decoration-color: var(--tertiary);
+}
+
+// Blockquotes carry a gold accent edge
+blockquote {
+  border-left: 3px solid var(--tertiary) !important;
+}
+
+// Left "Contents" tree title in serif
+.explorer h2,
+.explorer .title-button p {
+  font-family: var(--headerFont);
+}
+
+// Tables read like a printed ledger: gold header underline
+table thead tr {
+  border-bottom: 2px solid var(--tertiary);
+}
