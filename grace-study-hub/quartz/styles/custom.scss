@@ -1,48 +1,241 @@
 @use "./base.scss";
 
 // ─────────────────────────────────────────────────────────────
-// Grace's Study Hub — elegant academic theme
-// Navy (--dark/--secondary) + gold (--tertiary) + serif headings.
-// Matches the "GK" monogram design language.
+// Grace's Study Hub — "note app" theme
+// Warm off-white canvas + blue accent + clean system sans, ported
+// from the Claude Design mockup (oklch bg 0.99/.003/95,
+// accent 0.55/.14/250). Cards, pills, rounded controls.
 // ─────────────────────────────────────────────────────────────
 
-// Site title: refined serif with a touch of tracking
-.page-title {
-  font-family: var(--headerFont);
-  letter-spacing: 0.01em;
-  font-weight: 600;
+// Blue accent + neutral border tokens reused throughout.
+:root {
+  --sh-accent: var(--secondary);
+  --sh-accent-soft: var(--highlight);
+  --sh-radius: 14px;
+  --sh-radius-sm: 10px;
 }
 
-// Major headings get a gold rule for a scholarly, printed feel
+// System-sans everywhere for the app-like feel; Inter loads as the
+// configured font and falls back to the native UI stack.
+body {
+  font-family: var(--bodyFont), -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  letter-spacing: -0.005em;
+}
+
+// ── Site title: blue rounded "G" badge + tight wordmark ────────
+.page-title {
+  font-family: var(--bodyFont);
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: -0.01em;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+  a::before {
+    content: "G";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 8px;
+    background: var(--sh-accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex: 0 0 auto;
+  }
+}
+
+// ── Headings: clean, tight, no printed rules ───────────────────
 article {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--bodyFont);
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
   h1 {
-    border-bottom: 2px solid var(--tertiary);
-    padding-bottom: 0.25rem;
+    font-size: 1.9rem;
   }
   h2 {
     border-bottom: 1px solid var(--lightgray);
-    padding-bottom: 0.2rem;
+    padding-bottom: 0.25rem;
   }
 }
 
-// Links settle into gold on hover (navy → gold)
-a:hover {
-  color: var(--tertiary);
-  text-decoration-color: var(--tertiary);
+// ── Links: settle into a slightly darker blue on hover ─────────
+a {
+  &.internal {
+    background-color: var(--sh-accent-soft);
+    border-radius: 5px;
+    padding: 0 0.15em;
+  }
+  &:hover {
+    color: var(--tertiary);
+    text-decoration-color: var(--tertiary);
+  }
 }
 
-// Blockquotes carry a gold accent edge
-blockquote {
-  border-left: 3px solid var(--tertiary) !important;
+// ── Search / dark-mode / reader controls: rounded pills ────────
+.search .search-button,
+.search .search-container input,
+.darkmode,
+.readermode {
+  border-radius: var(--sh-radius-sm);
+}
+.search .search-button {
+  background: var(--light);
+  border: 1px solid var(--lightgray);
 }
 
-// Left "Contents" tree title in serif
+// ── Explorer (subject sidebar): rounded rows w/ hover fill ─────
+.explorer {
+  .folder-outer,
+  ul li > a,
+  .explorer-item {
+    border-radius: 8px;
+  }
+  button.explorer-toggle,
+  li > a {
+    &:hover {
+      background: var(--highlight);
+    }
+  }
+  #explorer-content li > a {
+    padding: 4px 8px;
+    display: inline-block;
+    border-radius: 8px;
+  }
+}
 .explorer h2,
 .explorer .title-button p {
-  font-family: var(--headerFont);
+  font-family: var(--bodyFont);
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
-// Tables read like a printed ledger: gold header underline
+// ── Note listings rendered as cards (folder / tag / index) ─────
+ul.section-ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 1.5em;
+
+  @media all and (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+li.section-li {
+  margin-bottom: 0;
+
+  & > .section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    padding: 20px;
+    border: 1px solid var(--lightgray);
+    border-radius: var(--sh-radius);
+    background: var(--light);
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease,
+      transform 0.15s ease;
+
+    &:hover {
+      border-color: color-mix(in srgb, var(--sh-accent) 40%, transparent);
+      box-shadow: 0 2px 12px rgba(27, 27, 23, 0.07);
+      transform: translateY(-1px);
+    }
+
+    & .meta {
+      margin: 0;
+      opacity: 1;
+      font-size: 0.75rem;
+      color: var(--gray);
+      order: 3;
+    }
+
+    & > .desc {
+      order: 1;
+      h3 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+      h3 > a {
+        background-color: transparent;
+        padding: 0;
+      }
+    }
+
+    & > .tags {
+      order: 2;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 0;
+    }
+  }
+}
+
+// ── Tag pills (in cards, tag list, article footer) ─────────────
+.tags > li > a,
+a.tag-link,
+.section > .tags li a {
+  background: var(--highlight);
+  color: var(--tertiary);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border: none;
+  &:hover {
+    background: color-mix(in srgb, var(--sh-accent) 18%, transparent);
+  }
+}
+
+// ── Article body sits on a soft card over the warm canvas ──────
+.center > article,
+.page > #quartz-body .center {
+  // keep content readable; cards are for listings, prose stays airy
+}
+
+// ── Blockquotes / callouts pick up the blue accent ─────────────
+blockquote {
+  border-left: 3px solid var(--sh-accent) !important;
+  border-radius: 0 var(--sh-radius-sm) var(--sh-radius-sm) 0;
+  background: var(--highlight);
+}
+
+// ── Code blocks: rounded to match the app language ─────────────
+pre,
+figure.highlight {
+  border-radius: var(--sh-radius-sm);
+}
+
+// ── Tables: quiet header rule instead of the gold ledger line ──
+table {
+  border-radius: var(--sh-radius-sm);
+  overflow: hidden;
+}
 table thead tr {
-  border-bottom: 2px solid var(--tertiary);
+  border-bottom: 2px solid var(--lightgray);
+}
+
+// ── Graph / backlinks / TOC panels: rounded, subtle ────────────
+.graph .graph-outer,
+.backlinks,
+.toc {
+  border-radius: var(--sh-radius-sm);
 }
