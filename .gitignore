@@ -19,5 +19,10 @@
 !/.gitignore
 !/vercel.json
 
+# 4b) Allow the serverless function that adds notes/files from the site
+!/api
+
 # 5) Never commit OS cruft anywhere in the tree
 .DS_Store
+.vercel
+.env*

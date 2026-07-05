@@ -12,7 +12,7 @@ import { FileTrieNode } from "./quartz/util/fileTrie"
 //    원래 이름으로 표시된다(안전). 전체 절차는 CLAUDE.md "과목(Subject) 추가 규약" 참조.
 const explorerOptions = {
   // 좌측 트리 목차: 제목을 달고 폴더를 펼친 상태로 기본 표시한다.
-  title: "📚 Contents",
+  title: "🗂 All notes",
   folderDefaultState: "open" as const,
   // 폴더 표시명을 과목 라벨(이모지 + 한글)로 교체
   mapFn: (node: FileTrieNode) => {
@@ -80,8 +80,23 @@ const explorerOptions = {
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
-  header: [],
-  afterBody: [],
+  // Full-width "note-app" top bar (ported from the Claude design mockup):
+  // G-logo wordmark on the left, a growing search box in the middle, and the
+  // dark-mode / reader-mode toggles on the right. Styled in custom.scss.
+  header: [
+    Component.PageTitle(),
+    Component.Flex({
+      components: [
+        { Component: Component.Search(), grow: true },
+        { Component: Component.TopActions() },
+        { Component: Component.Darkmode() },
+        { Component: Component.ReaderMode() },
+      ],
+    }),
+  ],
+  // In-page "add content" modal, rendered once per page (hidden until opened
+  // from the top-bar buttons).
+  afterBody: [Component.AddContentModal()],
   footer: Component.Footer({
     links: {
       GitHub: "https://github.com/jackyzha0/quartz",
@@ -101,45 +116,17 @@ export const defaultContentPageLayout: PageLayout = {
     Component.ContentMeta(),
     Component.TagList(),
   ],
-  left: [
-    Component.PageTitle(),
-    Component.MobileOnly(Component.Spacer()),
-    Component.Flex({
-      components: [
-        {
-          Component: Component.Search(),
-          grow: true,
-        },
-        { Component: Component.Darkmode() },
-        { Component: Component.ReaderMode() },
-      ],
-    }),
-    Component.Explorer(explorerOptions),
-  ],
-  right: [
-    // 목차(TOC)를 그래프 위로 올려 우측 상단에 바로 보이게 한다.
-    Component.DesktopOnly(Component.TableOfContents()),
-    Component.Graph(),
-    Component.Backlinks(),
-  ],
+  // Left column = the mockup's "과목(Subjects)" sidebar (All notes → subjects
+  // → More → tags). The client-side Explorer tree is retired in favor of this.
+  left: [Component.SubjectNav()],
+  // 2-column app shell: right panel (TOC/graph/backlinks) removed to match
+  // the mockup's clean subjects screen.
+  right: [],
 }
 
 // components for pages that display lists of pages  (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
   beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle(), Component.ContentMeta()],
-  left: [
-    Component.PageTitle(),
-    Component.MobileOnly(Component.Spacer()),
-    Component.Flex({
-      components: [
-        {
-          Component: Component.Search(),
-          grow: true,
-        },
-        { Component: Component.Darkmode() },
-      ],
-    }),
-    Component.Explorer(explorerOptions),
-  ],
+  left: [Component.SubjectNav()],
   right: [],
 }

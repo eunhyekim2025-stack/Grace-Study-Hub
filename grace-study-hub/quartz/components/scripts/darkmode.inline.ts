@@ -1,5 +1,7 @@
-const userPref = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"
-const currentTheme = localStorage.getItem("theme") ?? userPref
+// Grace's Study Hub defaults to the warm light "note-app" theme (from the
+// Claude design mockup) regardless of the OS setting; visitors can still
+// toggle to dark, which is then remembered.
+const currentTheme = localStorage.getItem("theme") ?? "light"
 document.documentElement.setAttribute("saved-theme", currentTheme)
 
 const emitThemeChangeEvent = (theme: "light" | "dark") => {

@@ -13,6 +13,79 @@
   --sh-accent-soft: var(--highlight);
   --sh-radius: 14px;
   --sh-radius-sm: 10px;
+  --sh-topbar-h: 60px;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// APP SHELL — full-width fixed top bar + [subjects | content] cols
+// (ported from the Claude design mockup). The grid itself (2-col,
+// right panel dropped) is defined in variables.scss.
+// ═══════════════════════════════════════════════════════════════
+
+// Everything sits below the fixed top bar.
+.page > #quartz-body {
+  padding-top: var(--sh-topbar-h);
+}
+
+// ── Fixed top bar: logo · search · toggles ─────────────────────
+.page-header {
+  margin: 0 !important;
+}
+.page-header > header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  height: var(--sh-topbar-h);
+  margin: 0;
+  padding: 0 24px;
+  gap: 16px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--lightgray);
+  background: color-mix(in srgb, var(--light) 85%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  .page-title {
+    margin: 0;
+    flex: 0 0 auto;
+  }
+  // search grows to fill; darkmode/reader toggles ride the right edge
+  .flex-component {
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 8px !important;
+  }
+  .search {
+    max-width: 460px;
+  }
+}
+
+// beforeBody (breadcrumbs / title / meta / tags) sits at the top of content
+.popover-hint {
+  margin-top: 1.25rem;
+}
+
+// ── Drop the right panel; subjects sidebar clears the top bar ───
+.sidebar.right {
+  display: none;
+}
+.page > #quartz-body {
+  & .center {
+    grid-area: grid-center;
+  }
+  & .sidebar.left {
+    top: var(--sh-topbar-h);
+    height: calc(100vh - var(--sh-topbar-h));
+    padding-top: 1.25rem;
+    border-right: 1px solid var(--lightgray);
+
+    @media all and (max-width: 800px) {
+      height: unset;
+      border-right: none;
+      padding-top: 0.5rem;
+    }
+  }
 }
 
 // System-sans everywhere for the app-like feel; Inter loads as the
@@ -120,6 +193,366 @@ a {
   font-family: var(--bodyFont);
   font-weight: 700;
   letter-spacing: 0.02em;
+}
+
+// ── Subjects sidebar (SubjectNav): colored dot · emoji · label ─
+.sh-subjects {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+.sh-subjects-group + .sh-subjects-group {
+  margin-top: 16px;
+}
+.sh-subjects-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin: 0 0 6px 8px;
+}
+.sh-subjects ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sh-subjects li {
+  margin: 0;
+}
+a.sh-subject {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 8px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--darkgray);
+  background: none;
+  text-decoration: none;
+
+  &:hover {
+    background: var(--highlight);
+    color: var(--dark);
+  }
+  &.active {
+    background: var(--highlight);
+    color: var(--secondary);
+    font-weight: 600;
+  }
+}
+.sh-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  background: var(--sh-dot, var(--secondary));
+}
+.sh-subject-emoji {
+  flex: 0 0 auto;
+  font-size: 0.95em;
+}
+.sh-subject-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+// note count, pushed to the right edge of the row (mockup)
+.sh-count {
+  margin-left: auto;
+  flex: 0 0 auto;
+  font-size: 0.72rem;
+  color: var(--gray);
+  font-variant-numeric: tabular-nums;
+}
+a.sh-subject.sh-all {
+  font-weight: 600;
+}
+
+// "+ Add subject" (과목 추가)
+a.sh-add-subject {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 8px;
+  margin-top: 2px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--secondary);
+  background: none;
+  text-decoration: none;
+
+  &:hover {
+    background: var(--highlight);
+  }
+  .sh-plus {
+    font-size: 1.05em;
+    line-height: 1;
+  }
+}
+
+// Tag chips (태그)
+.sh-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 4px;
+}
+a.sh-tag {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--lightgray);
+  font-size: 0.72rem;
+  color: var(--darkgray);
+  background: none;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--sh-accent) 55%, transparent);
+    color: var(--secondary);
+  }
+}
+
+// ── Top-bar action buttons (mockup: 녹음/파일 업로드 · 새 노트) ──
+.sh-topactions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+.sh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 15px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.83rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+.sh-btn-upload {
+  border: 1px solid color-mix(in srgb, var(--sh-accent) 40%, transparent);
+  background: var(--highlight);
+  color: var(--tertiary);
+
+  &:hover {
+    background: color-mix(in srgb, var(--sh-accent) 16%, transparent);
+    color: var(--tertiary);
+  }
+}
+.sh-btn-new {
+  border: 1px solid var(--secondary);
+  background: var(--secondary);
+  color: #fff;
+
+  &:hover {
+    background: var(--tertiary);
+    border-color: var(--tertiary);
+    color: #fff;
+  }
+}
+.sh-btn-ghost {
+  border: 1px solid var(--lightgray);
+  background: transparent;
+  color: var(--darkgray);
+
+  &:hover {
+    background: var(--highlight);
+  }
+}
+
+// ── In-page "add content" modal ────────────────────────────────
+.sh-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  &[hidden] {
+    display: none;
+  }
+}
+.sh-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: oklch(0.2 0.01 95 / 0.4);
+  backdrop-filter: blur(2px);
+}
+.sh-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 16px;
+  padding: 22px 24px 24px;
+  box-shadow: 0 16px 48px oklch(0.2 0.02 95 / 0.25);
+}
+.sh-modal-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.sh-modal-tab {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--lightgray);
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--gray);
+  cursor: pointer;
+
+  &.active {
+    border-color: color-mix(in srgb, var(--sh-accent) 45%, transparent);
+    background: var(--highlight);
+    color: var(--secondary);
+  }
+}
+.sh-modal-x {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  font-size: 1.1rem;
+  color: var(--gray);
+  cursor: pointer;
+  line-height: 1;
+
+  &:hover {
+    color: var(--dark);
+  }
+}
+.sh-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 14px;
+
+  label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--gray);
+  }
+}
+.sh-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  font-family: inherit;
+  font-size: 0.9rem;
+  outline: none;
+
+  &:focus {
+    border-color: color-mix(in srgb, var(--sh-accent) 55%, transparent);
+  }
+}
+textarea.sh-input {
+  resize: vertical;
+  line-height: 1.55;
+}
+.sh-modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+.sh-modal-hint {
+  font-size: 0.76rem;
+  color: var(--gray);
+  line-height: 1.5;
+  margin: -4px 0 14px;
+}
+.sh-modal-status {
+  margin-top: 14px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--gray);
+  word-break: break-word;
+
+  &.ok {
+    color: oklch(0.55 0.13 150);
+  }
+  &.err {
+    color: oklch(0.55 0.16 25);
+  }
+  &:empty {
+    display: none;
+  }
+}
+
+// ── Subject cards on the index (mockup note-card grid) ─────────
+.sh-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  margin: 1.25rem 0 2rem;
+
+  @media all and (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+a.sh-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 20px;
+  border: 1px solid var(--lightgray);
+  border-radius: var(--sh-radius);
+  background: var(--light);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--sh-accent) 45%, transparent);
+    box-shadow: 0 2px 12px rgba(27, 27, 23, 0.07);
+    transform: translateY(-1px);
+    color: inherit;
+  }
+}
+.sh-card-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--sh-dot, var(--secondary));
+}
+.sh-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--dark);
+}
+.sh-card-desc {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--gray);
 }
 
 // ── Note listings rendered as cards (folder / tag / index) ─────

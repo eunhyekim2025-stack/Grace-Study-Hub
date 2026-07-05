@@ -50,8 +50,8 @@ export default {
       linkToOriginal: "원본 링크",
     },
     search: {
-      title: "검색",
-      searchBarPlaceholder: "검색어를 입력하세요",
+      title: "노트 검색...",
+      searchBarPlaceholder: "노트 검색...",
     },
     tableOfContents: {
       title: "목차",

@@ -23,6 +23,9 @@ import Breadcrumbs from "./Breadcrumbs"
 import Comments from "./Comments"
 import Flex from "./Flex"
 import ConditionalRender from "./ConditionalRender"
+import SubjectNav from "./SubjectNav"
+import TopActions from "./TopActions"
+import AddContentModal from "./AddContentModal"
 
 export {
   ArticleTitle,
@@ -50,4 +53,7 @@ export {
   Comments,
   Flex,
   ConditionalRender,
+  SubjectNav,
+  TopActions,
+  AddContentModal,
 }
