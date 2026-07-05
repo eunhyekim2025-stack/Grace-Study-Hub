@@ -15,12 +15,6 @@ const SUBJECTS: Subject[] = [
   { slug: "operations-management", emoji: "⚙️", label: "Operations Management", hue: 25, prefixes: ["ops-concepts/"] },
 ]
 
-const MORE: Subject[] = [
-  { slug: "cross-domain/business-lifecycle", emoji: "🔗", label: "Cross-Domain", hue: 300, prefixes: ["cross-domain/"] },
-  { slug: "ai-foresight", emoji: "🤖", label: "AI · Foresight", hue: 200, prefixes: ["concepts/", "models/", "papers/", "prompts/", "tools/", "drivers/", "signals/", "systems/"] },
-  { slug: "about-me", emoji: "👤", label: "About Me", hue: 340, prefixes: [] },
-]
-
 const dot = (hue: number) => `oklch(0.62 0.15 ${hue})`
 
 const SubjectNav: QuartzComponent = ({ fileData, allFiles, displayClass }: QuartzComponentProps) => {
@@ -68,9 +62,6 @@ const SubjectNav: QuartzComponent = ({ fileData, allFiles, displayClass }: Quart
         </li>
         {SUBJECTS.map(row)}
       </ul>
-
-      <p class="sh-subjects-title">More</p>
-      <ul>{MORE.map(row)}</ul>
 
       <a href={resolveRelative(current, "add-content" as FullSlug)} class="sh-add-subject">
         <span class="sh-plus">+</span> Add subject

@@ -15,7 +15,27 @@ const config: QuartzConfig = {
     analytics: null,
     locale: "ko-KR",
     baseUrl: "grace-study-hub.vercel.app",
-    ignorePatterns: ["private", "templates", ".obsidian", "log.md"],
+    ignorePatterns: [
+      "private",
+      "templates",
+      ".obsidian",
+      "log.md",
+      // "More" areas — kept in the Obsidian vault, excluded from the site.
+      // Cross-Domain
+      "cross-domain/**",
+      // AI · Foresight (LLM/AI wiki + early warning)
+      "ai-foresight.md",
+      "concepts/**",
+      "models/**",
+      "papers/**",
+      "prompts/**",
+      "tools/**",
+      "drivers/**",
+      "signals/**",
+      "systems/**",
+      // About Me
+      "about-me.md",
+    ],
     defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",
