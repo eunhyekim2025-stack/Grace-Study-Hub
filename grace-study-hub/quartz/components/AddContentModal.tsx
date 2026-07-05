@@ -35,6 +35,9 @@ const AddContentModal: QuartzComponent = (_: QuartzComponentProps) => {
           <button class="sh-modal-tab" data-add-tab="upload">
             🎙 녹음/파일 업로드
           </button>
+          <button class="sh-modal-tab" data-add-tab="subject">
+            + 새 과목
+          </button>
           <button class="sh-modal-x" data-add-close aria-label="닫기">
             ✕
           </button>
@@ -83,6 +86,35 @@ const AddContentModal: QuartzComponent = (_: QuartzComponentProps) => {
           </p>
           <div class="sh-modal-actions">
             <button class="sh-btn sh-btn-new" data-add-submit="file">업로드</button>
+            <button class="sh-btn sh-btn-ghost" data-add-close>취소</button>
+          </div>
+        </div>
+
+        <div class="sh-panel" data-panel="subject" hidden>
+          <div class="sh-field">
+            <label for="sh-subject-name">과목 이름</label>
+            <input id="sh-subject-name" class="sh-input" placeholder="예: Machine Learning, 미시경제학" />
+          </div>
+          <p class="sh-subjects-title" style="margin:6px 0 8px;">기본 설정</p>
+          <label class="sh-check">
+            <input type="checkbox" id="sh-subject-notes" checked />
+            <span>
+              <b>영어 노트 + 요약 자동 생성</b>
+              <small>제목만으로 Claude가 영어 개요 노트와 핵심 요약을 만들어요.</small>
+            </span>
+          </label>
+          <label class="sh-check">
+            <input type="checkbox" id="sh-subject-quiz" checked />
+            <span>
+              <b>개념 이해용 짧은 퀴즈</b>
+              <small>핵심 개념을 확인하는 짧은 Q&amp;A 퀴즈를 함께 생성해요.</small>
+            </span>
+          </label>
+          <p class="sh-modal-hint">
+            생성 후 폴더 · 허브 페이지가 만들어지고 왼쪽 사이드바에 자동으로 나타나요 (1–2분 뒤 반영).
+          </p>
+          <div class="sh-modal-actions">
+            <button class="sh-btn sh-btn-new" data-add-submit="subject">과목 만들기</button>
             <button class="sh-btn sh-btn-ghost" data-add-close>취소</button>
           </div>
         </div>

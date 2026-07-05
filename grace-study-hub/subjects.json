@@ -1,0 +1,6 @@
+[
+  { "slug": "business-law", "emoji": "⚖️", "label": "Business Law", "hue": 250, "prefixes": ["law-concepts/", "cases/", "statutes/"] },
+  { "slug": "decision-analysis", "emoji": "📊", "label": "Decision Analysis", "hue": 150, "prefixes": ["da-concepts/"] },
+  { "slug": "financial-accounting", "emoji": "💰", "label": "Financial Accounting", "hue": 85, "prefixes": ["fa-concepts/"] },
+  { "slug": "operations-management", "emoji": "⚙️", "label": "Operations Management", "hue": 25, "prefixes": ["ops-concepts/"] }
+]

@@ -97,6 +97,59 @@ function submitNote(btn: HTMLButtonElement) {
   )
 }
 
+function checked(id: string): boolean {
+  const el = document.getElementById(id) as HTMLInputElement | null
+  return !!el && el.checked
+}
+
+async function postTo(endpoint: string, payload: Record<string, unknown>, btn: HTMLButtonElement) {
+  const password = val("sh-add-pw").trim()
+  if (!password) {
+    status("비밀번호를 입력하세요.", "err")
+    return
+  }
+  btn.disabled = true
+  status("생성 중… (AI 생성은 20~40초, 사이트는 1–2분 뒤 재배포됩니다)")
+  try {
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...payload, password }),
+    })
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok) {
+      status("실패: " + (data.error || res.status), "err")
+      return
+    }
+    localStorage.setItem(PW_KEY, password)
+    return data
+  } catch (e) {
+    status("네트워크 오류. 배포된 사이트에서 시도하세요.", "err")
+    return
+  } finally {
+    btn.disabled = false
+  }
+}
+
+async function submitSubject(btn: HTMLButtonElement) {
+  const name = val("sh-subject-name").trim()
+  if (!name) {
+    status("과목 이름을 입력하세요.", "err")
+    return
+  }
+  const data = await postTo(
+    "/api/add-subject",
+    { name, genNotes: checked("sh-subject-notes"), genQuiz: checked("sh-subject-quiz") },
+    btn,
+  )
+  if (data && data.ok) {
+    const ai = data.aiSkipped ? " (AI 생성은 건너뜀 — GROQ_API_KEY 필요)" : ""
+    status(`"${name}" 과목 생성됨${ai} · 1–2분 뒤 사이드바에 나타나요.`, "ok")
+    const el = document.getElementById("sh-subject-name") as HTMLInputElement | null
+    if (el) el.value = ""
+  }
+}
+
 function submitFile(btn: HTMLButtonElement) {
   const input = document.getElementById("sh-file-input") as HTMLInputElement | null
   const file = input?.files?.[0]
@@ -129,6 +182,7 @@ function onClick(e: MouseEvent) {
   } else if (t.dataset.addSubmit !== undefined) {
     e.preventDefault()
     if (t.dataset.addSubmit === "file") submitFile(t as HTMLButtonElement)
+    else if (t.dataset.addSubmit === "subject") submitSubject(t as HTMLButtonElement)
     else submitNote(t as HTMLButtonElement)
   }
 }
@@ -137,6 +191,7 @@ function onClick(e: MouseEvent) {
 function initFromHash() {
   if (location.hash === "#new") openModal("note")
   else if (location.hash === "#upload") openModal("upload")
+  else if (location.hash === "#subject") openModal("subject")
 }
 
 const w = window as unknown as { __shAddInit?: boolean }

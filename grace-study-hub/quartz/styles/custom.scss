@@ -271,18 +271,23 @@ a.sh-subject.sh-all {
 }
 
 // "+ Add subject" (과목 추가)
-a.sh-add-subject {
+.sh-add-subject {
   display: flex;
   align-items: center;
   gap: 6px;
+  width: 100%;
   padding: 7px 8px;
   margin-top: 2px;
+  border: none;
   border-radius: 8px;
+  font-family: inherit;
   font-size: 0.85rem;
   font-weight: 600;
+  text-align: left;
   color: var(--secondary);
   background: none;
   text-decoration: none;
+  cursor: pointer;
 
   &:hover {
     background: var(--highlight);
@@ -290,6 +295,36 @@ a.sh-add-subject {
   .sh-plus {
     font-size: 1.05em;
     line-height: 1;
+  }
+}
+
+// "새 과목" modal — default-setting checkboxes
+.sh-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 12px;
+  margin-bottom: 10px;
+  border: 1px solid var(--lightgray);
+  border-radius: 10px;
+  cursor: pointer;
+
+  input {
+    margin-top: 2px;
+    flex: 0 0 auto;
+    accent-color: var(--secondary);
+  }
+  b {
+    display: block;
+    font-size: 0.87rem;
+    color: var(--dark);
+  }
+  small {
+    display: block;
+    font-size: 0.76rem;
+    color: var(--gray);
+    margin-top: 2px;
+    line-height: 1.45;
   }
 }
 
