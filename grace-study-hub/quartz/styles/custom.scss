@@ -52,9 +52,10 @@ a.sh-card:hover {
 
 // ── Dashboard home: hide the plain markdown, show only <Dashboard> ──
 body[data-slug="index"] {
+  // Hide the plain markdown article + rule, but NOT .page-footer — the
+  // add-content modal lives there (afterBody) and must stay reachable.
   .center > article,
-  .center > hr,
-  .page-footer {
+  .center > hr {
     display: none;
   }
   .popover-hint > *:not(.sh-dash) {

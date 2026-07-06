@@ -60,7 +60,9 @@ export default async function handler(req, res) {
   }
 
   let path, contentBase64, commitMsg
-  const dir = SUBJECT_DIR[body.subject] ?? ""
+  // Known subjects map to their legacy folder; subjects created via the site
+  // use their slug as the folder, so fall back to the slug itself.
+  const dir = SUBJECT_DIR[body.subject] ?? body.subject ?? ""
 
   if (body.type === "note") {
     const { title, tags, content } = body

@@ -1,25 +1,25 @@
 // @ts-ignore
 import addContentScript from "./scripts/addContent.inline"
+// @ts-ignore  — subjects data, single source of truth (kept in sync by /api/add-subject)
+import subjectsData from "../../subjects.json"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 
 // In-page "add content" window (replaces the old GitHub redirect). Rendered
 // once per page (hidden); the top-bar buttons open it via data-add-open. Saving
 // posts to /api/add, which commits into the wiki. See addContent.inline.ts.
-const SUBJECT_OPTIONS: [string, string][] = [
-  ["business-law", "⚖️ Business Law"],
-  ["decision-analysis", "📊 Decision Analysis"],
-  ["financial-accounting", "💰 Financial Accounting"],
-  ["operations-management", "⚙️ Operations Management"],
-  ["cross-domain", "🔗 Cross-Domain"],
-  ["ai-foresight", "🤖 AI · Foresight"],
-  ["", "(미분류)"],
-]
+// The "과목" picker is driven by subjects.json so it always lists the real,
+// current subjects (new ones appear automatically; removed ones drop off).
+type Subject = { slug: string; emoji: string; label: string }
+const SUBJECTS = subjectsData as Subject[]
 
 const Subjects = ({ id }: { id: string }) => (
   <select id={id} class="sh-input">
-    {SUBJECT_OPTIONS.map(([v, label]) => (
-      <option value={v}>{label}</option>
+    {SUBJECTS.map((s) => (
+      <option value={s.slug}>
+        {s.emoji} {s.label}
+      </option>
     ))}
+    <option value="">(미분류)</option>
   </select>
 )
 
