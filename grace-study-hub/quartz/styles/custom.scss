@@ -14,16 +14,15 @@
   --sh-radius: 14px;
   --sh-radius-sm: 10px;
   --sh-topbar-h: 60px;
-  --sh-tan: #d3a98c; // warm tan (card-hover borders, chapter numbers)
-  --sh-canvas: #f5efe4; // cream page canvas (surfaces stay near-white --light)
+  --sh-canvas: #f4f6fb; // cool light-gray page canvas (surfaces stay white --light)
 }
 
 // ═══════════════════════════════════════════════════════════════
-// WARM EDITORIAL THEME (Claude design prototype)
-// Cream canvas · near-white surfaces · Lora serif headings · tan hovers.
+// SLATE / BLUE DASHBOARD THEME (Claude design prototype)
+// Cool canvas · white surfaces · Inter sans · blue accent.
 // ═══════════════════════════════════════════════════════════════
 
-// Cream page canvas; sidebar/top bar/cards keep the near-white surface (--light).
+// Cool light-gray canvas; sidebar/top bar/cards keep the white surface (--light).
 html,
 body {
   background: var(--sh-canvas);
@@ -32,23 +31,237 @@ body {
   background: var(--light);
 }
 
-// Lora serif for headings, site title, and card/note titles.
+// Korean-friendly sans everywhere (Inter for Latin + system Korean fallback).
+body,
 article h1,
 article h2,
 article h3,
 article h4,
-article h5,
 .page-title,
-.sh-card-title,
-li.section-li .desc h3 {
-  font-family: var(--headerFont), Georgia, "Times New Roman", serif !important;
+.sh-card-title {
+  font-family:
+    var(--bodyFont), "Pretendard", -apple-system, "Apple SD Gothic Neo", "Segoe UI", sans-serif;
 }
 
-// Cards settle onto a tan border (not the accent) on hover, per the prototype.
+// Cards lift onto the blue accent on hover.
 li.section-li > .section:hover,
 a.sh-card:hover {
-  border-color: var(--sh-tan) !important;
-  box-shadow: 0 2px 14px rgba(46, 42, 36, 0.06) !important;
+  border-color: color-mix(in srgb, var(--secondary) 45%, transparent) !important;
+  box-shadow: 0 4px 14px rgba(30, 41, 59, 0.06) !important;
+}
+
+// ── Dashboard home: hide the plain markdown, show only <Dashboard> ──
+body[data-slug="index"] {
+  .center > article,
+  .center > hr,
+  .page-footer {
+    display: none;
+  }
+  .popover-hint > *:not(.sh-dash) {
+    display: none;
+  }
+  .popover-hint {
+    margin-top: 0.5rem;
+  }
+}
+
+.sh-dash {
+  max-width: 1080px;
+}
+.sh-dash-head {
+  margin: 0 0 22px;
+  h1 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--dark);
+    margin: 0 0 4px;
+    border: none;
+  }
+  p {
+    margin: 0;
+    color: var(--gray);
+    font-size: 0.92rem;
+  }
+}
+
+// ── Stat cards ──
+.sh-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+
+  @media all and (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.sh-stat {
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 14px;
+  padding: 16px 18px;
+
+  &.dark {
+    background: var(--dark);
+    border-color: var(--dark);
+    .sh-stat-label {
+      color: color-mix(in srgb, var(--light) 65%, transparent);
+    }
+    .sh-stat-value {
+      color: var(--light);
+    }
+  }
+}
+.sh-stat-label {
+  font-size: 0.8rem;
+  color: var(--gray);
+  margin-bottom: 8px;
+}
+.sh-stat-value {
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--dark);
+  span {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--gray);
+  }
+}
+
+// ── Two-column body: subjects table + side panels ──
+.sh-dash-cols {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 16px;
+  align-items: start;
+
+  @media all and (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+.sh-panel {
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 16px;
+  padding: 20px 22px;
+}
+.sh-dash-side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.sh-panel-head {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 14px;
+}
+.sh-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--gray);
+}
+
+// subjects table
+.sh-subj-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+
+  th {
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--gray);
+    padding: 0 8px 10px;
+    border-bottom: 1px solid var(--lightgray);
+  }
+  td {
+    padding: 12px 8px;
+    font-size: 0.92rem;
+    color: var(--darkgray);
+    border-bottom: 1px solid var(--lightgray);
+    vertical-align: middle;
+  }
+  tr:last-child td {
+    border-bottom: none;
+  }
+  .sh-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sh-dot, var(--secondary));
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .sh-subj-emoji {
+    margin-right: 2px;
+  }
+  .sh-num {
+    color: var(--gray);
+    font-variant-numeric: tabular-nums;
+    width: 60px;
+  }
+  .sh-open {
+    width: 72px;
+    text-align: right;
+    a {
+      color: var(--secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      background: none;
+      padding: 0;
+    }
+  }
+}
+
+// generate panel
+.sh-generate .sh-drop {
+  border: 1.5px dashed var(--lightgray);
+  border-radius: 12px;
+  padding: 22px 14px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--gray);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+.sh-btn.sh-block {
+  width: 100%;
+  justify-content: center;
+  & + .sh-btn.sh-block {
+    margin-top: 8px;
+  }
+}
+
+// recent list
+.sh-recent {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  li {
+    margin: 0;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--lightgray);
+    font-size: 0.88rem;
+    &:last-child {
+      border-bottom: none;
+    }
+    a {
+      color: var(--darkgray);
+      background: none;
+      padding: 0;
+      &:hover {
+        color: var(--secondary);
+      }
+    }
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════

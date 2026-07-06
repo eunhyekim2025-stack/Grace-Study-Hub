@@ -41,36 +41,35 @@ const config: QuartzConfig = {
       fontOrigin: "googleFonts",
       cdnCaching: true,
       typography: {
-        // Warm editorial theme (Claude design prototype): Lora serif for
-        // headings/titles, Inter for UI/body.
-        header: "Lora",
+        // Slate/blue dashboard theme (Claude design prototype): clean sans UI.
+        header: "Inter",
         body: "Inter",
-        code: "IBM Plex Mono",
+        code: "JetBrains Mono",
       },
       colors: {
-        // "Grace's Study Hub" warm-editorial palette: cream canvas, near-white
-        // surfaces, terracotta accent, tan borders/numbers, warm-brown text.
+        // "Grace's Study Hub" dashboard palette: cool light-gray canvas, white
+        // surfaces, slate text, blue accent, slate-200 borders (Tailwind slate).
         lightMode: {
-          light: "#fdfbf8", // surfaces (cards, sidebar, top bar); canvas cream is set in custom.scss
-          lightgray: "#ece4d6", // warm tan borders
-          gray: "#8a8072", // muted text
-          darkgray: "#3a352c", // body text
-          dark: "#2e2a24", // headings / strong
-          secondary: "#a15d46", // terracotta accent (links, title, buttons)
-          tertiary: "#7d4230", // darker terracotta (hover)
-          highlight: "rgba(211, 169, 140, 0.22)", // tan highlight
-          textHighlight: "#d3a98c55",
+          light: "#ffffff", // surfaces (cards, sidebar, top bar); canvas set in custom.scss
+          lightgray: "#e2e8f0", // slate-200 borders
+          gray: "#64748b", // slate-500 muted text
+          darkgray: "#334155", // slate-700 body text
+          dark: "#1e293b", // slate-800 headings / strong
+          secondary: "#3b82f6", // blue-500 accent (links, buttons, active)
+          tertiary: "#2563eb", // blue-600 hover
+          highlight: "rgba(59, 130, 246, 0.10)",
+          textHighlight: "#3b82f622",
         },
         darkMode: {
-          light: "#211d17",
-          lightgray: "#3a352c",
-          gray: "#9a9084",
-          darkgray: "#e6ddcf",
-          dark: "#f5efe4",
-          secondary: "#d98a6f",
-          tertiary: "#e8b39a",
-          highlight: "rgba(217, 138, 111, 0.15)",
-          textHighlight: "#d98a6f44",
+          light: "#0f172a", // slate-900
+          lightgray: "#334155",
+          gray: "#94a3b8",
+          darkgray: "#cbd5e1",
+          dark: "#f8fafc",
+          secondary: "#60a5fa",
+          tertiary: "#93c5fd",
+          highlight: "rgba(96, 165, 250, 0.15)",
+          textHighlight: "#60a5fa44",
         },
       },
     },

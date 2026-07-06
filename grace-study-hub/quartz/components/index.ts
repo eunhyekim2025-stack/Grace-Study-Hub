@@ -26,6 +26,7 @@ import ConditionalRender from "./ConditionalRender"
 import SubjectNav from "./SubjectNav"
 import TopActions from "./TopActions"
 import AddContentModal from "./AddContentModal"
+import Dashboard from "./Dashboard"
 
 export {
   ArticleTitle,
@@ -56,4 +57,5 @@ export {
   SubjectNav,
   TopActions,
   AddContentModal,
+  Dashboard,
 }
