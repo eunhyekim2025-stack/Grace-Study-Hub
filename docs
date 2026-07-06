@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting...</title>
+  <meta http-equiv="refresh" content="0; url=https://grace-study-hub.vercel.app/">
+  <link rel="canonical" href="https://grace-study-hub.vercel.app/">
+  <script>
+    window.location.replace("https://grace-study-hub.vercel.app/");
+  </script>
+</head>
+<body>
+  <p>Redirecting to <a href="https://grace-study-hub.vercel.app/">Grace Study Hub</a>...</p>
+</body>
+</html>
