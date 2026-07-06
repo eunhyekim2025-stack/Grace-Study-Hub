@@ -7,13 +7,48 @@
 // accent 0.55/.14/250). Cards, pills, rounded controls.
 // ─────────────────────────────────────────────────────────────
 
-// Blue accent + neutral border tokens reused throughout.
+// Terracotta accent + warm neutral tokens reused throughout.
 :root {
   --sh-accent: var(--secondary);
   --sh-accent-soft: var(--highlight);
   --sh-radius: 14px;
   --sh-radius-sm: 10px;
   --sh-topbar-h: 60px;
+  --sh-tan: #d3a98c; // warm tan (card-hover borders, chapter numbers)
+  --sh-canvas: #f5efe4; // cream page canvas (surfaces stay near-white --light)
+}
+
+// ═══════════════════════════════════════════════════════════════
+// WARM EDITORIAL THEME (Claude design prototype)
+// Cream canvas · near-white surfaces · Lora serif headings · tan hovers.
+// ═══════════════════════════════════════════════════════════════
+
+// Cream page canvas; sidebar/top bar/cards keep the near-white surface (--light).
+html,
+body {
+  background: var(--sh-canvas);
+}
+.page > #quartz-body .sidebar.left {
+  background: var(--light);
+}
+
+// Lora serif for headings, site title, and card/note titles.
+article h1,
+article h2,
+article h3,
+article h4,
+article h5,
+.page-title,
+.sh-card-title,
+li.section-li .desc h3 {
+  font-family: var(--headerFont), Georgia, "Times New Roman", serif !important;
+}
+
+// Cards settle onto a tan border (not the accent) on hover, per the prototype.
+li.section-li > .section:hover,
+a.sh-card:hover {
+  border-color: var(--sh-tan) !important;
+  box-shadow: 0 2px 14px rgba(46, 42, 36, 0.06) !important;
 }
 
 // ═══════════════════════════════════════════════════════════════

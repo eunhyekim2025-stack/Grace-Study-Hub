@@ -41,34 +41,36 @@ const config: QuartzConfig = {
       fontOrigin: "googleFonts",
       cdnCaching: true,
       typography: {
-        header: "Inter",
+        // Warm editorial theme (Claude design prototype): Lora serif for
+        // headings/titles, Inter for UI/body.
+        header: "Lora",
         body: "Inter",
         code: "IBM Plex Mono",
       },
       colors: {
-        // "Grace's Study Hub" note-app palette: warm off-white + blue accent
-        // (oklch base: bg 0.99/.003/95, accent 0.55/.14/250), clean system sans.
+        // "Grace's Study Hub" warm-editorial palette: cream canvas, near-white
+        // surfaces, terracotta accent, tan borders/numbers, warm-brown text.
         lightMode: {
-          light: "#fcfcf9",
-          lightgray: "#dfdeda",
-          gray: "#72726e",
-          darkgray: "#2a2926",
-          dark: "#1b1b17",
-          secondary: "#1f74bf",
-          tertiary: "#0465af",
-          highlight: "rgba(31, 116, 191, 0.10)",
-          textHighlight: "#1f74bf22",
+          light: "#fdfbf8", // surfaces (cards, sidebar, top bar); canvas cream is set in custom.scss
+          lightgray: "#ece4d6", // warm tan borders
+          gray: "#8a8072", // muted text
+          darkgray: "#3a352c", // body text
+          dark: "#2e2a24", // headings / strong
+          secondary: "#a15d46", // terracotta accent (links, title, buttons)
+          tertiary: "#7d4230", // darker terracotta (hover)
+          highlight: "rgba(211, 169, 140, 0.22)", // tan highlight
+          textHighlight: "#d3a98c55",
         },
         darkMode: {
-          light: "#1b1b18",
-          lightgray: "#33322d",
-          gray: "#8f8e88",
-          darkgray: "#d9d7cf",
-          dark: "#f5f3ee",
-          secondary: "#5fa8e6",
-          tertiary: "#8cc3f2",
-          highlight: "rgba(95, 168, 230, 0.15)",
-          textHighlight: "#5fa8e644",
+          light: "#211d17",
+          lightgray: "#3a352c",
+          gray: "#9a9084",
+          darkgray: "#e6ddcf",
+          dark: "#f5efe4",
+          secondary: "#d98a6f",
+          tertiary: "#e8b39a",
+          highlight: "rgba(217, 138, 111, 0.15)",
+          textHighlight: "#d98a6f44",
         },
       },
     },
