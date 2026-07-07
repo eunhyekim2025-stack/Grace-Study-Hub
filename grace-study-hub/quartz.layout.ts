@@ -121,6 +121,9 @@ export const defaultContentPageLayout: PageLayout = {
     Component.ArticleTitle(),
     Component.ContentMeta(),
     Component.TagList(),
+    // Subject-page "Auto-Generate" bar + section tabs (renders only on the
+    // subject hub pages listed in subjects.json; no-op elsewhere).
+    Component.SubjectAutoBar(),
   ],
   // Left column = the mockup's "과목(Subjects)" sidebar (All notes → subjects
   // → More → tags). The client-side Explorer tree is retired in favor of this.

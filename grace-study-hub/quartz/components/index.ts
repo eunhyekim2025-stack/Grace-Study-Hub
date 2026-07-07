@@ -27,6 +27,7 @@ import SubjectNav from "./SubjectNav"
 import TopActions from "./TopActions"
 import AddContentModal from "./AddContentModal"
 import Dashboard from "./Dashboard"
+import SubjectAutoBar from "./SubjectAutoBar"
 
 export {
   ArticleTitle,
@@ -58,4 +59,5 @@ export {
   TopActions,
   AddContentModal,
   Dashboard,
+  SubjectAutoBar,
 }

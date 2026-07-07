@@ -41,8 +41,9 @@ const config: QuartzConfig = {
       fontOrigin: "googleFonts",
       cdnCaching: true,
       typography: {
-        // Slate/blue dashboard theme (Claude design prototype): clean sans UI.
-        header: "Inter",
+        // Slate/blue dashboard theme (Claude design prototype): Source Serif 4
+        // for content headings (editorial section titles), Inter for UI/body.
+        header: "Source Serif 4",
         body: "Inter",
         code: "JetBrains Mono",
       },

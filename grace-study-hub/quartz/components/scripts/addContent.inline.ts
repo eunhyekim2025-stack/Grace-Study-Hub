@@ -19,13 +19,20 @@ function setTab(tab: string) {
   })
 }
 
-function openModal(tab: string) {
+function openModal(tab: string, subject?: string) {
   const m = modal()
   if (!m) return
   const pw = document.getElementById("sh-add-pw") as HTMLInputElement | null
   if (pw && !pw.value) pw.value = localStorage.getItem(PW_KEY) || ""
   status("")
   setTab(tab)
+  // Preselect the subject in both note + upload pickers when opened for a subject.
+  if (subject) {
+    ;["sh-note-subject", "sh-file-subject"].forEach((id) => {
+      const sel = document.getElementById(id) as HTMLSelectElement | null
+      if (sel && [...sel.options].some((o) => o.value === subject)) sel.value = subject
+    })
+  }
   m.hidden = false
   document.documentElement.style.overflow = "hidden"
 }
@@ -173,7 +180,7 @@ function onClick(e: MouseEvent) {
   if (!t) return
   if (t.dataset.addOpen !== undefined) {
     e.preventDefault()
-    openModal(t.dataset.addOpen || "note")
+    openModal(t.dataset.addOpen || "note", t.dataset.addSubject || undefined)
   } else if (t.dataset.addClose !== undefined) {
     e.preventDefault()
     closeModal()
