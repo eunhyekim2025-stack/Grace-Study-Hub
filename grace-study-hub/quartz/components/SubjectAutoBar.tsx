@@ -1,5 +1,7 @@
 // @ts-ignore  — subjects data, single source of truth
 import subjectsData from "../../subjects.json"
+// @ts-ignore
+import subjectTabsScript from "./scripts/subjectTabs.inline"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 
 // Subject-page treatment from the "Business Law Subject Page" design:
@@ -62,5 +64,7 @@ const SubjectAutoBar: QuartzComponent = ({ fileData, allFiles }: QuartzComponent
     </div>
   )
 }
+
+SubjectAutoBar.afterDOMLoaded = subjectTabsScript
 
 export default (() => SubjectAutoBar) satisfies QuartzComponentConstructor
