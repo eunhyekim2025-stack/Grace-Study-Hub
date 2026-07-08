@@ -931,11 +931,21 @@ a.tag-link,
   // keep content readable; cards are for listings, prose stays airy
 }
 
-// ── Blockquotes / callouts pick up the blue accent ─────────────
-blockquote {
+// ── Blockquotes → clean slate callout cards (203 across the wiki) ─
+.center article blockquote {
   border-left: 3px solid var(--sh-accent) !important;
   border-radius: 0 var(--sh-radius-sm) var(--sh-radius-sm) 0;
-  background: var(--highlight);
+  background: color-mix(in srgb, var(--secondary) 6%, var(--light));
+  padding: 12px 18px;
+  margin: 1.1rem 0;
+  color: var(--darkgray);
+
+  & > :first-child {
+    margin-top: 0;
+  }
+  & > :last-child {
+    margin-bottom: 0;
+  }
 }
 
 // ── Code blocks: rounded to match the app language ─────────────
@@ -1091,4 +1101,323 @@ a.sh-subjtab {
 }
 .center article table tbody tr:hover td {
   background: color-mix(in srgb, var(--secondary) 4%, transparent);
+}
+
+// ── Note "Diagram view": embedded concept-map + Text/Diagram toggle ──
+// (Negligence Note design). The diagram carries its own inline styles;
+// here we only style the toggle bar and give the block room to breathe.
+.dc-toolbar,
+.neg-toolbar {
+  display: flex;
+  gap: 8px;
+  margin: 4px 0 18px;
+}
+.dc-vbtn,
+.neg-vbtn {
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--lightgray);
+  background: #f1f5f9;
+  color: var(--darkgray);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--highlight);
+  }
+  &.active {
+    background: var(--secondary);
+    border-color: var(--secondary);
+    color: #fff;
+  }
+}
+.dc-view,
+.neg-diagram {
+  margin: 0 0 1rem;
+  // custom-view cards use the full content width; links aren't chip-styled here
+  a {
+    background: none;
+    padding: 0;
+  }
+}
+:root[saved-theme="dark"] .dc-vbtn,
+:root[saved-theme="dark"] .neg-vbtn {
+  background: var(--lightgray);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UNIVERSAL NOTE READABILITY (applies to all 123 notes; no content edits)
+// Consistent slate/serif treatment for prose, lists, code, math, rules.
+// ═══════════════════════════════════════════════════════════════
+.center article {
+  // comfortable reading measure + rhythm
+  p,
+  li {
+    line-height: 1.7;
+  }
+  p {
+    margin: 0.75rem 0;
+  }
+
+  // heading rhythm (serif headings already set earlier)
+  h2 {
+    margin-top: 2rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--lightgray);
+  }
+  h3 {
+    margin-top: 1.4rem;
+    color: var(--darkgray);
+  }
+
+  // lists: breathing room, subtle markers
+  ul,
+  ol {
+    padding-left: 1.35rem;
+  }
+  li {
+    margin: 0.3rem 0;
+  }
+  li::marker {
+    color: var(--gray);
+  }
+
+  // inline code → subtle slate pill (JetBrains Mono)
+  :not(pre) > code {
+    font-family: var(--codeFont), "JetBrains Mono", monospace;
+    font-size: 0.85em;
+    background: color-mix(in srgb, var(--secondary) 8%, var(--sh-canvas));
+    color: var(--tertiary);
+    padding: 0.12em 0.4em;
+    border-radius: 5px;
+  }
+
+  // code blocks: card-like, comfortable
+  pre {
+    border: 1px solid var(--lightgray);
+    padding: 14px 16px;
+    line-height: 1.55;
+    overflow-x: auto;
+  }
+
+  // KaTeX display math: room to breathe + horizontal scroll for wide formulas
+  .katex-display {
+    margin: 1.2rem 0;
+    padding: 4px 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  // horizontal rules: quiet section breaks
+  hr {
+    border: none;
+    border-top: 1px solid var(--lightgray);
+    margin: 2rem 0;
+  }
+
+  // strong emphasis picks up the ink color for scannability
+  strong {
+    color: var(--dark);
+    font-weight: 700;
+  }
+
+  // first heading hugs the top
+  & > h1:first-child,
+  & > h2:first-child {
+    margin-top: 0.2rem;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NOTE DESIGN KIT — reusable building blocks for custom "Diagram view"s.
+// Author a  <div class="dc-view"> … </div>  block in any note using these
+// classes; the Text/Diagram toggle appears automatically (noteView.inline.ts).
+// See grace-study-hub/NOTE-DESIGN-KIT.md for the authoring guide.
+// ═══════════════════════════════════════════════════════════════
+.dc-view {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  // page header
+  .dc-title {
+    font-family: var(--headerFont), "Source Serif 4", Georgia, serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin: 0;
+  }
+  .dc-sub {
+    color: var(--gray);
+    font-size: 0.95rem;
+    margin: 4px 0 0;
+    line-height: 1.6;
+  }
+
+  // small uppercase label
+  .dc-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--secondary);
+  }
+
+  // generic card
+  .dc-card {
+    background: var(--light);
+    border: 1px solid var(--lightgray);
+    border-radius: 14px;
+    padding: 18px 22px;
+  }
+
+  // numbered section header (circle + serif title + optional note)
+  .dc-section {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin: 6px 0 2px;
+
+    .dc-num {
+      flex: 0 0 auto;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--secondary);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      align-self: center;
+    }
+    h2,
+    h3 {
+      font-family: var(--headerFont), serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin: 0;
+      border: none;
+      padding: 0;
+    }
+    .dc-hint {
+      font-size: 0.82rem;
+      color: var(--gray);
+    }
+  }
+
+  // horizontal flow: steps separated by arrows
+  .dc-flow {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    .dc-step {
+      flex: 1 1 0;
+      min-width: 150px;
+      background: var(--light);
+      border: 1px solid var(--lightgray);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+    }
+    .dc-step-n {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--secondary);
+      color: #fff;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+    .dc-step-t {
+      font-weight: 700;
+      color: var(--dark);
+      font-size: 0.95rem;
+    }
+    .dc-step-d {
+      color: var(--gray);
+      font-size: 0.8rem;
+      margin-top: 3px;
+    }
+    .dc-arrow {
+      align-self: center;
+      color: var(--gray);
+      font-size: 1.1rem;
+      flex: 0 0 auto;
+    }
+  }
+
+  // equal-width column grid (2 / 3 / 4 up)
+  .dc-cols {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .dc-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .dc-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media all and (max-width: 720px) {
+    .dc-cols,
+    .dc-cols-3,
+    .dc-cols-4 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // tinted callout (info by default; .warn / .ok variants)
+  .dc-callout {
+    border-left: 3px solid var(--secondary);
+    background: color-mix(in srgb, var(--secondary) 7%, var(--light));
+    border-radius: 0 10px 10px 0;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    color: var(--darkgray);
+    line-height: 1.6;
+
+    &.warn {
+      border-left-color: #d97706;
+      background: color-mix(in srgb, #d97706 8%, var(--light));
+    }
+    &.ok {
+      border-left-color: #2e7d4f;
+      background: color-mix(in srgb, #2e7d4f 8%, var(--light));
+    }
+  }
+
+  // inline chip — e.g. a case citation
+  .dc-chip {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--secondary) 12%, transparent);
+    color: var(--tertiary);
+    font-size: 0.82rem;
+    font-weight: 600;
+    white-space: nowrap;
+
+    &.amber {
+      background: color-mix(in srgb, #d97706 14%, transparent);
+      color: #b45309;
+    }
+  }
+}
+:root[saved-theme="dark"] .dc-view .dc-step,
+:root[saved-theme="dark"] .dc-view .dc-card {
+  background: color-mix(in srgb, var(--light) 92%, #fff);
 }

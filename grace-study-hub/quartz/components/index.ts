@@ -28,6 +28,7 @@ import TopActions from "./TopActions"
 import AddContentModal from "./AddContentModal"
 import Dashboard from "./Dashboard"
 import SubjectAutoBar from "./SubjectAutoBar"
+import NoteViewToggle from "./NoteViewToggle"
 
 export {
   ArticleTitle,
@@ -60,4 +61,5 @@ export {
   AddContentModal,
   Dashboard,
   SubjectAutoBar,
+  NoteViewToggle,
 }
