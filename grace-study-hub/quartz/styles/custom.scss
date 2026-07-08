@@ -1053,8 +1053,8 @@ a.sh-subjtab {
 }
 
 // ── Content tables: refined slate cards (Subject Page design) ──
-// Rounded bordered container, quiet uppercase header, thin row rules,
-// monospace first column (chapter numbers).
+// Rounded bordered container, quiet uppercase header, thin row rules.
+// Column-agnostic: works for numeric chapter tables and page-name tables alike.
 .center article table {
   width: 100%;
   border-collapse: separate;
@@ -1091,17 +1091,4 @@ a.sh-subjtab {
 }
 .center article table tbody tr:hover td {
   background: color-mix(in srgb, var(--secondary) 4%, transparent);
-}
-// first column = chapter numbers → mono, muted (matches the "06" look)
-.center article table td:first-child {
-  font-family: var(--codeFont), "JetBrains Mono", monospace;
-  font-size: 0.78rem;
-  color: var(--gray);
-  white-space: nowrap;
-  width: 1%;
-}
-// second column = chapter title → emphasized
-.center article table td:nth-child(2) {
-  font-weight: 600;
-  color: var(--dark);
 }
