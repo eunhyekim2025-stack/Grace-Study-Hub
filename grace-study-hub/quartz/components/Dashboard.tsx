@@ -1,5 +1,7 @@
 // @ts-ignore  — subjects data, single source of truth
 import subjectsData from "../../subjects.json"
+// @ts-ignore
+import greetingScript from "./scripts/greeting.inline"
 import { FullSlug, resolveRelative } from "../util/path"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { classNames } from "../util/lang"
@@ -38,7 +40,7 @@ const Dashboard: QuartzComponent = ({ fileData, allFiles, displayClass }: Quartz
   return (
     <div class={classNames(displayClass, "sh-dash")}>
       <div class="sh-dash-head">
-        <h1>Good morning, Grace ☀️</h1>
+        <h1 id="sh-greeting">Hello, Grace 👋</h1>
         <p>
           {total} notes across {SUBJECTS.length} subjects — pick one to drill in.
         </p>
@@ -120,5 +122,7 @@ const Dashboard: QuartzComponent = ({ fileData, allFiles, displayClass }: Quartz
     </div>
   )
 }
+
+Dashboard.afterDOMLoaded = greetingScript
 
 export default (() => Dashboard) satisfies QuartzComponentConstructor
