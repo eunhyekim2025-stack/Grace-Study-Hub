@@ -22,6 +22,9 @@
 # 4b) Allow the serverless function that adds notes/files from the site
 !/api
 
+# 4c) Allow the /docs folder — GitHub Pages serves it as a redirect to Vercel
+!/docs
+
 # 5) Never commit OS cruft anywhere in the tree
 .DS_Store
 .vercel
