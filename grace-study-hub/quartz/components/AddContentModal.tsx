@@ -43,7 +43,7 @@ const AddContentModal: QuartzComponent = (_: QuartzComponentProps) => {
           </button>
         </div>
 
-        <div class="sh-field">
+        <div class="sh-field" id="sh-pw-field">
           <label for="sh-add-pw">추가 비밀번호</label>
           <input id="sh-add-pw" class="sh-input" type="password" placeholder="한 번 입력하면 기억됩니다" />
         </div>

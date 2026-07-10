@@ -8,6 +8,26 @@ function modal(): HTMLElement | null {
   return document.getElementById("sh-add-modal")
 }
 
+// The "추가 비밀번호" field only appears when we DON'T have a remembered secret
+// (first use on this browser, or after a wrong-password failure). Once a save
+// succeeds the secret is stored and the field stays hidden.
+function syncPwField() {
+  const field = document.getElementById("sh-pw-field")
+  if (!field) return
+  field.hidden = !!localStorage.getItem(PW_KEY)
+}
+
+function revealPwField() {
+  localStorage.removeItem(PW_KEY)
+  const field = document.getElementById("sh-pw-field")
+  if (field) field.hidden = false
+  const pw = document.getElementById("sh-add-pw") as HTMLInputElement | null
+  if (pw) {
+    pw.value = ""
+    pw.focus()
+  }
+}
+
 function setTab(tab: string) {
   const m = modal()
   if (!m) return
@@ -24,6 +44,7 @@ function openModal(tab: string, subject?: string) {
   if (!m) return
   const pw = document.getElementById("sh-add-pw") as HTMLInputElement | null
   if (pw && !pw.value) pw.value = localStorage.getItem(PW_KEY) || ""
+  syncPwField()
   status("")
   setTab(tab)
   // Preselect the subject in both note + upload pickers when opened for a subject.
@@ -76,10 +97,12 @@ async function post(payload: Record<string, unknown>, btn: HTMLButtonElement, po
     })
     const data = await res.json().catch(() => ({}))
     if (!res.ok) {
+      if (res.status === 401) revealPwField()
       status("실패: " + (data.error || res.status), "err")
       return
     }
     localStorage.setItem(PW_KEY, password)
+    syncPwField()
     status("저장됨 → " + (data.path || "") + " · 1–2분 뒤 사이트에 반영됩니다.", "ok")
     // clear the note fields so the next add starts fresh
     ;["sh-note-title", "sh-note-tags", "sh-note-content"].forEach((id) => {
@@ -131,10 +154,12 @@ async function postTo(endpoint: string, payload: Record<string, unknown>, btn: H
     })
     const data = await res.json().catch(() => ({}))
     if (!res.ok) {
+      if (res.status === 401) revealPwField()
       status("실패: " + (data.error || res.status), "err")
       return
     }
     localStorage.setItem(PW_KEY, password)
+    syncPwField()
     return data
   } catch (e) {
     status("네트워크 오류. 배포된 사이트에서 시도하세요.", "err")
