@@ -63,8 +63,15 @@ const AddContentModal: QuartzComponent = (_: QuartzComponentProps) => {
           </div>
           <div class="sh-field">
             <label for="sh-note-content">내용</label>
-            <textarea id="sh-note-content" class="sh-input" rows={8} placeholder="마크다운으로 작성하세요…"></textarea>
+            <textarea id="sh-note-content" class="sh-input" rows={8} placeholder="마크다운으로 작성하거나, NotebookLM 요약을 그대로 붙여넣으세요…"></textarea>
           </div>
+          <label class="sh-check">
+            <input type="checkbox" id="sh-note-polish" checked />
+            <span>
+              <b>🪄 NotebookLM 붙여넣기 정리</b>
+              <small>붙여넣은 요약을 AI가 사이트 스타일(제목·목록·표·콜아웃)로 다듬어요. 내용은 그대로 두고 형식만 정리합니다.</small>
+            </span>
+          </label>
           <div class="sh-modal-actions">
             <button class="sh-btn sh-btn-new" data-add-submit="note">노트 저장</button>
             <button class="sh-btn sh-btn-ghost" data-add-close>취소</button>

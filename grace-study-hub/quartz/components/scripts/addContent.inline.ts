@@ -56,14 +56,18 @@ function val(id: string): string {
   return el ? el.value : ""
 }
 
-async function post(payload: Record<string, unknown>, btn: HTMLButtonElement) {
+async function post(payload: Record<string, unknown>, btn: HTMLButtonElement, polish = false) {
   const password = val("sh-add-pw").trim()
   if (!password) {
     status("비밀번호를 입력하세요.", "err")
     return
   }
   btn.disabled = true
-  status("저장 중… (사이트가 1–2분 뒤 재배포됩니다)")
+  status(
+    polish
+      ? "AI가 정리하는 중… (10~30초, 사이트는 1–2분 뒤 재배포됩니다)"
+      : "저장 중… (사이트가 1–2분 뒤 재배포됩니다)",
+  )
   try {
     const res = await fetch("/api/add", {
       method: "POST",
@@ -98,9 +102,11 @@ function submitNote(btn: HTMLButtonElement) {
     status("제목과 내용을 입력하세요.", "err")
     return
   }
+  const polish = checked("sh-note-polish")
   post(
-    { type: "note", title, subject: val("sh-note-subject"), tags: val("sh-note-tags"), content },
+    { type: "note", title, subject: val("sh-note-subject"), tags: val("sh-note-tags"), content, polish },
     btn,
+    polish,
   )
 }
 
