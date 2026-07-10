@@ -358,3 +358,10 @@ community: 1
 - Content folder `ops-concepts/` with seed [[ops-concepts/README]]; hub [[operations-management]] (kind 주제, Content → Sources — concepts only, no sources yet).
 - Registered across all three presentation layers: index.md Subjects row (after Financial Accounting), Explorer label + rank 35 in grace-study-hub/quartz.layout.ts (keeps it in the academic block between fa=30 and cross-domain=40), and ontology ENTITY_TYPES `ops-concepts`→`OpsConcept`.
 - graph-sync/analyze/viz/dashboard rerun; new pages picked up metrics. Explorer change needs a site restart to render.
+
+## [2026-07-10] data | Add Company Analytics section (M2 — financial snapshots)
+- Request: build M2 of the company-analytics platform (metrics + dashboard) and save results into the wiki so they're visible.
+- Pipeline lives in the repo at `company-analytics/` (SQLite + yfinance, provenance-aware schema; every value tagged with source/trust so more reliable data can override yfinance later). Computes revenue, margins, ROE/ROA, YoY growth, EPS, debt/equity, FCF.
+- Exported [[companies/companies]] (MOC) + per-company snapshots [[companies/d05-si]] (DBS), [[companies/o39-si]] (OCBC), [[companies/z74-si]] (Singtel) — frontmatter + callouts + metric tables with unicode sparkline trends.
+- Registered a "📈 Company Analytics" card in index.md Subjects grid. Data-only section; intentionally NOT wired into the graph ontology (these are external financial snapshots, not knowledge concepts).
+- Source is yfinance (lowest trust); annual coverage solid for SGX banks, quarterly patchy (DBS quarterly cashflow missing, Singtel quarterly income/cashflow missing).
