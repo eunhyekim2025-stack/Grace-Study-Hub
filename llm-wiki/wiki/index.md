@@ -17,6 +17,7 @@ Study Hub — **pick a subject.** Inside each subject you drill down: *content �
 <a class="sh-card" href="./financial-accounting"><span class="sh-card-dot" style="--sh-dot: oklch(0.62 0.15 85)"></span><span class="sh-card-title">💰 Financial Accounting</span><span class="sh-card-desc">Concepts · Sources</span></a>
 <a class="sh-card" href="./operations-management"><span class="sh-card-dot" style="--sh-dot: oklch(0.62 0.15 25)"></span><span class="sh-card-title">⚙️ Operations Management</span><span class="sh-card-desc">Concepts · Sources</span></a>
 <a class="sh-card" href="./companies/companies"><span class="sh-card-dot" style="--sh-dot: oklch(0.62 0.15 200)"></span><span class="sh-card-title">📈 Company Analytics</span><span class="sh-card-desc">SGX financial snapshots · metrics · yfinance pipeline</span></a>
+<a class="sh-card" href="./management-accounting"><span class="sh-card-dot" style="--sh-dot: oklch(0.62 0.15 180)"></span><span class="sh-card-title">📓 Management accounting</span><span class="sh-card-desc">Overview · Quiz</span></a>
 <!-- add-subject-cards -->
 </div>
 
