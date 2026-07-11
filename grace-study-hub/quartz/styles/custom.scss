@@ -70,7 +70,8 @@ body[data-slug="index"] {
 }
 
 .sh-dash {
-  max-width: 1080px;
+  // Fill wide screens; cap keeps stat cards from stretching absurdly on ultrawide.
+  max-width: 1400px;
 }
 .sh-dash-head {
   margin: 0 0 22px;
@@ -349,7 +350,9 @@ body[data-slug="index"] {
 }
 @media all and (min-width: 800px) {
   .page > #quartz-body {
-    grid-template-columns: var(--sh-side-w) auto !important;
+    // minmax(0, 1fr) (not `auto`) so the content column always absorbs the
+    // remaining width — including the space freed when the sidebar collapses.
+    grid-template-columns: var(--sh-side-w) minmax(0, 1fr) !important;
     transition: grid-template-columns 0.28s ease;
   }
   html.sh-side-collapsed {
@@ -362,9 +365,11 @@ body[data-slug="index"] {
     overflow: hidden;
     border-right: none;
   }
-  // Breathing room so the content doesn't hug the left edge once expanded.
-  html.sh-side-collapsed .page > #quartz-body .center {
-    padding-left: 28px;
+  // Consistent side gutters so content never hugs the sidebar border or the
+  // window's right edge — applies whether the sidebar is open or collapsed.
+  .page > #quartz-body .center {
+    padding-left: 32px;
+    padding-right: 44px;
   }
 }
 // Suppress the open/close animation while restoring the saved state on load.
