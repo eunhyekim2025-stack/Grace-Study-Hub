@@ -340,6 +340,69 @@ body[data-slug="index"] {
   }
 }
 
+// ── Collapsible left sidebar ───────────────────────────────────
+// The subjects column width follows a CSS variable so the top-bar hamburger
+// (SidebarToggle) can shrink it to 0; the content's `auto` track then reflows
+// to fill the freed space. Desktop/tablet only — mobile stacks as before.
+:root {
+  --sh-side-w: 320px;
+}
+@media all and (min-width: 800px) {
+  .page > #quartz-body {
+    grid-template-columns: var(--sh-side-w) auto !important;
+    transition: grid-template-columns 0.28s ease;
+  }
+  html.sh-side-collapsed {
+    --sh-side-w: 0px;
+  }
+  html.sh-side-collapsed .page > #quartz-body .sidebar.left {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    overflow: hidden;
+    border-right: none;
+  }
+  // Breathing room so the content doesn't hug the left edge once expanded.
+  html.sh-side-collapsed .page > #quartz-body .center {
+    padding-left: 28px;
+  }
+}
+// Suppress the open/close animation while restoring the saved state on load.
+html.sh-side-notransition .page > #quartz-body {
+  transition: none !important;
+}
+
+// Top-bar hamburger toggle
+.sh-side-toggle {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  border-radius: 9px;
+  background: var(--light);
+  color: var(--darkgray);
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+
+  &:hover {
+    background: color-mix(in srgb, var(--secondary) 8%, var(--light));
+    color: var(--secondary);
+    border-color: color-mix(in srgb, var(--secondary) 40%, var(--lightgray));
+  }
+}
+html.sh-side-collapsed .sh-side-toggle {
+  background: color-mix(in srgb, var(--secondary) 12%, var(--light));
+  color: var(--secondary);
+  border-color: color-mix(in srgb, var(--secondary) 45%, var(--lightgray));
+}
+
 // System-sans everywhere for the app-like feel; Inter loads as the
 // configured font and falls back to the native UI stack.
 body {

@@ -84,6 +84,7 @@ export const sharedPageComponents: SharedLayout = {
   // G-logo wordmark on the left, a growing search box in the middle, and the
   // dark-mode / reader-mode toggles on the right. Styled in custom.scss.
   header: [
+    Component.SidebarToggle(),
     Component.PageTitle(),
     Component.Flex({
       components: [

@@ -29,6 +29,7 @@ import AddContentModal from "./AddContentModal"
 import Dashboard from "./Dashboard"
 import SubjectAutoBar from "./SubjectAutoBar"
 import NoteViewToggle from "./NoteViewToggle"
+import SidebarToggle from "./SidebarToggle"
 
 export {
   ArticleTitle,
@@ -62,4 +63,5 @@ export {
   Dashboard,
   SubjectAutoBar,
   NoteViewToggle,
+  SidebarToggle,
 }
