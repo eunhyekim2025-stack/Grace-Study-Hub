@@ -232,10 +232,230 @@ function initFromHash() {
   else if (location.hash === "#subject") openModal("subject")
 }
 
+// ── In-site recorder: long lecture → chunked transcription → note ──────────
+// Record straight in the browser, rotate into ~2-minute segments (each a valid
+// file Whisper can read), transcribe each via /api/transcribe as it finishes,
+// then stitch the transcript and POST to /api/add with mode:"lecture".
+const SEG_MS = 120000 // 2-minute segments
+const REC: {
+  active: boolean
+  rec: MediaRecorder | null
+  stream: MediaStream | null
+  chunks: Blob[]
+  segIndex: number
+  jobs: Promise<{ i: number; text: string }>[]
+  mime: string
+  startedAt: number
+  rotate: number
+  tick: number
+} = {
+  active: false,
+  rec: null,
+  stream: null,
+  chunks: [],
+  segIndex: 0,
+  jobs: [],
+  mime: "",
+  startedAt: 0,
+  rotate: 0,
+  tick: 0,
+}
+
+function recStatus(msg: string, kind: "" | "ok" | "err" = "") {
+  const el = document.getElementById("sh-rec-status")
+  if (el) el.className = "sh-rec-status" + (kind ? " " + kind : "")
+  if (el) el.textContent = msg
+}
+
+function clock(ms: number): string {
+  const s = Math.floor(ms / 1000)
+  return `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`
+}
+
+function pickMime(): string {
+  const MR = (window as unknown as { MediaRecorder?: typeof MediaRecorder }).MediaRecorder
+  const opts = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/ogg;codecs=opus"]
+  for (const t of opts) if (MR?.isTypeSupported?.(t)) return t
+  return ""
+}
+
+function toggleRecUI(on: boolean) {
+  const start = document.querySelector<HTMLElement>("[data-rec-start]")
+  const stop = document.querySelector<HTMLElement>("[data-rec-stop]")
+  if (start) start.hidden = on
+  if (stop) stop.hidden = !on
+  const title = document.getElementById("sh-rec-title") as HTMLInputElement | null
+  if (title) title.disabled = on
+}
+
+function transcribeBlob(blob: Blob, i: number, password: string): Promise<{ i: number; text: string }> {
+  return new Promise((resolve) => {
+    const reader = new FileReader()
+    reader.onload = async () => {
+      const audioBase64 = String(reader.result).split(",")[1] || ""
+      try {
+        const res = await fetch("/api/transcribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ audioBase64, mimeType: blob.type, password }),
+        })
+        const data = await res.json().catch(() => ({}))
+        if (!res.ok) {
+          recStatus("전사 실패: " + (data.error || res.status), "err")
+          resolve({ i, text: "" })
+          return
+        }
+        resolve({ i, text: data.text || "" })
+      } catch {
+        resolve({ i, text: "" })
+      }
+    }
+    reader.onerror = () => resolve({ i, text: "" })
+    reader.readAsDataURL(blob)
+  })
+}
+
+function startSegment(password: string) {
+  const opts: MediaRecorderOptions = { audioBitsPerSecond: 32000 }
+  if (REC.mime) opts.mimeType = REC.mime
+  const rec = new MediaRecorder(REC.stream as MediaStream, opts)
+  REC.chunks = []
+  rec.ondataavailable = (e) => {
+    if (e.data && e.data.size) REC.chunks.push(e.data)
+  }
+  rec.onstop = () => {
+    const blob = new Blob(REC.chunks, { type: REC.mime || "audio/webm" })
+    if (blob.size > 0) {
+      const i = REC.segIndex++
+      REC.jobs.push(transcribeBlob(blob, i, password))
+    }
+  }
+  rec.start()
+  REC.rec = rec
+}
+
+async function startRecording() {
+  if (REC.active) return
+  const password = (val("sh-add-pw") || localStorage.getItem(PW_KEY) || "").trim()
+  if (!password) {
+    const field = document.getElementById("sh-pw-field")
+    if (field) field.hidden = false
+    recStatus("먼저 추가 비밀번호를 입력하세요.", "err")
+    return
+  }
+  if (!val("sh-rec-title").trim()) {
+    recStatus("노트 제목을 입력하세요.", "err")
+    return
+  }
+  const md = navigator.mediaDevices
+  if (!md || !md.getUserMedia || typeof MediaRecorder === "undefined") {
+    recStatus("이 브라우저는 녹음을 지원하지 않아요.", "err")
+    return
+  }
+  try {
+    REC.stream = await md.getUserMedia({ audio: true })
+  } catch {
+    recStatus("마이크 권한이 필요합니다. 브라우저 권한을 허용해 주세요.", "err")
+    return
+  }
+  REC.mime = pickMime()
+  REC.active = true
+  REC.segIndex = 0
+  REC.jobs = []
+  REC.startedAt = Date.now()
+  toggleRecUI(true)
+  startSegment(password)
+  REC.rotate = window.setInterval(() => {
+    if (REC.rec && REC.rec.state !== "inactive") REC.rec.stop()
+    startSegment(password)
+  }, SEG_MS)
+  REC.tick = window.setInterval(() => {
+    recStatus(`🔴 녹음 중 ${clock(Date.now() - REC.startedAt)} · 전사 대기 ${REC.jobs.length}조각`)
+  }, 1000)
+}
+
+async function stopRecording() {
+  if (!REC.active) return
+  const password = (val("sh-add-pw") || localStorage.getItem(PW_KEY) || "").trim()
+  REC.active = false
+  clearInterval(REC.rotate)
+  clearInterval(REC.tick)
+  if (REC.rec && REC.rec.state !== "inactive") {
+    await new Promise<void>((r) => {
+      REC.rec!.addEventListener("stop", () => r(), { once: true })
+      REC.rec!.stop()
+    })
+  }
+  REC.stream?.getTracks().forEach((t) => t.stop())
+  toggleRecUI(false)
+
+  const total = REC.jobs.length
+  if (!total) {
+    recStatus("녹음된 내용이 없습니다.", "err")
+    return
+  }
+  let done = 0
+  recStatus(`전사 중… (0/${total})`)
+  const results = await Promise.all(
+    REC.jobs.map((p) =>
+      p.then((r) => {
+        done++
+        recStatus(`전사 중… (${done}/${total})`)
+        return r
+      }),
+    ),
+  )
+  const transcript = results
+    .sort((a, b) => a.i - b.i)
+    .map((r) => r.text)
+    .filter(Boolean)
+    .join(" ")
+    .trim()
+  if (!transcript) {
+    recStatus("전사 결과가 비었습니다. Vercel의 GROQ_API_KEY를 확인하세요.", "err")
+    return
+  }
+  recStatus("정리 중… 강의 노트를 만들고 있어요 (10~40초)")
+  try {
+    const res = await fetch("/api/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        type: "note",
+        title: val("sh-rec-title").trim(),
+        subject: val("sh-file-subject"),
+        tags: "lecture, 녹음",
+        content: transcript,
+        mode: "lecture",
+        password,
+      }),
+    })
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok) {
+      recStatus("저장 실패: " + (data.error || res.status), "err")
+      return
+    }
+    localStorage.setItem(PW_KEY, password)
+    syncPwField()
+    recStatus("저장됨 → " + (data.path || "") + " · 1–2분 뒤 사이트에 반영됩니다.", "ok")
+    const t = document.getElementById("sh-rec-title") as HTMLInputElement | null
+    if (t) t.value = ""
+  } catch {
+    recStatus("네트워크 오류. 배포된 사이트에서 시도하세요.", "err")
+  }
+}
+
 const w = window as unknown as { __shAddInit?: boolean }
 if (!w.__shAddInit) {
   w.__shAddInit = true
   document.addEventListener("click", onClick)
+  document.addEventListener("click", (e) => {
+    const el = (e.target as HTMLElement)?.closest("[data-rec-start],[data-rec-stop]")
+    if (!el) return
+    e.preventDefault()
+    if (el.hasAttribute("data-rec-start")) startRecording()
+    else stopRecording()
+  })
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeModal()
   })

@@ -678,6 +678,9 @@ a.sh-tag {
   gap: 8px;
   flex: 0 0 auto;
 }
+.sh-btn[hidden] {
+  display: none !important;
+}
 .sh-btn {
   display: inline-flex;
   align-items: center;
@@ -857,6 +860,81 @@ textarea.sh-input {
   &:empty {
     display: none;
   }
+}
+
+// ── In-site recorder (upload tab) ──────────────────────────────
+.sh-rec {
+  border: 1px solid var(--lightgray);
+  border-radius: var(--sh-radius, 12px);
+  background: color-mix(in srgb, var(--secondary) 4%, var(--light));
+  padding: 14px 16px 12px;
+  margin-bottom: 12px;
+}
+.sh-rec-head {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 10px;
+}
+.sh-rec-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+.sh-btn-rec {
+  background: oklch(0.55 0.18 25);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+
+  &:hover {
+    background: oklch(0.5 0.19 25);
+  }
+}
+.sh-btn-rec-stop {
+  background: var(--dark);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  animation: sh-rec-pulse 1.4s ease-in-out infinite;
+
+  &:hover {
+    background: #000;
+  }
+}
+@keyframes sh-rec-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, oklch(0.55 0.18 25) 55%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 5px transparent;
+  }
+}
+.sh-rec-status {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--darkgray);
+  word-break: break-word;
+
+  &.ok {
+    color: oklch(0.55 0.13 150);
+  }
+  &.err {
+    color: oklch(0.55 0.16 25);
+  }
+  &:empty {
+    display: none;
+  }
+}
+.sh-rec-or {
+  text-align: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin: 4px 0 12px;
 }
 
 // ── Subject cards on the index (mockup note-card grid) ─────────

@@ -83,14 +83,37 @@ const AddContentModal: QuartzComponent = (_: QuartzComponentProps) => {
             <label for="sh-file-subject">과목</label>
             <Subjects id="sh-file-subject" />
           </div>
+
+          {/* ① Record right here — chunked transcription → auto lecture note */}
+          <div class="sh-rec">
+            <div class="sh-rec-head">🔴 사이트에서 녹음 → 강의 노트 자동 생성</div>
+            <div class="sh-field">
+              <label for="sh-rec-title">노트 제목</label>
+              <input id="sh-rec-title" class="sh-input" placeholder="예: 계약법 3주차 강의" />
+            </div>
+            <div class="sh-rec-controls">
+              <button class="sh-btn sh-btn-rec" data-rec-start>
+                🔴 녹음 시작
+              </button>
+              <button class="sh-btn sh-btn-rec-stop" data-rec-stop hidden>
+                ■ 정지 &amp; 노트 생성
+              </button>
+            </div>
+            <div class="sh-rec-status" id="sh-rec-status"></div>
+            <p class="sh-modal-hint">
+              긴 강의도 2분 단위로 나눠 자동 전사 후 하나의 노트로 정리해요. 마이크 권한이 필요하고,
+              Vercel에 <b>GROQ_API_KEY</b>가 설정돼 있어야 합니다.
+            </p>
+          </div>
+
+          <div class="sh-rec-or">또는</div>
+
+          {/* ② Upload an existing file */}
           <div class="sh-field">
-            <label for="sh-file-input">파일</label>
+            <label for="sh-file-input">파일 업로드</label>
             <input id="sh-file-input" class="sh-input" type="file" />
           </div>
-          <p class="sh-modal-hint">
-            PDF · 이미지 · 오디오 파일 등을 올릴 수 있어요. 오디오 <b>자동 전사</b>는 기존 iCloud
-            파이프라인을 사용하세요.
-          </p>
+          <p class="sh-modal-hint">PDF · 이미지 · 오디오 파일 등을 그대로 올릴 수 있어요.</p>
           <div class="sh-modal-actions">
             <button class="sh-btn sh-btn-new" data-add-submit="file">업로드</button>
             <button class="sh-btn sh-btn-ghost" data-add-close>취소</button>

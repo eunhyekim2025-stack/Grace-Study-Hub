@@ -32,26 +32,45 @@ const slugify = (s) =>
     .replace(/^-+|-+$/g, "")
     .slice(0, 80) || "note"
 
-// ①  NotebookLM → Study Hub: reformat a pasted summary into clean, site-styled
-// Markdown WITHOUT inventing facts. Formatting-only pass. Returns the polished
-// body (no frontmatter, no top-level "#" title). Falls back to the raw text if
-// GROQ_API_KEY is missing or the call fails, so a note is never lost.
-async function polishNote(title, raw, apiKey) {
+// AI note generation. Two modes, both returning a Markdown BODY (no frontmatter,
+// no top-level "#" title) and both falling back to the raw text if GROQ_API_KEY
+// is missing or the call fails, so a note is never lost:
+//   "tidy"    — ① NotebookLM paste: reformat only, invent nothing.
+//   "lecture" — 🔴 in-site recording: turn a rough speech transcript into
+//               well-structured study notes (summarize + organize).
+async function noteFromText(title, raw, apiKey, mode = "tidy") {
   if (!apiKey) return raw
-  const prompt =
-    `You are formatting a study note for a Quartz markdown wiki. The note is titled ` +
-    `"${title}". Below is raw text pasted from NotebookLM (a summary/notes). ` +
-    `Your job is to RESTRUCTURE and CLEAN UP the formatting ONLY — do not add, ` +
-    `remove, or invent any facts, and keep the SAME LANGUAGE as the input.\n\n` +
-    `Rules:\n` +
-    `- Output GitHub-flavored Markdown for the note BODY only. Do NOT include ` +
-    `frontmatter or a top-level "# title" (those are added separately).\n` +
-    `- Organize with "##"/"###" headings, tidy bullet/numbered lists.\n` +
-    `- Turn key definitions or warnings into "> " blockquote callouts.\n` +
-    `- Use a Markdown table when the text compares items or lists key/value pairs.\n` +
-    `- Keep it faithful and concise; fix obvious spacing/OCR artifacts only.\n` +
-    `- Respond with ONLY the Markdown body, no commentary or code fences.\n\n` +
-    `RAW TEXT:\n"""\n${String(raw).slice(0, 12000)}\n"""`
+  const lecture = mode === "lecture"
+
+  const prompt = lecture
+    ? `You are turning a raw lecture transcript into clean study notes for a Quartz ` +
+      `markdown wiki. The note is titled "${title}". The transcript is auto-generated ` +
+      `speech-to-text, so it has filler words, false starts, and no punctuation ` +
+      `structure. Produce faithful, well-organized STUDY NOTES in the SAME LANGUAGE ` +
+      `as the transcript.\n\n` +
+      `Rules:\n` +
+      `- Start with a one-paragraph "## Summary" (2-4 sentences).\n` +
+      `- Then "## " / "### " sections following the lecture's flow, with concise ` +
+      `bullet points capturing the key ideas.\n` +
+      `- Put important definitions, formulas, or warnings in "> " blockquote callouts.\n` +
+      `- Use a Markdown table when the lecture compares things or lists key/value pairs.\n` +
+      `- Remove filler ("um", "you know", repetitions); keep all substantive content.\n` +
+      `- Do NOT invent facts not present in the transcript.\n` +
+      `- Output ONLY the Markdown body — no frontmatter, no "# title", no code fences.\n\n` +
+      `TRANSCRIPT:\n"""\n${String(raw).slice(0, 60000)}\n"""`
+    : `You are formatting a study note for a Quartz markdown wiki. The note is titled ` +
+      `"${title}". Below is raw text pasted from NotebookLM (a summary/notes). ` +
+      `Your job is to RESTRUCTURE and CLEAN UP the formatting ONLY — do not add, ` +
+      `remove, or invent any facts, and keep the SAME LANGUAGE as the input.\n\n` +
+      `Rules:\n` +
+      `- Output GitHub-flavored Markdown for the note BODY only. Do NOT include ` +
+      `frontmatter or a top-level "# title" (those are added separately).\n` +
+      `- Organize with "##"/"###" headings, tidy bullet/numbered lists.\n` +
+      `- Turn key definitions or warnings into "> " blockquote callouts.\n` +
+      `- Use a Markdown table when the text compares items or lists key/value pairs.\n` +
+      `- Keep it faithful and concise; fix obvious spacing/OCR artifacts only.\n` +
+      `- Respond with ONLY the Markdown body, no commentary or code fences.\n\n` +
+      `RAW TEXT:\n"""\n${String(raw).slice(0, 12000)}\n"""`
 
   const model = process.env.GROQ_MODEL || "llama-3.3-70b-versatile"
   try {
@@ -61,8 +80,8 @@ async function polishNote(title, raw, apiKey) {
       body: JSON.stringify({
         model,
         messages: [{ role: "user", content: prompt }],
-        max_tokens: 4000,
-        temperature: 0.3,
+        max_tokens: lecture ? 8000 : 4000,
+        temperature: lecture ? 0.4 : 0.3,
       }),
     })
     const data = await res.json()
@@ -117,8 +136,13 @@ export default async function handler(req, res) {
       .split(",")
       .map((t) => t.trim())
       .filter(Boolean)
-    // ①  If the note was pasted from NotebookLM, tidy it up (formatting only).
-    const finalContent = body.polish ? await polishNote(title, content, process.env.GROQ_API_KEY) : content
+    // AI pass: "lecture" summarizes a recording transcript into study notes;
+    // "polish" tidies a pasted NotebookLM summary. Otherwise save as-is.
+    const aiMode = body.mode === "lecture" ? "lecture" : "tidy"
+    const wantAI = body.mode === "lecture" || body.polish
+    const finalContent = wantAI
+      ? await noteFromText(title, content, process.env.GROQ_API_KEY, aiMode)
+      : content
     const fm =
       `---\n` +
       `title: ${JSON.stringify(title)}\n` +
