@@ -942,6 +942,39 @@ textarea.sh-input {
   margin: 4px 0 12px;
 }
 
+// ── Delete-note button (note pages) ────────────────────────────
+.sh-delnote {
+  margin: 0.2rem 0 1rem;
+}
+.sh-delnote-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--gray);
+  background: transparent;
+  border: 1px solid var(--lightgray);
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+
+  &:hover {
+    color: oklch(0.55 0.18 25);
+    border-color: color-mix(in srgb, oklch(0.55 0.18 25) 40%, var(--lightgray));
+    background: color-mix(in srgb, oklch(0.55 0.18 25) 7%, transparent);
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+
 // ── Subject cards on the index (mockup note-card grid) ─────────
 .sh-card-grid {
   display: grid;
