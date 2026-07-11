@@ -881,6 +881,11 @@ textarea.sh-input {
   gap: 10px;
   margin-top: 4px;
 }
+// give the hint / status room below the record button (override the shared
+// hint's negative top margin so it isn't cramped against the button)
+.sh-rec .sh-modal-hint {
+  margin-top: 14px;
+}
 .sh-btn-rec {
   background: oklch(0.55 0.18 25);
   color: #fff;

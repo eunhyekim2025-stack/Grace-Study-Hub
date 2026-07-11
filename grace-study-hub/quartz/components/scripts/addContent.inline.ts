@@ -352,10 +352,22 @@ async function startRecording() {
     recStatus("이 브라우저는 녹음을 지원하지 않아요.", "err")
     return
   }
+  // Requesting the mic triggers the browser's permission dialog on first use.
+  recStatus("🎙 마이크 권한을 허용해 주세요… (브라우저의 “허용”을 클릭)")
   try {
     REC.stream = await md.getUserMedia({ audio: true })
-  } catch {
-    recStatus("마이크 권한이 필요합니다. 브라우저 권한을 허용해 주세요.", "err")
+  } catch (err) {
+    const name = (err as DOMException)?.name
+    if (name === "NotAllowedError" || name === "SecurityError") {
+      recStatus(
+        "마이크 권한이 차단돼 있어요. 주소창의 🔒(사이트 정보) → 마이크 → “허용”으로 바꾼 뒤 다시 시도하세요.",
+        "err",
+      )
+    } else if (name === "NotFoundError" || name === "DevicesNotFoundError") {
+      recStatus("마이크를 찾을 수 없어요. 입력 장치를 확인하세요.", "err")
+    } else {
+      recStatus("마이크를 열 수 없어요. 브라우저 권한을 확인하세요.", "err")
+    }
     return
   }
   REC.mime = pickMime()
