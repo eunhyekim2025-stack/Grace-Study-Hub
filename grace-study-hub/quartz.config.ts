@@ -35,6 +35,13 @@ const config: QuartzConfig = {
       "systems/**",
       // About Me
       "about-me.md",
+      // Other projects sharing this Obsidian vault — NOT part of the study hub:
+      // company/finance snapshots (DBS, OCBC, SingTel, MOC) …
+      "companies/**",
+      // … and leftover graph-visualization pages from the LLM/AI wiki.
+      "overview.md",
+      "graph-dashboard.md",
+      "graph-viz.md",
     ],
     defaultDateType: "modified",
     theme: {
