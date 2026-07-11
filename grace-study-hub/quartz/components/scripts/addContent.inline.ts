@@ -457,6 +457,94 @@ async function stopRecording() {
   }
 }
 
+// ── Note deletion + local "tombstones" ────────────────────────────────────
+// Deleting commits to GitHub and the site rebuilds in ~1–2 min; until then (and
+// past any browser/CDN cache) the note would still appear in listings. So on
+// delete we record the note's slug locally and hide it everywhere immediately.
+// Tombstones auto-expire after a day (by then the rebuild has removed it).
+const DELETED_KEY = "sh-deleted"
+
+function readTombstones(): { slug: string; t: number }[] {
+  try {
+    const list = JSON.parse(localStorage.getItem(DELETED_KEY) || "[]")
+    const fresh = (Array.isArray(list) ? list : []).filter(
+      (d) => d && typeof d.slug === "string" && Date.now() - (d.t || 0) < 86400000,
+    )
+    localStorage.setItem(DELETED_KEY, JSON.stringify(fresh))
+    return fresh
+  } catch {
+    return []
+  }
+}
+
+function hideDeleted() {
+  const slugs = new Set(readTombstones().map((d) => d.slug))
+  if (!slugs.size) return
+  document.querySelectorAll<HTMLAnchorElement>("a[href]").forEach((a) => {
+    let target = ""
+    try {
+      target = decodeURIComponent(new URL(a.href, location.href).pathname)
+        .replace(/^\/+|\/+$/g, "")
+        .replace(/\.html$/, "")
+        .replace(/\/index$/, "")
+    } catch {
+      return
+    }
+    if (slugs.has(target)) {
+      const item = a.closest("li, tr, .sh-recent-item") as HTMLElement | null
+      ;(item || a).style.display = "none"
+    }
+  })
+}
+
+async function deleteNote(btn: HTMLButtonElement) {
+  const path = btn.dataset.delPath
+  const slug = btn.dataset.delSlug || ""
+  const title = btn.dataset.delTitle || path || "이 노트"
+  if (!path) return
+  if (!confirm(`"${title}" 노트를 삭제할까요?\n되돌릴 수 없습니다.`)) return
+
+  let password = (localStorage.getItem(PW_KEY) || "").trim()
+  if (!password) {
+    password = (window.prompt("추가 비밀번호를 입력하세요") || "").trim()
+    if (!password) return
+  }
+
+  const original = btn.textContent
+  btn.disabled = true
+  btn.textContent = "삭제 중…"
+  try {
+    const res = await fetch("/api/delete", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ path, password }),
+    })
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok && res.status !== 404) {
+      if (res.status === 401) localStorage.removeItem(PW_KEY)
+      alert("삭제 실패: " + (data.error || res.status))
+      btn.disabled = false
+      btn.textContent = original
+      return
+    }
+    localStorage.setItem(PW_KEY, password)
+    // Tombstone: hide this note everywhere until the rebuild catches up.
+    if (slug) {
+      const list = readTombstones()
+      list.push({ slug, t: Date.now() })
+      localStorage.setItem(DELETED_KEY, JSON.stringify(list))
+    }
+    btn.textContent = "삭제됨 · 이동 중…"
+    setTimeout(() => {
+      location.href = "/"
+    }, 700)
+  } catch {
+    alert("네트워크 오류. 배포된 사이트에서 시도하세요.")
+    btn.disabled = false
+    btn.textContent = original
+  }
+}
+
 const w = window as unknown as { __shAddInit?: boolean }
 if (!w.__shAddInit) {
   w.__shAddInit = true
@@ -468,10 +556,18 @@ if (!w.__shAddInit) {
     if (el.hasAttribute("data-rec-start")) startRecording()
     else stopRecording()
   })
+  document.addEventListener("click", (e) => {
+    const btn = (e.target as HTMLElement)?.closest<HTMLButtonElement>(".sh-delnote-btn")
+    if (!btn) return
+    e.preventDefault()
+    deleteNote(btn)
+  })
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeModal()
   })
   window.addEventListener("hashchange", initFromHash)
 }
 document.addEventListener("nav", initFromHash)
+document.addEventListener("nav", hideDeleted)
 initFromHash()
+hideDeleted()
