@@ -45,5 +45,14 @@
     "prefixes": [
       "management-accounting/"
     ]
+  },
+  {
+    "slug": "critical-thinking-in-real-world",
+    "emoji": "📓",
+    "label": "Critical Thinking in Real World",
+    "hue": 20,
+    "prefixes": [
+      "critical-thinking-in-real-world/"
+    ]
   }
 ]
