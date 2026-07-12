@@ -54,5 +54,14 @@
     "prefixes": [
       "critical-thinking-in-real-world/"
     ]
+  },
+  {
+    "slug": "management-of-people-at-work",
+    "emoji": "📓",
+    "label": "Management of People at Work",
+    "hue": 120,
+    "prefixes": [
+      "management-of-people-at-work/"
+    ]
   }
 ]
