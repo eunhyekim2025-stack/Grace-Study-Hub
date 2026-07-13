@@ -4,6 +4,7 @@
     "emoji": "⚖️",
     "label": "Business Law",
     "hue": 250,
+    "term": "2025 Semester 1",
     "prefixes": [
       "law-concepts/",
       "cases/",
@@ -15,6 +16,7 @@
     "emoji": "📊",
     "label": "Decision Analysis",
     "hue": 150,
+    "term": "2025 Semester 1",
     "prefixes": [
       "da-concepts/"
     ]
@@ -24,6 +26,7 @@
     "emoji": "💰",
     "label": "Financial Accounting",
     "hue": 85,
+    "term": "2025 Semester 1",
     "prefixes": [
       "fa-concepts/"
     ]
@@ -33,6 +36,7 @@
     "emoji": "⚙️",
     "label": "Operations Management",
     "hue": 25,
+    "term": "2025 Semester 2",
     "prefixes": [
       "ops-concepts/"
     ]
@@ -42,6 +46,7 @@
     "emoji": "📓",
     "label": "Management accounting",
     "hue": 180,
+    "term": "2025 Semester 2",
     "prefixes": [
       "management-accounting/"
     ]
@@ -51,6 +56,7 @@
     "emoji": "📓",
     "label": "Critical Thinking in Real World",
     "hue": 20,
+    "term": "2025 Semester 2",
     "prefixes": [
       "critical-thinking-in-real-world/"
     ]
@@ -60,6 +66,7 @@
     "emoji": "📓",
     "label": "Management of People at Work",
     "hue": 120,
+    "term": "2025 Semester 2",
     "prefixes": [
       "management-of-people-at-work/"
     ]

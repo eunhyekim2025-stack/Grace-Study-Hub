@@ -9,9 +9,19 @@ import { classNames } from "../util/lang"
 // Dashboard home (Claude design prototype). Uses ONLY data the static wiki
 // actually has: total notes, subject counts, auto-generated count, tag count,
 // recent notes. Spaced-repetition review / streaks are omitted (no data).
-type Subject = { slug: string; emoji: string; label: string; hue: number; prefixes: string[] }
+type Subject = { slug: string; emoji: string; label: string; hue: number; term?: string; prefixes: string[] }
 const SUBJECTS = subjectsData as Subject[]
 const dot = (hue: number) => `oklch(0.62 0.15 ${hue})`
+
+// Group subjects by semester, newest term first ("기타"/no-term last).
+function byTerm(subs: Subject[]) {
+  const terms = [...new Set(subs.map((s) => s.term || "기타"))].sort((a, b) => {
+    if (a === "기타") return 1
+    if (b === "기타") return -1
+    return b.localeCompare(a, undefined, { numeric: true })
+  })
+  return terms.map((term) => ({ term, items: subs.filter((s) => (s.term || "기타") === term) }))
+}
 
 const Dashboard: QuartzComponent = ({ fileData, allFiles, displayClass }: QuartzComponentProps) => {
   const current = fileData.slug!
@@ -71,17 +81,26 @@ const Dashboard: QuartzComponent = ({ fileData, allFiles, displayClass }: Quartz
               </tr>
             </thead>
             <tbody>
-              {SUBJECTS.map((s) => (
-                <tr>
-                  <td>
-                    <span class="sh-dot" style={`--sh-dot: ${dot(s.hue)}`}></span>
-                    <span class="sh-subj-emoji">{s.emoji}</span> {s.label}
-                  </td>
-                  <td class="sh-num">{countFor(s.prefixes)}</td>
-                  <td class="sh-open">
-                    <a href={resolveRelative(current, s.slug as FullSlug)}>Open →</a>
-                  </td>
-                </tr>
+              {byTerm(SUBJECTS).map((g) => (
+                <>
+                  <tr class="sh-term-row">
+                    <td colSpan={3} class="sh-term-head">
+                      {g.term}
+                    </td>
+                  </tr>
+                  {g.items.map((s) => (
+                    <tr>
+                      <td>
+                        <span class="sh-dot" style={`--sh-dot: ${dot(s.hue)}`}></span>
+                        <span class="sh-subj-emoji">{s.emoji}</span> {s.label}
+                      </td>
+                      <td class="sh-num">{countFor(s.prefixes)}</td>
+                      <td class="sh-open">
+                        <a href={resolveRelative(current, s.slug as FullSlug)}>Open →</a>
+                      </td>
+                    </tr>
+                  ))}
+                </>
               ))}
             </tbody>
           </table>

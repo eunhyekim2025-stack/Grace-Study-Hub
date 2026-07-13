@@ -255,6 +255,19 @@ body[data-slug="index"] {
       padding: 0;
     }
   }
+  // Semester group header row
+  .sh-term-head {
+    padding: 16px 8px 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    border-bottom: none;
+  }
+  .sh-term-row:first-child .sh-term-head {
+    padding-top: 4px;
+  }
 }
 
 // generate panel
@@ -563,6 +576,46 @@ a {
   text-transform: uppercase;
   color: var(--gray);
   margin: 0 0 6px 8px;
+}
+// ── Semester groups (collapsible) ──
+.sh-term {
+  margin-top: 4px;
+}
+.sh-term-summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  cursor: pointer;
+  padding: 7px 8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gray);
+  border-radius: 8px;
+  user-select: none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+  // caret
+  &::before {
+    content: "▸";
+    font-size: 0.7rem;
+    color: var(--gray);
+    transition: transform 0.15s ease;
+  }
+  &:hover {
+    background: color-mix(in srgb, var(--secondary) 8%, transparent);
+    color: var(--secondary);
+  }
+}
+.sh-term[open] > .sh-term-summary::before {
+  transform: rotate(90deg);
+}
+.sh-term > ul {
+  margin-top: 2px;
 }
 .sh-subjects ul {
   list-style: none;

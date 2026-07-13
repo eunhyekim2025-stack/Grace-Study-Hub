@@ -169,8 +169,14 @@ export default async function handler(req, res) {
     (hubLinks.length ? `Start here:\n\n${hubLinks.join("\n")}\n` : `New subject — add notes with **+ 새 노트**.\n`)
   files.push({ path: `${WIKI}/${slug}/index.md`, content: fm(`${emoji} ${name}`, ["moc"], hubBody) })
 
-  // Update subjects.json (append)
-  subjects.push({ slug, emoji, label: name, hue, prefixes: [`${slug}/`] })
+  // Update subjects.json (append). New subjects join the newest existing term
+  // (the current semester) so they group correctly on the dashboard/sidebar.
+  const latestTerm =
+    subjects
+      .map((s) => s.term)
+      .filter(Boolean)
+      .sort((a, b) => b.localeCompare(a, undefined, { numeric: true }))[0] || "2025 Semester 2"
+  subjects.push({ slug, emoji, label: name, hue, term: latestTerm, prefixes: [`${slug}/`] })
   files.push({ path: SUBJECTS_JSON, content: JSON.stringify(subjects, null, 2) + "\n" })
 
   // Insert a card into index.md before the marker
