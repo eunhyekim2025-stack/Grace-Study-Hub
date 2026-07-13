@@ -46,8 +46,9 @@ async function noteFromText(title, raw, apiKey, mode = "tidy") {
     ? `You are turning a raw lecture transcript into clean study notes for a Quartz ` +
       `markdown wiki. The note is titled "${title}". The transcript is auto-generated ` +
       `speech-to-text, so it has filler words, false starts, and no punctuation ` +
-      `structure. Produce faithful, well-organized STUDY NOTES in the SAME LANGUAGE ` +
-      `as the transcript.\n\n` +
+      `structure. Produce faithful, well-organized STUDY NOTES in ENGLISH. If the ` +
+      `lecture is spoken in another language (e.g., Korean), translate the content ` +
+      `into natural English — the entire note must be in English.\n\n` +
       `Rules:\n` +
       `- Start with a one-paragraph "## Summary" (2-4 sentences).\n` +
       `- Then "## " / "### " sections following the lecture's flow, with concise ` +

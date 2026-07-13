@@ -101,9 +101,9 @@ const AddContentModal: QuartzComponent = (_: QuartzComponentProps) => {
             </div>
             <div class="sh-rec-status" id="sh-rec-status"></div>
             <p class="sh-modal-hint">
-              긴 강의도 2분 단위로 나눠 자동 전사 후 하나의 노트로 정리해요. <b>첫 녹음 시</b> 브라우저가
-              마이크 권한을 물으면 <b>“허용”</b>을 눌러주세요. Vercel에 <b>GROQ_API_KEY</b>가 설정돼
-              있어야 합니다.
+              긴 강의도 2분 단위로 나눠 자동 전사 후 하나의 노트로 정리해요. 노트는 <b>영어로 생성</b>됩니다
+              (한국어로 말해도 영어로 번역·정리). <b>첫 녹음 시</b> 브라우저가 마이크 권한을 물으면
+              <b>“허용”</b>을 눌러주세요. Vercel에 <b>GROQ_API_KEY</b>가 설정돼 있어야 합니다.
             </p>
           </div>
 

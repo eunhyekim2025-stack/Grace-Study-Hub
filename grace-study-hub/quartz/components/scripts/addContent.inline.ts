@@ -436,7 +436,7 @@ async function stopRecording() {
         type: "note",
         title: val("sh-rec-title").trim(),
         subject: val("sh-file-subject"),
-        tags: "lecture, 녹음",
+        tags: "lecture, recording",
         content: transcript,
         mode: "lecture",
         password,
