@@ -18,6 +18,37 @@
 }
 
 // ═══════════════════════════════════════════════════════════════
+// DARK MODE — cohesive slate night theme
+// Light mode paints a light canvas with dark-navy accent surfaces (var(--dark)).
+// In dark mode we (1) flip the canvas dark so it isn't a bright slab under the
+// dark cards, and (2) remap the "dark surface + white text" chrome bits so they
+// don't invert to near-white (which made them unreadable).
+// ═══════════════════════════════════════════════════════════════
+:root[saved-theme="dark"] {
+  --sh-canvas: #020617; // slate-950 page canvas; surfaces (--light #0f172a) sit above it
+}
+// Chrome that was a dark-navy surface in light mode → elevated slate here.
+:root[saved-theme="dark"] .sh-subjbar,
+:root[saved-theme="dark"] .sh-btn-rec-stop {
+  background: #1e293b;
+  color: #f8fafc;
+}
+:root[saved-theme="dark"] .sh-btn-rec-stop:hover {
+  background: #334155;
+}
+// Featured stat card must not invert to a solid white block.
+:root[saved-theme="dark"] .sh-stat.dark {
+  background: color-mix(in srgb, var(--secondary) 20%, var(--light));
+  border-color: color-mix(in srgb, var(--secondary) 38%, var(--lightgray)) !important;
+}
+:root[saved-theme="dark"] .sh-stat.dark .sh-stat-value {
+  color: var(--dark);
+}
+:root[saved-theme="dark"] .sh-stat.dark .sh-stat-label {
+  color: color-mix(in srgb, var(--dark) 60%, transparent);
+}
+
+// ═══════════════════════════════════════════════════════════════
 // SLATE / BLUE DASHBOARD THEME (Claude design prototype)
 // Cool canvas · white surfaces · Inter sans · blue accent.
 // ═══════════════════════════════════════════════════════════════
