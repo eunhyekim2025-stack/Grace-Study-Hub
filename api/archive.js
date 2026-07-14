@@ -9,9 +9,11 @@
 // configured yet, we return 501 so the client stops trying and the
 // recording→note flow keeps working without an audio backup.
 //
-// Required Vercel env vars:
-//   ADD_SECRET            — shared password (same one the modal sends)
-//   BLOB_READ_WRITE_TOKEN — auto-added when you create a PRIVATE Blob store
+// Required Vercel env vars (set automatically when you connect a Blob store):
+//   ADD_SECRET  — shared password (same one the modal sends)
+//   plus EITHER a static token (BLOB_READ_WRITE_TOKEN) OR the modern OIDC setup
+//   (BLOB_STORE_ID, with Vercel's auto VERCEL_OIDC_TOKEN). The @vercel/blob SDK
+//   picks whichever is available, so both connection styles work.
 //
 // Runtime: Node 18+. Depends on @vercel/blob (see root package.json).
 
@@ -46,10 +48,12 @@ export default async function handler(req, res) {
   body = body || {}
   if (body.password !== secret) return res.status(401).json({ error: "Wrong password." })
 
+  // Auth: a static read-write token, OR the OIDC setup (BLOB_STORE_ID + Vercel's
+  // auto OIDC token). If neither exists, no store is connected → tell the client
+  // to stop trying (archiving is optional; notes still work without it).
   const blobToken = process.env.BLOB_READ_WRITE_TOKEN
-  if (!blobToken) {
-    // No Blob store yet — tell the client to stop trying (archiving is optional;
-    // notes still work without it).
+  const hasStore = blobToken || process.env.BLOB_STORE_ID
+  if (!hasStore) {
     return res.status(501).json({ error: "no-blob-store", archived: false })
   }
 
@@ -70,12 +74,11 @@ export default async function handler(req, res) {
   }/seg-${seg}.${ext}`
 
   try {
-    const blob = await put(pathname, bytes, {
-      access: "private",
-      addRandomSuffix: true,
-      contentType: type,
-      token: blobToken,
-    })
+    const opts = { access: "private", addRandomSuffix: true, contentType: type }
+    // Pass the static token if we have one; otherwise the SDK authenticates via
+    // OIDC using BLOB_STORE_ID + VERCEL_OIDC_TOKEN automatically.
+    if (blobToken) opts.token = blobToken
+    const blob = await put(pathname, bytes, opts)
     return res.status(200).json({ archived: true, path: blob.pathname, url: blob.url })
   } catch (e) {
     return res.status(502).json({ error: "archive failed: " + e.message, archived: false })

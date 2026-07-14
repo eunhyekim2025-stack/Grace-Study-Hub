@@ -11,13 +11,16 @@ export default function handler(req, res) {
       ADD_SECRET: present(process.env.ADD_SECRET),
       GROQ_API_KEY: present(process.env.GROQ_API_KEY),
       BLOB_READ_WRITE_TOKEN: present(process.env.BLOB_READ_WRITE_TOKEN),
+      BLOB_STORE_ID: present(process.env.BLOB_STORE_ID),
     },
     // what each feature needs
     features: {
       addNote: present(process.env.GITHUB_TOKEN) && present(process.env.ADD_SECRET),
       aiTidyAndLectureNotes: present(process.env.GROQ_API_KEY),
       transcription: present(process.env.GROQ_API_KEY),
-      recordingBackup: present(process.env.BLOB_READ_WRITE_TOKEN),
+      // static token OR OIDC store id — either connects the private Blob store
+      recordingBackup:
+        present(process.env.BLOB_READ_WRITE_TOKEN) || present(process.env.BLOB_STORE_ID),
     },
   })
 }
