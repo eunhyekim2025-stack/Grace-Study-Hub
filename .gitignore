@@ -19,6 +19,11 @@
 !/.gitignore
 !/vercel.json
 
+# 4a) Root package.json/lock: dependencies for the /api serverless functions
+#     (e.g. @vercel/blob). node_modules stays ignored by the /* rule above.
+!/package.json
+!/package-lock.json
+
 # 4b) Allow the serverless function that adds notes/files from the site
 !/api
 

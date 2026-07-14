@@ -144,13 +144,28 @@ export default async function handler(req, res) {
     const finalContent = wantAI
       ? await noteFromText(title, content, process.env.GROQ_API_KEY, aiMode)
       : content
+    // Private audio backup: /api/archive uploaded each recording segment to the
+    // private Blob store and the client passes back their pathnames. We record
+    // them in frontmatter (a private-store path is useless without the token, so
+    // this is safe on a public note) plus a callout so you know a backup exists.
+    const recordings = Array.isArray(body.audio)
+      ? body.audio.filter((x) => typeof x === "string" && x)
+      : []
+    const recNote = recordings.length
+      ? `> [!note] 🎙️ Original recording archived privately (${recordings.length} segment${
+          recordings.length > 1 ? "s" : ""
+        }) in your Vercel Blob store — not published here.\n\n`
+      : ""
     const fm =
       `---\n` +
       `title: ${JSON.stringify(title)}\n` +
       (tagList.length ? `tags: [${tagList.map((t) => JSON.stringify(t)).join(", ")}]\n` : "") +
       `created: ${new Date().toISOString().slice(0, 10)}\n` +
+      (recordings.length
+        ? `recording:\n${recordings.map((p) => `  - ${JSON.stringify(p)}`).join("\n")}\n`
+        : "") +
       `---\n\n`
-    const md = fm + finalContent + "\n"
+    const md = fm + recNote + finalContent + "\n"
     path = [WIKI, dir, slugify(title) + ".md"].filter(Boolean).join("/")
     contentBase64 = Buffer.from(md, "utf8").toString("base64")
     commitMsg = `Add note: ${title} (via site)`

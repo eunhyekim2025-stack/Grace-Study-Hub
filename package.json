@@ -1,0 +1,8 @@
+{
+  "name": "grace-study-hub-api",
+  "private": true,
+  "description": "Dependencies for the /api serverless functions (Vercel). The site itself lives in grace-study-hub/ with its own package.json.",
+  "dependencies": {
+    "@vercel/blob": "^2.6.1"
+  }
+}

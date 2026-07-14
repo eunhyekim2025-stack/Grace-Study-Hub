@@ -244,6 +244,13 @@ const REC: {
   chunks: Blob[]
   segIndex: number
   jobs: Promise<{ i: number; text: string }>[]
+  // Optional private-audio backup: each segment is also uploaded to /api/archive
+  // (private Vercel Blob). archiveOn flips off the moment archiving is
+  // unavailable (no Blob store / any failure) so it never blocks the note.
+  archiveJobs: Promise<{ i: number; path: string | null }>[]
+  archiveOn: boolean
+  title: string
+  subject: string
   mime: string
   startedAt: number
   rotate: number
@@ -255,6 +262,10 @@ const REC: {
   chunks: [],
   segIndex: 0,
   jobs: [],
+  archiveJobs: [],
+  archiveOn: false,
+  title: "",
+  subject: "",
   mime: "",
   startedAt: 0,
   rotate: 0,
@@ -315,6 +326,47 @@ function transcribeBlob(blob: Blob, i: number, password: string): Promise<{ i: n
   })
 }
 
+// Upload one segment to the private Blob store as a backup. Best-effort: any
+// failure (or no store configured → 501) turns archiving off for the rest of
+// the session and resolves to null, so the recording→note flow is never blocked.
+function archiveBlob(
+  blob: Blob,
+  i: number,
+  password: string,
+): Promise<{ i: number; path: string | null }> {
+  return new Promise((resolve) => {
+    const reader = new FileReader()
+    reader.onload = async () => {
+      const audioBase64 = String(reader.result).split(",")[1] || ""
+      try {
+        const res = await fetch("/api/archive", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            audioBase64,
+            mimeType: blob.type,
+            password,
+            title: REC.title,
+            subject: REC.subject,
+            segment: i,
+          }),
+        })
+        if (!res.ok) {
+          REC.archiveOn = false // no store, wrong store type, or transient error
+          resolve({ i, path: null })
+          return
+        }
+        const data = await res.json().catch(() => ({}))
+        resolve({ i, path: data.archived ? data.path : null })
+      } catch {
+        resolve({ i, path: null })
+      }
+    }
+    reader.onerror = () => resolve({ i, path: null })
+    reader.readAsDataURL(blob)
+  })
+}
+
 function startSegment(password: string) {
   const opts: MediaRecorderOptions = { audioBitsPerSecond: 32000 }
   if (REC.mime) opts.mimeType = REC.mime
@@ -328,6 +380,7 @@ function startSegment(password: string) {
     if (blob.size > 0) {
       const i = REC.segIndex++
       REC.jobs.push(transcribeBlob(blob, i, password))
+      if (REC.archiveOn) REC.archiveJobs.push(archiveBlob(blob, i, password))
     }
   }
   rec.start()
@@ -374,6 +427,10 @@ async function startRecording() {
   REC.active = true
   REC.segIndex = 0
   REC.jobs = []
+  REC.archiveJobs = []
+  REC.archiveOn = true // attempt private-audio backup; disables itself if unavailable
+  REC.title = val("sh-rec-title").trim()
+  REC.subject = val("sh-file-subject")
   REC.startedAt = Date.now()
   toggleRecUI(true)
   startSegment(password)
@@ -427,6 +484,16 @@ async function stopRecording() {
     recStatus("전사 결과가 비었습니다. Vercel의 GROQ_API_KEY를 확인하세요.", "err")
     return
   }
+  // Collect the private-audio backup refs (if archiving was available).
+  let audio: string[] = []
+  if (REC.archiveJobs.length) {
+    const arch = await Promise.all(REC.archiveJobs)
+    audio = arch
+      .filter((a) => a.path)
+      .sort((a, b) => a.i - b.i)
+      .map((a) => a.path as string)
+  }
+
   recStatus("정리 중… 강의 노트를 만들고 있어요 (10~40초)")
   try {
     const res = await fetch("/api/add", {
@@ -439,6 +506,7 @@ async function stopRecording() {
         tags: "lecture, recording",
         content: transcript,
         mode: "lecture",
+        ...(audio.length ? { audio } : {}),
         password,
       }),
     })
@@ -449,7 +517,8 @@ async function stopRecording() {
     }
     localStorage.setItem(PW_KEY, password)
     syncPwField()
-    recStatus("저장됨 → " + (data.path || "") + " · 1–2분 뒤 사이트에 반영됩니다.", "ok")
+    const backup = audio.length ? ` · 🎙 녹음본 ${audio.length}조각 비공개 백업됨` : ""
+    recStatus("저장됨 → " + (data.path || "") + backup + " · 1–2분 뒤 사이트에 반영됩니다.", "ok")
     const t = document.getElementById("sh-rec-title") as HTMLInputElement | null
     if (t) t.value = ""
   } catch {
