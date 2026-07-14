@@ -4,7 +4,7 @@
     "emoji": "⚖️",
     "label": "Business Law",
     "hue": 250,
-    "term": "2025 Semester 1",
+    "term": "2026 Semester 1",
     "prefixes": [
       "law-concepts/",
       "cases/",
@@ -16,7 +16,7 @@
     "emoji": "📊",
     "label": "Decision Analysis",
     "hue": 150,
-    "term": "2025 Semester 1",
+    "term": "2026 Semester 1",
     "prefixes": [
       "da-concepts/"
     ]
@@ -26,7 +26,7 @@
     "emoji": "💰",
     "label": "Financial Accounting",
     "hue": 85,
-    "term": "2025 Semester 1",
+    "term": "2026 Semester 1",
     "prefixes": [
       "fa-concepts/"
     ]
