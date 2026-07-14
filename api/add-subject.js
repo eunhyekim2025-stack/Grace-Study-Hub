@@ -169,14 +169,17 @@ export default async function handler(req, res) {
     (hubLinks.length ? `Start here:\n\n${hubLinks.join("\n")}\n` : `New subject — add notes with **+ 새 노트**.\n`)
   files.push({ path: `${WIKI}/${slug}/index.md`, content: fm(`${emoji} ${name}`, ["moc"], hubBody) })
 
-  // Update subjects.json (append). New subjects join the newest existing term
-  // (the current semester) so they group correctly on the dashboard/sidebar.
+  // Update subjects.json (append). The new subject's semester comes from the
+  // "학기" field when provided (lets you start a brand-new semester); otherwise
+  // it joins the newest existing term so it groups with the current semester.
   const latestTerm =
     subjects
       .map((s) => s.term)
       .filter(Boolean)
       .sort((a, b) => b.localeCompare(a, undefined, { numeric: true }))[0] || "2026 Semester 2"
-  subjects.push({ slug, emoji, label: name, hue, term: latestTerm, prefixes: [`${slug}/`] })
+  const requestedTerm = String(body.term || "").trim().slice(0, 40)
+  const term = requestedTerm || latestTerm
+  subjects.push({ slug, emoji, label: name, hue, term, prefixes: [`${slug}/`] })
   files.push({ path: SUBJECTS_JSON, content: JSON.stringify(subjects, null, 2) + "\n" })
 
   // Insert a card into index.md before the marker
@@ -224,7 +227,7 @@ export default async function handler(req, res) {
       throw new Error(u.message || "ref update error")
     }
 
-    return res.status(200).json({ ok: true, slug, aiSkipped, commit: commit.sha })
+    return res.status(200).json({ ok: true, slug, term, aiSkipped, commit: commit.sha })
   } catch (e) {
     return res.status(502).json({ error: "GitHub commit failed: " + e.message })
   }

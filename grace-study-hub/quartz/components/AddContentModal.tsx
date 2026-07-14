@@ -9,8 +9,15 @@ import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } fro
 // posts to /api/add, which commits into the wiki. See addContent.inline.ts.
 // The "과목" picker is driven by subjects.json so it always lists the real,
 // current subjects (new ones appear automatically; removed ones drop off).
-type Subject = { slug: string; emoji: string; label: string }
+type Subject = { slug: string; emoji: string; label: string; term?: string }
 const SUBJECTS = subjectsData as Subject[]
+
+// Existing semesters (newest first) power the "학기" picker for new subjects.
+// Baked in at build time; the newest one is the default for a new subject.
+const TERMS = [...new Set(SUBJECTS.map((s) => s.term).filter(Boolean) as string[])].sort((a, b) =>
+  b.localeCompare(a, undefined, { numeric: true }),
+)
+const CURRENT_TERM = TERMS[0] || ""
 
 const Subjects = ({ id }: { id: string }) => (
   <select id={id} class="sh-input">
@@ -125,6 +132,25 @@ const AddContentModal: QuartzComponent = (_: QuartzComponentProps) => {
           <div class="sh-field">
             <label for="sh-subject-name">과목 이름</label>
             <input id="sh-subject-name" class="sh-input" placeholder="예: Machine Learning, 미시경제학" />
+          </div>
+          <div class="sh-field">
+            <label for="sh-subject-term">학기 (Semester)</label>
+            <input
+              id="sh-subject-term"
+              class="sh-input"
+              list="sh-term-options"
+              value={CURRENT_TERM}
+              placeholder="예: 2027 Semester 1"
+            />
+            <datalist id="sh-term-options">
+              {TERMS.map((t) => (
+                <option value={t} />
+              ))}
+            </datalist>
+            <p class="sh-modal-hint">
+              기존 학기를 고르거나 <b>새 학기</b>를 입력하세요. 형식: <b>YYYY Semester N</b> (예: 2027
+              Semester 1) — 이래야 학기순 정렬이 맞아요.
+            </p>
           </div>
           <p class="sh-subjects-title" style="margin:6px 0 8px;">기본 설정</p>
           <label class="sh-check">

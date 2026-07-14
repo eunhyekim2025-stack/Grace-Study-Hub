@@ -175,14 +175,16 @@ async function submitSubject(btn: HTMLButtonElement) {
     status("과목 이름을 입력하세요.", "err")
     return
   }
+  const term = val("sh-subject-term").trim()
   const data = await postTo(
     "/api/add-subject",
-    { name, genNotes: checked("sh-subject-notes"), genQuiz: checked("sh-subject-quiz") },
+    { name, term, genNotes: checked("sh-subject-notes"), genQuiz: checked("sh-subject-quiz") },
     btn,
   )
   if (data && data.ok) {
     const ai = data.aiSkipped ? " (AI 생성은 건너뜀 — GROQ_API_KEY 필요)" : ""
-    status(`"${name}" 과목 생성됨${ai} · 1–2분 뒤 사이드바에 나타나요.`, "ok")
+    const where = data.term ? ` (${data.term})` : ""
+    status(`"${name}" 과목 생성됨${where}${ai} · 1–2분 뒤 사이드바에 나타나요.`, "ok")
     const el = document.getElementById("sh-subject-name") as HTMLInputElement | null
     if (el) el.value = ""
   }
