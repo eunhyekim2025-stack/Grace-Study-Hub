@@ -175,7 +175,7 @@ export default async function handler(req, res) {
     subjects
       .map((s) => s.term)
       .filter(Boolean)
-      .sort((a, b) => b.localeCompare(a, undefined, { numeric: true }))[0] || "2025 Semester 2"
+      .sort((a, b) => b.localeCompare(a, undefined, { numeric: true }))[0] || "2026 Semester 2"
   subjects.push({ slug, emoji, label: name, hue, term: latestTerm, prefixes: [`${slug}/`] })
   files.push({ path: SUBJECTS_JSON, content: JSON.stringify(subjects, null, 2) + "\n" })
 
