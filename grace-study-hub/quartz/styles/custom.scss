@@ -345,11 +345,63 @@ body[data-slug="index"] {
 
 // ── weekly calendar grid ──
 $sh-gut: 52px;
+
+// Size control: width + row height (--hpx) driven by a class on the panel.
+// Default is Compact (matches the old side-card's 320px footprint).
+.sh-schedule {
+  --hpx: 30px; // px per hour row
+  max-width: 100%;
+  margin-right: auto; // left-align so it doesn't stretch the whole width
+  transition: width 0.15s ease;
+  &.size-s {
+    width: 320px;
+    --hpx: 26px;
+  }
+  &.size-m {
+    width: 560px;
+    --hpx: 38px;
+  }
+  &.size-l {
+    width: 100%;
+    --hpx: 46px;
+  }
+}
+.sh-sched-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sh-cal-sizer {
+  display: inline-flex;
+  border: 1px solid var(--lightgray);
+  border-radius: 7px;
+  overflow: hidden;
+  button {
+    border: none;
+    background: transparent;
+    color: var(--gray);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    cursor: pointer;
+    & + button {
+      border-left: 1px solid var(--lightgray);
+    }
+    &:hover {
+      background: color-mix(in oklch, var(--secondary) 8%, transparent);
+    }
+    &.active {
+      background: var(--secondary);
+      color: #fff;
+    }
+  }
+}
 .sh-sched-body {
   overflow-x: auto; // horizontal scroll on narrow screens
 }
 .sh-cal {
-  min-width: 640px;
+  width: 100%;
+  min-width: 0;
 }
 .sh-cal-headrow,
 .sh-cal-allday,
@@ -420,6 +472,7 @@ $sh-gut: 52px;
 }
 .sh-cal-hour {
   position: relative;
+  height: var(--hpx);
   span {
     position: absolute;
     top: -7px;
@@ -431,9 +484,11 @@ $sh-gut: 52px;
 }
 .sh-cal-col {
   position: relative;
+  height: calc(var(--hours) * var(--hpx));
   border-left: 1px solid var(--lightgray);
-  // hourly gridlines (background-size set inline = HOUR_PX)
+  // hourly gridlines, one line every --hpx
   background-image: linear-gradient(to bottom, var(--lightgray) 1px, transparent 1px);
+  background-size: 100% var(--hpx);
   background-position: 0 0;
   &.today {
     background-color: color-mix(in oklch, var(--secondary) 6%, transparent);
@@ -441,6 +496,8 @@ $sh-gut: 52px;
 }
 .sh-cal-ev {
   position: absolute;
+  top: calc(var(--t) * var(--hpx));
+  height: max(calc(var(--d) * var(--hpx)), 16px);
   left: 2px;
   right: 2px;
   overflow: hidden;

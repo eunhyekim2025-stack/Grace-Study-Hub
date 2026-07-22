@@ -32,7 +32,9 @@ function startOfWeekMonday(d: Date): Date {
   return x
 }
 
-const HOUR_PX = 40 // vertical pixels per hour in the time grid
+// Row height (px per hour) is a CSS var (--hpx) set by the size control, so the
+// grid resizes with pure CSS — no re-render needed. JS only emits unitless
+// hour offsets (--t = hours from grid top, --d = duration in hours).
 const DEFAULT_START = 8 // grid always spans at least 8:00…
 const DEFAULT_END = 20 // …to 20:00, expanding to fit earlier/later events
 
@@ -83,7 +85,7 @@ function renderEvents(body: HTMLElement, events: SchedEvent[]) {
   minH = Math.max(0, minH)
   maxH = Math.min(24, maxH)
   const dayStartMin = minH * 60
-  const gridHeight = (maxH - minH) * HOUR_PX
+  const numHours = maxH - minH
   const hasAllday = days.some((d) => d.allday.length)
 
   const heads = days
@@ -108,7 +110,7 @@ function renderEvents(body: HTMLElement, events: SchedEvent[]) {
 
   let gutter = ""
   for (let h = minH; h < maxH; h++) {
-    gutter += `<div class="sh-cal-hour" style="height:${HOUR_PX}px"><span>${fmtHour(h)}</span></div>`
+    gutter += `<div class="sh-cal-hour"><span>${fmtHour(h)}</span></div>`
   }
 
   const cols = days
@@ -116,15 +118,15 @@ function renderEvents(body: HTMLElement, events: SchedEvent[]) {
       const blocks = d.timed
         .sort((a, b) => a.startMin - b.startMin)
         .map((t) => {
-          const top = ((t.startMin - dayStartMin) / 60) * HOUR_PX
-          const height = Math.max(((t.endMin - t.startMin) / 60) * HOUR_PX, 16)
+          const topH = (t.startMin - dayStartMin) / 60
+          const durH = (t.endMin - t.startMin) / 60
           const loc = t.ev.location ? `<span class="sh-cal-evloc">${esc(t.ev.location)}</span>` : ""
-          return `<div class="sh-cal-ev" style="top:${top}px;height:${height}px"><span class="sh-cal-evtime">${fmtTime(
+          return `<div class="sh-cal-ev" style="--t:${topH};--d:${durH}"><span class="sh-cal-evtime">${fmtTime(
             new Date(t.ev.start),
           )}</span><span class="sh-cal-evtitle">${esc(t.ev.title)}</span>${loc}</div>`
         })
         .join("")
-      return `<div class="sh-cal-col${d.key === todayKey ? " today" : ""}" style="height:${gridHeight}px;background-size:100% ${HOUR_PX}px">${blocks}</div>`
+      return `<div class="sh-cal-col${d.key === todayKey ? " today" : ""}">${blocks}</div>`
     })
     .join("")
 
@@ -135,7 +137,7 @@ function renderEvents(body: HTMLElement, events: SchedEvent[]) {
 
   body.innerHTML =
     `<div class="sh-sched-week">${range}</div>` +
-    `<div class="sh-cal">` +
+    `<div class="sh-cal" style="--hours:${numHours}">` +
     `<div class="sh-cal-headrow"><div class="sh-cal-gut"></div><div class="sh-cal-dheads">${heads}</div></div>` +
     alldayRow +
     `<div class="sh-cal-body"><div class="sh-cal-gutter">${gutter}</div><div class="sh-cal-cols">${cols}</div></div>` +
@@ -207,9 +209,30 @@ function showLock(message = "") {
   })
 }
 
+const SIZE_KEY = "sh-cal-size"
+const SIZES = ["s", "m", "l"] as const
+
+function applySize(panel: HTMLElement, size: string) {
+  const s = SIZES.includes(size as (typeof SIZES)[number]) ? size : "s"
+  SIZES.forEach((x) => panel.classList.toggle(`size-${x}`, x === s))
+  panel.querySelectorAll<HTMLElement>(".sh-cal-sizer button").forEach((b) => {
+    b.classList.toggle("active", b.dataset.calSize === s)
+  })
+}
+
 function initSchedule() {
   const panel = el("sh-schedule")
   if (!panel) return // not on the dashboard
+
+  applySize(panel, localStorage.getItem(SIZE_KEY) || "s")
+  panel.querySelectorAll<HTMLElement>(".sh-cal-sizer button").forEach((b) => {
+    b.addEventListener("click", () => {
+      const size = b.dataset.calSize || "s"
+      localStorage.setItem(SIZE_KEY, size)
+      applySize(panel, size)
+    })
+  })
+
   const refresh = el("sh-sched-refresh")
   refresh?.addEventListener("click", () => {
     const pw = (localStorage.getItem(PW_KEY) || "").trim()
