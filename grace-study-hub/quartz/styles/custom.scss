@@ -350,9 +350,12 @@ $sh-gut: 52px;
 // Default is Compact (matches the old side-card's 320px footprint).
 .sh-schedule {
   --hpx: 30px; // px per hour row
+  --sh-cal-gap: 12px; // adjustable edge spacing; left stays auto for right-align
   max-width: 100%;
-  margin-left: auto; // right-align so it doesn't stretch the whole width
-  transition: width 0.15s ease;
+  // top / right / bottom use the gap; left auto keeps it right-aligned.
+  // Growing the gap reflows the panels below automatically (normal flow).
+  margin: var(--sh-cal-gap) var(--sh-cal-gap) var(--sh-cal-gap) auto;
+  transition: width 0.15s ease, margin 0.15s ease;
   &.size-s {
     width: 320px;
     --hpx: 26px;
@@ -371,7 +374,8 @@ $sh-gut: 52px;
   align-items: center;
   gap: 8px;
 }
-.sh-cal-sizer {
+.sh-cal-sizer,
+.sh-cal-gapper {
   display: inline-flex;
   border: 1px solid var(--lightgray);
   border-radius: 7px;
@@ -395,6 +399,11 @@ $sh-gut: 52px;
       color: #fff;
     }
   }
+}
+.sh-cal-gapper button {
+  font-size: 0.9rem;
+  line-height: 1;
+  padding: 2px 9px;
 }
 .sh-sched-body {
   overflow-x: auto; // horizontal scroll on narrow screens

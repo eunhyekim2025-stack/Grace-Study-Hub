@@ -78,6 +78,10 @@ const Dashboard: QuartzComponent = ({ fileData, allFiles, displayClass }: Quartz
               <button data-cal-size="m" title="Medium">M</button>
               <button data-cal-size="l" title="Wide">L</button>
             </div>
+            <div class="sh-cal-gapper" role="group" aria-label="Spacing">
+              <button data-cal-gap="-" title="Less spacing">−</button>
+              <button data-cal-gap="+" title="More spacing">+</button>
+            </div>
             <button class="sh-sched-refresh" id="sh-sched-refresh" title="Refresh" hidden>
               ⟳
             </button>

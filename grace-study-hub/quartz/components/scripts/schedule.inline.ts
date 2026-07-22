@@ -220,6 +220,20 @@ function applySize(panel: HTMLElement, size: string) {
   })
 }
 
+const GAP_KEY = "sh-cal-gap"
+const GAP_STEP = 6
+const GAP_MIN = 0
+const GAP_MAX = 48
+const GAP_DEFAULT = 12
+
+// Edge spacing around the calendar panel. It lives in normal document flow, so
+// growing its margin automatically pushes the panels below it further away.
+function applyGap(panel: HTMLElement, gap: number) {
+  const g = Math.min(GAP_MAX, Math.max(GAP_MIN, gap))
+  panel.style.setProperty("--sh-cal-gap", `${g}px`)
+  return g
+}
+
 function initSchedule() {
   const panel = el("sh-schedule")
   if (!panel) return // not on the dashboard
@@ -230,6 +244,15 @@ function initSchedule() {
       const size = b.dataset.calSize || "s"
       localStorage.setItem(SIZE_KEY, size)
       applySize(panel, size)
+    })
+  })
+
+  const storedGap = parseInt(localStorage.getItem(GAP_KEY) || "", 10)
+  let gap = applyGap(panel, Number.isFinite(storedGap) ? storedGap : GAP_DEFAULT)
+  panel.querySelectorAll<HTMLElement>(".sh-cal-gapper button").forEach((b) => {
+    b.addEventListener("click", () => {
+      gap = applyGap(panel, gap + (b.dataset.calGap === "-" ? -GAP_STEP : GAP_STEP))
+      localStorage.setItem(GAP_KEY, String(gap))
     })
   })
 
