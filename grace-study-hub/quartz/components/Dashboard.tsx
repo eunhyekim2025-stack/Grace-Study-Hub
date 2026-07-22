@@ -69,6 +69,16 @@ const Dashboard: QuartzComponent = ({ fileData, allFiles, displayClass }: Quartz
         ))}
       </div>
 
+      <div class="sh-panel sh-schedule" id="sh-schedule">
+        <div class="sh-panel-head">
+          <span class="sh-eyebrow">📅 MY SCHEDULE</span>
+          <button class="sh-sched-refresh" id="sh-sched-refresh" title="Refresh" hidden>
+            ⟳
+          </button>
+        </div>
+        <div class="sh-sched-body" id="sh-sched-body"></div>
+      </div>
+
       <div class="sh-dash-cols">
         <div class="sh-panel sh-dash-main">
           <div class="sh-panel-head">
@@ -109,16 +119,6 @@ const Dashboard: QuartzComponent = ({ fileData, allFiles, displayClass }: Quartz
         </div>
 
         <div class="sh-dash-side">
-          <div class="sh-panel sh-schedule" id="sh-schedule">
-            <div class="sh-panel-head">
-              <span class="sh-eyebrow">📅 MY SCHEDULE</span>
-              <button class="sh-sched-refresh" id="sh-sched-refresh" title="Refresh" hidden>
-                ⟳
-              </button>
-            </div>
-            <div class="sh-sched-body" id="sh-sched-body"></div>
-          </div>
-
           <div class="sh-panel">
             <div class="sh-panel-head">
               <span class="sh-eyebrow">RECENT</span>

@@ -32,8 +32,21 @@ function startOfWeekMonday(d: Date): Date {
   return x
 }
 
-// Weekly (Mon–Sun) planner view: always shows all 7 days of the current week,
-// today highlighted, empty days shown muted so the whole week reads at a glance.
+const HOUR_PX = 40 // vertical pixels per hour in the time grid
+const DEFAULT_START = 8 // grid always spans at least 8:00…
+const DEFAULT_END = 20 // …to 20:00, expanding to fit earlier/later events
+
+function fmtHour(h: number): string {
+  const ampm = h < 12 ? "AM" : "PM"
+  const hr = h % 12 === 0 ? 12 : h % 12
+  return `${hr} ${ampm}`
+}
+
+type Timed = { ev: SchedEvent; startMin: number; endMin: number }
+
+// Weekly calendar grid: days (Mon–Sun) as columns, hours as rows, events as
+// blocks placed at their real start/duration. All-day events sit in a strip on
+// top; today's column is highlighted.
 function renderEvents(body: HTMLElement, events: SchedEvent[]) {
   const esc = (s: string) =>
     s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c] as string))
@@ -44,44 +57,89 @@ function renderEvents(body: HTMLElement, events: SchedEvent[]) {
   const days = Array.from({ length: 7 }, (_, i) => {
     const d = new Date(monday)
     d.setDate(monday.getDate() + i)
-    return { date: d, key: dayKey(d), items: [] as SchedEvent[] }
+    return { date: d, key: dayKey(d), timed: [] as Timed[], allday: [] as SchedEvent[] }
   })
   const byKey: Record<string, (typeof days)[number]> = {}
   days.forEach((d) => (byKey[d.key] = d))
 
+  let minH = DEFAULT_START
+  let maxH = DEFAULT_END
   for (const ev of events) {
-    const bucket = byKey[dayKey(new Date(ev.start))]
-    if (bucket) bucket.items.push(ev)
+    const s = new Date(ev.start)
+    const bucket = byKey[dayKey(s)]
+    if (!bucket) continue
+    if (ev.allDay) {
+      bucket.allday.push(ev)
+      continue
+    }
+    const e = new Date(ev.end)
+    const startMin = s.getHours() * 60 + s.getMinutes()
+    let endMin = e.getHours() * 60 + e.getMinutes()
+    if (endMin <= startMin) endMin = startMin + 60
+    bucket.timed.push({ ev, startMin, endMin })
+    minH = Math.min(minH, Math.floor(startMin / 60))
+    maxH = Math.max(maxH, Math.ceil(endMin / 60))
   }
-  days.forEach((d) =>
-    d.items.sort((a, b) => (a.allDay === b.allDay ? a.start.localeCompare(b.start) : a.allDay ? -1 : 1)),
-  )
+  minH = Math.max(0, minH)
+  maxH = Math.min(24, maxH)
+  const dayStartMin = minH * 60
+  const gridHeight = (maxH - minH) * HOUR_PX
+  const hasAllday = days.some((d) => d.allday.length)
+
+  const heads = days
+    .map((d) => {
+      const wd = d.date.toLocaleDateString([], { weekday: "short" })
+      return `<div class="sh-cal-dhead${d.key === todayKey ? " today" : ""}">${wd}<span class="sh-cal-dnum">${d.date.getDate()}</span></div>`
+    })
+    .join("")
+
+  let alldayRow = ""
+  if (hasAllday) {
+    const cells = days
+      .map(
+        (d) =>
+          `<div class="sh-cal-allcell${d.key === todayKey ? " today" : ""}">${d.allday
+            .map((ev) => `<span class="sh-cal-chip">${esc(ev.title)}</span>`)
+            .join("")}</div>`,
+      )
+      .join("")
+    alldayRow = `<div class="sh-cal-allday"><div class="sh-cal-gut">All-day</div><div class="sh-cal-allcells">${cells}</div></div>`
+  }
+
+  let gutter = ""
+  for (let h = minH; h < maxH; h++) {
+    gutter += `<div class="sh-cal-hour" style="height:${HOUR_PX}px"><span>${fmtHour(h)}</span></div>`
+  }
+
+  const cols = days
+    .map((d) => {
+      const blocks = d.timed
+        .sort((a, b) => a.startMin - b.startMin)
+        .map((t) => {
+          const top = ((t.startMin - dayStartMin) / 60) * HOUR_PX
+          const height = Math.max(((t.endMin - t.startMin) / 60) * HOUR_PX, 16)
+          const loc = t.ev.location ? `<span class="sh-cal-evloc">${esc(t.ev.location)}</span>` : ""
+          return `<div class="sh-cal-ev" style="top:${top}px;height:${height}px"><span class="sh-cal-evtime">${fmtTime(
+            new Date(t.ev.start),
+          )}</span><span class="sh-cal-evtitle">${esc(t.ev.title)}</span>${loc}</div>`
+        })
+        .join("")
+      return `<div class="sh-cal-col${d.key === todayKey ? " today" : ""}" style="height:${gridHeight}px;background-size:100% ${HOUR_PX}px">${blocks}</div>`
+    })
+    .join("")
 
   const range =
     monday.toLocaleDateString([], { month: "short", day: "numeric" }) +
     " – " +
     days[6].date.toLocaleDateString([], { month: "short", day: "numeric" })
 
-  const html = days
-    .map((d) => {
-      const isToday = d.key === todayKey
-      const wd = d.date.toLocaleDateString([], { weekday: "short" })
-      const rows = d.items.length
-        ? d.items
-            .map((ev) => {
-              const when = ev.allDay ? "All day" : fmtTime(new Date(ev.start))
-              const loc = ev.location ? `<span class="sh-sched-loc">· ${esc(ev.location)}</span>` : ""
-              return `<li class="sh-sched-item"><span class="sh-sched-time">${when}</span><span class="sh-sched-title">${esc(
-                ev.title,
-              )}${loc}</span></li>`
-            })
-            .join("")
-        : `<li class="sh-sched-none">—</li>`
-      return `<div class="sh-sched-day${isToday ? " today" : ""}"><div class="sh-sched-daylabel">${wd} <span class="sh-sched-daynum">${d.date.getDate()}</span></div><ul class="sh-sched-list">${rows}</ul></div>`
-    })
-    .join("")
-
-  body.innerHTML = `<div class="sh-sched-week">${range}</div>${html}`
+  body.innerHTML =
+    `<div class="sh-sched-week">${range}</div>` +
+    `<div class="sh-cal">` +
+    `<div class="sh-cal-headrow"><div class="sh-cal-gut"></div><div class="sh-cal-dheads">${heads}</div></div>` +
+    alldayRow +
+    `<div class="sh-cal-body"><div class="sh-cal-gutter">${gutter}</div><div class="sh-cal-cols">${cols}</div></div>` +
+    `</div>`
 }
 
 async function loadSchedule(password: string, opts: { silent?: boolean } = {}) {

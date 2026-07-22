@@ -342,64 +342,128 @@ body[data-slug="index"] {
   color: var(--gray);
   margin: 0 0 12px;
 }
-.sh-sched-day {
-  padding: 6px 8px;
-  border-radius: 8px;
-  & + .sh-sched-day {
-    margin-top: 2px;
+
+// ── weekly calendar grid ──
+$sh-gut: 52px;
+.sh-sched-body {
+  overflow-x: auto; // horizontal scroll on narrow screens
+}
+.sh-cal {
+  min-width: 640px;
+}
+.sh-cal-headrow,
+.sh-cal-allday,
+.sh-cal-body {
+  display: grid;
+  grid-template-columns: $sh-gut 1fr;
+}
+.sh-cal-dheads,
+.sh-cal-allcells,
+.sh-cal-cols {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+.sh-cal-gut {
+  font-size: 0.62rem;
+  color: var(--gray);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 6px;
+}
+.sh-cal-dhead {
+  text-align: center;
+  padding: 4px 2px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--darkgray);
+  border-bottom: 1px solid var(--lightgray);
+  .sh-cal-dnum {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--gray);
+    margin-top: 1px;
   }
   &.today {
-    background: color-mix(in oklch, var(--secondary) 8%, transparent);
-    .sh-sched-daylabel {
+    color: var(--secondary);
+    .sh-cal-dnum {
       color: var(--secondary);
     }
   }
 }
-.sh-sched-daylabel {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--darkgray);
-  margin-bottom: 4px;
-  .sh-sched-daynum {
-    color: var(--gray);
-    margin-left: 2px;
+.sh-cal-allday {
+  border-bottom: 1px solid var(--lightgray);
+}
+.sh-cal-allcell {
+  padding: 3px 3px;
+  border-left: 1px solid var(--lightgray);
+  min-height: 22px;
+  &.today {
+    background: color-mix(in oklch, var(--secondary) 7%, transparent);
   }
 }
-.sh-sched-none {
-  list-style: none;
-  color: var(--lightgray);
-  font-size: 0.85rem;
-  padding: 1px 0;
-}
-.sh-sched-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.sh-sched-item {
-  display: flex;
-  gap: 10px;
-  padding: 3px 0;
-  font-size: 0.86rem;
-  align-items: baseline;
-}
-.sh-sched-time {
-  flex: 0 0 auto;
-  min-width: 58px;
-  color: var(--gray);
-  font-variant-numeric: tabular-nums;
-  font-size: 0.8rem;
-}
-.sh-sched-title {
+.sh-cal-chip {
+  display: block;
+  font-size: 0.7rem;
+  line-height: 1.3;
+  padding: 1px 5px;
+  margin-bottom: 2px;
+  border-radius: 5px;
+  background: color-mix(in oklch, var(--secondary) 16%, transparent);
   color: var(--darkgray);
-  line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.sh-sched-loc {
-  color: var(--gray);
-  font-size: 0.82em;
-  margin-left: 4px;
+.sh-cal-gutter {
+  position: relative;
+}
+.sh-cal-hour {
+  position: relative;
+  span {
+    position: absolute;
+    top: -7px;
+    right: 6px;
+    font-size: 0.62rem;
+    color: var(--gray);
+    white-space: nowrap;
+  }
+}
+.sh-cal-col {
+  position: relative;
+  border-left: 1px solid var(--lightgray);
+  // hourly gridlines (background-size set inline = HOUR_PX)
+  background-image: linear-gradient(to bottom, var(--lightgray) 1px, transparent 1px);
+  background-position: 0 0;
+  &.today {
+    background-color: color-mix(in oklch, var(--secondary) 6%, transparent);
+  }
+}
+.sh-cal-ev {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  overflow: hidden;
+  border-radius: 6px;
+  padding: 2px 5px;
+  background: color-mix(in oklch, var(--secondary) 22%, var(--light));
+  border-left: 2px solid var(--secondary);
+  font-size: 0.72rem;
+  line-height: 1.2;
+  .sh-cal-evtime {
+    color: var(--gray);
+    font-size: 0.64rem;
+    margin-right: 4px;
+  }
+  .sh-cal-evtitle {
+    color: var(--dark);
+    font-weight: 600;
+  }
+  .sh-cal-evloc {
+    display: block;
+    color: var(--gray);
+    font-size: 0.64rem;
+  }
 }
 
 // recent list
