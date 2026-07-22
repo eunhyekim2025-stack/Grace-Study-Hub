@@ -119,21 +119,6 @@ const Dashboard: QuartzComponent = ({ fileData, allFiles, displayClass }: Quartz
             <div class="sh-sched-body" id="sh-sched-body"></div>
           </div>
 
-          <div class="sh-panel sh-generate">
-            <div class="sh-panel-head">✦ Auto-Generate</div>
-            <div class="sh-drop">
-              Add a note or file to generate
-              <br />
-              summaries and quizzes
-            </div>
-            <button class="sh-btn sh-btn-new sh-block" data-add-open="upload">
-              Generate Summary · Quiz
-            </button>
-            <button class="sh-btn sh-btn-ghost sh-block" data-add-open="subject">
-              + New subject
-            </button>
-          </div>
-
           <div class="sh-panel">
             <div class="sh-panel-head">
               <span class="sh-eyebrow">RECENT</span>

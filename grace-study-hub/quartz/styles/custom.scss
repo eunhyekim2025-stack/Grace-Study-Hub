@@ -336,9 +336,23 @@ body[data-slug="index"] {
     margin-bottom: 8px;
   }
 }
+.sh-sched-week {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--gray);
+  margin: 0 0 12px;
+}
 .sh-sched-day {
+  padding: 6px 8px;
+  border-radius: 8px;
   & + .sh-sched-day {
-    margin-top: 12px;
+    margin-top: 2px;
+  }
+  &.today {
+    background: color-mix(in oklch, var(--secondary) 8%, transparent);
+    .sh-sched-daylabel {
+      color: var(--secondary);
+    }
   }
 }
 .sh-sched-daylabel {
@@ -346,8 +360,18 @@ body[data-slug="index"] {
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--secondary);
+  color: var(--darkgray);
   margin-bottom: 4px;
+  .sh-sched-daynum {
+    color: var(--gray);
+    margin-left: 2px;
+  }
+}
+.sh-sched-none {
+  list-style: none;
+  color: var(--lightgray);
+  font-size: 0.85rem;
+  padding: 1px 0;
 }
 .sh-sched-list {
   list-style: none;
@@ -357,13 +381,9 @@ body[data-slug="index"] {
 .sh-sched-item {
   display: flex;
   gap: 10px;
-  padding: 7px 0;
-  border-bottom: 1px solid var(--lightgray);
+  padding: 3px 0;
   font-size: 0.86rem;
   align-items: baseline;
-  &:last-child {
-    border-bottom: none;
-  }
 }
 .sh-sched-time {
   flex: 0 0 auto;

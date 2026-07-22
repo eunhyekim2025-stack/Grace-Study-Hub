@@ -47,7 +47,9 @@ export default async function handler(req, res) {
   }
 
   const now = new Date()
-  const rangeStart = new Date(now.getTime() - 60 * 60 * 1000) // keep events that started up to 1h ago
+  // Go back a week so the client can lay out the *current* Mon–Sun week even when
+  // today is late in the week; go forward two weeks for the agenda tail.
+  const rangeStart = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
   const rangeEnd = new Date(now.getTime() + WINDOW_DAYS * 24 * 60 * 60 * 1000)
   const out = []
 

@@ -22,53 +22,66 @@ function fmtTime(d: Date): string {
   return d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
 }
 
-function dayLabel(d: Date): string {
-  const today = new Date()
-  const t0 = new Date(today.getFullYear(), today.getMonth(), today.getDate())
-  const d0 = new Date(d.getFullYear(), d.getMonth(), d.getDate())
-  const diff = Math.round((d0.getTime() - t0.getTime()) / 86400000)
-  if (diff === 0) return "Today"
-  if (diff === 1) return "Tomorrow"
-  return d.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" })
+const dayKey = (d: Date) => `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`
+
+// Monday 00:00 (local) of the week containing d.
+function startOfWeekMonday(d: Date): Date {
+  const x = new Date(d.getFullYear(), d.getMonth(), d.getDate())
+  const dow = (x.getDay() + 6) % 7 // Mon=0 … Sun=6
+  x.setDate(x.getDate() - dow)
+  return x
 }
 
+// Weekly (Mon–Sun) planner view: always shows all 7 days of the current week,
+// today highlighted, empty days shown muted so the whole week reads at a glance.
 function renderEvents(body: HTMLElement, events: SchedEvent[]) {
-  if (!events.length) {
-    body.innerHTML = `<p class="sh-sched-empty">Nothing scheduled in the next two weeks 🎉</p>`
-    return
-  }
-  // Group by local calendar day
-  const groups: Record<string, { label: string; sortKey: number; items: SchedEvent[] }> = {}
-  for (const ev of events) {
-    const start = new Date(ev.start)
-    const key =
-      start.getFullYear() + "-" + start.getMonth() + "-" + start.getDate()
-    if (!groups[key]) {
-      const d0 = new Date(start.getFullYear(), start.getMonth(), start.getDate())
-      groups[key] = { label: dayLabel(start), sortKey: d0.getTime(), items: [] }
-    }
-    groups[key].items.push(ev)
-  }
-  const ordered = Object.values(groups).sort((a, b) => a.sortKey - b.sortKey)
-
   const esc = (s: string) =>
     s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c] as string))
 
-  body.innerHTML = ordered
-    .map((g) => {
-      const rows = g.items
-        .map((ev) => {
-          const start = new Date(ev.start)
-          const when = ev.allDay ? "All day" : fmtTime(start)
-          const loc = ev.location ? `<span class="sh-sched-loc">· ${esc(ev.location)}</span>` : ""
-          return `<li class="sh-sched-item"><span class="sh-sched-time">${when}</span><span class="sh-sched-title">${esc(
-            ev.title,
-          )}${loc}</span></li>`
-        })
-        .join("")
-      return `<div class="sh-sched-day"><div class="sh-sched-daylabel">${g.label}</div><ul class="sh-sched-list">${rows}</ul></div>`
+  const monday = startOfWeekMonday(new Date())
+  const todayKey = dayKey(new Date())
+
+  const days = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(monday)
+    d.setDate(monday.getDate() + i)
+    return { date: d, key: dayKey(d), items: [] as SchedEvent[] }
+  })
+  const byKey: Record<string, (typeof days)[number]> = {}
+  days.forEach((d) => (byKey[d.key] = d))
+
+  for (const ev of events) {
+    const bucket = byKey[dayKey(new Date(ev.start))]
+    if (bucket) bucket.items.push(ev)
+  }
+  days.forEach((d) =>
+    d.items.sort((a, b) => (a.allDay === b.allDay ? a.start.localeCompare(b.start) : a.allDay ? -1 : 1)),
+  )
+
+  const range =
+    monday.toLocaleDateString([], { month: "short", day: "numeric" }) +
+    " – " +
+    days[6].date.toLocaleDateString([], { month: "short", day: "numeric" })
+
+  const html = days
+    .map((d) => {
+      const isToday = d.key === todayKey
+      const wd = d.date.toLocaleDateString([], { weekday: "short" })
+      const rows = d.items.length
+        ? d.items
+            .map((ev) => {
+              const when = ev.allDay ? "All day" : fmtTime(new Date(ev.start))
+              const loc = ev.location ? `<span class="sh-sched-loc">· ${esc(ev.location)}</span>` : ""
+              return `<li class="sh-sched-item"><span class="sh-sched-time">${when}</span><span class="sh-sched-title">${esc(
+                ev.title,
+              )}${loc}</span></li>`
+            })
+            .join("")
+        : `<li class="sh-sched-none">—</li>`
+      return `<div class="sh-sched-day${isToday ? " today" : ""}"><div class="sh-sched-daylabel">${wd} <span class="sh-sched-daynum">${d.date.getDate()}</span></div><ul class="sh-sched-list">${rows}</ul></div>`
     })
     .join("")
+
+  body.innerHTML = `<div class="sh-sched-week">${range}</div>${html}`
 }
 
 async function loadSchedule(password: string, opts: { silent?: boolean } = {}) {
