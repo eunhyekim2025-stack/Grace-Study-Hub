@@ -351,23 +351,26 @@ $sh-gut: 52px;
 .sh-schedule {
   --hpx: 30px; // px per hour row
   --sh-cal-gap: 12px; // adjustable *vertical* edge spacing
+  // Width is locked to the Recent column (320px, same as the grid's side track)
+  // so the two panels are exactly the same horizontal length and line up as a
+  // tidy right-hand stack. S/M/L now only change the row height (grid detail).
+  width: 320px;
   max-width: 100%;
-  // Right edge stays flush (margin-right: 0) so it lines up with the Recent
-  // column; left auto keeps it right-aligned. Gap adjusts only top/bottom, and
-  // growing it reflows the panels below automatically (normal flow).
+  // Right edge flush (margin-right: 0) → aligned with Recent; left auto keeps it
+  // right-aligned. Gap adjusts only top/bottom and reflows the row below in flow.
   margin: var(--sh-cal-gap) 0 var(--sh-cal-gap) auto;
-  transition: width 0.15s ease, margin 0.15s ease;
+  transition: margin 0.15s ease;
   &.size-s {
-    width: 320px;
     --hpx: 26px;
   }
   &.size-m {
-    width: 560px;
     --hpx: 38px;
   }
   &.size-l {
-    width: 100%;
     --hpx: 46px;
+  }
+  @media all and (max-width: 900px) {
+    width: 100%; // side column goes full-width on mobile; match it
   }
 }
 .sh-sched-tools {

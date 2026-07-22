@@ -74,9 +74,9 @@ const Dashboard: QuartzComponent = ({ fileData, allFiles, displayClass }: Quartz
           <span class="sh-eyebrow">📅 MY SCHEDULE</span>
           <div class="sh-sched-tools">
             <div class="sh-cal-sizer" role="group" aria-label="Calendar size">
-              <button data-cal-size="s" title="Compact">S</button>
-              <button data-cal-size="m" title="Medium">M</button>
-              <button data-cal-size="l" title="Wide">L</button>
+              <button data-cal-size="s" title="Compact rows">S</button>
+              <button data-cal-size="m" title="Medium rows">M</button>
+              <button data-cal-size="l" title="Tall rows">L</button>
             </div>
             <div class="sh-cal-gapper" role="group" aria-label="Spacing">
               <button data-cal-gap="-" title="Less spacing">−</button>
