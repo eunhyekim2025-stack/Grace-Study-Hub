@@ -69,7 +69,7 @@ const Dashboard: QuartzComponent = ({ fileData, allFiles, displayClass }: Quartz
         ))}
       </div>
 
-      <div class="sh-panel sh-schedule size-s" id="sh-schedule">
+      <div class="sh-panel sh-schedule size-s rolled" id="sh-schedule">
         <div class="sh-panel-head">
           <span class="sh-eyebrow">📅 MY SCHEDULE</span>
           <div class="sh-sched-tools">
@@ -87,7 +87,13 @@ const Dashboard: QuartzComponent = ({ fileData, allFiles, displayClass }: Quartz
             </button>
           </div>
         </div>
-        <div class="sh-sched-body" id="sh-sched-body"></div>
+        <div class="sh-sched-roll">
+          <div class="sh-sched-body" id="sh-sched-body"></div>
+        </div>
+        <button class="sh-cal-roll" id="sh-cal-roll" aria-expanded="false">
+          <span class="sh-cal-roll-ico">▾</span>
+          <span class="sh-cal-roll-txt">Unroll schedule</span>
+        </button>
       </div>
 
       <div class="sh-dash-cols">

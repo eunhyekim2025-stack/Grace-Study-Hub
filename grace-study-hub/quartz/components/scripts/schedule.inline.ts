@@ -234,6 +234,22 @@ function applyGap(panel: HTMLElement, gap: number) {
   return g
 }
 
+const ROLL_KEY = "sh-cal-rolled"
+
+// Papyrus-style roll: the grid is rolled up (collapsed) by default; the bottom
+// button unrolls it. State persists so it stays how you left it.
+function applyRoll(panel: HTMLElement, rolled: boolean) {
+  panel.classList.toggle("rolled", rolled)
+  const btn = panel.querySelector<HTMLElement>("#sh-cal-roll")
+  if (btn) {
+    btn.setAttribute("aria-expanded", String(!rolled))
+    const ico = btn.querySelector(".sh-cal-roll-ico")
+    const txt = btn.querySelector(".sh-cal-roll-txt")
+    if (ico) ico.textContent = rolled ? "▾" : "▴"
+    if (txt) txt.textContent = rolled ? "Unroll schedule" : "Roll up"
+  }
+}
+
 function initSchedule() {
   const panel = el("sh-schedule")
   if (!panel) return // not on the dashboard
@@ -254,6 +270,14 @@ function initSchedule() {
       gap = applyGap(panel, gap + (b.dataset.calGap === "-" ? -GAP_STEP : GAP_STEP))
       localStorage.setItem(GAP_KEY, String(gap))
     })
+  })
+
+  let rolled = localStorage.getItem(ROLL_KEY) !== "0" // default rolled up
+  applyRoll(panel, rolled)
+  el("sh-cal-roll")?.addEventListener("click", () => {
+    rolled = !rolled
+    applyRoll(panel, rolled)
+    localStorage.setItem(ROLL_KEY, rolled ? "1" : "0")
   })
 
   const refresh = el("sh-sched-refresh")

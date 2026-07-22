@@ -350,11 +350,12 @@ $sh-gut: 52px;
 // Default is Compact (matches the old side-card's 320px footprint).
 .sh-schedule {
   --hpx: 30px; // px per hour row
-  --sh-cal-gap: 12px; // adjustable edge spacing; left stays auto for right-align
+  --sh-cal-gap: 12px; // adjustable *vertical* edge spacing
   max-width: 100%;
-  // top / right / bottom use the gap; left auto keeps it right-aligned.
-  // Growing the gap reflows the panels below automatically (normal flow).
-  margin: var(--sh-cal-gap) var(--sh-cal-gap) var(--sh-cal-gap) auto;
+  // Right edge stays flush (margin-right: 0) so it lines up with the Recent
+  // column; left auto keeps it right-aligned. Gap adjusts only top/bottom, and
+  // growing it reflows the panels below automatically (normal flow).
+  margin: var(--sh-cal-gap) 0 var(--sh-cal-gap) auto;
   transition: width 0.15s ease, margin 0.15s ease;
   &.size-s {
     width: 320px;
@@ -404,6 +405,48 @@ $sh-gut: 52px;
   font-size: 0.9rem;
   line-height: 1;
   padding: 2px 9px;
+}
+
+// ── papyrus roll (collapse / expand) ──
+.sh-sched-roll {
+  overflow: hidden;
+  max-height: 1600px; // unrolled
+  opacity: 1;
+  transition:
+    max-height 0.45s ease,
+    opacity 0.3s ease;
+}
+.sh-cal-roll {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px;
+  border: 1px dashed var(--lightgray);
+  border-radius: 10px;
+  background: color-mix(in oklch, var(--secondary) 5%, transparent);
+  color: var(--secondary);
+  font-weight: 600;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  &:hover {
+    background: color-mix(in oklch, var(--secondary) 12%, transparent);
+  }
+}
+.sh-schedule.rolled {
+  .sh-sched-roll {
+    max-height: 0;
+    opacity: 0;
+  }
+  .sh-cal-roll {
+    margin-top: 0;
+  }
+  .sh-sched-tools {
+    display: none; // controls only matter once unrolled
+  }
 }
 .sh-sched-body {
   overflow-x: auto; // horizontal scroll on narrow screens
