@@ -3,6 +3,7 @@
   "private": true,
   "description": "Dependencies for the /api serverless functions (Vercel). The site itself lives in grace-study-hub/ with its own package.json.",
   "dependencies": {
-    "@vercel/blob": "^2.6.1"
+    "@vercel/blob": "^2.6.1",
+    "node-ical": "^0.20.1"
   }
 }

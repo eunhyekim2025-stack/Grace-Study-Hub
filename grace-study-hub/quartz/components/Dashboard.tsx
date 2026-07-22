@@ -2,6 +2,8 @@
 import subjectsData from "../../subjects.json"
 // @ts-ignore
 import greetingScript from "./scripts/greeting.inline"
+// @ts-ignore
+import scheduleScript from "./scripts/schedule.inline"
 import { FullSlug, resolveRelative } from "../util/path"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { classNames } from "../util/lang"
@@ -107,6 +109,16 @@ const Dashboard: QuartzComponent = ({ fileData, allFiles, displayClass }: Quartz
         </div>
 
         <div class="sh-dash-side">
+          <div class="sh-panel sh-schedule" id="sh-schedule">
+            <div class="sh-panel-head">
+              <span class="sh-eyebrow">📅 MY SCHEDULE</span>
+              <button class="sh-sched-refresh" id="sh-sched-refresh" title="Refresh" hidden>
+                ⟳
+              </button>
+            </div>
+            <div class="sh-sched-body" id="sh-sched-body"></div>
+          </div>
+
           <div class="sh-panel sh-generate">
             <div class="sh-panel-head">✦ Auto-Generate</div>
             <div class="sh-drop">
@@ -142,6 +154,6 @@ const Dashboard: QuartzComponent = ({ fileData, allFiles, displayClass }: Quartz
   )
 }
 
-Dashboard.afterDOMLoaded = greetingScript
+Dashboard.afterDOMLoaded = greetingScript + "\n;\n" + scheduleScript
 
 export default (() => Dashboard) satisfies QuartzComponentConstructor

@@ -289,6 +289,99 @@ body[data-slug="index"] {
   }
 }
 
+// schedule panel (private, owner-gated Google Calendar feed)
+.sh-schedule {
+  .sh-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sh-sched-refresh {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--gray);
+    padding: 2px 4px;
+    border-radius: 6px;
+    &:hover {
+      color: var(--secondary);
+      background: var(--lightgray);
+    }
+  }
+}
+.sh-sched-loading,
+.sh-sched-empty,
+.sh-sched-err {
+  font-size: 0.84rem;
+  color: var(--gray);
+  line-height: 1.5;
+  margin: 4px 0;
+  code {
+    font-size: 0.8em;
+  }
+}
+.sh-sched-err {
+  color: oklch(0.6 0.18 25);
+}
+.sh-sched-lock {
+  .sh-sched-lockmsg {
+    font-size: 0.84rem;
+    color: var(--gray);
+    line-height: 1.5;
+    margin: 0 0 10px;
+  }
+  .sh-input {
+    margin-bottom: 8px;
+  }
+}
+.sh-sched-day {
+  & + .sh-sched-day {
+    margin-top: 12px;
+  }
+}
+.sh-sched-daylabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  margin-bottom: 4px;
+}
+.sh-sched-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sh-sched-item {
+  display: flex;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--lightgray);
+  font-size: 0.86rem;
+  align-items: baseline;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+.sh-sched-time {
+  flex: 0 0 auto;
+  min-width: 58px;
+  color: var(--gray);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8rem;
+}
+.sh-sched-title {
+  color: var(--darkgray);
+  line-height: 1.35;
+}
+.sh-sched-loc {
+  color: var(--gray);
+  font-size: 0.82em;
+  margin-left: 4px;
+}
+
 // recent list
 .sh-recent {
   list-style: none;
