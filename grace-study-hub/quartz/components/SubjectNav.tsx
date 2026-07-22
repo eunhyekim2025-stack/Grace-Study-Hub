@@ -14,12 +14,12 @@ const SUBJECTS = subjectsData as Subject[]
 
 const dot = (hue: number) => `oklch(0.62 0.15 ${hue})`
 
-// Group subjects by semester, newest term first ("기타"/no-term last).
+// Group subjects by semester, chronological (Semester 1 first; "기타"/no-term last).
 function byTerm(subs: Subject[]) {
   const terms = [...new Set(subs.map((s) => s.term || "기타"))].sort((a, b) => {
     if (a === "기타") return 1
     if (b === "기타") return -1
-    return b.localeCompare(a, undefined, { numeric: true })
+    return a.localeCompare(b, undefined, { numeric: true })
   })
   return terms.map((term) => ({ term, items: subs.filter((s) => (s.term || "기타") === term) }))
 }
