@@ -8,7 +8,6 @@
 
 type MNode = { label: string; children: MNode[]; level: number }
 
-const OPEN_KEY = "sh-mm-open"
 const MAX_DETAILS = 4 // detail leaves per heading
 const MAX_NODES = 46 // safety cap so the layout stays legible
 
@@ -213,37 +212,38 @@ function render(canvas: HTMLElement, root: MNode) {
     `<g>${edges}</g><g>${bubbles}</g></svg>`
 }
 
-function applyOpen(panel: HTMLElement, open: boolean) {
-  panel.classList.toggle("rolled", !open)
-  const btn = panel.querySelector("#sh-mm-toggle")
-  btn?.setAttribute("aria-expanded", String(open))
-}
-
 function initMindmap() {
-  const panel = document.getElementById("sh-mindmap")
+  const wrap = document.getElementById("sh-mindmap")
   const canvas = document.getElementById("sh-mm-canvas")
-  if (!panel || !canvas) return // not a note page
+  const article = document.querySelector<HTMLElement>(".center article")
+  if (!wrap || !canvas) return // not a note page
 
   const tree = buildTree()
   if (!tree) {
-    panel.hidden = true
+    // Nothing to map → hide the toggle and just show the note text.
+    wrap.hidden = true
+    canvas.hidden = true
+    if (article) article.style.display = ""
     return
   }
   render(canvas, tree)
-  panel.hidden = false
+  wrap.hidden = false
 
-  const open = localStorage.getItem(OPEN_KEY) !== "0"
-  applyOpen(panel, open)
-
-  const btn = document.getElementById("sh-mm-toggle")
-  if (btn && btn.dataset.bound !== "1") {
-    btn.dataset.bound = "1"
-    btn.addEventListener("click", () => {
-      const nowOpen = panel.classList.contains("rolled")
-      applyOpen(panel, nowOpen)
-      localStorage.setItem(OPEN_KEY, nowOpen ? "1" : "0")
-    })
+  const buttons = Array.from(wrap.querySelectorAll<HTMLElement>(".mm-vbtn"))
+  const setView = (view: string) => {
+    const graph = view === "graph"
+    canvas.hidden = !graph
+    if (article) article.style.display = graph ? "none" : ""
+    buttons.forEach((b) => b.classList.toggle("active", b.dataset.mmView === view))
+    window.scrollTo({ top: 0, behavior: "auto" })
   }
+
+  buttons.forEach((b) => {
+    if (b.dataset.bound === "1") return
+    b.dataset.bound = "1"
+    b.addEventListener("click", () => setView(b.dataset.mmView || "text"))
+  })
+  setView("text") // default: show the note
 }
 
 document.addEventListener("nav", initMindmap)

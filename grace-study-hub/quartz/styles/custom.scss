@@ -1315,8 +1315,8 @@ textarea.sh-input {
   margin: 4px 0 12px;
 }
 
-// ── Auto mind map (top of every note) ──────────────────────────
-.mm-panel {
+// ── Note view toggle + auto mind map (Graph view) ──────────────
+.mm-wrap {
   // Bubble palette (theme-aware); overridden for dark mode below.
   --mm-root-bg: oklch(0.72 0.14 350);
   --mm-root-fg: #fff;
@@ -1331,80 +1331,55 @@ textarea.sh-input {
   --mm-l3-fg: var(--darkgray);
   --mm-edge: color-mix(in srgb, var(--gray) 55%, transparent);
 
-  margin: 1rem 0 1.4rem;
+  &[hidden] {
+    display: none;
+  }
+}
+// Toggle buttons — reuse the Diagram-view button look (see .dc-vbtn).
+.mm-toolbar {
+  display: flex;
+  gap: 8px;
+  margin: 4px 0 14px;
+}
+.mm-vbtn {
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--lightgray);
+  background: #f1f5f9;
+  color: var(--darkgray);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--highlight);
+  }
+  &.active {
+    background: var(--secondary);
+    border-color: var(--secondary);
+    color: #fff;
+  }
+}
+:root[saved-theme="dark"] .mm-vbtn {
+  background: var(--lightgray);
+}
+.mm-graph {
+  margin: 0 0 1.4rem;
   border: 1px solid var(--lightgray);
   border-radius: 14px;
   background: color-mix(in srgb, var(--secondary) 4%, var(--light));
-  overflow: hidden;
+  padding: 8px 10px 14px;
 
   &[hidden] {
     display: none;
   }
 }
-.mm-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
-}
-.mm-eyebrow {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--secondary);
-}
-.mm-sub {
-  font-size: 0.72rem;
-  color: var(--gray);
-  flex: 1;
-
-  @media all and (max-width: 500px) {
-    display: none;
-  }
-}
-.mm-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  padding: 0;
-  border: 1px solid var(--lightgray);
-  border-radius: 8px;
-  background: var(--light);
-  color: var(--darkgray);
-  cursor: pointer;
-
-  .mm-toggle-ico {
-    transition: transform 0.2s ease;
-  }
-}
-.mm-roll {
-  overflow: hidden;
-  max-height: 760px;
-  transition:
-    max-height 0.4s ease,
-    opacity 0.3s ease;
-  opacity: 1;
-}
-.mm-panel.rolled {
-  .mm-roll {
-    max-height: 0;
-    opacity: 0;
-  }
-  .mm-toggle-ico {
-    transform: rotate(-90deg);
-  }
-}
-.mm-canvas {
-  padding: 4px 8px 12px;
-}
 .mm-svg {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 700px;
+  max-height: 720px;
 }
 .mm-edge {
   stroke: var(--mm-edge);
@@ -1468,7 +1443,7 @@ textarea.sh-input {
     border-radius: 9px;
   }
 }
-:root[saved-theme="dark"] .mm-panel {
+:root[saved-theme="dark"] .mm-wrap {
   --mm-l1-bg: oklch(0.42 0.06 155);
   --mm-l1-bd: oklch(0.6 0.09 155);
   --mm-l1-fg: oklch(0.94 0.03 155);
