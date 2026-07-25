@@ -1,16 +1,25 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { classNames } from "../util/lang"
+// @ts-ignore  — subjects data, single source of truth
+import subjectsData from "../../subjects.json"
 // @ts-ignore
 import mindmapScript from "./scripts/mindmap.inline"
 
+// Subject hub pages (slugs listed in subjects.json) are excluded — they get the
+// ✦ Auto-Generate bar instead, and a mind map of a table-of-contents hub is not
+// useful.
+const SUBJECT_SLUGS = new Set((subjectsData as { slug: string }[]).map((s) => s.slug))
+
 // A radial "🧠 Mind map" panel at the top of every note. The map is generated on
-// the client from the note's own headings (see mindmap.inline.ts) — it's purely
-// additive, so all existing note content is preserved untouched. Renders nothing
-// on the index / list pages, matching DeleteNote / PrintNote. If a note has no
-// mappable structure, the script hides the panel.
+// the client from the note's own headings + key detail points (see
+// mindmap.inline.ts) — it's purely additive, so all existing note content is
+// preserved untouched. Renders nothing on the index / list / subject-hub pages.
+// If a note has no mappable structure, the script hides the panel.
 const Mindmap: QuartzComponent = ({ fileData, displayClass }: QuartzComponentProps) => {
   const rel = fileData.relativePath
-  if (!rel || fileData.slug === "index" || !rel.toLowerCase().endsWith(".md")) return null
+  const slug = fileData.slug ?? ""
+  if (!rel || slug === "index" || !rel.toLowerCase().endsWith(".md")) return null
+  if (SUBJECT_SLUGS.has(slug)) return null
   return (
     <div class={classNames(displayClass, "mm-panel")} id="sh-mindmap" hidden>
       <div class="mm-head">

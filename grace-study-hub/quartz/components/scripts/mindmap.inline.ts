@@ -1,12 +1,16 @@
 // Builds a radial mind map at the top of every note FROM THE NOTE ITSELF — it
-// reads the rendered headings (title → H2 → H3) and draws a bubble-and-line map,
-// like a hand-drawn concept map. Nothing is written to the note; the map is a
-// live, additive overview, so all existing content is preserved. Rebuilt on
-// every SPA nav. No external library (pure SVG via innerHTML).
+// reads the rendered structure (title → H2 → H3 → key detail points) and draws a
+// bubble-and-line concept map, like a hand-drawn one. Nothing is written to the
+// note; the map is a live, additive overview, so all existing content is
+// preserved. The detail tier pulls the salient point from each bullet (its bold
+// term, else its first clause) so the map shows real content, not just section
+// names. Rebuilt on every SPA nav. No external library (pure SVG via innerHTML).
 
 type MNode = { label: string; children: MNode[]; level: number }
 
 const OPEN_KEY = "sh-mm-open"
+const MAX_DETAILS = 4 // detail leaves per heading
+const MAX_NODES = 46 // safety cap so the layout stays legible
 
 function esc(s: string): string {
   return s.replace(
@@ -25,31 +29,61 @@ function cleanHeading(h: HTMLElement): string {
     .trim()
 }
 
-function firstLine(s: string): string {
-  return s.replace(/\s+/g, " ").trim().slice(0, 60)
+function firstLine(s: string, max = 58): string {
+  return s.replace(/\s+/g, " ").trim().slice(0, max)
 }
 
-// Assemble the tree from the article's headings, with graceful fallbacks so even
-// heading-light notes get a small map.
+// The salient phrase from a bullet: its bold term if any, else its first clause.
+function detailLabel(li: Element): string {
+  const strong = li.querySelector("strong, b")
+  let s = (strong?.textContent || li.textContent || "").replace(/\s+/g, " ").trim()
+  if (!strong) s = s.split(/[.:;—–]| - | → /)[0].trim() // first clause only
+  return s.slice(0, 30)
+}
+
+function addDetails(parent: MNode, list: Element, budget: { n: number }) {
+  const items = Array.from(list.querySelectorAll(":scope > li"))
+  for (const li of items) {
+    if (parent.children.length >= MAX_DETAILS || budget.n <= 0) break
+    const label = detailLabel(li)
+    if (label) {
+      parent.children.push({ label, children: [], level: parent.level + 1 })
+      budget.n--
+    }
+  }
+}
+
+// Assemble the tree by walking the article in document order: H2 → branch,
+// H3 → sub-branch, and each following list contributes detail leaves.
 function buildTree(): MNode | null {
   const article = document.querySelector<HTMLElement>(".center article")
   if (!article) return null
   const titleEl = document.querySelector<HTMLElement>(".article-title")
   const rootLabel = firstLine(titleEl?.textContent || document.title || "Note") || "Note"
   const root: MNode = { label: rootLabel, children: [], level: 0 }
+  const budget = { n: MAX_NODES }
 
-  const heads = Array.from(article.querySelectorAll<HTMLElement>("h2, h3"))
-  let lastH2: MNode | null = null
-  for (const h of heads) {
-    const label = cleanHeading(h)
-    if (!label) continue
-    if (h.tagName === "H2") {
-      lastH2 = { label, children: [], level: 1 }
-      root.children.push(lastH2)
-    } else {
-      const node: MNode = { label, children: [], level: 2 }
-      if (lastH2) lastH2.children.push(node)
-      else root.children.push({ ...node, level: 1 })
+  let curH2: MNode | null = null
+  let curH3: MNode | null = null
+  for (const el of Array.from(article.children) as HTMLElement[]) {
+    if (budget.n <= 0) break
+    const tag = el.tagName
+    if (tag === "H2") {
+      const label = cleanHeading(el)
+      if (!label) continue
+      curH2 = { label, children: [], level: 1 }
+      curH3 = null
+      root.children.push(curH2)
+      budget.n--
+    } else if (tag === "H3") {
+      const label = cleanHeading(el)
+      if (!label) continue
+      curH3 = { label, children: [], level: curH2 ? 2 : 1 }
+      ;(curH2 || root).children.push(curH3)
+      budget.n--
+    } else if (tag === "UL" || tag === "OL") {
+      const parent = curH3 || curH2
+      if (parent) addDetails(parent, el, budget)
     }
   }
 
@@ -59,16 +93,15 @@ function buildTree(): MNode | null {
       article.querySelectorAll<HTMLElement>(":scope > ul > li, :scope > ol > li"),
     ).slice(0, 7)
     for (const li of items) {
-      const label = firstLine(li.textContent || "")
+      const label = firstLine(li.textContent || "", 40)
       if (label) root.children.push({ label, children: [], level: 1 })
     }
   }
   // Fallback 2: still nothing → use bold terms.
   if (root.children.length === 0) {
-    const strongs = Array.from(article.querySelectorAll<HTMLElement>("strong, b")).slice(0, 6)
     const seen = new Set<string>()
-    for (const s of strongs) {
-      const label = firstLine(s.textContent || "")
+    for (const s of Array.from(article.querySelectorAll<HTMLElement>("strong, b")).slice(0, 8)) {
+      const label = firstLine(s.textContent || "", 30)
       if (label && !seen.has(label.toLowerCase())) {
         seen.add(label.toLowerCase())
         root.children.push({ label, children: [], level: 1 })
@@ -80,8 +113,9 @@ function buildTree(): MNode | null {
 }
 
 function bubbleSize(node: MNode): { w: number; h: number } {
-  const w = node.level === 0 ? 176 : node.level === 1 ? 148 : 128
-  const fs = node.level === 0 ? 14 : node.level === 1 ? 12.5 : 11.5
+  const lvl = Math.min(node.level, 3)
+  const w = [176, 150, 130, 112][lvl]
+  const fs = [14, 12.5, 11.5, 10.5][lvl]
   const cpl = Math.max(6, Math.floor(w / (fs * 0.56)))
   const lines = Math.min(4, Math.max(1, Math.ceil(node.label.length / cpl)))
   const h = Math.round(lines * (fs * 1.28) + 16)
@@ -90,30 +124,32 @@ function bubbleSize(node: MNode): { w: number; h: number } {
 
 type Pt = { x: number; y: number }
 
-// Radial layout: root at origin, H2 branches spread evenly on a ring, each H3
-// child fanned out just past its parent.
+function leafCount(n: MNode): number {
+  return n.children.length ? n.children.reduce((s, c) => s + leafCount(c), 0) : 1
+}
+
+// Recursive sector-based radial layout: each node owns an angular slice sized by
+// its leaf count, and sits on the ring for its depth. This keeps whole branches
+// in separate wedges, so adding a detail tier doesn't collide across branches.
 function layout(root: MNode): Map<MNode, Pt> {
   const pos = new Map<MNode, Pt>()
-  pos.set(root, { x: 0, y: 0 })
-  const branches = root.children
-  const n = branches.length
-  const R1 = n <= 3 ? 200 : n <= 6 ? 240 : 280
-  const R2 = 168
-  branches.forEach((b, i) => {
-    const ang = -Math.PI / 2 + (2 * Math.PI * i) / n
-    const bx = Math.cos(ang) * R1
-    const by = Math.sin(ang) * R1
-    pos.set(b, { x: bx, y: by })
-    const kids = b.children
-    const m = kids.length
-    if (m) {
-      const spread = Math.min(Math.PI * 0.55, 0.34 * m)
-      kids.forEach((k, j) => {
-        const a2 = ang + (m === 1 ? 0 : -spread / 2 + (spread * j) / (m - 1))
-        pos.set(k, { x: bx + Math.cos(a2) * R2, y: by + Math.sin(a2) * R2 })
-      })
+  const rings = [0, root.children.length <= 2 ? 155 : 195, 340, 480]
+  const radiusFor = (lvl: number) =>
+    lvl < rings.length ? rings[lvl] : rings[rings.length - 1] + (lvl - rings.length + 1) * 150
+
+  const assign = (node: MNode, a0: number, a1: number) => {
+    const mid = (a0 + a1) / 2
+    const r = radiusFor(node.level)
+    pos.set(node, { x: Math.cos(mid) * r, y: Math.sin(mid) * r })
+    const total = leafCount(node)
+    let a = a0
+    for (const c of node.children) {
+      const span = (a1 - a0) * (leafCount(c) / total)
+      assign(c, a, a + span)
+      a += span
     }
-  })
+  }
+  assign(root, -Math.PI / 2, -Math.PI / 2 + 2 * Math.PI)
   return pos
 }
 
@@ -154,12 +190,9 @@ function render(canvas: HTMLElement, root: MNode) {
     const pb = pos.get(b)!
     edges += `<line x1="${pa.x.toFixed(1)}" y1="${pa.y.toFixed(1)}" x2="${pb.x.toFixed(
       1,
-    )}" y2="${pb.y.toFixed(1)}" class="mm-edge" />`
+    )}" y2="${pb.y.toFixed(1)}" class="mm-edge mm-edge-l${Math.min(b.level, 3)}" />`
   }
-  root.children.forEach((b) => {
-    drawEdge(root, b)
-    b.children.forEach((k) => drawEdge(b, k))
-  })
+  walk(root, (n) => n.children.forEach((c) => drawEdge(n, c)))
 
   // Bubbles (foreignObject lets the browser wrap + theme the text).
   let bubbles = ""
@@ -169,7 +202,7 @@ function render(canvas: HTMLElement, root: MNode) {
     bubbles +=
       `<foreignObject x="${(p.x - s.w / 2).toFixed(1)}" y="${(p.y - s.h / 2).toFixed(1)}" ` +
       `width="${s.w}" height="${s.h}">` +
-      `<div xmlns="http://www.w3.org/1999/xhtml" class="mm-bubble mm-l${n.level}">` +
+      `<div xmlns="http://www.w3.org/1999/xhtml" class="mm-bubble mm-l${Math.min(n.level, 3)}">` +
       `<span>${esc(n.label)}</span></div></foreignObject>`
   })
 

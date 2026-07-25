@@ -1326,6 +1326,9 @@ textarea.sh-input {
   --mm-l2-bg: var(--lightgray);
   --mm-l2-bd: var(--gray);
   --mm-l2-fg: var(--darkgray);
+  --mm-l3-bg: color-mix(in srgb, var(--secondary) 8%, var(--light));
+  --mm-l3-bd: color-mix(in srgb, var(--secondary) 30%, var(--lightgray));
+  --mm-l3-fg: var(--darkgray);
   --mm-edge: color-mix(in srgb, var(--gray) 55%, transparent);
 
   margin: 1rem 0 1.4rem;
@@ -1379,7 +1382,7 @@ textarea.sh-input {
 }
 .mm-roll {
   overflow: hidden;
-  max-height: 620px;
+  max-height: 760px;
   transition:
     max-height 0.4s ease,
     opacity 0.3s ease;
@@ -1401,11 +1404,19 @@ textarea.sh-input {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 560px;
+  max-height: 700px;
 }
 .mm-edge {
   stroke: var(--mm-edge);
   stroke-width: 1.5;
+  fill: none;
+}
+.mm-edge-l2 {
+  stroke-width: 1.2;
+}
+.mm-edge-l3 {
+  stroke-width: 0.9;
+  stroke-dasharray: 3 3;
 }
 .mm-bubble {
   box-sizing: border-box;
@@ -1448,6 +1459,13 @@ textarea.sh-input {
     background: var(--mm-l2-bg);
     color: var(--mm-l2-fg);
     border: 1px solid color-mix(in srgb, var(--mm-l2-bd) 40%, transparent);
+  }
+  &.mm-l3 {
+    font-size: 10.5px;
+    background: var(--mm-l3-bg);
+    color: var(--mm-l3-fg);
+    border: 1px dashed var(--mm-l3-bd);
+    border-radius: 9px;
   }
 }
 :root[saved-theme="dark"] .mm-panel {
