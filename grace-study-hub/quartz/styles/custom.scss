@@ -1349,9 +1349,10 @@ textarea.sh-input {
   }
 }
 
-// ── Print / Save-as-PDF button (note pages) ────────────────────
+// ── Print / Export button + menu (note pages) ──────────────────
 .sh-printnote {
   display: inline-block;
+  position: relative;
   margin: 0.2rem 0 1rem;
 }
 .sh-printnote-btn {
@@ -1376,6 +1377,64 @@ textarea.sh-input {
     color: var(--secondary);
     border-color: color-mix(in srgb, var(--secondary) 40%, var(--lightgray));
     background: color-mix(in srgb, var(--secondary) 7%, transparent);
+  }
+  .sh-print-caret {
+    font-size: 0.7em;
+    opacity: 0.7;
+  }
+  &[aria-expanded="true"] .sh-print-caret {
+    transform: rotate(180deg);
+  }
+}
+.sh-export-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 30;
+  min-width: 200px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 12px;
+  box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.35);
+
+  &[hidden] {
+    display: none;
+  }
+
+  button {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-family: inherit;
+    text-align: left;
+    color: var(--dark);
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.12s ease;
+
+    span {
+      font-weight: 400;
+      font-size: 0.72rem;
+      color: var(--gray);
+    }
+
+    &:hover {
+      background: color-mix(in srgb, var(--secondary) 12%, transparent);
+    }
+    &:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
   }
 }
 
