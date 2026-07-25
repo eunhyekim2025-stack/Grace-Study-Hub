@@ -86,25 +86,60 @@ function buildTree(): MNode | null {
     }
   }
 
-  // Fallback 1: no headings → use the note's top-level list items as branches.
+  // Fallbacks for heading-less / simple notes, so EVERY note with content still
+  // gets a useful Graph view.
+  // (a) Top-level list → branches, with their nested items as detail leaves.
   if (root.children.length === 0) {
-    const items = Array.from(
-      article.querySelectorAll<HTMLElement>(":scope > ul > li, :scope > ol > li"),
-    ).slice(0, 7)
-    for (const li of items) {
-      const label = firstLine(li.textContent || "", 40)
-      if (label) root.children.push({ label, children: [], level: 1 })
+    const lists = Array.from(article.querySelectorAll<HTMLElement>(":scope > ul, :scope > ol"))
+    for (const list of lists) {
+      for (const li of Array.from(list.children) as HTMLElement[]) {
+        if (li.tagName !== "LI" || root.children.length >= 8) break
+        const label = detailLabel(li) || firstLine(li.textContent || "", 40)
+        if (!label) continue
+        const branch: MNode = { label, children: [], level: 1 }
+        const sub = li.querySelector<HTMLElement>(":scope > ul, :scope > ol")
+        if (sub) {
+          for (const s of Array.from(sub.children) as HTMLElement[]) {
+            if (s.tagName !== "LI" || branch.children.length >= MAX_DETAILS) break
+            const dl = detailLabel(s)
+            if (dl) branch.children.push({ label: dl, children: [], level: 2 })
+          }
+        }
+        root.children.push(branch)
+      }
+      if (root.children.length) break
     }
   }
-  // Fallback 2: still nothing → use bold terms.
+  // (b) Internal wiki-links → "related concept" nodes (ties into your linked notes).
   if (root.children.length === 0) {
     const seen = new Set<string>()
-    for (const s of Array.from(article.querySelectorAll<HTMLElement>("strong, b")).slice(0, 8)) {
-      const label = firstLine(s.textContent || "", 30)
+    for (const a of Array.from(article.querySelectorAll<HTMLElement>("a.internal")).slice(0, 24)) {
+      const label = firstLine(a.textContent || "", 26)
       if (label && !seen.has(label.toLowerCase())) {
         seen.add(label.toLowerCase())
         root.children.push({ label, children: [], level: 1 })
+        if (root.children.length >= 8) break
       }
+    }
+  }
+  // (c) Bold / emphasized terms.
+  if (root.children.length === 0) {
+    const seen = new Set<string>()
+    for (const s of Array.from(article.querySelectorAll<HTMLElement>("strong, b, em")).slice(0, 10)) {
+      const label = firstLine(s.textContent || "", 28)
+      if (label && !seen.has(label.toLowerCase())) {
+        seen.add(label.toLowerCase())
+        root.children.push({ label, children: [], level: 1 })
+        if (root.children.length >= 8) break
+      }
+    }
+  }
+  // (d) Last resort — the first sentence of each of the first few paragraphs.
+  if (root.children.length === 0) {
+    for (const p of Array.from(article.querySelectorAll<HTMLElement>(":scope > p")).slice(0, 6)) {
+      const sentence = (p.textContent || "").replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s/)[0]
+      const label = firstLine(sentence, 40)
+      if (label) root.children.push({ label, children: [], level: 1 })
     }
   }
 
