@@ -31,6 +31,7 @@ import SubjectAutoBar from "./SubjectAutoBar"
 import NoteViewToggle from "./NoteViewToggle"
 import SidebarToggle from "./SidebarToggle"
 import DeleteNote from "./DeleteNote"
+import PrintNote from "./PrintNote"
 
 export {
   ArticleTitle,
@@ -66,4 +67,5 @@ export {
   NoteViewToggle,
   SidebarToggle,
   DeleteNote,
+  PrintNote,
 }

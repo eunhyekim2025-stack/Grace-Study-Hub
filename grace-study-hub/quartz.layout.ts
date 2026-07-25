@@ -124,6 +124,8 @@ export const defaultContentPageLayout: PageLayout = {
     Component.TagList(),
     // 🗑 Delete button (renders only on real note pages, not the index/lists).
     Component.DeleteNote(),
+    // 🖨 Print / Save-as-PDF button (same note-page-only condition as Delete).
+    Component.PrintNote(),
     // Subject-page "Auto-Generate" bar + section tabs (renders only on the
     // subject hub pages listed in subjects.json; no-op elsewhere).
     Component.SubjectAutoBar(),

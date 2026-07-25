@@ -1317,7 +1317,8 @@ textarea.sh-input {
 
 // ── Delete-note button (note pages) ────────────────────────────
 .sh-delnote {
-  margin: 0.2rem 0 1rem;
+  display: inline-block;
+  margin: 0.2rem 0.5rem 1rem 0;
 }
 .sh-delnote-btn {
   display: inline-flex;
@@ -1345,6 +1346,88 @@ textarea.sh-input {
   &:disabled {
     opacity: 0.6;
     cursor: default;
+  }
+}
+
+// ── Print / Save-as-PDF button (note pages) ────────────────────
+.sh-printnote {
+  display: inline-block;
+  margin: 0.2rem 0 1rem;
+}
+.sh-printnote-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--gray);
+  background: transparent;
+  border: 1px solid var(--lightgray);
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+
+  &:hover {
+    color: var(--secondary);
+    border-color: color-mix(in srgb, var(--secondary) 40%, var(--lightgray));
+    background: color-mix(in srgb, var(--secondary) 7%, transparent);
+  }
+}
+
+// ── Print layout: strip the app chrome so only the article prints ──
+// window.print() (fired by the 🖨 button) captures the whole page; these rules
+// hide the top bar, sidebars, footer and on-screen action buttons, leaving just
+// the note title + meta + body on paper / in the saved PDF.
+@media print {
+  @page {
+    margin: 1.6cm;
+  }
+
+  // Hide the app shell + interactive-only bits.
+  .page-header header,
+  .left.sidebar,
+  .right.sidebar,
+  .page-footer,
+  .sh-delnote,
+  .sh-printnote,
+  .sh-subjbar-wrap,
+  .breadcrumb-container,
+  hr {
+    display: none !important;
+  }
+
+  // Let the content use the full page width.
+  #quartz-root.page,
+  .center,
+  .page > #quartz-body {
+    display: block !important;
+    max-width: none !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  a {
+    color: #000 !important;
+    text-decoration: none !important;
+  }
+
+  // Avoid awkward breaks through headings, images and code blocks.
+  h1, h2, h3, h4 {
+    break-after: avoid;
+  }
+  pre, blockquote, table, img, figure {
+    break-inside: avoid;
   }
 }
 
