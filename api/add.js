@@ -32,6 +32,42 @@ const slugify = (s) =>
     .replace(/^-+|-+$/g, "")
     .slice(0, 80) || "note"
 
+// Shared "quality bar" appended to both prompts: it makes the model produce
+// notes that are readable AT A GLANCE — an optional visual "Diagram view" block,
+// a key-takeaways callout, tight sections, tables for comparisons, and a
+// glossary. The dc-view block enables the site's automatic Text/Diagram toggle
+// (see NOTE-DESIGN-KIT.md); sanitizeDcView() below repairs its formatting so it
+// always renders even if the model is sloppy.
+const DESIGN_SPEC =
+  `\n\nFORMAT THE NOTE FOR MAXIMUM SCANNABILITY — a reader must grasp it at a glance.\n` +
+  `1. DIAGRAM VIEW (preferred when the content has clear structure — a process, a ` +
+  `set of elements, a comparison, or a few key sections): make the VERY FIRST thing ` +
+  `in your output one raw-HTML block that summarizes the note visually. It powers an ` +
+  `automatic "Diagram view" toggle. Follow these rules EXACTLY or it will break:\n` +
+  `   • The block comes first, flush to the left margin (zero indentation).\n` +
+  `   • EXACTLY one HTML tag-group per line. NO blank lines anywhere inside the block. ` +
+  `NO markdown syntax inside it (use plain text or <b>…</b>).\n` +
+  `   • Use ONLY these classes:\n` +
+  `<div class="dc-view">  … </div>   (the wrapper — REQUIRED first & last)\n` +
+  `<div class="dc-title">TITLE</div><div class="dc-sub">one-line gist</div>\n` +
+  `Flow: <div class="dc-flow"><div class="dc-step"><div class="dc-step-n">1</div><div class="dc-step-t">Name</div><div class="dc-step-d">detail</div></div><div class="dc-arrow">→</div>…</div>\n` +
+  `Section header: <div class="dc-section"><span class="dc-num">1</span><h2>Heading</h2><span class="dc-hint">hint</span></div>\n` +
+  `Card: <div class="dc-card"><b>Point</b> short text <span class="dc-chip">tag</span></div>\n` +
+  `Columns: <div class="dc-cols">…cards…</div>  (or dc-cols-3 for three)\n` +
+  `Key rule: <div class="dc-callout">the single most important rule</div>  (add class "warn" for amber, "ok" for green)\n` +
+  `   • Keep it to the 3–6 most important ideas — it is a MAP, not the whole note.\n` +
+  `   • If the content does not suit a diagram, SKIP this block entirely.\n` +
+  `2. Next, a "> [!summary] Key takeaways" callout: 3–5 one-line bullets — the whole note at a glance.\n` +
+  `3. Then the body: "##"/"###" sections, each with TIGHT bullets (≤ 2 lines each). ` +
+  `No paragraph longer than 3 sentences. Prefer bullets and tables over prose.\n` +
+  `4. Put every definition/key rule in a "> [!info]" callout, every caution in "> [!warning]", ` +
+  `and worked examples in "> [!example]".\n` +
+  `5. Whenever you compare things or list attribute→value pairs, use a Markdown TABLE.\n` +
+  `6. End with a "## Key terms" table (| Term | Meaning |) of the 3–8 most important terms.\n` +
+  `7. Be ruthless about brevity: cut filler, merge redundancy, keep only what aids recall.\n` +
+  `8. Output ONLY the note body (the optional dc-view block, then markdown). No frontmatter, ` +
+  `no top-level "# title", no code fences, no commentary.`
+
 // AI note generation. Two modes, both returning a Markdown BODY (no frontmatter,
 // no top-level "#" title) and both falling back to the raw text if GROQ_API_KEY
 // is missing or the call fails, so a note is never lost:
@@ -48,30 +84,20 @@ async function noteFromText(title, raw, apiKey, mode = "tidy") {
       `speech-to-text, so it has filler words, false starts, and no punctuation ` +
       `structure. Produce faithful, well-organized STUDY NOTES in ENGLISH. If the ` +
       `lecture is spoken in another language (e.g., Korean), translate the content ` +
-      `into natural English — the entire note must be in English.\n\n` +
-      `Rules:\n` +
-      `- Start with a one-paragraph "## Summary" (2-4 sentences).\n` +
-      `- Then "## " / "### " sections following the lecture's flow, with concise ` +
-      `bullet points capturing the key ideas.\n` +
-      `- Put important definitions, formulas, or warnings in "> " blockquote callouts.\n` +
-      `- Use a Markdown table when the lecture compares things or lists key/value pairs.\n` +
-      `- Remove filler ("um", "you know", repetitions); keep all substantive content.\n` +
-      `- Do NOT invent facts not present in the transcript.\n` +
-      `- Output ONLY the Markdown body — no frontmatter, no "# title", no code fences.\n\n` +
-      `TRANSCRIPT:\n"""\n${String(raw).slice(0, 60000)}\n"""`
-    : `You are formatting a study note for a Quartz markdown wiki. The note is titled ` +
-      `"${title}". Below is raw text pasted from NotebookLM (a summary/notes). ` +
-      `Your job is to RESTRUCTURE and CLEAN UP the formatting ONLY — do not add, ` +
-      `remove, or invent any facts, and keep the SAME LANGUAGE as the input.\n\n` +
-      `Rules:\n` +
-      `- Output GitHub-flavored Markdown for the note BODY only. Do NOT include ` +
-      `frontmatter or a top-level "# title" (those are added separately).\n` +
-      `- Organize with "##"/"###" headings, tidy bullet/numbered lists.\n` +
-      `- Turn key definitions or warnings into "> " blockquote callouts.\n` +
-      `- Use a Markdown table when the text compares items or lists key/value pairs.\n` +
-      `- Keep it faithful and concise; fix obvious spacing/OCR artifacts only.\n` +
-      `- Respond with ONLY the Markdown body, no commentary or code fences.\n\n` +
-      `RAW TEXT:\n"""\n${String(raw).slice(0, 12000)}\n"""`
+      `into natural English — the entire note (including the diagram block, callout ` +
+      `titles, and glossary) must be in English. Remove filler ("um", "you know", ` +
+      `repetitions) but keep ALL substantive content. Do NOT invent facts that are ` +
+      `not present in the transcript.` +
+      DESIGN_SPEC +
+      `\n\nTRANSCRIPT:\n"""\n${String(raw).slice(0, 60000)}\n"""`
+    : `You are reformatting a study note for a Quartz markdown wiki. The note is ` +
+      `titled "${title}". Below is raw text pasted from NotebookLM (a summary/notes). ` +
+      `RESTRUCTURE and CLEAN UP the formatting — do NOT add, remove, or invent any ` +
+      `facts, and keep the SAME LANGUAGE as the input (write the diagram block, ` +
+      `callout titles, and glossary in that language too). Fix obvious spacing/OCR ` +
+      `artifacts only.` +
+      DESIGN_SPEC +
+      `\n\nRAW TEXT:\n"""\n${String(raw).slice(0, 12000)}\n"""`
 
   const model = process.env.GROQ_MODEL || "llama-3.3-70b-versatile"
   try {
@@ -82,7 +108,8 @@ async function noteFromText(title, raw, apiKey, mode = "tidy") {
         model,
         messages: [{ role: "user", content: prompt }],
         max_tokens: lecture ? 8000 : 4000,
-        temperature: lecture ? 0.4 : 0.3,
+        // Low temperature = more faithful, less rambling → tighter notes.
+        temperature: lecture ? 0.3 : 0.2,
       }),
     })
     const data = await res.json()
@@ -90,10 +117,39 @@ async function noteFromText(title, raw, apiKey, mode = "tidy") {
     let out = data.choices?.[0]?.message?.content || ""
     // strip a stray ```markdown fence if the model wrapped the whole answer
     out = out.replace(/^```(?:markdown|md)?\s*\n?/i, "").replace(/\n?```\s*$/i, "").trim()
+    out = sanitizeDcView(out)
     return out || raw
   } catch {
     return raw
   }
+}
+
+// Repair a generated <div class="dc-view"> … </div> block so Markdown renders it
+// as raw HTML (the toggle needs it as a real element). Markdown turns HTML into a
+// code block if the block is indented (≥4 spaces) or has blank lines inside, so
+// we collapse the block to flush-left, one line per source line, no blanks — then
+// guarantee a blank line after it so the markdown body resumes cleanly.
+function sanitizeDcView(md) {
+  const start = md.indexOf('<div class="dc-view"')
+  if (start === -1) return md
+  const before = md.slice(0, start)
+  const lines = md.slice(start).split("\n")
+  const kept = []
+  let depth = 0
+  let end = lines.length
+  for (let i = 0; i < lines.length; i++) {
+    const trimmed = lines[i].trim()
+    const opens = (trimmed.match(/<div\b/g) || []).length
+    const closes = (trimmed.match(/<\/div>/g) || []).length
+    if (trimmed !== "") kept.push(trimmed) // drop blank lines + leading indentation
+    depth += opens - closes
+    if (depth <= 0 && (opens > 0 || closes > 0)) {
+      end = i + 1
+      break
+    }
+  }
+  const after = lines.slice(end).join("\n").replace(/^\n+/, "")
+  return `${before}${kept.join("\n")}\n\n${after}`
 }
 
 export default async function handler(req, res) {
