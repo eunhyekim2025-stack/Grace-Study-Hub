@@ -121,6 +121,9 @@ export const defaultContentPageLayout: PageLayout = {
     }),
     Component.ArticleTitle(),
     Component.ContentMeta(),
+    // 🧠 Auto mind map — a radial overview built from the note's headings,
+    // placed at the top of every note (no-op on the index/lists).
+    Component.Mindmap(),
     Component.TagList(),
     // 🗑 Delete button (renders only on real note pages, not the index/lists).
     Component.DeleteNote(),

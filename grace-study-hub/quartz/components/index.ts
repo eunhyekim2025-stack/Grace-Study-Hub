@@ -32,6 +32,7 @@ import NoteViewToggle from "./NoteViewToggle"
 import SidebarToggle from "./SidebarToggle"
 import DeleteNote from "./DeleteNote"
 import PrintNote from "./PrintNote"
+import Mindmap from "./Mindmap"
 
 export {
   ArticleTitle,
@@ -68,4 +69,5 @@ export {
   SidebarToggle,
   DeleteNote,
   PrintNote,
+  Mindmap,
 }

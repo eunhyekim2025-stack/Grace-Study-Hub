@@ -1315,6 +1315,149 @@ textarea.sh-input {
   margin: 4px 0 12px;
 }
 
+// ── Auto mind map (top of every note) ──────────────────────────
+.mm-panel {
+  // Bubble palette (theme-aware); overridden for dark mode below.
+  --mm-root-bg: oklch(0.72 0.14 350);
+  --mm-root-fg: #fff;
+  --mm-l1-bg: oklch(0.93 0.06 155);
+  --mm-l1-bd: oklch(0.72 0.11 155);
+  --mm-l1-fg: oklch(0.32 0.06 155);
+  --mm-l2-bg: var(--lightgray);
+  --mm-l2-bd: var(--gray);
+  --mm-l2-fg: var(--darkgray);
+  --mm-edge: color-mix(in srgb, var(--gray) 55%, transparent);
+
+  margin: 1rem 0 1.4rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--secondary) 4%, var(--light));
+  overflow: hidden;
+
+  &[hidden] {
+    display: none;
+  }
+}
+.mm-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+}
+.mm-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--secondary);
+}
+.mm-sub {
+  font-size: 0.72rem;
+  color: var(--gray);
+  flex: 1;
+
+  @media all and (max-width: 500px) {
+    display: none;
+  }
+}
+.mm-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  border-radius: 8px;
+  background: var(--light);
+  color: var(--darkgray);
+  cursor: pointer;
+
+  .mm-toggle-ico {
+    transition: transform 0.2s ease;
+  }
+}
+.mm-roll {
+  overflow: hidden;
+  max-height: 620px;
+  transition:
+    max-height 0.4s ease,
+    opacity 0.3s ease;
+  opacity: 1;
+}
+.mm-panel.rolled {
+  .mm-roll {
+    max-height: 0;
+    opacity: 0;
+  }
+  .mm-toggle-ico {
+    transform: rotate(-90deg);
+  }
+}
+.mm-canvas {
+  padding: 4px 8px 12px;
+}
+.mm-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 560px;
+}
+.mm-edge {
+  stroke: var(--mm-edge);
+  stroke-width: 1.5;
+}
+.mm-bubble {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 12px;
+  line-height: 1.2;
+  overflow: hidden;
+  font-family: var(--bodyFont);
+
+  span {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &.mm-l0 {
+    font-size: 14px;
+    font-weight: 700;
+    background: var(--mm-root-bg);
+    color: var(--mm-root-fg);
+    border-radius: 16px;
+    box-shadow: 0 4px 14px -6px var(--mm-root-bg);
+  }
+  &.mm-l1 {
+    font-size: 12.5px;
+    font-weight: 600;
+    background: var(--mm-l1-bg);
+    color: var(--mm-l1-fg);
+    border: 1px solid var(--mm-l1-bd);
+  }
+  &.mm-l2 {
+    font-size: 11.5px;
+    background: var(--mm-l2-bg);
+    color: var(--mm-l2-fg);
+    border: 1px solid color-mix(in srgb, var(--mm-l2-bd) 40%, transparent);
+  }
+}
+:root[saved-theme="dark"] .mm-panel {
+  --mm-l1-bg: oklch(0.42 0.06 155);
+  --mm-l1-bd: oklch(0.6 0.09 155);
+  --mm-l1-fg: oklch(0.94 0.03 155);
+  --mm-l2-bg: color-mix(in srgb, var(--lightgray) 60%, transparent);
+  --mm-l2-fg: var(--light);
+}
+
 // ── Delete-note button (note pages) ────────────────────────────
 .sh-delnote {
   display: inline-block;
