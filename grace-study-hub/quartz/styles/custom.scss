@@ -1372,7 +1372,7 @@ textarea.sh-input {
   padding: 8px 10px 14px;
   // Definite height so the SVG (which only carries a viewBox, no height attr)
   // actually has a box to fill — height:auto collapses to 0 in some browsers.
-  height: clamp(360px, 68vh, 640px);
+  height: clamp(420px, 76vh, 780px);
 
   &[hidden] {
     display: none;

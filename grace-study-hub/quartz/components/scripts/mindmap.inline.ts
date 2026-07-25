@@ -8,8 +8,10 @@
 
 type MNode = { label: string; children: MNode[]; level: number }
 
-const MAX_DETAILS = 4 // detail leaves per heading
-const MAX_NODES = 46 // safety cap so the layout stays legible
+const MAX_DETAILS = 7 // detail leaves per heading
+const MAX_SUB = 3 // nested detail leaves per detail
+const MAX_NODES = 90 // safety cap so the layout stays legible
+const LABEL_MAX = 46 // detail label length before truncation
 
 function esc(s: string): string {
   return s.replace(
@@ -37,18 +39,61 @@ function detailLabel(li: Element): string {
   const strong = li.querySelector("strong, b")
   let s = (strong?.textContent || li.textContent || "").replace(/\s+/g, " ").trim()
   if (!strong) s = s.split(/[.:;—–]| - | → /)[0].trim() // first clause only
-  return s.slice(0, 30)
+  return s.slice(0, LABEL_MAX)
 }
 
+const canAdd = (parent: MNode, budget: { n: number }) =>
+  parent.children.length < MAX_DETAILS && budget.n > 0
+
+function pushChild(parent: MNode, label: string, budget: { n: number }): MNode | null {
+  if (!label || !canAdd(parent, budget)) return null
+  const node: MNode = { label, children: [], level: parent.level + 1 }
+  parent.children.push(node)
+  budget.n--
+  return node
+}
+
+// A list → detail leaves, with one nested tier so sub-bullets show too.
 function addDetails(parent: MNode, list: Element, budget: { n: number }) {
-  const items = Array.from(list.querySelectorAll(":scope > li"))
-  for (const li of items) {
-    if (parent.children.length >= MAX_DETAILS || budget.n <= 0) break
-    const label = detailLabel(li)
-    if (label) {
-      parent.children.push({ label, children: [], level: parent.level + 1 })
-      budget.n--
+  for (const li of Array.from(list.children) as HTMLElement[]) {
+    if (li.tagName !== "LI") continue
+    if (!canAdd(parent, budget)) break
+    const node = pushChild(parent, detailLabel(li), budget)
+    if (!node) break
+    const sub = li.querySelector<HTMLElement>(":scope > ul, :scope > ol")
+    if (sub) {
+      for (const s of Array.from(sub.children) as HTMLElement[]) {
+        if (s.tagName !== "LI" || node.children.length >= MAX_SUB || budget.n <= 0) break
+        const dl = detailLabel(s)
+        if (dl) {
+          node.children.push({ label: dl, children: [], level: node.level + 1 })
+          budget.n--
+        }
+      }
     }
+  }
+}
+
+// A callout / blockquote → one detail leaf (its title, else its first line).
+function addBlockquote(parent: MNode, bq: Element, budget: { n: number }) {
+  const title = bq.querySelector(".callout-title-inner")?.textContent
+  pushChild(parent, firstLine(title || bq.textContent || "", LABEL_MAX), budget)
+}
+
+// A table → each row's first cell (the row header / key) as a detail leaf.
+function addTable(parent: MNode, table: Element, budget: { n: number }) {
+  for (const row of Array.from(table.querySelectorAll("tbody tr"))) {
+    if (!canAdd(parent, budget)) break
+    const cell = row.querySelector("th, td")
+    pushChild(parent, firstLine(cell?.textContent || "", 34), budget)
+  }
+}
+
+// A paragraph's bold terms (definitions) → detail leaves.
+function addParaTerms(parent: MNode, p: Element, budget: { n: number }) {
+  for (const s of Array.from(p.querySelectorAll("strong, b"))) {
+    if (!canAdd(parent, budget)) break
+    pushChild(parent, firstLine(s.textContent || "", 34), budget)
   }
 }
 
@@ -80,9 +125,14 @@ function buildTree(): MNode | null {
       curH3 = { label, children: [], level: curH2 ? 2 : 1 }
       ;(curH2 || root).children.push(curH3)
       budget.n--
-    } else if (tag === "UL" || tag === "OL") {
+    } else {
+      // Attach content details to the current heading (H3 if inside one, else H2).
       const parent = curH3 || curH2
-      if (parent) addDetails(parent, el, budget)
+      if (!parent) continue
+      if (tag === "UL" || tag === "OL") addDetails(parent, el, budget)
+      else if (tag === "BLOCKQUOTE") addBlockquote(parent, el, budget)
+      else if (tag === "TABLE") addTable(parent, el, budget)
+      else if (tag === "P") addParaTerms(parent, el, budget)
     }
   }
 
