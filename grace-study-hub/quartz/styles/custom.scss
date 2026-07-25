@@ -1370,6 +1370,9 @@ textarea.sh-input {
   border-radius: 14px;
   background: color-mix(in srgb, var(--secondary) 4%, var(--light));
   padding: 8px 10px 14px;
+  // Definite height so the SVG (which only carries a viewBox, no height attr)
+  // actually has a box to fill — height:auto collapses to 0 in some browsers.
+  height: clamp(360px, 68vh, 640px);
 
   &[hidden] {
     display: none;
@@ -1378,8 +1381,7 @@ textarea.sh-input {
 .mm-svg {
   display: block;
   width: 100%;
-  height: auto;
-  max-height: 720px;
+  height: 100%;
 }
 .mm-edge {
   stroke: var(--mm-edge);
