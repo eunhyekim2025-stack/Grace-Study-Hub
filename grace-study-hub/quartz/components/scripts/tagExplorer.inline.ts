@@ -94,11 +94,7 @@ function initTagExplorer() {
       ? matched
           .slice()
           .sort((a, b) => a.title.localeCompare(b.title))
-          .map(
-            (n) =>
-              `<li><a href="${n.href}">${esc(n.title)}</a>` +
-              `<span class="tx-tags">${n.tags.map((t) => `#${esc(t)}`).join(" ")}</span></li>`,
-          )
+          .map((n) => `<li><a href="${n.href}">${esc(n.title)}</a></li>`)
           .join("")
       : ""
 

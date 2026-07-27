@@ -108,21 +108,13 @@ export default ((opts?: Partial<TagContentOptions>) => {
         </div>
       )
     } else {
-      const pages = allPagesWithTag(tag)
-      const listProps = {
-        ...props,
-        allFiles: pages,
-      }
-
+      // A single-tag page: the interactive "Combine tags" explorer (rendered in
+      // beforeBody, preselected to this tag) already lists the matching notes, so
+      // the old card grid + "N items" count is redundant clutter — drop it and
+      // keep only the tag's own description (usually empty).
       return (
         <div class="popover-hint">
           <article class={classes}>{content}</article>
-          <div class="page-listing">
-            <p>{i18n(cfg.locale).pages.tagContent.itemsUnderTag({ count: pages.length })}</p>
-            <div>
-              <PageList {...listProps} sort={options?.sort} />
-            </div>
-          </div>
         </div>
       )
     }
