@@ -34,6 +34,7 @@ import DeleteNote from "./DeleteNote"
 import PrintNote from "./PrintNote"
 import Mindmap from "./Mindmap"
 import TagExplorer from "./TagExplorer"
+import TagFilter from "./TagFilter"
 
 export {
   ArticleTitle,
@@ -72,4 +73,5 @@ export {
   PrintNote,
   Mindmap,
   TagExplorer,
+  TagFilter,
 }

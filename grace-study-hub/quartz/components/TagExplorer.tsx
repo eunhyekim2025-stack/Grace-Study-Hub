@@ -34,9 +34,9 @@ const TagExplorer: QuartzComponent = ({ fileData, allFiles, displayClass }: Quar
     <div class={classNames(displayClass, "tx")} id="sh-tag-explorer">
       <div class="tx-bar">
         <span class="tx-title">🔎 Combine tags</span>
-        <span class="tx-hint">select tags to see notes that have ALL of them</span>
+        <input class="tx-search" id="tx-search" type="search" placeholder="태그 검색…" aria-label="Filter tags" />
         <button class="tx-clear" id="tx-clear" hidden>
-          clear
+          모두 해제
         </button>
       </div>
       <div class="tx-chips">
@@ -47,6 +47,7 @@ const TagExplorer: QuartzComponent = ({ fileData, allFiles, displayClass }: Quar
           </button>
         ))}
       </div>
+      <button class="tx-more" id="tx-more" hidden></button>
       <div class="tx-meta" id="tx-meta"></div>
       <ul class="tx-results" id="tx-results"></ul>
       <script

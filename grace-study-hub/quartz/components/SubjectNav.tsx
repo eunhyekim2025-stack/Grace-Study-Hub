@@ -88,7 +88,11 @@ const SubjectNav: QuartzComponent = ({ fileData, allFiles, displayClass }: Quart
           <p class="sh-subjects-title">Tags</p>
           <div class="sh-tags">
             {topTags.map((t) => (
-              <a class="sh-tag" href={resolveRelative(current, joinSegments("tags", slugTag(t)) as FullSlug)}>
+              <a
+                class="sh-tag"
+                data-mtag={t}
+                href={resolveRelative(current, joinSegments("tags", slugTag(t)) as FullSlug)}
+              >
                 {t}
               </a>
             ))}
