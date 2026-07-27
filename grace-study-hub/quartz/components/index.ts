@@ -33,6 +33,7 @@ import SidebarToggle from "./SidebarToggle"
 import DeleteNote from "./DeleteNote"
 import PrintNote from "./PrintNote"
 import Mindmap from "./Mindmap"
+import TagExplorer from "./TagExplorer"
 
 export {
   ArticleTitle,
@@ -70,4 +71,5 @@ export {
   DeleteNote,
   PrintNote,
   Mindmap,
+  TagExplorer,
 }

@@ -127,10 +127,28 @@ function submitNote(btn: HTMLButtonElement) {
   }
   const polish = checked("sh-note-polish")
   post(
-    { type: "note", title, subject: val("sh-note-subject"), tags: val("sh-note-tags"), content, polish },
+    {
+      type: "note",
+      title,
+      subject: val("sh-note-subject"),
+      tags: val("sh-note-tags"),
+      content,
+      polish,
+      knownTags: knownTags(), // reuse the existing vocabulary for auto-tagging
+    },
     btn,
     polish,
   )
+}
+
+// The build-time tag vocabulary embedded by AddContentModal — lets the server's
+// auto-tagger reuse existing tags (shared with Obsidian + the wiki graph).
+function knownTags(): string[] {
+  try {
+    return JSON.parse(document.getElementById("sh-known-tags")?.textContent || "[]")
+  } catch {
+    return []
+  }
 }
 
 function checked(id: string): boolean {

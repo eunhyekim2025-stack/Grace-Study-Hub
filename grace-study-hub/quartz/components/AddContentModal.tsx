@@ -30,7 +30,14 @@ const Subjects = ({ id }: { id: string }) => (
   </select>
 )
 
-const AddContentModal: QuartzComponent = (_: QuartzComponentProps) => {
+const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) => {
+  // The live tag vocabulary (every note's frontmatter tags), baked in at build
+  // time. Posted to /api/add so auto-tagging reuses existing tags instead of
+  // inventing near-duplicates — the same tags Obsidian and the wiki graph read.
+  const knownTags = [
+    ...new Set((allFiles ?? []).flatMap((f) => (f.frontmatter?.tags ?? []) as string[])),
+  ].sort()
+  const knownTagsJSON = JSON.stringify(knownTags).replace(/</g, "\\u003c")
   return (
     <div id="sh-add-modal" class="sh-modal" hidden>
       <div class="sh-modal-backdrop" data-add-close></div>
@@ -66,8 +73,14 @@ const AddContentModal: QuartzComponent = (_: QuartzComponentProps) => {
           </div>
           <div class="sh-field">
             <label for="sh-note-tags">태그 (쉼표로 구분)</label>
-            <input id="sh-note-tags" class="sh-input" placeholder="예: 개념, 시험대비" />
+            <input id="sh-note-tags" class="sh-input" placeholder="예: 개념, 시험대비 — 비워두면 AI가 자동 추가" />
+            <small class="sh-hint">비워두거나 몇 개만 적어도 AI가 기존 태그를 재사용해 자동으로 채워줍니다.</small>
           </div>
+          <script
+            type="application/json"
+            id="sh-known-tags"
+            dangerouslySetInnerHTML={{ __html: knownTagsJSON }}
+          />
           <div class="sh-field">
             <label for="sh-note-content">내용</label>
             <textarea id="sh-note-content" class="sh-input" rows={8} placeholder="마크다운으로 작성하거나, NotebookLM 요약을 그대로 붙여넣으세요…"></textarea>

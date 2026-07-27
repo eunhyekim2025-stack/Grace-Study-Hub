@@ -143,7 +143,16 @@ export const defaultContentPageLayout: PageLayout = {
 
 // components for pages that display lists of pages  (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
-  beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle(), Component.ContentMeta()],
+  beforeBody: [
+    Component.Breadcrumbs(),
+    Component.ArticleTitle(),
+    Component.ContentMeta(),
+    // 🔎 Multi-tag (AND) filter — only on the tags index page.
+    Component.ConditionalRender({
+      component: Component.TagExplorer(),
+      condition: (page) => page.fileData.slug === "tags/index" || page.fileData.slug === "tags",
+    }),
+  ],
   left: [Component.SubjectNav()],
   right: [],
 }

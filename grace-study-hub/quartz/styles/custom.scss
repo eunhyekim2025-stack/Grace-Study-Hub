@@ -1453,6 +1453,127 @@ textarea.sh-input {
   --mm-l2-fg: var(--light);
 }
 
+// Small helper caption under a form field (e.g. auto-tagging note).
+.sh-hint {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.72rem;
+  color: var(--gray);
+}
+
+// ── Multi-tag explorer (/tags page) ────────────────────────────
+.tx {
+  margin: 0.5rem 0 2rem;
+}
+.tx-bar {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.tx-title {
+  font-weight: 700;
+  color: var(--secondary);
+}
+.tx-hint {
+  font-size: 0.78rem;
+  color: var(--gray);
+  flex: 1;
+}
+.tx-clear {
+  font-family: inherit;
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border: 1px solid var(--lightgray);
+  border-radius: 999px;
+  background: var(--light);
+  color: var(--darkgray);
+  cursor: pointer;
+
+  &[hidden] {
+    display: none;
+  }
+}
+.tx-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.tx-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 5px 12px;
+  border: 1px solid var(--lightgray);
+  border-radius: 999px;
+  background: var(--light);
+  color: var(--dark);
+  cursor: pointer;
+  transition:
+    background 0.12s ease,
+    border-color 0.12s ease,
+    opacity 0.12s ease;
+
+  .tx-count {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--gray);
+  }
+
+  &:hover {
+    border-color: var(--secondary);
+  }
+  &.active {
+    background: var(--secondary);
+    border-color: var(--secondary);
+    color: #fff;
+    .tx-count {
+      color: color-mix(in srgb, #fff 75%, transparent);
+    }
+  }
+  &.tx-dim {
+    opacity: 0.35;
+  }
+}
+.tx-meta {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--darkgray);
+  margin-bottom: 8px;
+}
+.tx-results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  li {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 7px 12px;
+    border: 1px solid var(--lightgray);
+    border-radius: 10px;
+    background: var(--light);
+  }
+  a {
+    font-weight: 600;
+  }
+  .tx-tags {
+    font-size: 0.72rem;
+    color: var(--gray);
+  }
+}
+
 // ── Delete-note button (note pages) ────────────────────────────
 .sh-delnote {
   display: inline-block;

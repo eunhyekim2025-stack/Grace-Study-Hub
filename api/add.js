@@ -152,6 +152,63 @@ function sanitizeDcView(md) {
   return `${before}${kept.join("\n")}\n\n${after}`
 }
 
+// Canonical tag form — one shared vocabulary for Quartz, Obsidian, and the
+// llm-wiki graph. All three read frontmatter `tags:`, so normalizing every tag
+// to lowercase kebab-case (keeping Unicode letters, e.g. Korean) keeps the same
+// tag a single node everywhere and prevents near-duplicate fragmentation.
+function normTag(t) {
+  return String(t || "")
+    .toLowerCase()
+    .trim()
+    .replace(/^#/, "")
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 40)
+}
+
+// Auto-tagging (free, via Groq): propose a few topical tags for a note, STRONGLY
+// biased to reuse the existing vocabulary passed from the client (derived at
+// build time from every note's frontmatter — the same tags Obsidian and the
+// wiki graph use). Returns [] on any failure so tagging never blocks a save.
+async function suggestTags(title, body, knownTags, apiKey) {
+  if (!apiKey) return []
+  const vocab = (Array.isArray(knownTags) ? knownTags : [])
+    .map(normTag)
+    .filter(Boolean)
+    .slice(0, 250)
+  const prompt =
+    `You assign tags to a study note for a wiki shared by Quartz, Obsidian, and a ` +
+    `knowledge graph. Choose 3–6 short topical tags.\n` +
+    `Rules:\n` +
+    `- STRONGLY prefer reusing tags from this existing vocabulary; only invent a new ` +
+    `tag when nothing fits (at most 2 new):\n${vocab.join(", ") || "(none yet)"}\n` +
+    `- lowercase kebab-case, no "#". Prefer subject/topic tags over generic words.\n` +
+    `- Output ONLY a JSON array of strings, e.g. ["contract","singapore"].\n\n` +
+    `TITLE: ${title}\nNOTE:\n"""\n${String(body).slice(0, 6000)}\n"""`
+  const model = process.env.GROQ_MODEL || "llama-3.3-70b-versatile"
+  try {
+    const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: { "content-type": "application/json", authorization: `Bearer ${apiKey}` },
+      body: JSON.stringify({
+        model,
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 200,
+        temperature: 0.2,
+      }),
+    })
+    const data = await res.json()
+    if (!res.ok) return []
+    const out = data.choices?.[0]?.message?.content || ""
+    const m = out.match(/\[[\s\S]*\]/)
+    if (!m) return []
+    const arr = JSON.parse(m[0])
+    return Array.isArray(arr) ? arr : []
+  } catch {
+    return []
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "POST only" })
@@ -189,9 +246,9 @@ export default async function handler(req, res) {
     if (!title || !content) {
       return res.status(400).json({ error: "Title and content are required." })
     }
-    const tagList = String(tags || "")
+    const userTags = String(tags || "")
       .split(",")
-      .map((t) => t.trim())
+      .map(normTag)
       .filter(Boolean)
     // AI pass: "lecture" summarizes a recording transcript into study notes;
     // "polish" tidies a pasted NotebookLM summary. Otherwise save as-is.
@@ -200,6 +257,15 @@ export default async function handler(req, res) {
     const finalContent = wantAI
       ? await noteFromText(title, content, process.env.GROQ_API_KEY, aiMode)
       : content
+    // Auto-tags (free, Groq): reuse the client-supplied vocabulary. User-typed
+    // tags are authoritative and come first; suggestions fill in, deduped & capped.
+    const autoTags =
+      body.autoTags === false
+        ? []
+        : (await suggestTags(title, finalContent, body.knownTags, process.env.GROQ_API_KEY))
+            .map(normTag)
+            .filter(Boolean)
+    const tagList = [...new Set([...userTags, ...autoTags])].slice(0, 8)
     // Private audio backup: /api/archive uploaded each recording segment to the
     // private Blob store and the client passes back their pathnames. We record
     // them in frontmatter (a private-store path is useless without the token, so
