@@ -12,6 +12,29 @@ degree: 19
 community: 2
 ---
 
+<div class="dc-view">
+<div><div class="dc-title">Misrepresentation</div><div class="dc-sub">A false statement of fact that induces a contract → voidable</div></div>
+<div class="dc-flow">
+<div class="dc-step"><div class="dc-step-n">1</div><div class="dc-step-t">False statement</div><div class="dc-step-d">of fact, not opinion</div></div>
+<div class="dc-arrow">→</div>
+<div class="dc-step"><div class="dc-step-n">2</div><div class="dc-step-t">Communicated</div><div class="dc-step-d">to the representee</div></div>
+<div class="dc-arrow">→</div>
+<div class="dc-step"><div class="dc-step-n">3</div><div class="dc-step-t">Reliance</div><div class="dc-step-d">party relied on it</div></div>
+<div class="dc-arrow">→</div>
+<div class="dc-step"><div class="dc-step-n">4</div><div class="dc-step-t">Inducement</div><div class="dc-step-d">a material factor</div></div>
+</div>
+<div class="dc-section"><span class="dc-num">1</span><h2>Three types</h2><span class="dc-hint">state of mind → remedy</span></div>
+<div class="dc-cols-3">
+<div class="dc-card"><div class="dc-eyebrow">Fraudulent</div>Knows it is false / reckless <span class="dc-chip">Derry v Peek</span></div>
+<div class="dc-card"><div class="dc-eyebrow">Negligent</div>No reasonable basis <span class="dc-chip amber">MA s.2(1)</span></div>
+<div class="dc-card"><div class="dc-eyebrow">Innocent</div>Reasonable belief it was true</div>
+</div>
+<div class="dc-section"><span class="dc-num">2</span><h2>Remedies</h2><span class="dc-hint">rescission + damages</span></div>
+<div class="dc-card"><b>Rescission</b> — unwind the contract from the outset, with restitution</div>
+<div class="dc-callout warn">Bars to rescission: affirmation · lapse of time · restitution impossible · third-party rights</div>
+<div class="dc-callout">MA s.2(1) shifts the burden of proof onto the representor — very favourable to the victim.</div>
+</div>
+
 # Misrepresentation
 
 A **false statement of fact** that induces the formation of a contract. A vitiating factor that renders a contract voidable.
