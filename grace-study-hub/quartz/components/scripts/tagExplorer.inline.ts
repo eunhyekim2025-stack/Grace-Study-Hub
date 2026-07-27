@@ -54,13 +54,21 @@ function initTagExplorer() {
     matched.forEach((n) => n.tags.forEach((t) => viable.add(t)))
 
     // Decide chip visibility: search match + (top-N unless expanded/searching) +
-    // (when filtering, only selected or still-combinable tags).
+    // (when filtering, only selected or still-combinable tags). Each chip's count
+    // is CONTEXTUAL: with a selection it shows how many of the matched notes also
+    // carry that tag (co-occurrence), e.g. decision-analysis → exam-prep shows 2.
     const q = query.trim().toLowerCase()
-    let shown = 0
     let hiddenByCollapse = 0
     chips.forEach((c, i) => {
       const t = c.dataset.tag as string
       const isSel = selected.has(t)
+
+      // matched === all notes when nothing is selected, so this is the global
+      // count then, and the co-occurrence count once a tag is picked.
+      const cnt = matched.filter((n) => n.tags.includes(t)).length
+      const countEl = c.querySelector(".tx-count")
+      if (countEl) countEl.textContent = String(cnt)
+
       const matchesSearch = !q || t.toLowerCase().includes(q)
       const combinable = !sel.length || isSel || viable.has(t)
       const withinTop = showAll || q !== "" || isSel || i < INITIAL
@@ -71,7 +79,6 @@ function initTagExplorer() {
       }
       c.classList.toggle("active", isSel)
       c.hidden = !show
-      if (show) shown++
     })
 
     if (moreBtn) {
