@@ -11,10 +11,6 @@ community: 2
 ---
 
 
-<div class="neg-toolbar">
-<button class="neg-vbtn" data-neg-view="text">📝 Text view</button>
-<button class="neg-vbtn active" data-neg-view="diagram">🗺 Diagram view</button>
-</div>
 <div class="neg-diagram">
 <div style="display:flex; flex-direction:column; gap:8px;">
 <h1 style="margin:0; font-size:28px; font-weight:700; color:#1E293B; font-family:'Source Serif 4', serif;">Negligence</h1>
