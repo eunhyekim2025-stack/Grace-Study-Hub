@@ -32,6 +32,14 @@ function initTagExplorer() {
 
   const selected = new Set<string>()
 
+  // On an individual tag page (slug "tags/<tag>") open preselected to that tag,
+  // so clicking a tag anywhere lands in a combinable filter already started.
+  const slug = document.body.dataset.slug || ""
+  if (slug.startsWith("tags/") && slug !== "tags/index") {
+    const pre = slug.slice("tags/".length)
+    if (chips.some((c) => c.dataset.tag === pre)) selected.add(pre)
+  }
+
   const render = () => {
     const sel = [...selected]
     const matched = sel.length ? notes.filter((n) => sel.every((t) => n.tags.includes(t))) : notes

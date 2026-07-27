@@ -147,10 +147,11 @@ export const defaultListPageLayout: PageLayout = {
     Component.Breadcrumbs(),
     Component.ArticleTitle(),
     Component.ContentMeta(),
-    // 🔎 Multi-tag (AND) filter — only on the tags index page.
+    // 🔎 Multi-tag (AND) filter on every tag page — a single-tag page opens it
+    // preselected to that tag, so you can keep adding tags to combine.
     Component.ConditionalRender({
       component: Component.TagExplorer(),
-      condition: (page) => page.fileData.slug === "tags/index" || page.fileData.slug === "tags",
+      condition: (page) => (page.fileData.slug ?? "").startsWith("tags/"),
     }),
   ],
   left: [Component.SubjectNav()],
