@@ -12,6 +12,18 @@ degree: 10
 community: 3
 ---
 
+<div class="dc-view">
+<div class="dc-title">Extreme Points</div>
+<div class="dc-sub">Optimal solutions in Linear Programming occur at corner points of the Feasible Region</div>
+<div class="dc-flow"><div class="dc-step"><div class="dc-step-n">1</div><div class="dc-step-t">Identify Extreme Points</div><div class="dc-step-d">corner points of the Feasible Region</div></div><div class="dc-arrow">→</div><div class="dc-step"><div class="dc-step-n">2</div><div class="dc-step-t">Check for Optimality</div><div class="dc-step-d">evaluate the objective function at each extreme point</div></div></div>
+<div class="dc-section"><span class="dc-num">1</span><h2>Extreme Point Theorem</h2><span class="dc-hint">basis of the simplex method</span></div>
+<div class="dc-cols-3"><div class="dc-card"><b>Optimal Solution</b> occurs at an extreme point <span class="dc-chip">Extreme Point Theorem</span></div><div class="dc-card"><b>Finite Set</b> of extreme points to check <span class="dc-chip">reduces search space</span></div><div class="dc-card"><b>Vertex-Enumeration</b> problem <span class="dc-chip">theoretical basis of simplex method</span></div></div>
+<div class="dc-section"><span class="dc-num">2</span><h2>Meaning</h2><span class="dc-hint">characteristics of extreme points</span></div>
+<div class="dc-cols"><div class="dc-card"><b>Intersection</b> of constraint lines <span class="dc-chip">definition of extreme point</span></div><div class="dc-card"><b>Optimal Solution</b> last point touched by the objective function <span class="dc-chip">Graphical Solution Method</span></div></div>
+<div class="dc-callout">Optimal solutions in LP occur at extreme points of the Feasible Region</div>
+</div>
+
+
 # Extreme Points
 
 The **vertices** of the [[Feasible Region]] — corner points that no longer lie on the line segment between two other points in the region.

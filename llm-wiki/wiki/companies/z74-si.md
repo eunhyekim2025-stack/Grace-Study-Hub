@@ -8,6 +8,18 @@ source: yfinance
 updated: 2026-07-10
 ---
 
+<div class="dc-view">
+<div class="dc-title">Singapore Telecommunications Limited (Z74.SI) — Financial Snapshot</div>
+<div class="dc-sub">Automated annual financial snapshot of Singapore Telecommunications Limited (Z74.SI) in SGD, sourced from yfinance</div>
+<div class="dc-flow"><div class="dc-step"><div class="dc-step-n">1</div><div class="dc-step-t">Review key metrics</div><div class="dc-step-d">Revenue, net income, net margin, ROE, and other financial metrics</div></div><div class="dc-arrow">→</div><div class="dc-step"><div class="dc-step-n">2</div><div class="dc-step-t">Analyze trends</div><div class="dc-step-d">Year-over-year growth and changes in key metrics</div></div></div>
+<div class="dc-section"><span class="dc-num">1</span><h2>Key Metrics</h2><span class="dc-hint">Annual figures in SGD</span></div>
+<div class="dc-cols-3"><div class="dc-card"><b>Revenue</b> 14.26B <span class="dc-chip">0.8% YoY</span></div><div class="dc-card"><b>Net income</b> 5.61B <span class="dc-chip">39.5% YoY</span></div><div class="dc-card"><b>Net margin</b> 39.3% <span class="dc-chip">2026-03-31</span></div></div>
+<div class="dc-section"><span class="dc-num">2</span><h2>Reliability</h2><span class="dc-hint">Single source, yfinance, used for prototyping</span></div>
+<div class="dc-card"><b>Source</b> yfinance <span class="dc-chip">unofficial scraper</span></div>
+<div class="dc-callout">Use multiple sources for authoritative data</div>
+<div class="dc-view">
+
+
 # Singapore Telecommunications Limited (Z74.SI) — Financial Snapshot
 
 Automated annual snapshot from the [[companies/companies|Company Analytics]] pipeline. All figures in **SGD**. Source: **yfinance** (prototype-grade — see reliability note).

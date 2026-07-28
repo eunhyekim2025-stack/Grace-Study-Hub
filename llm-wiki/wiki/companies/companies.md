@@ -4,6 +4,18 @@ tags: [company, financials, analytics, moc, overview]
 updated: 2026-07-10
 ---
 
+<div class="dc-view">
+<div class="dc-title">Company Analytics — Companies (MOC)</div>
+<div class="dc-sub">Financial snapshots from company-analytics pipeline</div>
+<div class="dc-flow"><div class="dc-step"><div class="dc-step-n">1</div><div class="dc-step-t">Data source</div><div class="dc-step-d">yfinance (unofficial, lowest trust)</div></div><div class="dc-arrow">→</div><div class="dc-step"><div class="dc-step-n">2</div><div class="dc-step-t">Provenance-aware storage</div><div class="dc-step-d">schema stores every value with its source</div></div></div>
+<div class="dc-section"><span class="dc-num">1</span><h2>Key Points</h2><span class="dc-hint">company data</span></div>
+<div class="dc-cols-3"><div class="dc-card"><b>Ticker</b> links to company note <span class="dc-chip">yfinance</span></div><div class="dc-card"><b>Financial data</b> includes revenue and ROE <span class="dc-chip">company-analytics</span></div><div class="dc-card"><b>Exchange and currency</b> stored for each company <span class="dc-chip">SES, SGD</span></div></div>
+<div class="dc-section"><span class="dc-num">2</span><h2>Data Trust</h2><span class="dc-hint">data source limitations</span></div>
+<div class="dc-card"><b>Current source</b> is yfinance (unofficial) <span class="dc-chip">lowest trust</span></div>
+<div class="dc-callout" class="warn">More reliable data can override yfinance with no change to notes</div>
+<div class="dc-view">
+
+
 # Company Analytics — Companies (MOC)
 
 Financial snapshots generated from the **company-analytics** pipeline (SQLite + yfinance, provenance-aware). Each company links to its note.

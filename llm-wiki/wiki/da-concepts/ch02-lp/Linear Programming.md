@@ -12,6 +12,18 @@ degree: 31
 community: 3
 ---
 
+<div class="dc-view">
+<div class="dc-title">Linear Programming</div>
+<div class="dc-sub">optimizes a linear objective function subject to linear constraints</div>
+<div class="dc-flow"><div class="dc-step"><div class="dc-step-n">1</div><div class="dc-step-t">Define decision variables</div><div class="dc-step-d">controllable unknowns (e.g., production quantities)</div></div><div class="dc-arrow">→</div><div class="dc-step"><div class="dc-step-n">2</div><div class="dc-step-t">Formulate objective function</div><div class="dc-step-d">linear expression to maximize (profit) or minimize (cost)</div></div><div class="dc-arrow">→</div><div class="dc-step"><div class="dc-step-n">3</div><div class="dc-step-t">Specify constraints</div><div class="dc-step-d">linear inequalities/equalities (e.g., resource limits)</div></div></div>
+<div class="dc-section"><span class="dc-num">1</span><h2>Key Components</h2><span class="dc-hint">decision variables, objective function, constraints</span></div>
+<div class="dc-cols-3"><div class="dc-card"><b>Decision Variables</b> controllable unknowns <span class="dc-chip">x₁, x₂</span></div><div class="dc-card"><b>Objective Function</b> linear expression to maximize/minimize <span class="dc-chip">profit/cost</span></div><div class="dc-card"><b>Constraints</b> linear inequalities/equalities <span class="dc-chip">resource limits</span></div></div>
+<div class="dc-section"><span class="dc-num">2</span><h2>Assumptions</h2><span class="dc-hint">proportionality, additivity, divisibility, certainty</span></div>
+<div class="dc-cols"><div class="dc-card"><b>Proportionality</b> linear relationship between variables <span class="dc-chip">assumption</span></div><div class="dc-card"><b>Divisibility</b> decision variables can be divided <span class="dc-chip">assumption</span></div></div>
+<div class="dc-callout">Proportionality, Additivity, Divisibility, and Certainty are key assumptions in Linear Programming</div>
+<div class="dc-view">
+
+
 # Linear Programming (LP)
 
 A mathematical programming technique that optimizes (maximizes/minimizes) a **linear objective function** subject to **linear constraints**.

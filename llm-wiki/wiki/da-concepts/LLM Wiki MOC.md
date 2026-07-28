@@ -12,6 +12,20 @@ degree: 68
 community: 3
 ---
 
+<div class="dc-view">
+<div class="dc-title">LLM Wiki MOC — Decision Analysis</div>
+<div class="dc-sub">Map of core concepts in management science</div>
+<div class="dc-flow"><div class="dc-step"><div class="dc-step-n">1</div><div class="dc-step-t">Management Science Process</div><div class="dc-step-d">5 modeling steps, deterministic/probabilistic models</div></div><div class="dc-arrow">→</div><div class="dc-step"><div class="dc-step-n">2</div><div class="dc-step-t">Linear Programming</div><div class="dc-step-d">formulation, assumptions, graphical solution</div></div><div class="dc-arrow">→</div><div class="dc-step"><div class="dc-step-n">3</div><div class="dc-step-t">Sensitivity Analysis</div><div class="dc-step-d">what-if, post-optimality, shadow price</div></div></div>
+<div class="dc-section"><span class="dc-num">1</span><h2>Foundations</h2><span class="dc-hint">core concepts</span></div>
+<div class="dc-cols-3"><div class="dc-card"><b>Management Science Process</b> 5 modeling steps <span class="dc-chip">deterministic/probabilistic</span></div><div class="dc-card"><b>Breakeven Analysis</b> cost, revenue, profit <span class="dc-chip">breakeven point</span></div><div class="dc-card"><b>Linear Programming</b> formulation, assumptions <span class="dc-chip">graphical solution</span></div></div>
+<div class="dc-section"><span class="dc-num">2</span><h2>Linear Programming Core</h2><span class="dc-hint">formulation and solution</span></div>
+<div class="dc-cols-3"><div class="dc-card"><b>Graphical Solution Method</b> two-variable solution <span class="dc-chip">feasible region</span></div><div class="dc-card"><b>Extreme Points</b> extreme point theorem <span class="dc-chip">optimality</span></div><div class="dc-card"><b>Slack and Surplus Variables</b> standard form, binding <span class="dc-chip">constraints</span></div></div>
+<div class="dc-section"><span class="dc-num">3</span><h2>Sensitivity Analysis</h2><span class="dc-hint">what-if analysis</span></div>
+<div class="dc-cols-3"><div class="dc-card"><b>Shadow Price</b> dual value, resource value <span class="dc-chip">sensitivity</span></div><div class="dc-card"><b>Reduced Cost</b> non-producing variable cost <span class="dc-chip">entry cost</span></div><div class="dc-card"><b>Range of Optimality</b> objective coefficient changes <span class="dc-chip">100% rule</span></div></div>
+<div class="dc-callout">Understand the management science process and linear programming core concepts before applying sensitivity analysis</div>
+<div class="dc-view">
+
+
 # 🗺️ LLM Wiki MOC — Decision Analysis
 
 A map of core concepts based on Anderson·Sweeney·Williams, *An Introduction to Management Science* (14e).

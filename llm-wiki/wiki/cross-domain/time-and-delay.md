@@ -13,6 +13,18 @@ degree: 7
 community: 0
 ---
 
+<div class="dc-view">
+<div class="dc-title">Insight — The Passage of Time Changes Value, Validity, and Causation</div>
+<div class="dc-sub">Time affects value, validity, and causation across FA, Systems, and Law</div>
+<div class="dc-flow"><div class="dc-step"><div class="dc-step-n">1</div><div class="dc-step-t">Financial Analysis</div><div class="dc-step-d">Discounting reduces future value</div></div><div class="dc-arrow">→</div><div class="dc-step"><div class="dc-step-n">2</div><div class="dc-step-t">Systems Thinking</div><div class="dc-step-d">Delayed reactions cause overshoot</div></div><div class="dc-arrow">→</div><div class="dc-step"><div class="dc-step-n">3</div><div class="dc-step-t">Law</div><div class="dc-step-d">Timing changes validity and causation</div></div></div>
+<div class="dc-section"><span class="dc-num">1</span><h2>Key Concepts</h2><span class="dc-hint">Time's impact across domains</span></div>
+<div class="dc-cols-3"><div class="dc-card"><b>Discounting</b> reduces future value <span class="dc-chip">FA</span></div><div class="dc-card"><b>Delayed Reaction</b> causes overshoot <span class="dc-chip">Systems</span></div><div class="dc-card"><b>Supervening Circumstances</b> change validity <span class="dc-chip">Law</span></div></div>
+<div class="dc-section"><span class="dc-num">2</span><h2>Connections and Limits</h2><span class="dc-hint">Isomorphism across domains</span></div>
+<div class="dc-cols"><div class="dc-card"><b>Discounting and Delay</b> are two sides of the same coin <span class="dc-chip">FA × Systems</span></div><div class="dc-card"><b>Time's Operation</b> differs across domains <span class="dc-chip">FA, Systems, Law</span></div></div>
+<div class="dc-callout">Timing changes the outcome across value, validity, and causation</div>
+<div class="dc-view">
+
+
 # Insight — time is not neutral: discounting, delay, extinction
 
 The structure "as time passes, the same thing's value/validity/causation changes" cuts across three layers.

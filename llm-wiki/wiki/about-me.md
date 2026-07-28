@@ -12,6 +12,22 @@ degree: 8
 community: 1
 ---
 
+<div class="dc-view">
+<div class="dc-title">About Me — Grace (Eunhye) Kim</div>
+<div class="dc-sub">Personal hub connecting who I am to what this wiki studies and the things I build</div>
+<div class="dc-section"><span class="dc-num">1</span><h2>Snapshot</h2><span class="dc-hint">Key information</span></div>
+<div class="dc-card"><b>Who</b> Grace Kim (Eunhye Kim / 김은혜), second-year Business Management undergraduate</div>
+<div class="dc-card"><b>Focus</b> business, information systems, and applied AI</div>
+<div class="dc-card"><b>Contact</b> eunhye.kim.2025@smu.edu.sg · LinkedIn · GitHub · Singapore <span class="dc-chip">Contact info</span></div>
+<div class="dc-section"><span class="dc-num">2</span><h2>What I study</h2><span class="dc-hint">Wiki subjects</span></div>
+<div class="dc-cols-3"><div class="dc-card"><b>Business Law</b> major in Business Management <span class="dc-chip">business-law</span></div><div class="dc-card"><b>Financial Accounting</b> major in Business Management <span class="dc-chip">financial-accounting</span></div><div class="dc-card"><b>Decision Analysis</b> major in Business Management <span class="dc-chip">decision-analysis</span></div></div>
+<div class="dc-cols-3"><div class="dc-card"><b>AI Foresight</b> major in Business Management <span class="dc-chip">ai-foresight</span></div></div>
+<div class="dc-section"><span class="dc-num">3</span><h2>What I build</h2><span class="dc-hint">Projects</span></div>
+<div class="dc-card"><b>This LLM knowledge wiki</b> an Obsidian vault with an LLM pipeline <span class="dc-chip">overview</span></div>
+<div class="dc-callout">Stay connected through this personal hub to explore what I study and build</div>
+</div>
+
+
 # 👤 About Me — Grace (Eunhye) Kim
 
 > [[index|← Subjects]] · Personal hub — this page connects

@@ -13,6 +13,18 @@ degree: 7
 community: 4
 ---
 
+<div class="dc-view">
+<div class="dc-title">Insight — A Single Threshold Flips the Conclusion</div>
+<div class="dc-sub">three subjects share the same reasoning structure with a single threshold flipping the conclusion discretely</div>
+<div class="dc-flow"><div class="dc-step"><div class="dc-step-n">1</div><div class="dc-step-t">Continuous input</div><div class="dc-step-d">varies until it crosses a threshold</div></div><div class="dc-arrow">→</div><div class="dc-step"><div class="dc-step-n">2</div><div class="dc-step-t">Threshold crossed</div><div class="dc-step-d">result jumps discretely</div></div></div>
+<div class="dc-section"><span class="dc-num">1</span><h2>Shared Reasoning Structure</h2><span class="dc-hint">across three subjects</span></div>
+<div class="dc-cols-3"><div class="dc-card"><b>DA</b> objective coefficient/RHS crosses end of optimality/feasibility range <span class="dc-chip">[[da-concepts/ch03-sensitivity/Range of Optimality]]</span></div><div class="dc-card"><b>Law</b> degree of facts crosses "one decisive fact" <span class="dc-chip">[[law-concepts/quiz-methodology]]</span></div><div class="dc-card"><b>FA</b> demand/timing crosses FOB delivery/holding condition <span class="dc-chip">[[fa-concepts/ch06-inventory/inventory]]</span></div></div>
+<div class="dc-section"><span class="dc-num">2</span><h2>Key Differences</h2><span class="dc-hint">in boundary nature</span></div>
+<div class="dc-cols"><div class="dc-card"><b>DA boundary</b> mathematical and continuous <span class="dc-chip">range</span></div><div class="dc-card"><b>Law boundary</b> normative and categorical <span class="dc-chip">qualitative classification</span></div></div>
+<div class="dc-callout">one decisive fact/threshold flips the conclusion/state the boundary line</div>
+<div class="dc-view">
+
+
 # Insight — a threshold flips the conclusion discretely
 
 The three subjects share the **same reasoning structure**: the moment a *continuously varying input* crosses **a single threshold**,

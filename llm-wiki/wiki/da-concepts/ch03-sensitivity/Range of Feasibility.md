@@ -12,6 +12,20 @@ degree: 10
 community: 3
 ---
 
+<div class="dc-view">
+<div class="dc-title">Range of Feasibility</div>
+<div class="dc-sub">Range over which a constraint RHS can change with a constant shadow price</div>
+<div class="dc-flow"><div class="dc-step"><div class="dc-step-n">1</div><div class="dc-step-t">Change in RHS</div><div class="dc-step-d">within range of feasibility</div></div><div class="dc-arrow">→</div><div class="dc-step"><div class="dc-step-n">2</div><div class="dc-step-t">Shadow Price</div><div class="dc-step-d">stays constant</div></div><div class="dc-arrow">→</div><div class="dc-step"><div class="dc-step-n">3</div><div class="dc-step-t">Objective Value</div><div class="dc-step-d">changes linearly</div></div></div>
+<div class="dc-section"><span class="dc-num">1</span><h2>Characteristics</h2><span class="dc-hint">key properties</span></div>
+<div class="dc-cols-3"><div class="dc-card"><b>Constant Shadow Price</b> within range <span class="dc-chip">linearity</span></div><div class="dc-card"><b>Linear Change</b> in objective value <span class="dc-chip">shadow price × change in RHS</span></div><div class="dc-card"><b>Single RHS Change</b> at a time <span class="dc-chip">assumption</span></div></div>
+<div class="dc-section"><span class="dc-num">2</span><h2>Example Use</h2><span class="dc-hint">applications</span></div>
+<div class="dc-cols"><div class="dc-card"><b>Evaluating Expansion</b> economics <span class="dc-chip">resource expansion</span></div><div class="dc-card"><b>Profit Increase</b> calculation <span class="dc-chip">shadow price × change in RHS</span></div></div>
+<div class="dc-section"><span class="dc-num">3</span><h2>Multiple RHS Changes</h2><span class="dc-hint">100% rule</span></div>
+<div class="dc-card"><b>100% Rule</b> applies <span class="dc-chip">Range of Optimality</span></div>
+<div class="dc-callout">Shadow price stays constant within the range of feasibility</div>
+</div>
+
+
 # Range of Feasibility
 
 The range over which a **constraint right-hand side (RHS, bᵢ)** can change while the **[[Shadow Price]] stays constant**.

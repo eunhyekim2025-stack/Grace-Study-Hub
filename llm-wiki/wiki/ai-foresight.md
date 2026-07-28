@@ -10,6 +10,20 @@ degree: 15
 community: 0
 ---
 
+<div class="dc-view">
+<div class="dc-title">🤖 AI · Foresight</div>
+<div class="dc-sub">Mapping AI knowledge, environment scanning, and systems thinking</div>
+<div class="dc-flow"><div class="dc-step"><div class="dc-step-n">1</div><div class="dc-step-t">LLM/AI Wiki</div><div class="dc-step-d">Core concepts, models, papers, prompts, and tools</div></div><div class="dc-arrow">→</div><div class="dc-step"><div class="dc-step-n">2</div><div class="dc-step-t">Early Warning</div><div class="dc-step-d">Environment scanning and operational ontology</div></div><div class="dc-arrow">→</div><div class="dc-step"><div class="dc-step-n">3</div><div class="dc-step-t">Systems Thinking</div><div class="dc-step-d">Causal variables, feedback loops, and leverage points</div></div></div>
+<div class="dc-section"><span class="dc-num">1</span><h2>LLM/AI Wiki</h2><span class="dc-hint">Key concepts and resources</span></div>
+<div class="dc-cols-3"><div class="dc-card"><b>Core Concepts</b> list of fundamental ideas <span class="dc-chip">concepts/README</span></div><div class="dc-card"><b>Models</b> per-model notes <span class="dc-chip">models/README</span></div><div class="dc-card"><b>Papers</b> summaries list <span class="dc-chip">papers/README</span></div></div>
+<div class="dc-section"><span class="dc-num">2</span><h2>Early Warning</h2><span class="dc-hint">Monitoring drivers and signals</span></div>
+<div class="dc-cols-3"><div class="dc-card"><b>Drivers</b> key factors influencing AI adoption <span class="dc-chip">drivers/</span></div><div class="dc-card"><b>Signals</b> indicators of AI-related trends <span class="dc-chip">signals/</span></div><div class="dc-card"><b>Triggers</b> early warning targets <span class="dc-chip">🚨 early-warning table</span></div></div>
+<div class="dc-section"><span class="dc-num">3</span><h2>Systems Thinking</h2><span class="dc-hint">Understanding causal relationships</span></div>
+<div class="dc-cols-3"><div class="dc-card"><b>Variables</b> linked by causal relationships <span class="dc-chip">systems/</span></div><div class="dc-card"><b>Feedback Loops</b> reinforcing and balancing loops <span class="dc-chip">R/B loops</span></div><div class="dc-card"><b>Leverage Points</b> key points for intervention <span class="dc-chip">top leverage</span></div></div>
+<div class="dc-callout">Monitor AI adoption rate and contract-review unit cost for potential reinforcing loops</div>
+<div class="dc-view>
+
+
 # 🤖 AI · Foresight (wiki meta layer)
 
 > [[index|← Subjects]] · This wiki's own LLM/AI knowledge plus environment-scanning and systems-thinking layers

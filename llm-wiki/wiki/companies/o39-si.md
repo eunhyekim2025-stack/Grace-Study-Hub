@@ -8,6 +8,20 @@ source: yfinance
 updated: 2026-07-10
 ---
 
+<div class="dc-view">
+<div class="dc-title">Oversea-Chinese Banking Corporation Limited (O39.SI) — Financial Snapshot</div>
+<div class="dc-sub">Automated annual financial snapshot of OCBC in SGD, sourced from yfinance</div>
+<div class="dc-flow"><div class="dc-step"><div class="dc-step-n">1</div><div class="dc-step-t">Review key metrics</div><div class="dc-step-d">Revenue, net income, net margin, ROE, ROA, EPS, debt/equity, free cash flow</div></div><div class="dc-arrow">→</div><div class="dc-step"><div class="dc-step-n">2</div><div class="dc-step-t">Analyze trends</div><div class="dc-step-d">Year-over-year growth, annual changes in metrics</div></div><div class="dc-arrow">→</div><div class="dc-step"><div class="dc-step-n">3</div><div class="dc-step-t">Assess reliability</div><div class="dc-step-d">Single source (yfinance), potential for patchy quarterly coverage</div></div></div>
+<div class="dc-section"><span class="dc-num">1</span><h2>Key Metrics</h2><span class="dc-hint">Annual figures in SGD</span></div>
+<div class="dc-cols-3"><div class="dc-card"><b>Revenue</b> 14.53B <span class="dc-chip">0.7% YoY</span></div><div class="dc-card"><b>Net Income</b> 7.42B <span class="dc-chip">-2.2% YoY</span></div><div class="dc-card"><b>Net Margin</b> 51.1% <span class="dc-chip">52.6% in 2024</span></div></div>
+<div class="dc-section"><span class="dc-num">2</span><h2>Financial Performance</h2><span class="dc-hint">Trends and growth rates</span></div>
+<div class="dc-cols-3"><div class="dc-card"><b>ROE</b> 11.9% <span class="dc-chip">13.0% in 2023</span></div><div class="dc-card"><b>ROA</b> 1.1% <span class="dc-chip">1.2% in 2024</span></div><div class="dc-card"><b>EPS (basic)</b> 1.63 <span class="dc-chip">1.67 in 2024</span></div></div>
+<div class="dc-section"><span class="dc-num">3</span><h2>Reliability and Limitations</h2><span class="dc-hint">Single source, potential for incomplete data</span></div>
+<div class="dc-card"><b>Source</b> yfinance <span class="dc-chip">unofficial scraper, patchy quarterly coverage</span></div>
+<div class="dc-callout">Use with caution: single source, potential for incomplete or inaccurate data</div>
+<div class="dc-view">
+
+
 # Oversea-Chinese Banking Corporation Limited (O39.SI) — Financial Snapshot
 
 Automated annual snapshot from the [[companies/companies|Company Analytics]] pipeline. All figures in **SGD**. Source: **yfinance** (prototype-grade — see reliability note).

@@ -11,6 +11,20 @@ degree: 28
 community: 4
 ---
 
+<div class="dc-view">
+<div class="dc-title">Business Lifecycle — Cross-Map of Three Subjects</div>
+<div class="dc-sub">Analyzing a single business activity through the lenses of Law, Decision Analysis, and Financial Accounting</div>
+<div class="dc-flow"><div class="dc-step"><div class="dc-step-n">1</div><div class="dc-step-t">Law</div><div class="dc-step-d">Legal effect and liability</div></div><div class="dc-arrow">→</div><div class="dc-step"><div class="dc-step-n">2</div><div class="dc-step-t">Decision Analysis</div><div class="dc-step-d">Quantitative decision-making and optimization</div></div><div class="dc-arrow">→</div><div class="dc-step"><div class="dc-step-n">3</div><div class="dc-step-t">Financial Accounting</div><div class="dc-step-d">Accounting records and financial-statement impact</div></div></div>
+<div class="dc-section"><span class="dc-num">1</span><h2>Core Insight</h2><span class="dc-hint">Same event, three lenses</span></div>
+<div class="dc-cols-3"><div class="dc-card"><b>Contract Formation</b> Offer and acceptance <span class="dc-chip">Law</span></div><div class="dc-card"><b>Order Quantity</b> Decision under uncertain demand <span class="dc-chip">Decision Analysis</span></div><div class="dc-card"><b>Purchase Entry</b> Inventory and FOB <span class="dc-chip">Financial Accounting</span></div></div>
+<div class="dc-section"><span class="dc-num">2</span><h2>Three-Step Framework</h2><span class="dc-hint">Integrated analysis for business scenarios</span></div>
+<div class="dc-cols"><div class="dc-card"><b>Legally Valid</b> Contract formation and liability <span class="dc-chip">Law</span></div><div class="dc-card"><b>Optimal Choice</b> Numerical decision-making and optimization <span class="dc-chip">Decision Analysis</span></div></div>
+<div class="dc-section"><span class="dc-num">3</span><h2>Common Methodology</h2><span class="dc-hint">Same design principle across subjects</span></div>
+<div class="dc-card"><b>Decisive Fact</b> One fact that flips the conclusion <span class="dc-chip">Quiz design</span></div>
+<div class="dc-callout">Apply the three-step thinking framework for integrated analysis of business scenarios</div>
+<div class="dc-view>
+
+
 # Business Lifecycle — Law × Decision Analysis × Financial Accounting Cross-Map
 
 The three subjects are studied separately, but **a single business activity** is analyzed through all three lenses at once.
