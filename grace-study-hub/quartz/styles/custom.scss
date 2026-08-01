@@ -362,13 +362,13 @@ $sh-gut: 52px;
   // S = locked to the Recent column (320px); M/L expand left. Wider columns
   // also give all-day chips more room, so long titles wrap less.
   &.size-s {
-    width: 320px;
+    width: 320px; // locked to the Recent column
   }
   &.size-m {
-    width: min(500px, 100%);
+    width: min(560px, 100%); // middle step — clearly larger than S, not full
   }
   &.size-l {
-    width: min(680px, 100%);
+    width: 100%; // fills the whole container, flush with the panels below
   }
   @media all and (max-width: 900px) {
     width: 100% !important; // side column goes full-width on mobile; match it
@@ -504,9 +504,9 @@ $sh-gut: 52px;
   border-bottom: 1px solid var(--lightgray);
 }
 .sh-cal-allcell {
-  padding: 3px 3px;
+  padding: 1px 2px;
   border-left: 1px solid var(--lightgray);
-  min-height: 22px;
+  min-height: 14px; // slimmest band in the grid
   min-width: 0; // confine the cell to its own day column — no invasion
   &.today {
     background: color-mix(in oklch, var(--secondary) 7%, transparent);
@@ -514,18 +514,19 @@ $sh-gut: 52px;
 }
 .sh-cal-chip {
   display: block;
-  font-size: 0.7rem;
-  line-height: 1.3;
-  padding: 1px 5px;
-  margin-bottom: 2px;
-  border-radius: 5px;
+  font-size: 0.6rem;
+  line-height: 1.15;
+  padding: 0 4px;
+  margin-bottom: 1px;
+  border-radius: 4px;
   background: color-mix(in oklch, var(--secondary) 16%, transparent);
   color: var(--darkgray);
-  // Wrap inside its own column so the full title stays readable and never
-  // spills into the neighbouring day.
+  // Single line, truncated with an ellipsis — the full title shows on hover via
+  // the `title` attribute, so the strip stays the thinnest row and never grows
+  // tall or spills into the neighbouring day (min-width:0 confines it).
+  white-space: nowrap;
   overflow: hidden;
-  overflow-wrap: anywhere;
-  white-space: normal;
+  text-overflow: ellipsis;
 }
 .sh-cal-gutter {
   position: relative;
