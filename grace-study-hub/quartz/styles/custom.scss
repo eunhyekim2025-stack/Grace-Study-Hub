@@ -346,31 +346,32 @@ body[data-slug="index"] {
 // ── weekly calendar grid ──
 $sh-gut: 52px;
 
-// Size control: width + row height (--hpx) driven by a class on the panel.
-// Default is Compact (matches the old side-card's 320px footprint).
+// Size control: S/M/L widen the panel *sideways* (not taller). Row height
+// (--hpx) is fixed so growing detail doesn't push the panels below it down.
 .sh-schedule {
-  --hpx: 30px; // px per hour row
+  --hpx: 32px; // fixed px per hour row
   --sh-cal-gap: 12px; // adjustable *vertical* edge spacing
-  // Width is locked to the Recent column (320px, same as the grid's side track)
-  // so the two panels are exactly the same horizontal length and line up as a
-  // tidy right-hand stack. S/M/L now only change the row height (grid detail).
-  width: 320px;
   max-width: 100%;
   // Right edge flush (margin-right: 0) → aligned with Recent; left auto keeps it
-  // right-aligned. Gap adjusts only top/bottom and reflows the row below in flow.
+  // right-aligned, so growing the width expands it leftward (sideways), never
+  // reflowing the panels below. Gap still adjusts only top/bottom.
   margin: var(--sh-cal-gap) 0 var(--sh-cal-gap) auto;
-  transition: margin 0.15s ease;
+  transition:
+    margin 0.15s ease,
+    width 0.18s ease;
+  // S = locked to the Recent column (320px); M/L expand left. Wider columns
+  // also give all-day chips more room, so long titles wrap less.
   &.size-s {
-    --hpx: 26px;
+    width: 320px;
   }
   &.size-m {
-    --hpx: 38px;
+    width: min(500px, 100%);
   }
   &.size-l {
-    --hpx: 46px;
+    width: min(680px, 100%);
   }
   @media all and (max-width: 900px) {
-    width: 100%; // side column goes full-width on mobile; match it
+    width: 100% !important; // side column goes full-width on mobile; match it
   }
 }
 .sh-sched-tools {
@@ -469,6 +470,7 @@ $sh-gut: 52px;
 .sh-cal-cols {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  min-width: 0; // let the 1fr tracks shrink instead of blowing out the row
 }
 .sh-cal-gut {
   font-size: 0.62rem;
@@ -505,6 +507,7 @@ $sh-gut: 52px;
   padding: 3px 3px;
   border-left: 1px solid var(--lightgray);
   min-height: 22px;
+  min-width: 0; // confine the cell to its own day column — no invasion
   &.today {
     background: color-mix(in oklch, var(--secondary) 7%, transparent);
   }
@@ -518,9 +521,11 @@ $sh-gut: 52px;
   border-radius: 5px;
   background: color-mix(in oklch, var(--secondary) 16%, transparent);
   color: var(--darkgray);
+  // Wrap inside its own column so the full title stays readable and never
+  // spills into the neighbouring day.
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 .sh-cal-gutter {
   position: relative;

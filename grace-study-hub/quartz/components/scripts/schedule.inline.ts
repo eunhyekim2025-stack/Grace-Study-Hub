@@ -101,7 +101,7 @@ function renderEvents(body: HTMLElement, events: SchedEvent[]) {
       .map(
         (d) =>
           `<div class="sh-cal-allcell${d.key === todayKey ? " today" : ""}">${d.allday
-            .map((ev) => `<span class="sh-cal-chip">${esc(ev.title)}</span>`)
+            .map((ev) => `<span class="sh-cal-chip" title="${esc(ev.title)}">${esc(ev.title)}</span>`)
             .join("")}</div>`,
       )
       .join("")
