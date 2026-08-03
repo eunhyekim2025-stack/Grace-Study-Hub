@@ -1241,7 +1241,28 @@ if (!w.__shAddInit) {
   })
   window.addEventListener("hashchange", initFromHash)
 }
+// Auto note-count for the home Subject cards. The left "과목" sidebar (SubjectNav)
+// already renders a per-subject count computed from the build's file list, so we
+// just copy that live number into any card's <span class="sh-card-count"> — no
+// hardcoded totals to go stale. Both are keyed by the subject slug in the href.
+function fillSubjectCardCounts() {
+  const slots = document.querySelectorAll<HTMLElement>(".sh-card-count")
+  if (!slots.length) return
+  const slugOf = (href: string | null) => (href || "").replace(/^\.?\//, "").replace(/\/+$/, "")
+  const counts = new Map<string, string>()
+  document.querySelectorAll<HTMLAnchorElement>("a.sh-subject[href]").forEach((a) => {
+    const c = a.querySelector(".sh-count")?.textContent?.trim()
+    if (c) counts.set(slugOf(a.getAttribute("href")), c)
+  })
+  slots.forEach((el) => {
+    const n = counts.get(slugOf(el.closest<HTMLAnchorElement>("a.sh-card[href]")?.getAttribute("href") ?? ""))
+    if (n) el.textContent = n
+  })
+}
+
 document.addEventListener("nav", initFromHash)
 document.addEventListener("nav", hideDeleted)
+document.addEventListener("nav", fillSubjectCardCounts)
 initFromHash()
 hideDeleted()
+fillSubjectCardCounts()
