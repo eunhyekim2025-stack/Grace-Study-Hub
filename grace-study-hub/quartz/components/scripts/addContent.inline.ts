@@ -947,6 +947,153 @@ async function generateNotesFromPdf(btn: HTMLButtonElement) {
   }
 }
 
+// ── Web page / SQLBolt → notes ─────────────────────────────────────────────
+// Fetch a URL via /api/web (server-side, no bot-gate) and turn it into notes.
+// SQLBolt returns all ~17 lessons as pages[] → one note each with the same
+// resumable progress as the video-chapter / PDF flows; any other URL → 1 note.
+function webStatus(msg: string, kind: "" | "ok" | "err" = "") {
+  const el = document.getElementById("sh-web-status")
+  if (el) {
+    el.textContent = msg
+    el.className = "sh-rec-status" + (kind ? " " + kind : "")
+  }
+}
+function readWebDone(docId: string): number[] {
+  try {
+    const a = JSON.parse(localStorage.getItem("sh-webdoc-" + docId) || "[]")
+    return Array.isArray(a) ? a.filter((n) => typeof n === "number") : []
+  } catch {
+    return []
+  }
+}
+function markWebDone(docId: string, idx: number) {
+  const set = new Set(readWebDone(docId))
+  set.add(idx)
+  localStorage.setItem("sh-webdoc-" + docId, JSON.stringify([...set]))
+}
+
+// Generate one note from a title + text via /api/add (lecture mode). Returns
+// "ok" | "exists" | "<error message to stop on>".
+async function addLectureNote(
+  title: string,
+  text: string,
+  tags: string,
+  password: string,
+): Promise<"ok" | "exists" | string> {
+  try {
+    const res = await fetch("/api/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        type: "note",
+        title,
+        subject: val("sh-file-subject"),
+        tags,
+        content: text,
+        mode: "lecture",
+        knownTags: knownTags(),
+        password,
+      }),
+    })
+    const data = await res.json().catch(() => ({}))
+    if (res.ok) return "ok"
+    if (res.status === 422 && /exist/i.test(data.error || "")) return "exists"
+    return data.error || String(res.status)
+  } catch {
+    return "network"
+  }
+}
+
+async function generateFromWeb(btn: HTMLButtonElement) {
+  const password = (val("sh-add-pw") || localStorage.getItem(PW_KEY) || "").trim()
+  if (!password) {
+    revealPwField()
+    webStatus("먼저 추가 비밀번호를 입력하세요.", "err")
+    return
+  }
+  const url = val("sh-web-url").trim()
+  if (!url) {
+    webStatus("웹 링크를 입력하세요.", "err")
+    return
+  }
+  btn.disabled = true
+  try {
+    webStatus("페이지를 분석하는 중…")
+    const wres = await fetch("/api/web", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url, password }),
+    })
+    const wdata = await wres.json().catch(() => ({}))
+    if (!wres.ok) {
+      if (wres.status === 401) revealPwField()
+      webStatus("실패: " + (wdata.error || wres.status), "err")
+      return
+    }
+    const isSqlbolt = wdata.source === "sqlbolt"
+    const tags = isSqlbolt ? "sql, sqlbolt" : "web, notes"
+
+    // Multi-page (SQLBolt course): one note per lesson, resumable.
+    if (Array.isArray(wdata.pages) && wdata.pages.length) {
+      const pages = wdata.pages as { index: number; title: string; text: string }[]
+      const docId = url
+      const total = pages.length
+      const done = new Set(readWebDone(docId))
+      const todo = pages.filter((p) => !done.has(p.index))
+      if (!todo.length) {
+        webStatus(`이미 ${total}개 레슨 노트가 모두 생성돼 있어요.`, "ok")
+        return
+      }
+      let made = 0
+      const already = total - todo.length
+      for (let n = 0; n < todo.length; n++) {
+        const p = todo[n]
+        webStatus(`노트 생성 중… ${already + made + 1}/${total} · ${p.title}`)
+        const r = await addLectureNote(`SQLBolt: ${p.title}`, p.text, tags, password)
+        if (r === "ok" || r === "exists") {
+          markWebDone(docId, p.index)
+          if (r === "ok") made++
+        } else if (r === "network") {
+          webStatus(`${already + made}/${total} 생성 후 네트워크 오류. 다시 누르면 이어서 만들어요.`, "err")
+          return
+        } else {
+          webStatus(
+            `${already + made}/${total} 생성 후 중단: ${r}. 잠시 뒤 다시 누르면 이어서 만들어요.`,
+            "err",
+          )
+          return
+        }
+        localStorage.setItem(PW_KEY, password)
+        syncPwField()
+        if (n < todo.length - 1) await sleep(1500)
+      }
+      webStatus(`완료 · ${total}개 레슨 노트 생성됨 · 1–2분 뒤 사이트에 반영됩니다.`, "ok")
+      return
+    }
+
+    // Single page → one note.
+    const title = String(wdata.title || "Web note")
+    webStatus("강의 노트를 만드는 중… (10~40초)")
+    const r = await addLectureNote(isSqlbolt ? `SQLBolt: ${title}` : title, String(wdata.text || ""), tags, password)
+    if (r === "ok" || r === "exists") {
+      localStorage.setItem(PW_KEY, password)
+      syncPwField()
+      webStatus(
+        r === "exists" ? "이미 같은 제목의 노트가 있어요." : "저장됨 · 1–2분 뒤 사이트에 반영됩니다.",
+        "ok",
+      )
+      const el = document.getElementById("sh-web-url") as HTMLInputElement | null
+      if (el) el.value = ""
+    } else {
+      webStatus("실패: " + (r === "network" ? "네트워크 오류" : r), "err")
+    }
+  } catch {
+    webStatus("네트워크 오류. 배포된 사이트에서 시도하세요.", "err")
+  } finally {
+    btn.disabled = false
+  }
+}
+
 // ── Note deletion + local "tombstones" ────────────────────────────────────
 // Deleting commits to GitHub and the site rebuilds in ~1–2 min; until then (and
 // past any browser/CDN cache) the note would still appear in listings. So on
@@ -1063,6 +1210,12 @@ if (!w.__shAddInit) {
     if (!el) return
     e.preventDefault()
     generateNotesFromPdf(el)
+  })
+  document.addEventListener("click", (e) => {
+    const el = (e.target as HTMLElement)?.closest<HTMLButtonElement>("[data-web-generate]")
+    if (!el) return
+    e.preventDefault()
+    generateFromWeb(el)
   })
   document.addEventListener("click", (e) => {
     const el = (e.target as HTMLElement)?.closest<HTMLButtonElement>(".sh-copy-embed")

@@ -164,7 +164,33 @@ const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) =>
 
           <div class="sh-rec-or">또는</div>
 
-          {/* ③ Upload / turn a file into notes */}
+          {/* ③ Web page / SQLBolt → notes */}
+          <div class="sh-rec">
+            <div class="sh-rec-head">🔗 웹 페이지 · SQLBolt → 노트 자동 생성</div>
+            <div class="sh-field">
+              <label for="sh-web-url">웹 링크</label>
+              <input
+                id="sh-web-url"
+                class="sh-input"
+                type="url"
+                placeholder="https://sqlbolt.com/ 또는 아티클 URL"
+              />
+            </div>
+            <div class="sh-rec-controls">
+              <button class="sh-btn sh-btn-new" data-web-generate>🔗 링크로 노트 생성</button>
+            </div>
+            <div class="sh-rec-status" id="sh-web-status"></div>
+            <p class="sh-modal-hint">
+              웹 페이지 본문을 읽어 AI 노트로 정리해요. <b>SQLBolt 링크</b>(sqlbolt.com)를 넣으면
+              <b>모든 레슨(약 17개)</b>을 레슨별 노트로 자동 생성합니다 (중단 시 다시 누르면 이어서).
+              위 <b>과목</b> 선택을 따라가니 SQL 노트로 넣으려면 <b>SQL</b>을 고르세요. JS로만 렌더되는
+              사이트는 본문을 못 읽을 수 있어요.
+            </p>
+          </div>
+
+          <div class="sh-rec-or">또는</div>
+
+          {/* ④ Upload / turn a file into notes */}
           <div class="sh-field">
             <label for="sh-file-input">파일</label>
             <input id="sh-file-input" class="sh-input" type="file" />
