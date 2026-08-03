@@ -19,7 +19,7 @@ Study Hub — **pick a subject.** Inside each subject you drill down: *content �
 <a class="sh-card" href="./management-accounting"><span class="sh-card-dot" style="--sh-dot: oklch(0.62 0.15 180)"></span><span class="sh-card-title">📓 Management accounting</span><span class="sh-card-desc">Overview · Quiz</span></a>
 <a class="sh-card" href="./critical-thinking-in-real-world"><span class="sh-card-dot" style="--sh-dot: oklch(0.62 0.15 20)"></span><span class="sh-card-title">📓 Critical Thinking in Real World</span><span class="sh-card-desc">New subject</span></a>
 <a class="sh-card" href="./management-of-people-at-work"><span class="sh-card-dot" style="--sh-dot: oklch(0.62 0.15 120)"></span><span class="sh-card-title">📓 Management of People at Work</span><span class="sh-card-desc">New subject</span></a>
-<a class="sh-card" href="./sql"><span class="sh-card-dot" style="--sh-dot: oklch(0.62 0.15 210)"></span><span class="sh-card-title">🗄 SQL</span><span class="sh-card-desc">혼자 공부하는 SQL — 개념 노트 7</span></a>
+<a class="sh-card" href="./sql"><span class="sh-card-dot" style="--sh-dot: oklch(0.62 0.15 210)"></span><span class="sh-card-title">🗄 SQL</span><span class="sh-card-desc">혼자 공부하는 SQL + SQLBolt — 노트 9</span></a>
 <!-- add-subject-cards -->
 </div>
 
