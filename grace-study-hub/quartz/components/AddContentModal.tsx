@@ -164,14 +164,20 @@ const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) =>
 
           <div class="sh-rec-or">또는</div>
 
-          {/* ③ Upload an existing file */}
+          {/* ③ Upload / turn a file into notes */}
           <div class="sh-field">
-            <label for="sh-file-input">파일 업로드</label>
+            <label for="sh-file-input">파일</label>
             <input id="sh-file-input" class="sh-input" type="file" />
           </div>
-          <p class="sh-modal-hint">PDF · 이미지 · 오디오 파일 등을 그대로 올릴 수 있어요.</p>
+          <div class="sh-rec-status" id="sh-pdf-status"></div>
+          <p class="sh-modal-hint">
+            <b>📄 PDF → 노트 생성</b>: PDF의 <b>글자</b>를 읽어 AI로 정리한 노트를 만들어요 (긴 문서는
+            자동으로 여러 노트로 분할 · 중단 시 다시 누르면 이어서 생성). 스캔 이미지 PDF는 글자가 없어
+            안 돼요. · <b>업로드</b>: 파일을 <b>그대로</b> 위키에 첨부만 해요 (노트로 정리하지 않음).
+          </p>
           <div class="sh-modal-actions">
-            <button class="sh-btn sh-btn-new" data-add-submit="file">업로드</button>
+            <button class="sh-btn sh-btn-new" data-pdf-generate>📄 PDF → 노트 생성</button>
+            <button class="sh-btn sh-btn-ghost" data-add-submit="file">그대로 업로드</button>
             <button class="sh-btn sh-btn-ghost" data-add-close>취소</button>
           </div>
         </div>

@@ -745,6 +745,183 @@ async function generateChaptersFromVideo(btn: HTMLButtonElement) {
   }
 }
 
+// ── PDF → notes ────────────────────────────────────────────────────────────
+// Extract the PDF's text IN THE BROWSER (pdf.js), so we send text — not the
+// multi-MB file — to /api/add (which is capped at ~1MB body + 60k lecture
+// chars). Long documents split into ≤40k-char parts, one note each, with the
+// same resumable progress the video-chapter flow uses.
+function pdfStatus(msg: string, kind: "" | "ok" | "err" = "") {
+  const el = document.getElementById("sh-pdf-status")
+  if (el) {
+    el.textContent = msg
+    el.className = "sh-rec-status" + (kind ? " " + kind : "")
+  }
+}
+
+function loadPdfJs(): Promise<any> {
+  const w = window as any
+  if (w.pdfjsLib) return Promise.resolve(w.pdfjsLib)
+  return new Promise((resolve, reject) => {
+    const s = document.createElement("script")
+    s.src = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/legacy/build/pdf.min.js"
+    s.onload = () => {
+      const lib = w.pdfjsLib
+      if (!lib) return reject(new Error("pdf.js 로드 실패"))
+      lib.GlobalWorkerOptions.workerSrc =
+        "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/legacy/build/pdf.worker.min.js"
+      resolve(lib)
+    }
+    s.onerror = () => reject(new Error("PDF 라이브러리를 불러오지 못했습니다."))
+    document.head.appendChild(s)
+  })
+}
+
+async function extractPdfText(
+  file: File,
+  onProgress?: (page: number, pages: number) => void,
+): Promise<string> {
+  const pdfjs = await loadPdfJs()
+  const buf = await file.arrayBuffer()
+  const doc = await pdfjs.getDocument({ data: buf }).promise
+  const pages: string[] = []
+  for (let p = 1; p <= doc.numPages; p++) {
+    const page = await doc.getPage(p)
+    const content = await page.getTextContent()
+    pages.push(content.items.map((i: any) => (typeof i.str === "string" ? i.str : "")).join(" "))
+    onProgress?.(p, doc.numPages)
+  }
+  return pages.join("\n").replace(/[ \t]+/g, " ").trim()
+}
+
+// Even-sized ≤max pieces, split on whitespace (mirrors the server's splitText).
+function chunkText(text: string, max: number): string[] {
+  if (text.length <= max) return [text]
+  const n = Math.ceil(text.length / max)
+  const target = Math.ceil(text.length / n)
+  const parts: string[] = []
+  let i = 0
+  for (let k = 0; k < n && i < text.length; k++) {
+    let end = k === n - 1 ? text.length : Math.min(i + target, text.length)
+    if (end < text.length) {
+      const sp = text.lastIndexOf(" ", end)
+      if (sp > i) end = sp
+    }
+    parts.push(text.slice(i, end).trim())
+    i = end
+  }
+  if (i < text.length) parts.push(text.slice(i).trim())
+  return parts.filter(Boolean)
+}
+
+function readPdfDone(docId: string): number[] {
+  try {
+    const a = JSON.parse(localStorage.getItem("sh-pdfdoc-" + docId) || "[]")
+    return Array.isArray(a) ? a.filter((n) => typeof n === "number") : []
+  } catch {
+    return []
+  }
+}
+function markPdfDone(docId: string, idx: number) {
+  const set = new Set(readPdfDone(docId))
+  set.add(idx)
+  localStorage.setItem("sh-pdfdoc-" + docId, JSON.stringify([...set]))
+}
+
+async function generateNotesFromPdf(btn: HTMLButtonElement) {
+  const password = (val("sh-add-pw") || localStorage.getItem(PW_KEY) || "").trim()
+  if (!password) {
+    revealPwField()
+    pdfStatus("먼저 추가 비밀번호를 입력하세요.", "err")
+    return
+  }
+  const input = document.getElementById("sh-file-input") as HTMLInputElement | null
+  const file = input?.files?.[0]
+  if (!file) {
+    pdfStatus("PDF 파일을 선택하세요.", "err")
+    return
+  }
+  if (!/\.pdf$/i.test(file.name) && file.type !== "application/pdf") {
+    pdfStatus("PDF 파일만 지원해요.", "err")
+    return
+  }
+  btn.disabled = true
+  try {
+    pdfStatus("PDF 텍스트 추출 중…")
+    let text = ""
+    try {
+      text = await extractPdfText(file, (p, n) => pdfStatus(`PDF 텍스트 추출 중… ${p}/${n}쪽`))
+    } catch (e) {
+      pdfStatus("PDF를 읽지 못했습니다: " + ((e as Error)?.message || ""), "err")
+      return
+    }
+    if (text.length < 50) {
+      pdfStatus("PDF에서 글자를 찾지 못했어요 — 스캔 이미지 PDF는 지원하지 않아요.", "err")
+      return
+    }
+
+    const base = file.name.replace(/\.pdf$/i, "").replace(/_+/g, " ").trim() || "PDF note"
+    const docId = file.name + ":" + file.size
+    const chunks = chunkText(text, 40000)
+    const total = chunks.length
+    const done = new Set(readPdfDone(docId))
+    const todo = chunks.map((_, i) => i).filter((i) => !done.has(i))
+    if (!todo.length) {
+      pdfStatus(`이미 ${total}개 노트가 모두 생성돼 있어요.`, "ok")
+      return
+    }
+
+    let made = 0
+    const already = total - todo.length
+    for (let n = 0; n < todo.length; n++) {
+      const idx = todo[n]
+      pdfStatus(`노트 생성 중… ${already + made + 1}/${total}${total > 1 ? ` · Part ${idx + 1}` : ""}`)
+      const title = total > 1 ? `${base} — Part ${idx + 1}/${total}` : base
+      let data: { error?: string; path?: string } = {}
+      try {
+        const res = await fetch("/api/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            type: "note",
+            title,
+            subject: val("sh-file-subject"),
+            tags: "pdf, notes",
+            content: chunks[idx],
+            mode: "lecture",
+            knownTags: knownTags(),
+            password,
+          }),
+        })
+        data = await res.json().catch(() => ({}))
+        if (res.ok) {
+          markPdfDone(docId, idx)
+          made++
+        } else if (res.status === 422 && /exist/i.test(data.error || "")) {
+          markPdfDone(docId, idx)
+        } else {
+          pdfStatus(
+            `${already + made}/${total} 생성 후 중단: ${data.error || res.status}. ` +
+              `잠시 뒤 같은 PDF로 다시 누르면 이어서 만들어요.`,
+            "err",
+          )
+          return
+        }
+      } catch {
+        pdfStatus(`${already + made}/${total} 생성 후 네트워크 오류. 다시 누르면 이어서 만들어요.`, "err")
+        return
+      }
+      localStorage.setItem(PW_KEY, password)
+      syncPwField()
+      if (n < todo.length - 1) await sleep(1500)
+    }
+    pdfStatus(`완료 · ${total}개 노트 생성됨 · 1–2분 뒤 사이트에 반영됩니다.`, "ok")
+  } catch {
+    pdfStatus("오류가 발생했습니다. 다시 시도하세요.", "err")
+  } finally {
+    btn.disabled = false
+  }
+}
+
 // ── Note deletion + local "tombstones" ────────────────────────────────────
 // Deleting commits to GitHub and the site rebuilds in ~1–2 min; until then (and
 // past any browser/CDN cache) the note would still appear in listings. So on
@@ -855,6 +1032,12 @@ if (!w.__shAddInit) {
     if (!el) return
     e.preventDefault()
     generateChaptersFromVideo(el)
+  })
+  document.addEventListener("click", (e) => {
+    const el = (e.target as HTMLElement)?.closest<HTMLButtonElement>("[data-pdf-generate]")
+    if (!el) return
+    e.preventDefault()
+    generateNotesFromPdf(el)
   })
   document.addEventListener("click", (e) => {
     const btn = (e.target as HTMLElement)?.closest<HTMLButtonElement>(".sh-delnote-btn")
