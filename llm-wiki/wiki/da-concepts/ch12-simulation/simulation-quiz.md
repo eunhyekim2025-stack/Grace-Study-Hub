@@ -3,11 +3,11 @@ title: Simulation Chapter 12 — Calculation Drill Cards
 tags: [decision-analysis, simulation, exam-prep, quiz, portacom, butler, black-sheep]
 sources: [da/Textbook.pdf]
 updated: 2026-06-18
-pagerank: 0.0073
+pagerank: 0.0071
 betweenness: 0.0000
-eigenvector: 0.0553
+eigenvector: 0.0502
 degree: 4
-community: 3
+community: 4
 ---
 
 # Simulation (Chapter 12) — Calculation Drill Cards

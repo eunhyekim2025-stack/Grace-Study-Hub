@@ -6,6 +6,11 @@ exchange: SES
 currency: SGD
 source: yfinance
 updated: 2026-07-10
+pagerank: 0.0070
+betweenness: 0.0000
+eigenvector: 0.0011
+degree: 3
+community: 1
 ---
 
 <div class="dc-view">
@@ -19,7 +24,7 @@ updated: 2026-07-10
 <div class="dc-section"><span class="dc-num">3</span><h2>Reliability Note</h2><span class="dc-hint">source and coverage</span></div>
 <div class="dc-card"><b>Source</b> yfinance <span class="dc-chip">unofficial scraper</span></div>
 <div class="dc-callout">Use with caution: single source, patchy quarterly coverage, add second source for cross-checking</div>
-<div class="dc-view">
+</div>
 
 
 # DBS Group Holdings Ltd (D05.SI) — Financial Snapshot

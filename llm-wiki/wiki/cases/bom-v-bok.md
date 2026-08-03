@@ -6,11 +6,11 @@ sources:
   - "law/prewriting/11. Monkey's Unconscionability.pdf"
 updated: 2026-06-24
 relations:
-  applies: [law-concepts/unconscionability, law-concepts/undue-influence, law-concepts/misrepresentation, law-concepts/mistake, law-concepts/vitiating-factor]
-  see-also: [law-concepts/duress, cases/gay-choon-ing-v-loh]
-pagerank: 0.0055
-betweenness: 0.0019
-eigenvector: 0.0692
+  applies: [law-concepts/ch14-duress-undue-influence/unconscionability, law-concepts/ch14-duress-undue-influence/undue-influence, law-concepts/ch13-misrepresentation/misrepresentation, law-concepts/ch12-mistake/mistake, law-concepts/vitiating-factor]
+  see-also: [law-concepts/ch14-duress-undue-influence/duress, cases/gay-choon-ing-v-loh]
+pagerank: 0.0052
+betweenness: 0.0017
+eigenvector: 0.0690
 degree: 7
 community: 2
 ---

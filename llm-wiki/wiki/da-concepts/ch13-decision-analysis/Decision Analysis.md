@@ -5,11 +5,11 @@ created: 2026-06-24
 source: Textbook.pdf (Management Science 14e, Ch.13)
 sources: [da/Textbook.pdf]
 updated: 2026-06-24
-pagerank: 0.0045
+pagerank: 0.0044
 betweenness: 0.0001
-eigenvector: 0.0695
+eigenvector: 0.0614
 degree: 8
-community: 3
+community: 4
 ---
 
 # Decision Analysis

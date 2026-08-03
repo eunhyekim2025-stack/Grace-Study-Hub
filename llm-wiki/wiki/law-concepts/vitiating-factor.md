@@ -4,9 +4,9 @@ tags: [business-law, contract, vitiating-factor, singapore, concept-umbrella]
 sources: []
 updated: 2026-06-19
 kind: 의미
-pagerank: 0.0024
+pagerank: 0.0022
 betweenness: 0.0001
-eigenvector: 0.0850
+eigenvector: 0.0820
 degree: 6
 community: 2
 ---

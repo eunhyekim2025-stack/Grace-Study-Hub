@@ -5,11 +5,11 @@ created: 2026-06-18
 source: Textbook.pdf (Management Science 14e, Ch.6.2)
 sources: [da/Textbook.pdf]
 updated: 2026-06-18
-pagerank: 0.0086
-betweenness: 0.0006
-eigenvector: 0.0684
+pagerank: 0.0083
+betweenness: 0.0002
+eigenvector: 0.0604
 degree: 10
-community: 3
+community: 4
 ---
 
 # Transshipment Problem

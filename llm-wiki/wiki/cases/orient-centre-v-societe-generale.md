@@ -5,13 +5,13 @@ sources:
   - "law/cases/(5a) Orient Centre Investments v Societe Generale [2007] SGCA 24.pdf"
 updated: 2026-06-23
 relations:
-  applies: [law-concepts/misrepresentation, law-concepts/exemption-clause, law-concepts/terms]
+  applies: [law-concepts/ch13-misrepresentation/misrepresentation, law-concepts/ch11-exemption-clauses/exemption-clause, law-concepts/ch10-terms/terms]
   cites: [cases/gay-choon-ing-v-loh]
   governs: [statutes/unfair-contract-terms-act, statutes/evidence-act]
   see-also: [cases/raiffeisen-v-archer-daniels-midland, law-concepts/vitiating-factor]
 pagerank: 0.0022
-betweenness: 0.0019
-eigenvector: 0.0687
+betweenness: 0.0017
+eigenvector: 0.0657
 degree: 7
 community: 2
 ---

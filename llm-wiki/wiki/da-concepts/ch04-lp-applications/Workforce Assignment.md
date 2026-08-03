@@ -5,11 +5,11 @@ created: 2026-06-18
 source: Textbook.pdf (Ch.4 Operations) + da/excel-solutions/Workforce Assignment.xlsx
 sources: [da/Textbook.pdf, da/excel-solutions/Workforce Assignment.xlsx]
 updated: 2026-06-18
-pagerank: 0.0062
-betweenness: 0.0003
-eigenvector: 0.0816
+pagerank: 0.0060
+betweenness: 0.0001
+eigenvector: 0.0719
 degree: 9
-community: 3
+community: 4
 ---
 
 # Workforce Assignment (Operations Application)

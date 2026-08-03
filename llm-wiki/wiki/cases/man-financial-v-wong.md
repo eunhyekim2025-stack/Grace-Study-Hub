@@ -5,12 +5,12 @@ sources:
   - "law/cases/(7c) Man Financial v Wong [2007] SGCA 53.pdf"
 updated: 2026-06-23
 relations:
-  applies: [law-concepts/restraint-of-trade, law-concepts/illegality, law-concepts/terms, law-concepts/discharge]
+  applies: [law-concepts/ch15-illegality/restraint-of-trade, law-concepts/ch15-illegality/illegality, law-concepts/ch10-terms/terms, law-concepts/ch16-breach/discharge]
   cites: [cases/rdc-concrete-v-sato-kogyo]
   see-also: [cases/sports-connection-v-deuter, cases/gay-choon-ing-v-loh]
-pagerank: 0.0071
-betweenness: 0.0136
-eigenvector: 0.0751
+pagerank: 0.0068
+betweenness: 0.0119
+eigenvector: 0.0736
 degree: 12
 community: 2
 ---

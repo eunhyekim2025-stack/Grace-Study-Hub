@@ -4,12 +4,12 @@ tags: [business-law, contract, consideration, promissory-estoppel, singapore]
 sources: [law/prewriting/3. Monkey's Consideration.pdf]
 updated: 2026-06-17
 relations:
-  see-also: [law-concepts/offer, law-concepts/privity, law-concepts/duress]
+  see-also: [law-concepts/ch07-offer-acceptance/offer, law-concepts/ch09-capacity-privity/privity, law-concepts/ch14-duress-undue-influence/duress]
   cites: [cases/gay-choon-ing-v-loh, cases/teo-seng-kee-bob-v-arianecorp]
-pagerank: 0.0248
-betweenness: 0.0170
-eigenvector: 0.1168
-degree: 17
+pagerank: 0.0238
+betweenness: 0.0148
+eigenvector: 0.1355
+degree: 18
 community: 2
 ---
 
@@ -69,5 +69,5 @@ Consideration need only be sufficient; it need not be adequate → *Chappell v N
 ---
 
 ## Related pages
-- [[wiki/law-concepts/offer]] · [[wiki/law-concepts/privity]] · [[wiki/law-concepts/duress]]
+- [[law-concepts/ch07-offer-acceptance/offer]] · [[law-concepts/ch09-capacity-privity/privity]] · [[law-concepts/ch14-duress-undue-influence/duress]]
 - [[wiki/cases/teo-seng-kee-bob-v-arianecorp]] · [[wiki/cases/gay-choon-ing-v-loh]]

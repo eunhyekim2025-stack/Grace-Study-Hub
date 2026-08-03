@@ -5,11 +5,11 @@ created: 2026-06-18
 source: Textbook.pdf (Ch.4 Operations) + da/excel-solutions/Blending Problem.xlsx
 sources: [da/Textbook.pdf, da/excel-solutions/Blending Problem.xlsx]
 updated: 2026-06-18
-pagerank: 0.0084
-betweenness: 0.0004
-eigenvector: 0.0962
+pagerank: 0.0082
+betweenness: 0.0002
+eigenvector: 0.0835
 degree: 11
-community: 3
+community: 4
 ---
 
 # Blending Problem (Operations Application)

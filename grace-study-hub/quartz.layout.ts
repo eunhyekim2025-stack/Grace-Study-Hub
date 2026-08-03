@@ -28,6 +28,8 @@ const explorerOptions = {
       "fa-concepts": "💰 Financial Accounting (FA) · Notes",
       // ⚙️ Operations Management
       "ops-concepts": "⚙️ Operations Management · Notes",
+      // 🗄 SQL
+      "sql-concepts": "🗄 SQL · Concepts",
       // 🔗 Cross-Domain
       "cross-domain": "🔗 Cross-Domain · 3-Subject Integration",
       // 🤖 LLM/AI Wiki
@@ -53,6 +55,7 @@ const explorerOptions = {
       "da-concepts": 20,
       "fa-concepts": 30,
       "ops-concepts": 35,
+      "sql-concepts": 38,
       "cross-domain": 40,
       concepts: 50,
       models: 51,

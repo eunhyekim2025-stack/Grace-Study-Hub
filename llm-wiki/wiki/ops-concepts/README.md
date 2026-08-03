@@ -3,10 +3,10 @@ title: ⚙️ Operations Management — Concept Index
 tags: [ops, moc]
 updated: 2026-07-03
 kind: 주제
-pagerank: 0.0032
+pagerank: 0.0035
 betweenness: 0.0000
-eigenvector: 0.0005
-degree: 2
+eigenvector: 0.0020
+degree: 3
 community: 1
 ---
 

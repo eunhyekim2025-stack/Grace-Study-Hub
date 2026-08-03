@@ -5,12 +5,12 @@ sources: []
 updated: 2026-06-19
 kind: 통찰
 relations:
-  see-also: [fa-concepts/time-value-of-money, systems/liability-disputes, law-concepts/frustration, law-concepts/discharge]
-pagerank: 0.0017
-betweenness: 0.0005
-eigenvector: 0.0299
-degree: 7
-community: 0
+  see-also: [fa-concepts/ch09-long-term-liabilities/time-value-of-money, systems/liability-disputes, law-concepts/ch17-frustration/frustration, law-concepts/ch16-breach/discharge]
+pagerank: 0.0018
+betweenness: 0.0024
+eigenvector: 0.0518
+degree: 8
+community: 3
 ---
 
 <div class="dc-view">
@@ -22,7 +22,7 @@ community: 0
 <div class="dc-section"><span class="dc-num">2</span><h2>Connections and Limits</h2><span class="dc-hint">Isomorphism across domains</span></div>
 <div class="dc-cols"><div class="dc-card"><b>Discounting and Delay</b> are two sides of the same coin <span class="dc-chip">FA × Systems</span></div><div class="dc-card"><b>Time's Operation</b> differs across domains <span class="dc-chip">FA, Systems, Law</span></div></div>
 <div class="dc-callout">Timing changes the outcome across value, validity, and causation</div>
-<div class="dc-view">
+</div>
 
 
 # Insight — time is not neutral: discounting, delay, extinction

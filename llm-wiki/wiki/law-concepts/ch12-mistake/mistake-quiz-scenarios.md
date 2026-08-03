@@ -3,9 +3,9 @@ title: Chapter 8 — Mistake Scenario Quiz (PQ Style)
 tags: [business-law, mistake, quiz, scenario, IRAC, exam-prep]
 sources: [law/prewriting/8. Monkey's Mistake.pdf, law/pq/(1) PQ 1C (For T2 AY2025-26).pdf]
 updated: 2026-06-17
-pagerank: 0.0015
+pagerank: 0.0014
 betweenness: 0.0000
-eigenvector: 0.0251
+eigenvector: 0.0256
 degree: 1
 community: 2
 ---

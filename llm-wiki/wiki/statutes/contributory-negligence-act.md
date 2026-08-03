@@ -6,11 +6,11 @@ sources:
   - "law/Textbook.pdf"
 updated: 2026-06-23
 relations:
-  governs: [law-concepts/negligence]
-  see-also: [law-concepts/remedies]
-pagerank: 0.0026
-betweenness: 0.0013
-eigenvector: 0.0529
+  governs: [law-concepts/ch06-negligence/negligence]
+  see-also: [law-concepts/ch18-remedies/remedies]
+pagerank: 0.0025
+betweenness: 0.0012
+eigenvector: 0.0524
 degree: 5
 community: 2
 ---

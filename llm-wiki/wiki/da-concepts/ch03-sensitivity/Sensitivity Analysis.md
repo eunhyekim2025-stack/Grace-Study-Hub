@@ -5,11 +5,11 @@ created: 2026-06-18
 source: Textbook.pdf (Management Science 14e, Ch.3)
 sources: [da/Textbook.pdf]
 updated: 2026-06-18
-pagerank: 0.0197
-betweenness: 0.0026
-eigenvector: 0.1229
+pagerank: 0.0192
+betweenness: 0.0015
+eigenvector: 0.1069
 degree: 20
-community: 3
+community: 4
 ---
 
 # Sensitivity Analysis

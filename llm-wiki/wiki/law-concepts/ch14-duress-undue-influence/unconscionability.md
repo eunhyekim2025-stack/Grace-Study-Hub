@@ -5,9 +5,9 @@ sources:
   - "law/cases/(11) BOM v BOK [2018] SGCA 83.txt"
   - "law/prewriting/11. Monkey's Unconscionability.pdf"
 updated: 2026-06-17
-pagerank: 0.0141
-betweenness: 0.0043
-eigenvector: 0.0651
+pagerank: 0.0135
+betweenness: 0.0031
+eigenvector: 0.0639
 degree: 9
 community: 2
 ---
@@ -26,7 +26,7 @@ The Singapore Court of Appeal adopted a **narrow** doctrine of unconscionability
 4. **A substantial undervalue and the absence of independent advice are not essential requirements** — though they are *"very important factors"* the court always considers. [para 141–142]
 
 > *BOM v BOK*: rejected the broad "special disability" doctrine of Australia's *Amadio* as **too subjective**; recognised only the narrow doctrine. [para 132–133]
-> Also raised the hypothesis (left undecided) that the narrow doctrine may be **virtually identical to Class 1 undue influence**. [para 145–152] → [[wiki/law-concepts/undue-influence]]
+> Also raised the hypothesis (left undecided) that the narrow doctrine may be **virtually identical to Class 1 undue influence**. [para 145–152] → [[law-concepts/ch14-duress-undue-influence/undue-influence]]
 
 ## Traditional test (England)
 - The weaker party is "poor and ignorant" → *Cresswell v Potter [1978]*, *Fry v Lane [1888]*
@@ -42,5 +42,5 @@ The Singapore Court of Appeal adopted a **narrow** doctrine of unconscionability
 ---
 
 ## Related pages
-- [[wiki/law-concepts/duress]] · [[wiki/law-concepts/undue-influence]]
+- [[law-concepts/ch14-duress-undue-influence/duress]] · [[law-concepts/ch14-duress-undue-influence/undue-influence]]
 - [[wiki/cases/bom-v-bok]]

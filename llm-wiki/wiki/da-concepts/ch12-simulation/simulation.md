@@ -3,11 +3,11 @@ title: Simulation (Chapter 12)
 tags: [decision-analysis, simulation, risk-analysis, inventory, waiting-line, monte-carlo]
 sources: [da/Textbook.pdf, da/textbook-solutions/MS14E_chapter_12_Final.doc]
 updated: 2026-06-18
-pagerank: 0.0097
-betweenness: 0.0047
-eigenvector: 0.1039
+pagerank: 0.0093
+betweenness: 0.0031
+eigenvector: 0.1017
 degree: 13
-community: 3
+community: 4
 ---
 
 # Simulation (Chapter 12)

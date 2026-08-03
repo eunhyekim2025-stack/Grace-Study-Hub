@@ -7,10 +7,10 @@ kind: 주장
 relations:
   about: [drivers/ai-legal-automation]
   extends: [cross-domain/business-lifecycle]
-pagerank: 0.0014
-betweenness: 0.0000
-eigenvector: 0.0193
-degree: 3
+pagerank: 0.0015
+betweenness: 0.0013
+eigenvector: 0.0248
+degree: 4
 community: 0
 ---
 

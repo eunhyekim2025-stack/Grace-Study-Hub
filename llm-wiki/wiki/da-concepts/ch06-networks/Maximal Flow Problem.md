@@ -5,11 +5,11 @@ created: 2026-06-18
 source: Textbook.pdf (Management Science 14e, Ch.6.5)
 sources: [da/Textbook.pdf]
 updated: 2026-06-18
-pagerank: 0.0065
+pagerank: 0.0063
 betweenness: 0.0000
-eigenvector: 0.0660
+eigenvector: 0.0577
 degree: 9
-community: 3
+community: 4
 ---
 
 # Maximal Flow Problem

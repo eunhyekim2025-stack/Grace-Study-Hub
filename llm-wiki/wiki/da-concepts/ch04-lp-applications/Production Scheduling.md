@@ -5,11 +5,11 @@ created: 2026-06-18
 source: Textbook.pdf (Ch.4 Operations) + da/excel-solutions/Production Scheduling.xlsx
 sources: [da/Textbook.pdf, da/excel-solutions/Production Scheduling.xlsx]
 updated: 2026-06-18
-pagerank: 0.0059
+pagerank: 0.0058
 betweenness: 0.0002
-eigenvector: 0.0873
+eigenvector: 0.0762
 degree: 10
-community: 3
+community: 4
 ---
 
 # Production Scheduling (Operations Application)

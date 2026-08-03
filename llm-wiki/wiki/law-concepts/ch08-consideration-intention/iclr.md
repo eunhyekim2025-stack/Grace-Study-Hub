@@ -3,9 +3,9 @@ title: Intention to Create Legal Relations (ICLR)
 tags: [business-law, contract, iclr, singapore]
 sources: [law/prewriting/4. Monkey's ICLR.pdf]
 updated: 2026-06-17
-pagerank: 0.0076
+pagerank: 0.0073
 betweenness: 0.0000
-eigenvector: 0.0517
+eigenvector: 0.0537
 degree: 6
 community: 2
 ---
@@ -35,4 +35,4 @@ Even where there is an agreement, this determines whether both parties had an **
 ---
 
 ## Related pages
-- [[wiki/law-concepts/offer]] · [[wiki/law-concepts/acceptance]] · [[wiki/law-concepts/consideration]]
+- [[law-concepts/ch07-offer-acceptance/offer]] · [[law-concepts/ch07-offer-acceptance/acceptance]] · [[law-concepts/ch08-consideration-intention/consideration]]

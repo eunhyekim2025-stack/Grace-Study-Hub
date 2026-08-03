@@ -3,10 +3,10 @@ title: Mistake
 tags: [business-law, contract, mistake, vitiating-factor, singapore]
 sources: [law/prewriting/8. Monkey's Mistake.pdf]
 updated: 2026-06-17
-pagerank: 0.0201
-betweenness: 0.0071
-eigenvector: 0.1014
-degree: 11
+pagerank: 0.0194
+betweenness: 0.0063
+eigenvector: 0.1208
+degree: 12
 community: 2
 ---
 
@@ -43,4 +43,4 @@ A signed document is fundamentally different + no negligence on the signer's par
 ---
 
 ## Related pages
-- [[wiki/law-concepts/misrepresentation]] · [[wiki/law-concepts/offer]] · [[wiki/law-concepts/remedies]]
+- [[law-concepts/ch13-misrepresentation/misrepresentation]] · [[law-concepts/ch07-offer-acceptance/offer]] · [[law-concepts/ch18-remedies/remedies]]

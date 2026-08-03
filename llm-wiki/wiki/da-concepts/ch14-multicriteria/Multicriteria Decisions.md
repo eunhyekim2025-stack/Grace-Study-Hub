@@ -5,11 +5,11 @@ created: 2026-06-24
 source: Textbook.pdf (Management Science 14e, Ch.14)
 sources: [da/Textbook.pdf]
 updated: 2026-06-24
-pagerank: 0.0037
+pagerank: 0.0036
 betweenness: 0.0000
-eigenvector: 0.0645
+eigenvector: 0.0569
 degree: 6
-community: 3
+community: 4
 ---
 
 # Multicriteria Decisions

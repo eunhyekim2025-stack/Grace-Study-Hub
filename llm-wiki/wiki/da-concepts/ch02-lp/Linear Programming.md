@@ -5,11 +5,11 @@ created: 2026-06-18
 source: Textbook.pdf (Management Science 14e, Ch.2)
 sources: [da/Textbook.pdf]
 updated: 2026-06-18
-pagerank: 0.0252
-betweenness: 0.0181
-eigenvector: 0.2148
+pagerank: 0.0243
+betweenness: 0.0070
+eigenvector: 0.1951
 degree: 31
-community: 3
+community: 4
 ---
 
 <div class="dc-view">
@@ -21,7 +21,7 @@ community: 3
 <div class="dc-section"><span class="dc-num">2</span><h2>Assumptions</h2><span class="dc-hint">proportionality, additivity, divisibility, certainty</span></div>
 <div class="dc-cols"><div class="dc-card"><b>Proportionality</b> linear relationship between variables <span class="dc-chip">assumption</span></div><div class="dc-card"><b>Divisibility</b> decision variables can be divided <span class="dc-chip">assumption</span></div></div>
 <div class="dc-callout">Proportionality, Additivity, Divisibility, and Certainty are key assumptions in Linear Programming</div>
-<div class="dc-view">
+</div>
 
 
 # Linear Programming (LP)

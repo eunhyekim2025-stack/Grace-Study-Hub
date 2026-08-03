@@ -6,6 +6,11 @@ exchange: SES
 currency: SGD
 source: yfinance
 updated: 2026-07-10
+pagerank: 0.0070
+betweenness: 0.0000
+eigenvector: 0.0011
+degree: 3
+community: 1
 ---
 
 <div class="dc-view">
@@ -19,7 +24,7 @@ updated: 2026-07-10
 <div class="dc-section"><span class="dc-num">3</span><h2>Reliability and Limitations</h2><span class="dc-hint">Single source, potential for incomplete data</span></div>
 <div class="dc-card"><b>Source</b> yfinance <span class="dc-chip">unofficial scraper, patchy quarterly coverage</span></div>
 <div class="dc-callout">Use with caution: single source, potential for incomplete or inaccurate data</div>
-<div class="dc-view">
+</div>
 
 
 # Oversea-Chinese Banking Corporation Limited (O39.SI) — Financial Snapshot

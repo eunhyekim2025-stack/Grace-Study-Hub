@@ -6,11 +6,11 @@ sources:
   - law/Textbook.pdf
 updated: 2026-06-23
 relations:
-  governs: [law-concepts/terms, law-concepts/capacity, law-concepts/remedies]
-  see-also: [statutes/unfair-contract-terms-act, law-concepts/discharge]
-pagerank: 0.0099
-betweenness: 0.0149
-eigenvector: 0.1067
+  governs: [law-concepts/ch10-terms/terms, law-concepts/ch09-capacity-privity/capacity, law-concepts/ch18-remedies/remedies]
+  see-also: [statutes/unfair-contract-terms-act, law-concepts/ch16-breach/discharge]
+pagerank: 0.0095
+betweenness: 0.0133
+eigenvector: 0.1042
 degree: 13
 community: 2
 ---

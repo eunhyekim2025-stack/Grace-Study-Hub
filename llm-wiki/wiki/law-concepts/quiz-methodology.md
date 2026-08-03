@@ -3,11 +3,11 @@ title: IRAC Drill Design Methodology
 tags: [exam-prep, methodology, IRAC, quiz-design]
 sources: [law/prewriting/8. Monkey's Mistake.pdf]
 updated: 2026-06-17
-pagerank: 0.0024
+pagerank: 0.0023
 betweenness: 0.0000
-eigenvector: 0.0583
+eigenvector: 0.0650
 degree: 5
-community: 4
+community: 3
 ---
 
 # IRAC Drill Design Methodology

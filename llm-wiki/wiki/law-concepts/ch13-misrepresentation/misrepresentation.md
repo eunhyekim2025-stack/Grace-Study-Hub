@@ -5,9 +5,9 @@ sources: [law/prewriting/7. Monkey's Misrepresentation.pdf]
 updated: 2026-06-17
 relations:
   is-a: [law-concepts/vitiating-factor]
-pagerank: 0.0352
-betweenness: 0.0149
-eigenvector: 0.1579
+pagerank: 0.0334
+betweenness: 0.0124
+eigenvector: 0.1569
 degree: 19
 community: 2
 ---
@@ -74,4 +74,4 @@ A **false statement of fact** that induces the formation of a contract. A vitiat
 ---
 
 ## Related pages
-- [[wiki/law-concepts/terms]] · [[wiki/law-concepts/mistake]] · [[wiki/law-concepts/remedies]]
+- [[law-concepts/ch10-terms/terms]] · [[law-concepts/ch12-mistake/mistake]] · [[law-concepts/ch18-remedies/remedies]]

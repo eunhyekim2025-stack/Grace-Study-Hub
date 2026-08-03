@@ -6,11 +6,11 @@ sources:
   - law/Textbook.pdf
 updated: 2026-06-23
 relations:
-  governs: [law-concepts/terms]
-  see-also: [cases/gay-choon-ing-v-loh, law-concepts/misrepresentation]
-pagerank: 0.0083
-betweenness: 0.0144
-eigenvector: 0.1123
+  governs: [law-concepts/ch10-terms/terms]
+  see-also: [cases/gay-choon-ing-v-loh, law-concepts/ch13-misrepresentation/misrepresentation]
+pagerank: 0.0079
+betweenness: 0.0121
+eigenvector: 0.1120
 degree: 14
 community: 2
 ---

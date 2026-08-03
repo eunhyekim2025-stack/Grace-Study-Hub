@@ -3,16 +3,16 @@ title: Agency
 tags: [business-law, agency, singapore]
 sources: [law/prewriting/20. Monkey's Agency.pdf]
 updated: 2026-06-17
-pagerank: 0.0049
-betweenness: 0.0044
-eigenvector: 0.0681
+pagerank: 0.0046
+betweenness: 0.0026
+eigenvector: 0.0747
 degree: 7
 community: 2
 ---
 
 # Agency
 
-An agent forms legal relations with a third party on behalf of the principal. A major exception to [[wiki/law-concepts/privity]].
+An agent forms legal relations with a third party on behalf of the principal. A major exception to [[law-concepts/ch09-capacity-privity/privity]].
 
 ## 1. Creation of Agency
 
@@ -43,4 +43,4 @@ An agent forms legal relations with a third party on behalf of the principal. A 
 ---
 
 ## Related Pages
-- [[wiki/law-concepts/privity]] · [[wiki/law-concepts/capacity]] · [[wiki/law-concepts/offer]]
+- [[law-concepts/ch09-capacity-privity/privity]] · [[law-concepts/ch09-capacity-privity/capacity]] · [[law-concepts/ch07-offer-acceptance/offer]]

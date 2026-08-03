@@ -3,10 +3,10 @@ title: 🤖 AI · Foresight
 tags: [moc, index, ai-impact]
 updated: 2026-06-24
 kind: 주제
-pagerank: 0.0018
-betweenness: 0.0022
-eigenvector: 0.0321
-degree: 15
+pagerank: 0.0019
+betweenness: 0.0031
+eigenvector: 0.0371
+degree: 16
 community: 0
 ---
 
@@ -21,7 +21,7 @@ community: 0
 <div class="dc-section"><span class="dc-num">3</span><h2>Systems Thinking</h2><span class="dc-hint">Understanding causal relationships</span></div>
 <div class="dc-cols-3"><div class="dc-card"><b>Variables</b> linked by causal relationships <span class="dc-chip">systems/</span></div><div class="dc-card"><b>Feedback Loops</b> reinforcing and balancing loops <span class="dc-chip">R/B loops</span></div><div class="dc-card"><b>Leverage Points</b> key points for intervention <span class="dc-chip">top leverage</span></div></div>
 <div class="dc-callout">Monitor AI adoption rate and contract-review unit cost for potential reinforcing loops</div>
-<div class="dc-view>
+</div>
 
 
 # 🤖 AI · Foresight (wiki meta layer)

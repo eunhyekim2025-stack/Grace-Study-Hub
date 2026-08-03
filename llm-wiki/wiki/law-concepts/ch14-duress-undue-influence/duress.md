@@ -5,9 +5,9 @@ sources: [law/prewriting/9. Monkey's Duress.pdf]
 updated: 2026-06-17
 relations:
   is-a: [law-concepts/vitiating-factor]
-pagerank: 0.0184
-betweenness: 0.0070
-eigenvector: 0.1268
+pagerank: 0.0175
+betweenness: 0.0047
+eigenvector: 0.1298
 degree: 14
 community: 2
 ---
@@ -43,4 +43,4 @@ Coercing consent to a contract through illegitimate pressure. Renders the contra
 ---
 
 ## Related pages
-- [[wiki/law-concepts/undue-influence]] · [[wiki/law-concepts/unconscionability]] · [[wiki/law-concepts/consideration]]
+- [[law-concepts/ch14-duress-undue-influence/undue-influence]] · [[law-concepts/ch14-duress-undue-influence/unconscionability]] · [[law-concepts/ch08-consideration-intention/consideration]]

@@ -3,11 +3,11 @@ title: Simulation Chapter 12 — Textbook Problem Quiz
 tags: [decision-analysis, simulation, exam-prep, quiz, textbook-problems, monte-carlo]
 sources: [da/Textbook.pdf, da/textbook-solutions/MS14E_chapter_12_Final.doc]
 updated: 2026-06-18
-pagerank: 0.0018
-betweenness: 0.0004
-eigenvector: 0.0631
+pagerank: 0.0017
+betweenness: 0.0003
+eigenvector: 0.0671
 degree: 6
-community: 4
+community: 3
 ---
 
 # Simulation (Chapter 12) — Textbook Problem Quiz

@@ -5,11 +5,11 @@ created: 2026-06-24
 source: Textbook.pdf (Management Science 14e, Ch.9)
 sources: [da/Textbook.pdf]
 updated: 2026-06-24
-pagerank: 0.0027
+pagerank: 0.0026
 betweenness: 0.0000
-eigenvector: 0.0694
+eigenvector: 0.0610
 degree: 6
-community: 3
+community: 4
 ---
 
 # Project Scheduling: PERT/CPM

@@ -3,11 +3,11 @@ title: 📊 Decision Analysis
 tags: [decision-analysis, moc, index]
 updated: 2026-06-24
 kind: 주제
-pagerank: 0.0019
-betweenness: 0.0153
-eigenvector: 0.2748
-degree: 39
-community: 3
+pagerank: 0.0021
+betweenness: 0.0253
+eigenvector: 0.2655
+degree: 41
+community: 4
 ---
 
 # 📊 Decision Analysis (DA)

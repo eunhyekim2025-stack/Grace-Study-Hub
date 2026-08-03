@@ -5,13 +5,13 @@ sources:
   - "law/cases/(4a) Zurich v B-Gold [2008] SGCA 27.pdf"
 updated: 2026-06-23
 relations:
-  applies: [law-concepts/terms]
+  applies: [law-concepts/ch10-terms/terms]
   governs: [statutes/evidence-act]
   cites: [statutes/evidence-act]
-  see-also: [cases/sembcorp-marine-v-ppl, law-concepts/exemption-clause]
-pagerank: 0.0019
+  see-also: [cases/sembcorp-marine-v-ppl, law-concepts/ch11-exemption-clauses/exemption-clause]
+pagerank: 0.0018
 betweenness: 0.0000
-eigenvector: 0.0491
+eigenvector: 0.0482
 degree: 5
 community: 2
 ---

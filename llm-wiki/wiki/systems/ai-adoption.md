@@ -7,9 +7,9 @@ relations:
   dampens: [systems/review-cost]
   amplifies: [systems/liability-disputes]
   see-also: [drivers/ai-contract-review]
-pagerank: 0.0060
-betweenness: 0.0092
-eigenvector: 0.0320
+pagerank: 0.0056
+betweenness: 0.0102
+eigenvector: 0.0302
 degree: 7
 community: 0
 ---

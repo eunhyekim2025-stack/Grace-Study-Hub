@@ -5,11 +5,11 @@ created: 2026-06-18
 source: Textbook.pdf (Ch.4 Marketing) + da/excel-solutions/Media Selection.xlsx
 sources: [da/Textbook.pdf, da/excel-solutions/Media Selection.xlsx]
 updated: 2026-06-18
-pagerank: 0.0063
+pagerank: 0.0061
 betweenness: 0.0000
-eigenvector: 0.0838
+eigenvector: 0.0730
 degree: 9
-community: 3
+community: 4
 ---
 
 # Media Selection (Marketing Application)

@@ -5,11 +5,11 @@ created: 2026-06-18
 source: Textbook.pdf (Management Science 14e, Ch.11)
 sources: [da/Textbook.pdf]
 updated: 2026-06-18
-pagerank: 0.0080
-betweenness: 0.0052
-eigenvector: 0.0563
+pagerank: 0.0077
+betweenness: 0.0040
+eigenvector: 0.0502
 degree: 7
-community: 3
+community: 4
 ---
 
 # Waiting Line Models (Queuing)
@@ -37,11 +37,11 @@ A model that analyzes the **performance characteristics of a waiting line** unde
 ## Extensions
 - **M/M/k**: multiple channels (formulas are complex; use tables/software)
 - Variants: finite queue, finite population, constant service time (M/D/1), etc.
-- When an analytic solution is hard → use [[Simulation]] instead
+- When an analytic solution is hard → use [[da-concepts/ch12-simulation/simulation|Simulation]] instead
 
 ## Cost model
 Choose the number of channels k that minimizes `Total cost = waiting cost (cw·L) + service cost (cs·k)`.
 
 ## Related notes
-- [[Simulation]] · [[Management Science Process]]
+- [[da-concepts/ch12-simulation/simulation|Simulation]] · [[Management Science Process]]
 - Full map: [[LLM Wiki MOC]]

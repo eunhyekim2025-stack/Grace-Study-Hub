@@ -5,11 +5,11 @@ created: 2026-06-24
 source: Textbook.pdf (Management Science 14e, Ch.8)
 sources: [da/Textbook.pdf]
 updated: 2026-06-24
-pagerank: 0.0032
+pagerank: 0.0031
 betweenness: 0.0000
-eigenvector: 0.0790
+eigenvector: 0.0690
 degree: 7
-community: 3
+community: 4
 ---
 
 # Nonlinear Optimization Models

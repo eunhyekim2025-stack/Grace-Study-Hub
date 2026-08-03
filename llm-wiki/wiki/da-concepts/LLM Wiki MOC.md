@@ -5,11 +5,11 @@ created: 2026-06-18
 source: Textbook.pdf (Anderson/Sweeney/Williams, Management Science 14e)
 sources: [da/Textbook.pdf]
 updated: 2026-06-18
-pagerank: 0.0500
-betweenness: 0.0807
-eigenvector: 0.2598
+pagerank: 0.0484
+betweenness: 0.0568
+eigenvector: 0.2253
 degree: 68
-community: 3
+community: 4
 ---
 
 <div class="dc-view">
@@ -23,7 +23,7 @@ community: 3
 <div class="dc-section"><span class="dc-num">3</span><h2>Sensitivity Analysis</h2><span class="dc-hint">what-if analysis</span></div>
 <div class="dc-cols-3"><div class="dc-card"><b>Shadow Price</b> dual value, resource value <span class="dc-chip">sensitivity</span></div><div class="dc-card"><b>Reduced Cost</b> non-producing variable cost <span class="dc-chip">entry cost</span></div><div class="dc-card"><b>Range of Optimality</b> objective coefficient changes <span class="dc-chip">100% rule</span></div></div>
 <div class="dc-callout">Understand the management science process and linear programming core concepts before applying sensitivity analysis</div>
-<div class="dc-view">
+</div>
 
 
 # 🗺️ LLM Wiki MOC — Decision Analysis
@@ -68,7 +68,7 @@ Course scope: **Linear programming (Ch.2–5) · Integer and nonlinear (Ch.7–8
 
 ## 🎲 F. Probabilistic Models (Ch.11–12)
 - [[Waiting Line Models]] — queuing M/M/1, M/M/k, Little's Law
-- [[Simulation]] — Monte Carlo simulation *(existing page)*
+- [[da-concepts/ch12-simulation/simulation|Simulation]] — Monte Carlo simulation *(existing page)*
   - Related quiz: [[simulation-quiz]]
 
 ## 🧮 G. Optimization Extensions (Ch.5·7·8)

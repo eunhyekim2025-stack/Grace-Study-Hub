@@ -3,9 +3,9 @@ title: Frustration
 tags: [business-law, contract, frustration, discharge, singapore]
 sources: [law/prewriting/17. Monkey's Frustration.pdf]
 updated: 2026-06-17
-pagerank: 0.0232
-betweenness: 0.0049
-eigenvector: 0.0879
+pagerank: 0.0221
+betweenness: 0.0039
+eigenvector: 0.0884
 degree: 11
 community: 2
 ---
@@ -43,5 +43,5 @@ See [[wiki/statutes/frustrated-contracts-act]]
 ---
 
 ## Related pages
-- [[wiki/law-concepts/discharge]] · [[wiki/law-concepts/mistake]] · [[wiki/law-concepts/remedies]]
+- [[law-concepts/ch16-breach/discharge]] · [[law-concepts/ch12-mistake/mistake]] · [[law-concepts/ch18-remedies/remedies]]
 - [[wiki/statutes/frustrated-contracts-act]]

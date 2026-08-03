@@ -5,12 +5,12 @@ sources:
   - "law/cases/(7b) Sports v Deuter [2009] SGCA 22.pdf"
 updated: 2026-06-23
 relations:
-  applies: [law-concepts/discharge, law-concepts/terms, law-concepts/remedies]
+  applies: [law-concepts/ch16-breach/discharge, law-concepts/ch10-terms/terms, law-concepts/ch18-remedies/remedies]
   refines: [cases/rdc-concrete-v-sato-kogyo]
   cites: [cases/man-financial-v-wong]
-pagerank: 0.0042
+pagerank: 0.0040
 betweenness: 0.0000
-eigenvector: 0.0575
+eigenvector: 0.0563
 degree: 7
 community: 2
 ---

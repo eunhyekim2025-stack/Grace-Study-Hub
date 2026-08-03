@@ -1,12 +1,12 @@
 ---
 title: Graph Visualization
 tags: [viz, graph]
-updated: 2026-07-03
+updated: 2026-08-01
 ---
 
 # 그래프 시각화 (초점 뷰)
 
-*2026-07-03 생성 · 전체 인터랙티브: `graph/graph.html`*
+*2026-08-01 생성 · 전체 인터랙티브: `graph/graph.html`*
 
 ## 🗣️ 담론 그래프 (논증 구조)
 
@@ -33,11 +33,11 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-  n_systems_ai_adoption["ai-adoption"]
   n_systems_liability_disputes["liability-disputes"]
+  n_systems_ai_adoption["ai-adoption"]
   n_systems_review_cost["review-cost"]
-  n_systems_ai_adoption -->|B:+| n_systems_liability_disputes
   n_systems_liability_disputes -->|B:−| n_systems_ai_adoption
+  n_systems_ai_adoption -->|B:+| n_systems_liability_disputes
   n_systems_review_cost -->|R:−| n_systems_ai_adoption
   n_systems_ai_adoption -->|R:−| n_systems_review_cost
 ```

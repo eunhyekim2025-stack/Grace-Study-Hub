@@ -2,6 +2,11 @@
 title: Company Analytics — Companies (MOC)
 tags: [company, financials, analytics, moc, overview]
 updated: 2026-07-10
+pagerank: 0.0193
+betweenness: 0.0004
+eigenvector: 0.0013
+degree: 7
+community: 1
 ---
 
 <div class="dc-view">
@@ -13,7 +18,7 @@ updated: 2026-07-10
 <div class="dc-section"><span class="dc-num">2</span><h2>Data Trust</h2><span class="dc-hint">data source limitations</span></div>
 <div class="dc-card"><b>Current source</b> is yfinance (unofficial) <span class="dc-chip">lowest trust</span></div>
 <div class="dc-callout" class="warn">More reliable data can override yfinance with no change to notes</div>
-<div class="dc-view">
+</div>
 
 
 # Company Analytics — Companies (MOC)

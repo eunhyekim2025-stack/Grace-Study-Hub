@@ -5,12 +5,12 @@ sources:
   - "law/cases/(9c) Man Mohan Singh v Zurich Insurance.pdf"
 updated: 2026-06-23
 relations:
-  applies: [law-concepts/negligence, law-concepts/remedies]
+  applies: [law-concepts/ch06-negligence/negligence, law-concepts/ch18-remedies/remedies]
   cites: [cases/spandeck-v-dsta, cases/ngiam-kong-seng-v-lim]
-  see-also: [law-concepts/negligence]
-pagerank: 0.0036
-betweenness: 0.0006
-eigenvector: 0.0422
+  see-also: [law-concepts/ch06-negligence/negligence]
+pagerank: 0.0035
+betweenness: 0.0005
+eigenvector: 0.0423
 degree: 5
 community: 2
 ---

@@ -5,11 +5,11 @@ created: 2026-06-18
 source: Textbook.pdf (Management Science 14e, Ch.3.1)
 sources: [da/Textbook.pdf]
 updated: 2026-06-18
-pagerank: 0.0099
-betweenness: 0.0004
-eigenvector: 0.0659
+pagerank: 0.0096
+betweenness: 0.0003
+eigenvector: 0.0581
 degree: 10
-community: 3
+community: 4
 ---
 
 # Range of Optimality

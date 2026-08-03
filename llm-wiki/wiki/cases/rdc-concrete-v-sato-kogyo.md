@@ -5,11 +5,11 @@ sources:
   - "law/cases/(7a) RDC v Sato Kogyo [2007] SGCA 39.pdf"
 updated: 2026-06-23
 relations:
-  applies: [law-concepts/discharge, law-concepts/terms, law-concepts/remedies, law-concepts/frustration]
+  applies: [law-concepts/ch16-breach/discharge, law-concepts/ch10-terms/terms, law-concepts/ch18-remedies/remedies, law-concepts/ch17-frustration/frustration]
   see-also: [cases/sports-connection-v-deuter, cases/man-financial-v-wong]
-pagerank: 0.0109
-betweenness: 0.0065
-eigenvector: 0.0757
+pagerank: 0.0104
+betweenness: 0.0054
+eigenvector: 0.0737
 degree: 11
 community: 2
 ---

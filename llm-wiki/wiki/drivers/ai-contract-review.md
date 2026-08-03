@@ -6,15 +6,15 @@ updated: 2026-06-19
 horizon: H2
 threshold: {watch: 1.5, act: 3.0}
 relations:
-  triggers: [law-concepts/exemption-clause, cross-domain/business-lifecycle]
+  triggers: [law-concepts/ch11-exemption-clauses/exemption-clause, cross-domain/business-lifecycle]
   serves: [cross-domain/business-lifecycle]
   part-of: [drivers/ai-legal-automation]
-pagerank: 0.0080
-betweenness: 0.0336
-eigenvector: 0.0572
+pagerank: 0.0076
+betweenness: 0.0401
+eigenvector: 0.0620
 degree: 8
 community: 0
-strength: 2.0867
+strength: 1.8693
 ---
 
 # Driver — Generative AI Replaces First-Pass Contract Review

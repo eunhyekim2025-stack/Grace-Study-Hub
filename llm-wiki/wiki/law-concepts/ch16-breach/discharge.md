@@ -3,9 +3,9 @@ title: Discharge of Contract
 tags: [business-law, contract, discharge, breach, singapore]
 sources: [law/prewriting/16. Monkey's Discharge.pdf]
 updated: 2026-06-17
-pagerank: 0.0298
-betweenness: 0.0113
-eigenvector: 0.1220
+pagerank: 0.0283
+betweenness: 0.0088
+eigenvector: 0.1251
 degree: 16
 community: 2
 ---
@@ -37,10 +37,10 @@ A breach does not automatically terminate — **the innocent party elects** (to 
 - On electing to terminate: future obligations are extinguished + damages; on electing to affirm, the risk is borne → *White & Carter v McGregor [1962]*
 
 ## 4. Discharge by Frustration
-See [[wiki/law-concepts/frustration]] — automatic termination due to a supervening event.
+See [[law-concepts/ch17-frustration/frustration]] — automatic termination due to a supervening event.
 
 ---
 
 ## Related pages
-- [[wiki/law-concepts/terms]] · [[wiki/law-concepts/frustration]] · [[wiki/law-concepts/remedies]]
+- [[law-concepts/ch10-terms/terms]] · [[law-concepts/ch17-frustration/frustration]] · [[law-concepts/ch18-remedies/remedies]]
 - [[wiki/cases/rdc-concrete-v-sato-kogyo]]

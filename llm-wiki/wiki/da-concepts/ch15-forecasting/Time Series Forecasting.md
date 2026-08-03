@@ -5,11 +5,11 @@ created: 2026-06-24
 source: Textbook.pdf (Management Science 14e, Ch.15)
 sources: [da/Textbook.pdf]
 updated: 2026-06-24
-pagerank: 0.0027
+pagerank: 0.0026
 betweenness: 0.0000
-eigenvector: 0.0558
+eigenvector: 0.0498
 degree: 5
-community: 3
+community: 4
 ---
 
 # Time Series Analysis and Forecasting

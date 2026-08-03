@@ -3,9 +3,9 @@ title: Terms of Contract
 tags: [business-law, contract, terms, singapore]
 sources: [law/prewriting/5. Monkey's Terms.pdf]
 updated: 2026-06-17
-pagerank: 0.0298
-betweenness: 0.0312
-eigenvector: 0.1377
+pagerank: 0.0283
+betweenness: 0.0262
+eigenvector: 0.1312
 degree: 20
 community: 2
 ---
@@ -53,9 +53,9 @@ Where a written contract is complete, oral/extrinsic evidence that varies or add
 - **Condition (essential term)**: breach allows termination + damages
 - **Warranty (subsidiary term)**: breach allows damages only
 - **Innominate term (intermediate term)**: judged by the consequences (seriousness) of the breach → *Hong Kong Fir Shipping v Kawasaki [1962]*
-- See [[wiki/law-concepts/discharge]]
+- See [[law-concepts/ch16-breach/discharge]]
 
 ---
 
 ## Related pages
-- [[wiki/law-concepts/exemption-clause]] · [[wiki/law-concepts/misrepresentation]] · [[wiki/law-concepts/discharge]]
+- [[law-concepts/ch11-exemption-clauses/exemption-clause]] · [[law-concepts/ch13-misrepresentation/misrepresentation]] · [[law-concepts/ch16-breach/discharge]]

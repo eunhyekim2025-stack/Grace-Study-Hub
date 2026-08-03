@@ -5,11 +5,11 @@ created: 2026-06-18
 source: Textbook.pdf (Management Science 14e, Ch.2.5)
 sources: [da/Textbook.pdf]
 updated: 2026-06-18
-pagerank: 0.0081
+pagerank: 0.0079
 betweenness: 0.0001
-eigenvector: 0.0846
+eigenvector: 0.0738
 degree: 10
-community: 3
+community: 4
 ---
 
 <div class="dc-view">

@@ -6,13 +6,13 @@ sources:
   - "law/cases/(2d) Chwee Kin Keong v Digilandmall [2004] SGHC 71.pdf"
 updated: 2026-06-23
 relations:
-  applies: [law-concepts/mistake, law-concepts/offer, law-concepts/acceptance]
-  about: [law-concepts/mistake]
+  applies: [law-concepts/ch12-mistake/mistake, law-concepts/ch07-offer-acceptance/offer, law-concepts/ch07-offer-acceptance/acceptance]
+  about: [law-concepts/ch12-mistake/mistake]
   cites: [statutes/electronic-transactions-act]
-  see-also: [law-concepts/consideration, law-concepts/unconscionability, law-concepts/vitiating-factor, statutes/sales-of-goods-act]
-pagerank: 0.0028
-betweenness: 0.0007
-eigenvector: 0.0816
+  see-also: [law-concepts/ch08-consideration-intention/consideration, law-concepts/ch14-duress-undue-influence/unconscionability, law-concepts/vitiating-factor, statutes/sales-of-goods-act]
+pagerank: 0.0027
+betweenness: 0.0006
+eigenvector: 0.0841
 degree: 9
 community: 2
 ---

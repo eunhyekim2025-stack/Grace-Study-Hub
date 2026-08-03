@@ -5,11 +5,11 @@ sources:
   - "law/cases/(9a) Spandeck v DSTA [2007] SGCA 37.pdf"
 updated: 2026-06-23
 relations:
-  applies: [law-concepts/negligence]
+  applies: [law-concepts/ch06-negligence/negligence]
   cites: [cases/teo-seng-kee-bob-v-arianecorp]
-pagerank: 0.0075
-betweenness: 0.0098
-eigenvector: 0.0376
+pagerank: 0.0073
+betweenness: 0.0073
+eigenvector: 0.0373
 degree: 7
 community: 2
 ---

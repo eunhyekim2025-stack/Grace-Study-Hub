@@ -5,9 +5,9 @@ sources: [law/prewriting/10. Monkey's Undue Influence.pdf]
 updated: 2026-06-17
 relations:
   is-a: [law-concepts/vitiating-factor]
-pagerank: 0.0147
-betweenness: 0.0024
-eigenvector: 0.1019
+pagerank: 0.0140
+betweenness: 0.0020
+eigenvector: 0.0980
 degree: 11
 community: 2
 ---
@@ -48,4 +48,4 @@ Where a surety alleges undue influence by the debtor, the transaction may be set
 ---
 
 ## Related pages
-- [[wiki/law-concepts/duress]] · [[wiki/law-concepts/unconscionability]] · [[wiki/law-concepts/misrepresentation]]
+- [[law-concepts/ch14-duress-undue-influence/duress]] · [[law-concepts/ch14-duress-undue-influence/unconscionability]] · [[law-concepts/ch13-misrepresentation/misrepresentation]]

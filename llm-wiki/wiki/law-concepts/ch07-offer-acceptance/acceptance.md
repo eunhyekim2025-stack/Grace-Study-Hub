@@ -3,16 +3,16 @@ title: Acceptance
 tags: [business-law, contract, acceptance, singapore]
 sources: [law/prewriting/2. Monkey's Acceptance.pdf]
 updated: 2026-06-17
-pagerank: 0.0121
-betweenness: 0.0057
-eigenvector: 0.0919
+pagerank: 0.0116
+betweenness: 0.0037
+eigenvector: 0.0987
 degree: 13
 community: 2
 ---
 
 # Acceptance
 
-> Applies only to bilateral contracts. Unilateral contracts require no notice of acceptance — see [[wiki/law-concepts/offer]].
+> Applies only to bilateral contracts. Unilateral contracts require no notice of acceptance — see [[law-concepts/ch07-offer-acceptance/offer]].
 
 ## Rules of Acceptance (the 4 principles)
 
@@ -68,5 +68,5 @@ See [[wiki/statutes/electronic-transactions-act]].
 ---
 
 ## Related pages
-- [[wiki/law-concepts/offer]] · [[wiki/law-concepts/consideration]] · [[wiki/law-concepts/iclr]]
+- [[law-concepts/ch07-offer-acceptance/offer]] · [[law-concepts/ch08-consideration-intention/consideration]] · [[law-concepts/ch08-consideration-intention/iclr]]
 - [[wiki/cases/gay-choon-ing-v-loh]]

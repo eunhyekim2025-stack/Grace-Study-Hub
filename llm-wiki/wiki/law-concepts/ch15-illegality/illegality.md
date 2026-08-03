@@ -3,9 +3,9 @@ title: Illegality
 tags: [business-law, contract, illegality, public-policy, singapore]
 sources: [law/prewriting/12. Monkey's Illegality.pdf]
 updated: 2026-06-17
-pagerank: 0.0035
-betweenness: 0.0002
-eigenvector: 0.0475
+pagerank: 0.0033
+betweenness: 0.0001
+eigenvector: 0.0477
 degree: 5
 community: 2
 ---
@@ -28,7 +28,7 @@ A contract that is illegal or contrary to public policy is unenforceable.
 | Public corruption | Sale of public office |
 | Sexual immorality | *Pearce v Brooks [1866]* |
 | Interference with marriage / family | Contract in restraint of marriage |
-| **Restraint of Trade** | [[wiki/law-concepts/restraint-of-trade]] |
+| **Restraint of Trade** | [[law-concepts/ch15-illegality/restraint-of-trade]] |
 
 ### 3. Intermediate Cases — Singapore
 The contract itself is lawful but is performed with an illegal intent/method. The court weighs **proportionality** → *Ting Siew May v Boon Lay Choo [2014] SGCA*
@@ -45,4 +45,4 @@ The contract itself is lawful but is performed with an illegal intent/method. Th
 ---
 
 ## Related pages
-- [[wiki/law-concepts/restraint-of-trade]] · [[wiki/law-concepts/remedies]]
+- [[law-concepts/ch15-illegality/restraint-of-trade]] · [[law-concepts/ch18-remedies/remedies]]

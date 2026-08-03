@@ -3,9 +3,9 @@ title: Privity of Contract
 tags: [business-law, contract, privity, crtpa, singapore]
 sources: [law/prewriting/15. Monkey's Privity.pdf]
 updated: 2026-06-17
-pagerank: 0.0109
-betweenness: 0.0089
-eigenvector: 0.0420
+pagerank: 0.0105
+betweenness: 0.0072
+eigenvector: 0.0438
 degree: 7
 community: 2
 ---
@@ -14,7 +14,7 @@ community: 2
 
 Principle: only the parties to a contract have rights and obligations under it, and a **third party cannot sue** → *Tweddle v Atkinson [1861]*, *Dunlop v Selfridge [1915]*
 
-> Closely linked to the principle in [[wiki/law-concepts/consideration]] that "consideration must move from the promisee".
+> Closely linked to the principle in [[law-concepts/ch08-consideration-intention/consideration]] that "consideration must move from the promisee".
 
 ## Statutory exception — Contracts (Rights of Third Parties) Act (CRTPA)
 
@@ -27,7 +27,7 @@ See [[wiki/statutes/contracts-rights-third-parties-act]]. Cases where a third pa
 
 | Exception | Content | Authority |
 |------|------|------|
-| **Agency** | The principal is a party through the agent | [[wiki/law-concepts/agency]] |
+| **Agency** | The principal is a party through the agent | [[law-concepts/ch20-agency/agency]] |
 | **Trust** | The third party is a beneficiary | *Les Affreteurs v Walford [1919]* |
 | **Assignment** | Assignment of contractual rights | — |
 | **Collateral contract** | A separate contract with the third party | *Shanklin Pier v Detel [1951]* |
@@ -37,5 +37,5 @@ See [[wiki/statutes/contracts-rights-third-parties-act]]. Cases where a third pa
 ---
 
 ## Related pages
-- [[wiki/law-concepts/consideration]] · [[wiki/law-concepts/agency]]
+- [[law-concepts/ch08-consideration-intention/consideration]] · [[law-concepts/ch20-agency/agency]]
 - [[wiki/statutes/contracts-rights-third-parties-act]]

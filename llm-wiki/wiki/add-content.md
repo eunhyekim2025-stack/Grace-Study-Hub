@@ -3,9 +3,9 @@ title: ➕ Add Content
 tags: [guide, workflow, moc]
 updated: 2026-07-03
 kind: 절차
-pagerank: 0.0018
-betweenness: 0.0000
-eigenvector: 0.0133
+pagerank: 0.0015
+betweenness: 0.0002
+eigenvector: 0.0183
 degree: 4
 community: 1
 ---

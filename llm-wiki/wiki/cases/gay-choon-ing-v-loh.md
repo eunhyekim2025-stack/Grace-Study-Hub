@@ -6,12 +6,12 @@ sources:
   - law/Textbook.pdf
 updated: 2026-06-23
 relations:
-  applies: [law-concepts/consideration, law-concepts/offer, law-concepts/acceptance, law-concepts/iclr]
+  applies: [law-concepts/ch08-consideration-intention/consideration, law-concepts/ch07-offer-acceptance/offer, law-concepts/ch07-offer-acceptance/acceptance, law-concepts/ch08-consideration-intention/iclr]
   cites: [cases/man-financial-v-wong, cases/teo-seng-kee-bob-v-arianecorp]
-  see-also: [law-concepts/duress, law-concepts/remedies]
-pagerank: 0.0165
-betweenness: 0.0207
-eigenvector: 0.1329
+  see-also: [law-concepts/ch14-duress-undue-influence/duress, law-concepts/ch18-remedies/remedies]
+pagerank: 0.0158
+betweenness: 0.0174
+eigenvector: 0.1306
 degree: 19
 community: 2
 ---

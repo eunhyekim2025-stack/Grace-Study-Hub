@@ -3,9 +3,9 @@ title: Exemption Clause
 tags: [business-law, contract, exemption-clause, ucta, singapore]
 sources: [law/prewriting/6. Monkey's Exemption Clause.pdf]
 updated: 2026-06-17
-pagerank: 0.0130
-betweenness: 0.0207
-eigenvector: 0.1204
+pagerank: 0.0123
+betweenness: 0.0133
+eigenvector: 0.1212
 degree: 14
 community: 2
 ---
@@ -44,5 +44,5 @@ See [[wiki/statutes/unfair-contract-terms-act]]
 ---
 
 ## Related pages
-- [[wiki/law-concepts/terms]] · [[wiki/law-concepts/remedies]]
+- [[law-concepts/ch10-terms/terms]] · [[law-concepts/ch18-remedies/remedies]]
 - [[wiki/statutes/unfair-contract-terms-act]] · [[wiki/statutes/consumer-protection-act]]

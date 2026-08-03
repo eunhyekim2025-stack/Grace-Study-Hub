@@ -5,11 +5,11 @@ created: 2026-06-18
 source: Textbook.pdf (Management Science 14e, Ch.6.1)
 sources: [da/Textbook.pdf]
 updated: 2026-06-18
-pagerank: 0.0095
-betweenness: 0.0007
-eigenvector: 0.0991
+pagerank: 0.0092
+betweenness: 0.0005
+eigenvector: 0.0884
 degree: 12
-community: 3
+community: 4
 ---
 
 # Transportation Problem

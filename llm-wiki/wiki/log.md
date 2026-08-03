@@ -1,8 +1,8 @@
 ---
 pagerank: 0.0014
 betweenness: 0.0000
-eigenvector: 0.0123
-degree: 3
+eigenvector: 0.0135
+degree: 9
 community: 1
 ---
 # Log
@@ -365,3 +365,20 @@ community: 1
 - Exported [[companies/companies]] (MOC) + per-company snapshots [[companies/d05-si]] (DBS), [[companies/o39-si]] (OCBC), [[companies/z74-si]] (Singtel) — frontmatter + callouts + metric tables with unicode sparkline trends.
 - Registered a "📈 Company Analytics" card in index.md Subjects grid. Data-only section; intentionally NOT wired into the graph ontology (these are external financial snapshots, not knowledge concepts).
 - Source is yfinance (lowest trust); annual coverage solid for SGX banks, quarterly patchy (DBS quarterly cashflow missing, Singtel quarterly income/cashflow missing).
+
+## [2026-08-01] lint | Health check — link rot from the chapter reorganization
+- Issues found: 6 classes / 172 items. Fixed: 168. Left alone by design: 4.
+- **Broken cross-references (65 links, 20 pages)**: law concept pages still linked each other at the pre-reorganization flat paths (`[[wiki/law-concepts/offer]]`) while the hub already used chapter paths. Rewrote every one to `law-concepts/chNN-…/slug`. The subject hub [[business-law]] was already correct, so only note-to-note navigation was dead.
+- **Stale `relations:` targets (85 across 26 pages)**: typed ontology edges still declared flat paths. `sync.py` resolved them by basename so the graph was fine, but the declared strings leaked into generated pages as dead links (e.g. the early-warning table in [[graph-dashboard]]). Rewrote all 85 to real paths; relation count unchanged at 151, confirming resolution was equivalent.
+- **Malformed diagram blocks (13 pages)**: the auto-generated `dc-view` block ended with a stray opening `<div class="dc-view">` (5 of them the unquoted `<div class="dc-view>`) where the wrapper's `</div>` belonged, leaving every note's markdown body nested inside an unclosed container. Repaired all 13; div balance is now clean wiki-wide. Root cause fixed in `scripts/gen-diagrams.mjs` — `sanitizeDcView` trusted the model's last line and wrote unbalanced output whenever depth never returned to 0.
+- **Orphans**: linked [[cross-domain/threshold-reasoning]], [[cross-domain/ai-disruption-thesis]], [[cross-domain/expected-value-under-uncertainty]] and [[cross-domain/time-and-delay]] from [[cross-domain/business-lifecycle]] as sibling cross-maps; added a Subjects table to [[overview]] so the three new-subject hubs are reachable from the graph (the home [[index]] links them with HTML cards, which carry no graph edges).
+- **Dead hub links**: [[management-accounting/index]] still pointed at the `overview`/`quiz` pages deleted from the site on 2026-07-30; the hub now matches the other empty subjects.
+- **Rationalization trap**: `lint_citations.py` was counting the `dc-view` HTML as uncited prose, so every diagrammed page looked uncited (11 warnings). Taught it to skip raw-HTML blocks and to exempt procedure guides / personal profiles that carry the `moc` tag. Real warnings: 2. Raised [[cross-domain/business-lifecycle]] from 26% to 47% citation density by anchoring its framework steps to the concept pages they name.
+- Left alone: the three `[[resume]]` links in this log (history of a deliberately deleted page — the log is append-only), and [[cross-domain/integrated-quiz]] (19% density, see the report).
+
+## [2026-08-03] subject | Add SQL (🗄, key `sql`)
+- Request: NotebookLM "SQL Mindmap" (혼자 공부하는 SQL, center "혼자 공부하는 SQL") 7 branches → new subject `sql`, notes split as most-scannable.
+- Content folder `sql-concepts/` with one note per mind-map branch (7): [[sql-concepts/learning-environment]], [[sql-concepts/sql-programming]], [[sql-concepts/tables-and-ddl]], [[sql-concepts/views]], [[sql-concepts/indexes]], [[sql-concepts/stored-objects]], [[sql-concepts/triggers]]. Each carries the site's dc-view diagram block + Korean body (SQL keywords in English), cross-linked to siblings.
+- Hub [[sql]] (kind 주제, Concepts table only). Source language kept Korean to match the study material (NotebookLM was fed YouTube "[SQL 기초 강의]" sources).
+- Registered across presentation layers: index.md Subjects grid card (🗄 SQL, hue 210); Explorer label + rank 38 in grace-study-hub/quartz.layout.ts (self-study block, between ops=35 and cross-domain=40); subjects.json entry (term "Self-study") powering Dashboard/SubjectNav/AutoBar/AddContentModal.
+- Content was transcribed/expanded from the mind-map skeleton + standard MySQL knowledge (sub-nodes weren't expanded in the source screenshot), not a verbatim copy of the NotebookLM chat.

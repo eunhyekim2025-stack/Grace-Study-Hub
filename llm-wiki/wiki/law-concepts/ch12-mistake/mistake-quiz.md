@@ -3,9 +3,9 @@ title: Chapter 8 — Mistake Quiz Cards
 tags: [business-law, mistake, quiz, flashcard, exam-prep]
 sources: [law/prewriting/8. Monkey's Mistake.pdf]
 updated: 2026-06-17
-pagerank: 0.0015
+pagerank: 0.0014
 betweenness: 0.0000
-eigenvector: 0.0251
+eigenvector: 0.0256
 degree: 1
 community: 2
 ---

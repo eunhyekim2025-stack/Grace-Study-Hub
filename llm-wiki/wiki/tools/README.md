@@ -1,7 +1,7 @@
 ---
 pagerank: 0.0015
 betweenness: 0.0000
-eigenvector: 0.0025
+eigenvector: 0.0028
 degree: 1
 community: 0
 ---

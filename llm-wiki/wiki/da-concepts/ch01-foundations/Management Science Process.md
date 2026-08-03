@@ -5,11 +5,11 @@ created: 2026-06-18
 source: Textbook.pdf (Management Science 14e, Ch.1)
 sources: [da/Textbook.pdf]
 updated: 2026-06-18
-pagerank: 0.0066
+pagerank: 0.0064
 betweenness: 0.0003
-eigenvector: 0.0755
+eigenvector: 0.0670
 degree: 9
-community: 3
+community: 4
 ---
 
 <div class="dc-view">
@@ -21,7 +21,7 @@ community: 3
 <div class="dc-section"><span class="dc-num">2</span><h2>Key Techniques</h2><span class="dc-hint">Linear Programming and more</span></div>
 <div class="dc-cols"><div class="dc-card"><b>Linear Programming</b> technique for model solution <span class="dc-chip">LP</span></div><div class="dc-card"><b>Waiting Line Models</b> technique for stochastic models <span class="dc-chip">Queueing Theory</span></div></div>
 <div class="dc-callout">Use mathematical models to inform decision-making</div>
-<div class="dc-view>
+</div>
 
 
 # Management Science Process
@@ -40,7 +40,7 @@ Management Science (also called Operations Research) is the discipline that appl
 
 ## Types of Models
 - **Deterministic model**: all inputs are known → LP
-- **Stochastic / Probabilistic model**: includes uncertainty → [[Waiting Line Models]], [[Simulation]]
+- **Stochastic / Probabilistic model**: includes uncertainty → [[Waiting Line Models]], [[da-concepts/ch12-simulation/simulation|Simulation]]
 
 ## Related Notes
 - [[Breakeven Analysis]] · [[Linear Programming]]

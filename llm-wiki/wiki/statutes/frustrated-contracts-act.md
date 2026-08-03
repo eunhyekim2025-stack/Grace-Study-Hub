@@ -6,11 +6,11 @@ sources:
   - "law/Textbook.pdf"
 updated: 2026-06-23
 relations:
-  governs: [law-concepts/frustration, law-concepts/discharge]
-  see-also: [law-concepts/remedies, statutes/consumer-protection-act]
-pagerank: 0.0070
+  governs: [law-concepts/ch17-frustration/frustration, law-concepts/ch16-breach/discharge]
+  see-also: [law-concepts/ch18-remedies/remedies, statutes/consumer-protection-act]
+pagerank: 0.0067
 betweenness: 0.0002
-eigenvector: 0.0593
+eigenvector: 0.0590
 degree: 6
 community: 2
 ---

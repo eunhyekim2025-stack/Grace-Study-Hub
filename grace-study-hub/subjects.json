@@ -70,5 +70,15 @@
     "prefixes": [
       "management-of-people-at-work/"
     ]
+  },
+  {
+    "slug": "sql",
+    "emoji": "🗄",
+    "label": "SQL",
+    "hue": 210,
+    "term": "Self-study",
+    "prefixes": [
+      "sql-concepts/"
+    ]
   }
 ]

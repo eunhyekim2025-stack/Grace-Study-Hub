@@ -3,9 +3,9 @@ title: Capacity
 tags: [business-law, contract, capacity, singapore]
 sources: [law/prewriting/14. Monkey's Capacity.pdf]
 updated: 2026-06-17
-pagerank: 0.0086
-betweenness: 0.0073
-eigenvector: 0.0671
+pagerank: 0.0083
+betweenness: 0.0064
+eigenvector: 0.0683
 degree: 8
 community: 2
 ---
@@ -43,5 +43,5 @@ Treated similarly to mental incapacity — voidable where the other party knew a
 ---
 
 ## Related pages
-- [[wiki/law-concepts/offer]] · [[wiki/law-concepts/consideration]]
+- [[law-concepts/ch07-offer-acceptance/offer]] · [[law-concepts/ch08-consideration-intention/consideration]]
 - [[wiki/statutes/sales-of-goods-act]]

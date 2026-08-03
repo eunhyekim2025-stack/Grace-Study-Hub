@@ -5,10 +5,10 @@ sources: [law/Textbook.pdf, da/Textbook.pdf, fa/Textbook.pdf]
 updated: 2026-06-18
 kind: 주제
 pagerank: 0.0059
-betweenness: 0.0514
-eigenvector: 0.1912
-degree: 28
-community: 4
+betweenness: 0.0673
+eigenvector: 0.2741
+degree: 38
+community: 3
 ---
 
 <div class="dc-view">
@@ -22,14 +22,14 @@ community: 4
 <div class="dc-section"><span class="dc-num">3</span><h2>Common Methodology</h2><span class="dc-hint">Same design principle across subjects</span></div>
 <div class="dc-card"><b>Decisive Fact</b> One fact that flips the conclusion <span class="dc-chip">Quiz design</span></div>
 <div class="dc-callout">Apply the three-step thinking framework for integrated analysis of business scenarios</div>
-<div class="dc-view>
+</div>
 
 
 # Business Lifecycle — Law × Decision Analysis × Financial Accounting Cross-Map
 
 The three subjects are studied separately, but **a single business activity** is analyzed through all three lenses at once.
-One transaction simultaneously carries (1) **legal effect** (Business Law), (2) **quantitative decision-making** (Decision Analysis), and (3) **accounting records** (Financial Accounting).
-This page connects those intersection points, serving as a bridge for applying all three subjects to a single case in an integrated way.
+One transaction simultaneously carries (1) **legal effect** ([[business-law]]), (2) **quantitative decision-making** ([[decision-analysis]]), and (3) **accounting records** ([[financial-accounting]]).
+This page connects those intersection points, serving as a bridge for applying all three subjects to a single case in an integrated way — the sibling cross-maps below cut the same material along other axes.
 
 > The integrated quiz starts here → [[cross-domain/integrated-quiz]]
 
@@ -53,13 +53,13 @@ This page connects those intersection points, serving as a bridge for applying a
 When you receive a specific business scenario:
 
 1. **⚖️ Law — "Is it legally valid / is there liability?"**
-   Contract formation, defects, limitation of liability, remedies → result: void/voidable/valid, whether damages apply.
+   Contract formation ([[law-concepts/ch07-offer-acceptance/offer]] · [[law-concepts/ch08-consideration-intention/consideration]]), defects ([[law-concepts/ch13-misrepresentation/misrepresentation]] · [[law-concepts/ch12-mistake/mistake]]), limitation of liability ([[law-concepts/ch11-exemption-clauses/exemption-clause]]), remedies ([[law-concepts/ch18-remedies/remedies]]) → result: void/voidable/valid, whether damages apply.
 
 2. **📊 Decision Analysis — "Numerically, which choice is optimal?"**
-   Uncertainty modeling (simulation/probability), expected-value comparison, optimization → result: recommended action.
+   Uncertainty modeling ([[da-concepts/ch12-simulation/simulation]]), expected-value comparison ([[cross-domain/expected-value-under-uncertainty]]), optimization ([[da-concepts/ch02-lp/Linear Programming]]) → result: recommended action.
 
 3. **💰 Financial Accounting — "How is it recorded in the books?"**
-   Journal entries (DR/CR), financial-statement impact, cash-flow classification → result: financial figures.
+   Journal entries (DR/CR), financial-statement impact ([[fa-concepts/financial-accounting]]), cash-flow classification ([[fa-concepts/ch11-cash-flows/statement-of-cash-flows]]) → result: financial figures.
 
 > The three conclusions **interact**: a legally void contract also overturns the accounting records, and DA's expected-value calculation uses legal liability (damages) as an input.
 
@@ -86,3 +86,14 @@ The quiz cards across all three subjects use the **same design principle** — [
 - 📊 [[da-concepts/ch12-simulation/simulation]] — DA core concept
 - 💰 [[fa-concepts/financial-accounting]] — FA concept map
 - 🎯 [[cross-domain/integrated-quiz]] — three-subject integrated quiz
+
+## Sibling cross-maps
+
+This page is the cross-map along the **scenario axis** (one business lifecycle seen through three subjects). The other cross-maps cut the same material along different axes:
+
+| Page | Axis |
+|---|---|
+| [[cross-domain/threshold-reasoning]] | Methodology — one decisive fact flips the conclusion, across all three subjects |
+| [[cross-domain/expected-value-under-uncertainty]] | Probability weighting — expected value as the shared device |
+| [[cross-domain/time-and-delay]] | Time weighting — present value, delay, and their interaction with EV |
+| [[cross-domain/ai-disruption-thesis]] | Foresight — how the lifecycle analysis changes under AI assumptions |

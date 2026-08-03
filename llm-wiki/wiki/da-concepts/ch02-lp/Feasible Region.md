@@ -5,11 +5,11 @@ created: 2026-06-18
 source: Textbook.pdf (Management Science 14e, Ch.2.2)
 sources: [da/Textbook.pdf]
 updated: 2026-06-18
-pagerank: 0.0131
-betweenness: 0.0004
-eigenvector: 0.0842
+pagerank: 0.0127
+betweenness: 0.0002
+eigenvector: 0.0734
 degree: 12
-community: 3
+community: 4
 ---
 
 <div class="dc-view">
@@ -22,7 +22,7 @@ community: 3
 <div class="dc-section"><span class="dc-num">3</span><h2>Special Cases</h2><span class="dc-hint">infeasible or unbounded regions</span></div>
 <div class="dc-cols-3"><div class="dc-card"><b>Infeasible</b> no solution exists <span class="dc-chip">empty feasible region</span></div><div class="dc-card"><b>Unbounded</b> unlimited improvement possible <span class="dc-chip">unbounded region</span></div><div class="dc-card"><b>Extreme Points</b> vertices of feasible region <span class="dc-chip">optimal solutions</span></div></div>
 <div class="dc-callout">feasible region is convex set</div>
-<div class="dc-view>
+</div>
 
 
 # Feasible Region

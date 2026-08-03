@@ -5,11 +5,11 @@ sources: []
 updated: 2026-06-19
 kind: 통찰
 relations:
-  see-also: [da-concepts/Range of Optimality, da-concepts/Range of Feasibility, da-concepts/Shadow Price, da-concepts/Sensitivity Analysis, law-concepts/quiz-methodology, fa-concepts/inventory]
-pagerank: 0.0014
-betweenness: 0.0000
-eigenvector: 0.0492
-degree: 7
+  see-also: [da-concepts/ch03-sensitivity/Range of Optimality, da-concepts/ch03-sensitivity/Range of Feasibility, da-concepts/ch03-sensitivity/Shadow Price, da-concepts/ch03-sensitivity/Sensitivity Analysis, law-concepts/quiz-methodology, fa-concepts/ch06-inventory/inventory]
+pagerank: 0.0015
+betweenness: 0.0013
+eigenvector: 0.0519
+degree: 8
 community: 4
 ---
 
@@ -22,7 +22,7 @@ community: 4
 <div class="dc-section"><span class="dc-num">2</span><h2>Key Differences</h2><span class="dc-hint">in boundary nature</span></div>
 <div class="dc-cols"><div class="dc-card"><b>DA boundary</b> mathematical and continuous <span class="dc-chip">range</span></div><div class="dc-card"><b>Law boundary</b> normative and categorical <span class="dc-chip">qualitative classification</span></div></div>
 <div class="dc-callout">one decisive fact/threshold flips the conclusion/state the boundary line</div>
-<div class="dc-view">
+</div>
 
 
 # Insight — a threshold flips the conclusion discretely

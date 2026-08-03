@@ -3,9 +3,9 @@ title: Remedies
 tags: [business-law, contract, remedies, damages, singapore]
 sources: [law/prewriting/18. Monkey's Remedies.pdf]
 updated: 2026-06-17
-pagerank: 0.0397
-betweenness: 0.0087
-eigenvector: 0.1474
+pagerank: 0.0378
+betweenness: 0.0075
+eigenvector: 0.1504
 degree: 19
 community: 2
 ---
@@ -45,4 +45,4 @@ Remedies for breach of contract. **Common law remedies (as of right)** + **equit
 ---
 
 ## Related pages
-- [[wiki/law-concepts/discharge]] · [[wiki/law-concepts/misrepresentation]] · [[wiki/law-concepts/frustration]]
+- [[law-concepts/ch16-breach/discharge]] · [[law-concepts/ch13-misrepresentation/misrepresentation]] · [[law-concepts/ch17-frustration/frustration]]

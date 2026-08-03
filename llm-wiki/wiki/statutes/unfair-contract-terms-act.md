@@ -6,12 +6,12 @@ sources:
   - law/Textbook.pdf
 updated: 2026-06-23
 relations:
-  governs: [law-concepts/exemption-clause, law-concepts/terms, law-concepts/negligence]
-  see-also: [statutes/sales-of-goods-act, law-concepts/misrepresentation]
-pagerank: 0.0057
-betweenness: 0.0180
-eigenvector: 0.0990
-degree: 10
+  governs: [law-concepts/ch11-exemption-clauses/exemption-clause, law-concepts/ch10-terms/terms, law-concepts/ch06-negligence/negligence]
+  see-also: [statutes/sales-of-goods-act, law-concepts/ch13-misrepresentation/misrepresentation]
+pagerank: 0.0053
+betweenness: 0.0124
+eigenvector: 0.0758
+degree: 9
 community: 2
 ---
 

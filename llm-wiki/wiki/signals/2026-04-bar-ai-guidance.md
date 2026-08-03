@@ -5,9 +5,9 @@ sources: []
 updated: 2026-04-10
 relations:
   part-of: [drivers/ai-contract-review]
-pagerank: 0.0016
+pagerank: 0.0015
 betweenness: 0.0000
-eigenvector: 0.0231
+eigenvector: 0.0214
 degree: 2
 community: 0
 ---

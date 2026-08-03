@@ -10,7 +10,7 @@ relations:
   supports: [cross-domain/ai-disruption-thesis]
 pagerank: 0.0020
 betweenness: 0.0000
-eigenvector: 0.0246
+eigenvector: 0.0233
 degree: 3
 community: 0
 ---

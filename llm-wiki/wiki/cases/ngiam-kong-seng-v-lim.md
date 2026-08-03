@@ -5,12 +5,12 @@ sources:
   - "law/cases/(9b) Ngiam Kong Seng v Lim Chiew Hock [2008] SGCA 23.pdf"
 updated: 2026-06-23
 relations:
-  applies: [law-concepts/negligence]
+  applies: [law-concepts/ch06-negligence/negligence]
   cites: [cases/spandeck-v-dsta]
   see-also: [cases/man-mohan-singh-v-zurich]
-pagerank: 0.0046
+pagerank: 0.0045
 betweenness: 0.0000
-eigenvector: 0.0314
+eigenvector: 0.0317
 degree: 4
 community: 2
 ---

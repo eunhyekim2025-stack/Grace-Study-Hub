@@ -5,11 +5,11 @@ sources:
   - "law/cases/(5b) Raiffeisen Zentralbank v Archer Daniels Midland [2006] SGHC 182.pdf"
 updated: 2026-06-23
 relations:
-  applies: [law-concepts/misrepresentation, law-concepts/negligence, law-concepts/remedies]
+  applies: [law-concepts/ch13-misrepresentation/misrepresentation, law-concepts/ch06-negligence/negligence, law-concepts/ch18-remedies/remedies]
   see-also: [cases/orient-centre-v-societe-generale, law-concepts/vitiating-factor]
 pagerank: 0.0018
 betweenness: 0.0000
-eigenvector: 0.0430
+eigenvector: 0.0426
 degree: 4
 community: 2
 ---

@@ -3,11 +3,11 @@ title: Statement of Cash Flows — Indirect Method (Week 11)
 tags: [financial-accounting, acct101, cash-flows, indirect-method, working-capital]
 sources: [fa/guided-notes/Week 11 - Guided Notes Final.pdf]
 updated: 2026-06-18
-pagerank: 0.0213
-betweenness: 0.0009
-eigenvector: 0.0469
+pagerank: 0.0204
+betweenness: 0.0007
+eigenvector: 0.0589
 degree: 15
-community: 4
+community: 3
 ---
 
 # Statement of Cash Flows — Week 11

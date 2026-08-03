@@ -3,9 +3,9 @@ title: Restraint of Trade
 tags: [business-law, contract, restraint-of-trade, public-policy, singapore]
 sources: [law/prewriting/13. Monkey's Restraint of Trade.pdf]
 updated: 2026-06-17
-pagerank: 0.0040
-betweenness: 0.0041
-eigenvector: 0.0607
+pagerank: 0.0038
+betweenness: 0.0026
+eigenvector: 0.0657
 degree: 7
 community: 2
 ---
@@ -38,5 +38,5 @@ If the excessive part can be severed by **deletion alone** and the remainder sta
 ---
 
 ## Related pages
-- [[wiki/law-concepts/illegality]] · [[wiki/law-concepts/terms]]
+- [[law-concepts/ch15-illegality/illegality]] · [[law-concepts/ch10-terms/terms]]
 - [[wiki/cases/man-financial-v-wong]]

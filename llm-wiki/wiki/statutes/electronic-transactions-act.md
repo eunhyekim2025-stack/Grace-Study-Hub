@@ -6,11 +6,11 @@ sources:
   - law/Textbook.pdf
 updated: 2026-06-23
 relations:
-  governs: [law-concepts/offer, law-concepts/acceptance, law-concepts/terms]
+  governs: [law-concepts/ch07-offer-acceptance/offer, law-concepts/ch07-offer-acceptance/acceptance, law-concepts/ch10-terms/terms]
   see-also: [statutes/evidence-act]
-pagerank: 0.0046
-betweenness: 0.0035
-eigenvector: 0.0766
+pagerank: 0.0045
+betweenness: 0.0030
+eigenvector: 0.0775
 degree: 9
 community: 2
 ---

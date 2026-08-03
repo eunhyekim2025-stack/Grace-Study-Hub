@@ -5,12 +5,12 @@ sources: []
 updated: 2026-06-19
 kind: 통찰
 relations:
-  see-also: [da-concepts/simulation, law-concepts/remedies, fa-concepts/time-value-of-money]
-pagerank: 0.0017
-betweenness: 0.0022
-eigenvector: 0.0405
-degree: 6
-community: 4
+  see-also: [da-concepts/ch12-simulation/simulation, law-concepts/ch18-remedies/remedies, fa-concepts/ch09-long-term-liabilities/time-value-of-money]
+pagerank: 0.0018
+betweenness: 0.0025
+eigenvector: 0.0480
+degree: 7
+community: 3
 ---
 
 <div class="dc-view">
@@ -22,7 +22,7 @@ community: 4
 <div class="dc-section"><span class="dc-num">2</span><h2>Limits of Isomorphism</h2><span class="dc-hint">Differences in weighting and meaning</span></div>
 <div class="dc-cols"><div class="dc-card"><b>Time preference</b> is weighted in finance, differing from probability weighting <span class="dc-chip">FA</span></div><div class="dc-card"><b>Probability estimation</b> is challenging in law due to judicial discretion <span class="dc-chip">Law</span></div></div>
 <div class="dc-callout">The expected value of a decision under uncertainty is the weighted sum of outcome × probability.</div>
-<div class="dc-view>
+</div>
 
 
 # Insight — Expected Value (EV): the weighted sum of outcome × probability

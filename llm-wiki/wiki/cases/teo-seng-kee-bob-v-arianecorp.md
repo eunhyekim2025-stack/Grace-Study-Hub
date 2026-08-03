@@ -6,12 +6,12 @@ sources:
   - law/Textbook.pdf
 updated: 2026-06-23
 relations:
-  applies: [law-concepts/consideration, law-concepts/offer, law-concepts/acceptance]
+  applies: [law-concepts/ch08-consideration-intention/consideration, law-concepts/ch07-offer-acceptance/offer, law-concepts/ch07-offer-acceptance/acceptance]
   cites: [cases/gay-choon-ing-v-loh, cases/chwee-kin-keong-v-digilandmall]
-  see-also: [law-concepts/terms, law-concepts/remedies]
-pagerank: 0.0078
-betweenness: 0.0041
-eigenvector: 0.0686
+  see-also: [law-concepts/ch10-terms/terms, law-concepts/ch18-remedies/remedies]
+pagerank: 0.0075
+betweenness: 0.0030
+eigenvector: 0.0700
 degree: 9
 community: 2
 ---

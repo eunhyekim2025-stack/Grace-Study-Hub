@@ -3,9 +3,9 @@ title: Offer
 tags: [business-law, contract, offer, singapore]
 sources: [law/prewriting/1. Monkey's Offer.pdf]
 updated: 2026-06-17
-pagerank: 0.0239
-betweenness: 0.0149
-eigenvector: 0.1283
+pagerank: 0.0229
+betweenness: 0.0117
+eigenvector: 0.1346
 degree: 18
 community: 2
 ---
@@ -19,9 +19,9 @@ community: 2
 | Element | Description |
 |------|------|
 | Consensus ad idem | "meeting of the minds" → Offer + Acceptance |
-| [[wiki/law-concepts/consideration]] | Consideration |
-| [[wiki/law-concepts/iclr]] | Intention to Create Legal Relations |
-| [[wiki/law-concepts/capacity]] | Contractual capacity |
+| [[law-concepts/ch08-consideration-intention/consideration]] | Consideration |
+| [[law-concepts/ch08-consideration-intention/iclr]] | Intention to Create Legal Relations |
+| [[law-concepts/ch09-capacity-privity/capacity]] | Contractual capacity |
 | Absence of vitiating factors | No factors that invalidate the contract |
 
 ---
@@ -134,8 +134,8 @@ A reply to a mere request for information is not an acceptance → *Harvey v Fac
 
 ## Related pages
 
-- [[wiki/law-concepts/acceptance]] — Acceptance
-- [[wiki/law-concepts/consideration]] — Consideration
-- [[wiki/law-concepts/iclr]] — Intention to create legal relations
-- [[wiki/law-concepts/capacity]] — Contractual capacity
+- [[law-concepts/ch07-offer-acceptance/acceptance]] — Acceptance
+- [[law-concepts/ch08-consideration-intention/consideration]] — Consideration
+- [[law-concepts/ch08-consideration-intention/iclr]] — Intention to create legal relations
+- [[law-concepts/ch09-capacity-privity/capacity]] — Contractual capacity
 - [[wiki/cases/gay-choon-ing-v-loh]] — Gay Choon Ing v Loh (leading SG offer case)

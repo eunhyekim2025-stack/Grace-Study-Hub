@@ -5,12 +5,12 @@ sources:
   - "law/cases/(4b) Sembcorp Marine v PPL [2013] SGCA 43.pdf"
 updated: 2026-06-23
 relations:
-  applies: [law-concepts/terms]
+  applies: [law-concepts/ch10-terms/terms]
   cites: [cases/zurich-v-b-gold, statutes/evidence-act]
   see-also: [cases/zurich-v-b-gold, cases/rdc-concrete-v-sato-kogyo]
-pagerank: 0.0020
+pagerank: 0.0019
 betweenness: 0.0003
-eigenvector: 0.0547
+eigenvector: 0.0534
 degree: 6
 community: 2
 ---

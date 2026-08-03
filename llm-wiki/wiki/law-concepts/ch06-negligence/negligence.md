@@ -3,9 +3,9 @@ title: Negligence
 tags: [business-law, tort, negligence, singapore]
 sources: [law/prewriting/19. Monkey's Negligence.pdf]
 updated: 2026-06-17
-pagerank: 0.0054
-betweenness: 0.0187
-eigenvector: 0.0847
+pagerank: 0.0051
+betweenness: 0.0134
+eigenvector: 0.0802
 degree: 9
 community: 2
 ---
@@ -181,6 +181,6 @@ Standard: the **reasonable person** → *Blyth v Birmingham Waterworks [1856]*
 ---
 
 ## Related pages
-- [[wiki/law-concepts/remedies]] · [[wiki/law-concepts/misrepresentation]]
+- [[law-concepts/ch18-remedies/remedies]] · [[law-concepts/ch13-misrepresentation/misrepresentation]]
 - [[wiki/cases/spandeck-v-dsta]] · [[wiki/statutes/contributory-negligence-act]]
 
