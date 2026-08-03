@@ -173,11 +173,12 @@ const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) =>
           <p class="sh-modal-hint">
             <b>📄 PDF → 노트 생성</b>: PDF의 <b>글자</b>를 읽어 AI로 정리한 노트를 만들어요 (긴 문서는
             자동으로 여러 노트로 분할 · 중단 시 다시 누르면 이어서 생성). 스캔 이미지 PDF는 글자가 없어
-            안 돼요. · <b>업로드</b>: 파일을 <b>그대로</b> 위키에 첨부만 해요 (노트로 정리하지 않음).
+            안 돼요. · <b>🖼 이미지·오디오 첨부</b>: 필기 사진·다이어그램·오디오를 위키에 올려요. 올린 뒤
+            뜨는 <code>![[파일명]]</code>을 아무 노트에 붙여넣으면 그 자리에 표시됩니다.
           </p>
           <div class="sh-modal-actions">
             <button class="sh-btn sh-btn-new" data-pdf-generate>📄 PDF → 노트 생성</button>
-            <button class="sh-btn sh-btn-ghost" data-add-submit="file">그대로 업로드</button>
+            <button class="sh-btn sh-btn-ghost" data-add-submit="file">🖼 이미지·오디오 첨부</button>
             <button class="sh-btn sh-btn-ghost" data-add-close>취소</button>
           </div>
         </div>

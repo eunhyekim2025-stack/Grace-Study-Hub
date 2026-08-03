@@ -1241,6 +1241,22 @@ textarea.sh-input {
   }
 }
 
+// Copyable embed snippet shown after an image/audio attach.
+.sh-embed-snip {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: color-mix(in oklch, var(--secondary) 12%, transparent);
+  color: var(--darkgray);
+  font-family: var(--codeFont, monospace);
+  font-size: 0.78rem;
+  user-select: all; // one click selects the whole snippet
+}
+.sh-copy-embed {
+  padding: 1px 8px !important;
+  font-size: 0.72rem !important;
+}
+
 // ── In-site recorder (upload tab) ──────────────────────────────
 .sh-rec {
   border: 1px solid var(--lightgray);

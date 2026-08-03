@@ -72,6 +72,26 @@ function status(msg: string, kind: "" | "ok" | "err" = "") {
   el.className = "sh-modal-status" + (kind ? " " + kind : "")
 }
 
+function escHtml(s: string): string {
+  return s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] as string)
+}
+
+// After an image/audio attach, show the exact embed snippet to paste into a note.
+// Quartz resolves links by filename (shortest path), so no folder is needed.
+function showUploaded(path: string) {
+  const el = document.getElementById("sh-add-status")
+  if (!el) return
+  const name = path.split("/").pop() || path
+  const isImg = /\.(png|jpe?g|gif|webp|svg|avif|bmp)$/i.test(name)
+  const snippet = isImg ? `![[${name}]]` : `[[${name}]]`
+  el.className = "sh-modal-status ok"
+  el.innerHTML =
+    `첨부됨 → ${escHtml(name)} · 노트에 넣기: ` +
+    `<code class="sh-embed-snip">${escHtml(snippet)}</code> ` +
+    `<button type="button" class="sh-btn sh-btn-ghost sh-copy-embed" data-embed="${escHtml(snippet)}">복사</button>` +
+    ` · 1–2분 뒤 반영`
+}
+
 function val(id: string): string {
   const el = document.getElementById(id) as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null
   return el ? el.value : ""
@@ -103,7 +123,12 @@ async function post(payload: Record<string, unknown>, btn: HTMLButtonElement, po
     }
     localStorage.setItem(PW_KEY, password)
     syncPwField()
-    status("저장됨 → " + (data.path || "") + " · 1–2분 뒤 사이트에 반영됩니다.", "ok")
+    if (payload.type === "file") {
+      // Attach flow: show a ready-to-paste embed snippet for the stored file.
+      showUploaded(String(data.path || ""))
+    } else {
+      status("저장됨 → " + (data.path || "") + " · 1–2분 뒤 사이트에 반영됩니다.", "ok")
+    }
     // clear the note fields so the next add starts fresh
     ;["sh-note-title", "sh-note-tags", "sh-note-content"].forEach((id) => {
       const el = document.getElementById(id) as HTMLInputElement | null
@@ -1038,6 +1063,19 @@ if (!w.__shAddInit) {
     if (!el) return
     e.preventDefault()
     generateNotesFromPdf(el)
+  })
+  document.addEventListener("click", (e) => {
+    const el = (e.target as HTMLElement)?.closest<HTMLButtonElement>(".sh-copy-embed")
+    if (!el) return
+    e.preventDefault()
+    const snippet = el.dataset.embed || ""
+    navigator.clipboard?.writeText(snippet).then(
+      () => {
+        el.textContent = "복사됨 ✓"
+        setTimeout(() => (el.textContent = "복사"), 1500)
+      },
+      () => {},
+    )
   })
   document.addEventListener("click", (e) => {
     const btn = (e.target as HTMLElement)?.closest<HTMLButtonElement>(".sh-delnote-btn")
