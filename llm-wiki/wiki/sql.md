@@ -1,13 +1,13 @@
 ---
 title: 🗄 SQL
 tags: [sql, moc, index]
-updated: 2026-08-03
+updated: 2026-08-04
 kind: 주제
 ---
 
 # 🗄 SQL
 
-> [[index|← 과목 선택]] · 혼자 공부하는 SQL (MySQL) — **학습 환경 → 데이터 정의 → 프로그래밍 → 고급 개체**
+> [[index|← 과목 선택]] · 혼자 공부하는 SQL (MySQL) + SQLBolt — **학습 환경 → 데이터 정의 → 쿼리 → 프로그래밍 → 고급 개체**
 
 ## 수업 내용 — 개념 (sql-concepts/)
 > [SQL 기초 강의] · *혼자 공부하는 SQL* 마인드맵을 노트로 옮긴 것. 마인드맵의 7개 가지 = 노트 7개.
@@ -21,3 +21,11 @@ kind: 주제
 | 5 | 인덱스(Index) | [[sql-concepts/indexes]] — 클러스터형 vs 보조 · B-tree |
 | 6 | 스토어드 개체 | [[sql-concepts/stored-objects]] — 프로시저 · 함수 · 커서 |
 | 7 | 트리거(Trigger) | [[sql-concepts/triggers]] — 이벤트 자동 실행 · OLD/NEW |
+
+## 쿼리 (SQLBolt 보강)
+> SQLBolt의 조회(쿼리) 부분을 주제별로 정리. 기존 노트에 없던 SELECT·JOIN·집계를 채운다.
+
+| 주제 | 페이지 |
+|------|--------|
+| 쿼리 기초 | [[sql-concepts/queries-basics]] — SELECT · WHERE(연산자·LIKE) · 정렬(ORDER BY·LIMIT) · 표현식/AS |
+| JOIN과 집계 | [[sql-concepts/joins-and-aggregates]] — INNER/OUTER JOIN · NULL · GROUP BY 집계 · HAVING · 실행 순서 |
