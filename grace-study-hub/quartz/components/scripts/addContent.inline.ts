@@ -622,6 +622,129 @@ async function generateFromVideo(btn: HTMLButtonElement) {
   }
 }
 
+// Long video → one note per chapter. Fetches the chapter split from /api/video
+// (mode:"chapters"), then generates notes one at a time so we stay under Groq's
+// rate limits. Completed chapters are remembered per video in localStorage, so
+// if a run stops (rate limit, closed tab) clicking again RESUMES where it left
+// off — already-made chapters are skipped, no wasted Groq calls.
+function chapDoneKey(videoId: string): string {
+  return "sh-vidchap-" + videoId
+}
+function readChapDone(videoId: string): number[] {
+  try {
+    const a = JSON.parse(localStorage.getItem(chapDoneKey(videoId)) || "[]")
+    return Array.isArray(a) ? a.filter((n) => typeof n === "number") : []
+  } catch {
+    return []
+  }
+}
+function markChapDone(videoId: string, idx: number) {
+  const set = new Set(readChapDone(videoId))
+  set.add(idx)
+  localStorage.setItem(chapDoneKey(videoId), JSON.stringify([...set]))
+}
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
+
+async function generateChaptersFromVideo(btn: HTMLButtonElement) {
+  const password = (val("sh-add-pw") || localStorage.getItem(PW_KEY) || "").trim()
+  if (!password) {
+    revealPwField()
+    videoStatus("먼저 추가 비밀번호를 입력하세요.", "err")
+    return
+  }
+  const url = val("sh-video-url").trim()
+  if (!url) {
+    videoStatus("YouTube 링크를 입력하세요.", "err")
+    return
+  }
+  btn.disabled = true
+  try {
+    videoStatus("영상 챕터를 분석하는 중…")
+    const vres = await fetch("/api/video", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url, password, mode: "chapters" }),
+    })
+    const vdata = await vres.json().catch(() => ({}))
+    if (!vres.ok) {
+      if (vres.status === 401) revealPwField()
+      videoStatus("실패: " + (vdata.error || vres.status), "err")
+      return
+    }
+    const videoId = String(vdata.videoId || "")
+    const chapters = Array.isArray(vdata.chapters) ? vdata.chapters : []
+    if (!chapters.length) {
+      videoStatus("챕터를 만들 자막이 없습니다.", "err")
+      return
+    }
+    const base = val("sh-video-title").trim() || String(vdata.title || "Video note")
+    const done = new Set(readChapDone(videoId))
+    const total = chapters.length
+    const todo = chapters.filter((c: { index: number }) => !done.has(c.index))
+    if (!todo.length) {
+      videoStatus(`이미 ${total}개 챕터 노트가 모두 생성돼 있어요.`, "ok")
+      return
+    }
+
+    let made = 0
+    const already = total - todo.length
+    for (let n = 0; n < todo.length; n++) {
+      const ch = todo[n]
+      const label = String(ch.title || `Part ${ch.index + 1}`)
+      videoStatus(`강의 노트 생성 중… ${already + made + 1}/${total} · ${label}`)
+      const title = `${base} — ${label}`
+      let data: { error?: string; path?: string } = {}
+      try {
+        const res = await fetch("/api/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            type: "note",
+            title,
+            subject: val("sh-file-subject"),
+            tags: "lecture, video, chapter",
+            content: String(ch.transcript || ""),
+            mode: "lecture",
+            knownTags: knownTags(),
+            password,
+          }),
+        })
+        data = await res.json().catch(() => ({}))
+        if (res.ok) {
+          markChapDone(videoId, ch.index)
+          made++
+        } else if (res.status === 422 && /exist/i.test(data.error || "")) {
+          // A note with this title already exists — treat as done and continue.
+          markChapDone(videoId, ch.index)
+        } else {
+          // Likely a Groq rate/day limit — stop and let the user resume later.
+          videoStatus(
+            `${already + made}/${total} 생성 후 중단: ${data.error || res.status}. ` +
+              `잠시 뒤 다시 "챕터별 노트 생성"을 누르면 이어서 만들어요.`,
+            "err",
+          )
+          return
+        }
+      } catch {
+        videoStatus(
+          `${already + made}/${total} 생성 후 네트워크 오류. 다시 누르면 이어서 만들어요.`,
+          "err",
+        )
+        return
+      }
+      localStorage.setItem(PW_KEY, password)
+      syncPwField()
+      if (n < todo.length - 1) await sleep(1500) // ease off Groq between chapters
+    }
+    videoStatus(`완료 · ${total}개 챕터 노트 생성됨 · 1–2분 뒤 사이트에 반영됩니다.`, "ok")
+  } catch {
+    videoStatus("네트워크 오류. 배포된 사이트에서 시도하세요.", "err")
+  } finally {
+    btn.disabled = false
+  }
+}
+
 // ── Note deletion + local "tombstones" ────────────────────────────────────
 // Deleting commits to GitHub and the site rebuilds in ~1–2 min; until then (and
 // past any browser/CDN cache) the note would still appear in listings. So on
@@ -726,6 +849,12 @@ if (!w.__shAddInit) {
     if (!el) return
     e.preventDefault()
     generateFromVideo(el)
+  })
+  document.addEventListener("click", (e) => {
+    const el = (e.target as HTMLElement)?.closest<HTMLButtonElement>("[data-video-chapters]")
+    if (!el) return
+    e.preventDefault()
+    generateChaptersFromVideo(el)
   })
   document.addEventListener("click", (e) => {
     const btn = (e.target as HTMLElement)?.closest<HTMLButtonElement>(".sh-delnote-btn")

@@ -149,10 +149,15 @@ const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) =>
               <button class="sh-btn sh-btn-new" data-video-generate>
                 🔗 링크로 노트 생성
               </button>
+              <button class="sh-btn sh-btn-ghost" data-video-chapters>
+                📚 챕터별 노트 생성 (긴 영상)
+              </button>
             </div>
             <div class="sh-rec-status" id="sh-video-status"></div>
             <p class="sh-modal-hint">
-              영상의 <b>자막</b>(자동 생성 포함)을 읽어 하나의 노트로 정리해요. 노트는 <b>영어로 생성</b>됩니다.
+              영상의 <b>자막</b>(자동 생성 포함)을 읽어 노트로 정리해요. 노트는 <b>영어로 생성</b>됩니다.
+              긴 영상은 <b>챕터별 노트 생성</b>으로 나누면 영상 챕터(없으면 ~30분 단위)마다 노트 1개씩
+              만들어요 — 중간에 멈춰도 다시 누르면 <b>이어서</b> 생성합니다.
               <b>자막이 없는 영상</b>은 만들 수 없어요. Vercel에 <b>GROQ_API_KEY</b>가 설정돼 있어야 합니다.
             </p>
           </div>
