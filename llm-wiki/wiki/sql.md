@@ -16,7 +16,7 @@ kind: 주제
 |---|------|--------|
 | 1 | 강의 및 학습 환경 | [[sql-concepts/learning-environment]] — DBMS 개념 · MySQL/Workbench 세팅 |
 | 2 | SQL 프로그래밍 | [[sql-concepts/sql-programming]] — 변수 · IF/CASE · WHILE · 동적 SQL |
-| 3 | 테이블과 데이터 정의 | [[sql-concepts/tables-and-ddl]] — DDL · 데이터 형식 · 제약조건 |
+| 3 | 테이블 정의 · 데이터 조작 | [[sql-concepts/tables-and-ddl]] — DDL(CREATE/ALTER/DROP) + DML(INSERT/UPDATE/DELETE) |
 | 4 | 가상 테이블: 뷰(View) | [[sql-concepts/views]] — SELECT에 이름 붙인 가상 테이블 |
 | 5 | 인덱스(Index) | [[sql-concepts/indexes]] — 클러스터형 vs 보조 · B-tree |
 | 6 | 스토어드 개체 | [[sql-concepts/stored-objects]] — 프로시저 · 함수 · 커서 |
