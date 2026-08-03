@@ -129,7 +129,37 @@ const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) =>
 
           <div class="sh-rec-or">또는</div>
 
-          {/* ② Upload an existing file */}
+          {/* ② Video link → captions → auto lecture note (reuses /api/add) */}
+          <div class="sh-rec">
+            <div class="sh-rec-head">🔗 영상 링크 → 강의 노트 자동 생성</div>
+            <div class="sh-field">
+              <label for="sh-video-url">YouTube 링크</label>
+              <input
+                id="sh-video-url"
+                class="sh-input"
+                type="url"
+                placeholder="https://www.youtube.com/watch?v=…"
+              />
+            </div>
+            <div class="sh-field">
+              <label for="sh-video-title">노트 제목 (선택 — 비우면 영상 제목 사용)</label>
+              <input id="sh-video-title" class="sh-input" placeholder="예: SQL 기초 5강 - 인덱스" />
+            </div>
+            <div class="sh-rec-controls">
+              <button class="sh-btn sh-btn-new" data-video-generate>
+                🔗 링크로 노트 생성
+              </button>
+            </div>
+            <div class="sh-rec-status" id="sh-video-status"></div>
+            <p class="sh-modal-hint">
+              영상의 <b>자막</b>(자동 생성 포함)을 읽어 하나의 노트로 정리해요. 노트는 <b>영어로 생성</b>됩니다.
+              <b>자막이 없는 영상</b>은 만들 수 없어요. Vercel에 <b>GROQ_API_KEY</b>가 설정돼 있어야 합니다.
+            </p>
+          </div>
+
+          <div class="sh-rec-or">또는</div>
+
+          {/* ③ Upload an existing file */}
           <div class="sh-field">
             <label for="sh-file-input">파일 업로드</label>
             <input id="sh-file-input" class="sh-input" type="file" />
