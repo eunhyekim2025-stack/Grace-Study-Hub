@@ -160,6 +160,12 @@ const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) =>
               만들어요 — 중간에 멈춰도 다시 누르면 <b>이어서</b> 생성합니다.
               <b>자막이 없는 영상</b>은 만들 수 없어요. Vercel에 <b>GROQ_API_KEY</b>가 설정돼 있어야 합니다.
             </p>
+            <p class="sh-modal-hint">
+              ⚠️ YouTube는 서버(Vercel) IP에서 오는 요청을 <b>봇으로 차단</b>하는 일이 잦습니다. 여기서
+              “Sign in to confirm you're not a bot”이 뜨면 내 컴퓨터에서{" "}
+              <code>node scripts/yt-note.mjs &lt;링크&gt;</code> 를 실행하세요 — 같은 방식으로 노트를
+              만들지만 자막을 내 IP로 받아오기 때문에 차단되지 않아요.
+            </p>
           </div>
 
           <div class="sh-rec-or">또는</div>

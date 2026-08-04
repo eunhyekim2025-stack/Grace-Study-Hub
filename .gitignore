@@ -30,6 +30,12 @@
 # 4c) Allow the /docs folder — GitHub Pages serves it as a redirect to Vercel
 !/docs
 
+# 4d) Allow /scripts. These are local CLIs, not published by Quartz (it only
+#     renders grace-study-hub/content), but they must be in the repo: the site's
+#     add-content modal tells you to run scripts/yt-note.mjs when YouTube
+#     bot-gates the serverless caption fetch, so the script has to ship with it.
+!/scripts
+
 # 5) Never commit OS cruft anywhere in the tree
 .DS_Store
 .vercel
