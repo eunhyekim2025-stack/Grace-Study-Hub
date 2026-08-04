@@ -27,6 +27,8 @@
 //   node scripts/yt-note.mjs <url> --dry-run --save lecture.txt   # for NotebookLM
 
 import { createInterface } from "node:readline"
+import { createHash } from "node:crypto"
+import { existsSync } from "node:fs"
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises"
 import { homedir } from "node:os"
 import { dirname, join } from "node:path"
@@ -39,11 +41,23 @@ const WIKI_DIR = join(REPO_ROOT, "llm-wiki", "wiki")
 // Pick up ADD_SECRET from the repo's .env so you set the add-password once
 // instead of exporting it every shell. A value already in the environment wins,
 // and .env* is gitignored, so the secret never leaves this machine.
-if (!process.env.ADD_SECRET) {
-  try {
-    process.loadEnvFile(join(REPO_ROOT, ".env"))
-  } catch {
-    /* no .env — fall back to the shell env, --password, or the prompt */
+//
+// process.loadEnvFile needs Node ≥20.12. We check for it explicitly rather than
+// catching: a blanket try/catch would make an old Node look exactly like "no
+// .env file" and drop you at the password prompt with no idea why.
+const ENV_FILE = join(REPO_ROOT, ".env")
+if (!process.env.ADD_SECRET && existsSync(ENV_FILE)) {
+  if (typeof process.loadEnvFile !== "function") {
+    console.error(
+      `! ${ENV_FILE} 를 읽으려면 Node 20.12 이상이 필요합니다 (현재 ${process.version}). ` +
+        "비밀번호를 직접 입력하거나 --password 를 쓰세요.",
+    )
+  } else {
+    try {
+      process.loadEnvFile(ENV_FILE)
+    } catch (e) {
+      console.error(`! .env 를 읽지 못했습니다: ${e?.message || e}`)
+    }
   }
 }
 
@@ -110,21 +124,33 @@ function askHidden(question) {
   })
 }
 
-const stateFile = (id) => join(STATE_DIR, id + ".json")
+// Resume state is keyed by the video AND by everything that changes which notes
+// a run produces — target site, subject folder, title. Keying on the video alone
+// would make a second run under a different --subject/--title/--site report
+// "already complete" and silently create nothing.
+function resumeKey(id, { site, subject, baseTitle }) {
+  const h = createHash("sha1")
+    .update([site, subject || "", baseTitle].join("\n"))
+    .digest("hex")
+    .slice(0, 10)
+  return `${id}-${h}`
+}
 
-async function readDone(id) {
+const stateFile = (key) => join(STATE_DIR, key + ".json")
+
+async function readDone(key) {
   try {
-    const a = JSON.parse(await readFile(stateFile(id), "utf8"))
+    const a = JSON.parse(await readFile(stateFile(key), "utf8"))
     return new Set(Array.isArray(a) ? a.filter((n) => typeof n === "number") : [])
   } catch {
     return new Set()
   }
 }
 
-async function markDone(id, done, idx) {
+async function markDone(key, done, idx) {
   done.add(idx)
   await mkdir(STATE_DIR, { recursive: true })
-  await writeFile(stateFile(id), JSON.stringify([...done]))
+  await writeFile(stateFile(key), JSON.stringify([...done]))
 }
 
 // The tag vocabulary /api/add's auto-tagger reuses. In the browser this comes
@@ -197,10 +223,19 @@ async function main() {
   if (!id) fail("유효한 YouTube 링크가 아닙니다: " + opts.url)
 
   const site = (opts.site || process.env.SITE_URL || DEFAULT_SITE).replace(/\/+$/, "")
-  let password = opts.password || process.env.ADD_SECRET || ""
+  // Never auto-send the stored secret to a host typed on the command line: one
+  // mistyped --site would hand the wiki's add-password to a stranger. $SITE_URL
+  // counts as trusted — you set it deliberately, in your own environment.
+  const untrustedSite = !!opts.site && site !== DEFAULT_SITE
+  let password = opts.password || (untrustedSite ? "" : process.env.ADD_SECRET) || ""
   if (!password && !opts.dryRun) {
+    if (untrustedSite) {
+      console.log(
+        `▸ ${site} 는 기본 사이트가 아닙니다 — 저장된 비밀번호를 자동으로 보내지 않습니다.`,
+      )
+    }
     password = await askHidden("추가 비밀번호: ")
-    if (!password) fail("비밀번호가 필요합니다. (또는 `export ADD_SECRET=...`)")
+    if (!password) fail("비밀번호가 필요합니다. (또는 `.env`의 ADD_SECRET)")
   }
 
   console.log(`▸ 자막을 가져오는 중… (${id})`)
@@ -249,7 +284,8 @@ async function main() {
   )
   if (opts.dryRun) return console.log("▸ --dry-run: 노트는 만들지 않았습니다.")
 
-  const done = await readDone(id)
+  const key = resumeKey(id, { site, subject: opts.subject, baseTitle })
+  const done = await readDone(key)
   const todo = chapters.map((ch, i) => ({ ...ch, index: i })).filter((ch) => !done.has(ch.index))
   if (!todo.length) return console.log(`✔ 이미 ${chapters.length}개 챕터 노트가 모두 생성돼 있습니다.`)
 
@@ -265,12 +301,12 @@ async function main() {
       vocab,
     })
     if (r.ok) {
-      await markDone(id, done, ch.index)
+      await markDone(key, done, ch.index)
       made++
       console.log(`  ✔ ${r.path}`)
     } else if (r.status === 422 && /exist/i.test(r.error || "")) {
       // A note with this title already exists — treat as done and continue.
-      await markDone(id, done, ch.index)
+      await markDone(key, done, ch.index)
       made++
       console.log("  · 이미 존재함 — 건너뜀")
     } else {
