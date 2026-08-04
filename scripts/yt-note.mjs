@@ -18,7 +18,8 @@
 //   --save <file>         write the raw transcript to a file
 //   --dry-run             fetch + report only; create no notes
 //   --site <url>          target site (default $SITE_URL or the live site)
-//   --password <pw>       add-password (default $ADD_SECRET, else prompted)
+//   --password <pw>       add-password (default: $ADD_SECRET, then ADD_SECRET
+//                         in the repo's .env, else prompted)
 //
 // Examples:
 //   node scripts/yt-note.mjs https://youtu.be/7gwFmNAO4Vo
@@ -34,6 +35,17 @@ import { buildChapters, cuesToText, getCaptions, videoId } from "../api/_youtube
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 const WIKI_DIR = join(REPO_ROOT, "llm-wiki", "wiki")
+
+// Pick up ADD_SECRET from the repo's .env so you set the add-password once
+// instead of exporting it every shell. A value already in the environment wins,
+// and .env* is gitignored, so the secret never leaves this machine.
+if (!process.env.ADD_SECRET) {
+  try {
+    process.loadEnvFile(join(REPO_ROOT, ".env"))
+  } catch {
+    /* no .env — fall back to the shell env, --password, or the prompt */
+  }
+}
 
 const DEFAULT_SITE = "https://grace-study-hub.vercel.app"
 // Chapter progress lives outside the repo so it never gets committed. Mirrors
@@ -79,7 +91,7 @@ const usage = () =>
       "  --save <파일>      자막 원문을 파일로 저장 (NotebookLM에 넣을 때)",
       "  --dry-run          자막만 확인하고 노트는 만들지 않음",
       "  --site <url>       대상 사이트 (기본: $SITE_URL 또는 " + DEFAULT_SITE + ")",
-      "  --password <pw>    추가 비밀번호 (기본: $ADD_SECRET, 없으면 입력받음)",
+      "  --password <pw>    추가 비밀번호 (기본: $ADD_SECRET → .env의 ADD_SECRET → 직접 입력)",
     ].join("\n"),
   )
 
