@@ -15,7 +15,7 @@
 // local generator already did better).
 //
 // Usage:
-//   node scripts/ingest.mjs <youtube-url> [options]
+//   node scripts/ingest.mjs <youtube-url | audio-or-video-file> [options]
 //
 //   --subject <slug>      wiki subject folder, e.g. business-law
 //   --title "..."         note title (default: the source's own title)
@@ -39,20 +39,32 @@
 // scripts/ingest.test.mjs asserts both properties.
 
 import Anthropic from "@anthropic-ai/sdk"
-import { execFile } from "node:child_process"
+import { execFile, spawn } from "node:child_process"
 import { existsSync } from "node:fs"
-import { mkdir, readdir, readFile, writeFile } from "node:fs/promises"
-import { dirname, join, relative, resolve, sep } from "node:path"
+import { mkdir, readdir, readFile, rm, stat, writeFile } from "node:fs/promises"
+import { tmpdir } from "node:os"
+import { basename, dirname, extname, join, relative, resolve, sep } from "node:path"
 import { promisify } from "node:util"
 import { fileURLToPath } from "node:url"
-import { buildNote, normTag, notePath } from "../api/_note.js"
+import { buildNote, normTag, notePath, slugify, subjectDir } from "../api/_note.js"
 import { cuesToText, getCaptions, videoId } from "../api/_youtube.js"
 
 const execFileP = promisify(execFile)
 
 export const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..")
 export const WIKI = "llm-wiki/wiki"
+// Transcripts are RAW sources, not wiki pages: .gitignore keeps llm-wiki/raw out
+// of the repo, so recordings and their text stay on this machine while the note
+// that cites them gets published.
+export const RAW = "llm-wiki/raw"
 const DEFAULT_MODEL = "claude-opus-5"
+// Same model the launchd lecture watcher uses (llm-wiki/scripts/lecture-watch.sh),
+// so a file ingested by hand transcribes identically to one dropped in iCloud.
+const DEFAULT_WHISPER_MODEL = join(REPO_ROOT, RAW, ".models", "ggml-small.bin")
+export const MEDIA_EXT = new Set([
+  ".m4a", ".mp3", ".wav", ".aac", ".flac", ".ogg", ".opus", ".wma",
+  ".mp4", ".mov", ".m4v", ".mkv", ".webm", ".avi",
+])
 
 // process.loadEnvFile needs Node ≥20.12. Checked explicitly rather than caught:
 // a blanket try/catch would make an old Node look exactly like "no .env file".
@@ -71,7 +83,7 @@ if (!process.env.ANTHROPIC_API_KEY && existsSync(ENV_FILE)) {
   }
 }
 
-const FLAGS_WITH_VALUE = ["subject", "title", "tags", "model", "save"]
+const FLAGS_WITH_VALUE = ["subject", "title", "tags", "model", "save", "whisper-model", "language"]
 
 function parseArgs(argv) {
   const opts = { dryRun: false, commit: true, push: true }
@@ -87,7 +99,7 @@ function parseArgs(argv) {
       if (!FLAGS_WITH_VALUE.includes(name)) fail(`알 수 없는 옵션: ${a}`)
       const v = argv[++i]
       if (v === undefined) fail(`${a} 뒤에 값이 필요합니다.`)
-      opts[name] = v
+      opts[name === "whisper-model" ? "whisperModel" : name] = v
     } else rest.push(a)
   }
   opts.source = rest[0]
@@ -102,13 +114,17 @@ function fail(msg) {
 const usage = () =>
   console.log(
     [
-      "사용법: node scripts/ingest.mjs <youtube-url> [옵션]",
+      "사용법: node scripts/ingest.mjs <소스> [옵션]",
+      "",
+      "  <소스>  YouTube 링크  또는  오디오·비디오 파일 경로",
       "",
       "  --subject <slug>   과목 폴더 (예: business-law)",
       "  --title <제목>     노트 제목 (기본: 원본 제목)",
       '  --tags "a, b"      태그 추가 (자동 태그가 위에 더해집니다)',
       "  --model <id>       Anthropic 모델 (기본: " + DEFAULT_MODEL + ")",
-      "  --save <파일>      자막 원문을 파일로 저장 (NotebookLM에 넣을 때)",
+      "  --save <파일>      전사본을 이 경로에도 저장 (NotebookLM에 넣을 때)",
+      "  --language <코드>  전사 언어 en·ko 등 (기본: auto — 섞인 음성은 지정 권장)",
+      "  --whisper-model <경로>  whisper.cpp 모델 (기본: raw/.models/ggml-small.bin)",
       "  --dry-run          노트를 만들어 출력만 하고 파일은 쓰지 않음",
       "  --no-commit        파일만 쓰고 커밋하지 않음",
       "  --no-push          커밋만 하고 푸시하지 않음",
@@ -134,10 +150,136 @@ async function youtubeAdapter(source) {
   }
 }
 
-async function extract(source) {
+const hhmmss = (s) => {
+  s = Math.max(0, Math.round(s))
+  const h = Math.floor(s / 3600)
+  const m = Math.floor((s % 3600) / 60)
+  return (h ? `${h}:${String(m).padStart(2, "0")}` : `${m}`) + `:${String(s % 60).padStart(2, "0")}`
+}
+
+async function mediaDuration(file) {
+  try {
+    const { stdout } = await execFileP("ffprobe", [
+      "-v", "error",
+      "-show_entries", "format=duration",
+      "-of", "default=noprint_wrappers=1:nokey=1",
+      file,
+    ])
+    const d = parseFloat(stdout.trim())
+    return Number.isFinite(d) ? d : 0
+  } catch {
+    return 0
+  }
+}
+
+// Run a command, streaming its stderr/stdout through `onLine` for progress.
+function run(cmd, args, onLine) {
+  return new Promise((res, rej) => {
+    const p = spawn(cmd, args)
+    let tail = ""
+    const feed = (buf) => {
+      const lines = (tail + buf).split("\n")
+      tail = lines.pop() || ""
+      for (const l of lines) onLine?.(l)
+    }
+    p.stdout.on("data", feed)
+    p.stderr.on("data", feed)
+    p.on("error", (e) =>
+      rej(new Error(e.code === "ENOENT" ? `${cmd} 를 찾을 수 없습니다.` : e.message)),
+    )
+    p.on("close", (code) =>
+      code === 0 ? res() : rej(new Error(`${cmd} 가 코드 ${code} 로 종료했습니다.`)),
+    )
+  })
+}
+
+// Audio/video file → transcript, entirely on this machine. whisper.cpp handles
+// long files itself, so there is no chunking here — and no upload, so no size
+// cap, no rate limit, and the recording never leaves the laptop.
+async function mediaAdapter(source, opts) {
+  if (!existsSync(source)) return null
+  if (!MEDIA_EXT.has(extname(source).toLowerCase())) return null
+  const st = await stat(source)
+  if (!st.isFile()) return null
+
+  const model = opts.whisperModel || process.env.WHISPER_MODEL || DEFAULT_WHISPER_MODEL
+  if (!existsSync(model)) {
+    fail(
+      `whisper 모델이 없습니다: ${model}\n` +
+        `  받으려면: mkdir -p ${dirname(model)} && curl -L -o ${model} \\\n` +
+        `    https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.bin`,
+    )
+  }
+
+  const name = basename(source, extname(source))
+  const secs = await mediaDuration(source)
+  console.log(
+    `▸ ${basename(source)} · ${(st.size / 1048576).toFixed(0)}MB` +
+      (secs ? ` · ${hhmmss(secs)}` : ""),
+  )
+
+  const work = join(tmpdir(), `ingest-${process.pid}`)
+  await mkdir(work, { recursive: true })
+  const wav = join(work, "audio.wav")
+  const outBase = join(work, "transcript")
+  try {
+    // 16 kHz mono PCM is what whisper.cpp wants; this also strips the video track.
+    console.log("▸ 오디오를 추출하는 중… (ffmpeg 16kHz mono)")
+    await run("ffmpeg", ["-y", "-i", source, "-ar", "16000", "-ac", "1", "-c:a", "pcm_s16le", wav])
+
+    // -l auto re-detects per segment, so an English lecture with one loan-word
+    // can flip mid-sentence and come back transliterated. Pass --language when
+    // you know it; that alone fixes more than a bigger model does.
+    const lang = opts.language || "auto"
+    console.log(`▸ 전사하는 중… (whisper.cpp ${basename(model)}, lang=${lang}, 로컬)`)
+    let last = 0
+    await run(
+      "whisper-cli",
+      ["-m", model, "-f", wav, "-l", lang, "-otxt", "-of", outBase],
+      (line) => {
+        // Segment lines look like: [00:00:00.000 --> 00:00:05.000]  text
+        const m = line.match(/-->\s*(\d+):(\d+):(\d+)/)
+        if (!m || !secs) return
+        const at = +m[1] * 3600 + +m[2] * 60 + +m[3]
+        if (at - last < 30) return // only redraw every ~30s of audio
+        last = at
+        process.stdout.write(`\r  ${hhmmss(at)} / ${hhmmss(secs)} (${Math.round((at / secs) * 100)}%)   `)
+      },
+    )
+    if (secs) process.stdout.write("\r" + " ".repeat(40) + "\r")
+
+    const transcript = (await readFile(outBase + ".txt", "utf8"))
+      .replace(/\r/g, "")
+      .split("\n")
+      .map((l) => l.trim())
+      .filter(Boolean)
+      .join(" ")
+    if (transcript.length < 50) fail("전사 결과가 비어 있습니다 — 오디오에 말소리가 있나요?")
+
+    return {
+      kind: "media",
+      title: name.replace(/[_-]+/g, " ").trim(),
+      transcript,
+      note: `로컬 전사 (whisper.cpp ${basename(model)})`,
+      // Keep the transcript as a raw source so the note's claims stay checkable.
+      rawName: `${new Date(st.mtime).toISOString().slice(0, 10)}-${slugify(name)}.txt`,
+      sourceLabel: basename(source),
+    }
+  } finally {
+    await rm(work, { recursive: true, force: true })
+  }
+}
+
+async function extract(source, opts) {
+  const media = await mediaAdapter(source, opts)
+  if (media) return media
   const yt = await youtubeAdapter(source)
   if (yt) return yt
-  fail(`지원하지 않는 소스입니다: ${source}\n  (현재 YouTube 링크만 지원합니다.)`)
+  fail(
+    `지원하지 않는 소스입니다: ${source}\n` +
+      `  YouTube 링크, 또는 오디오·비디오 파일 경로를 넣으세요 ` +
+      `(${[...MEDIA_EXT].slice(0, 6).join(" ")} …).`,
+  )
 }
 
 // ── Generator: transcript → { tags, body } ────────────────────────────────
@@ -296,14 +438,26 @@ async function main() {
     fail("ANTHROPIC_API_KEY 가 없습니다. `.env` 에 넣거나 export 하세요.")
   }
 
-  const src = await extract(opts.source)
+  const src = await extract(opts.source, opts)
   const title = opts.title || src.title || "Untitled note"
   console.log(`  제목: ${src.title}`)
   console.log(`  ${src.note} · ${src.transcript.length.toLocaleString()}자`)
 
   if (opts.save) {
     await writeFile(opts.save, src.transcript, "utf8")
-    console.log(`  자막 저장 → ${opts.save}`)
+    console.log(`  전사본 저장 → ${opts.save}`)
+  }
+
+  // A transcript is a raw source: keep it so the note's claims stay checkable
+  // against what was actually said. llm-wiki/raw is gitignored, so it stays local.
+  let rawRel = ""
+  if (src.rawName && !opts.dryRun) {
+    rawRel = join(RAW, subjectDir(opts.subject) || "lectures", "lectures", src.rawName)
+    const rawAbs = resolve(REPO_ROOT, rawRel)
+    if (!rawAbs.startsWith(resolve(REPO_ROOT, RAW) + sep)) throw new Error("거부됨 — raw 밖 경로")
+    await mkdir(dirname(rawAbs), { recursive: true })
+    await writeFile(rawAbs, src.transcript, "utf8")
+    console.log(`  전사본 보관 → ${rawRel} (git 제외)`)
   }
 
   const { rel, abs } = safeNotePath(opts.subject, title)
@@ -326,11 +480,22 @@ async function main() {
   )
 
   const userTags = String(opts.tags || "").split(",").map(normTag).filter(Boolean)
+  // Speech-to-text mangles technical terms, case names, and figures, so a note
+  // built from a recording is a DRAFT and says so — the same review discipline
+  // the launchd lecture watcher applies. (Wiki content is English per
+  // llm-wiki/CLAUDE.md, even though this CLI speaks Korean.)
+  const banner = src.sourceUrl
+    ? `> [!note] Source: ${src.sourceUrl}\n\n`
+    : src.kind === "media"
+      ? `> [!todo] Needs review — drafted from a local whisper.cpp transcript of ` +
+        `\`${src.sourceLabel}\`. Verify technical terms, names, and figures` +
+        (rawRel ? ` against \`${rawRel}\`` : "") + `.\n\n`
+      : ""
   const md = buildNote({
     title,
-    tags: [...userTags, ...out.tags],
+    tags: [...userTags, ...out.tags, ...(src.kind === "media" ? ["lecture"] : [])],
     body: out.body,
-    extra: src.sourceUrl ? `> [!note] Source: ${src.sourceUrl}\n\n` : "",
+    extra: banner,
   })
 
   if (opts.dryRun) {

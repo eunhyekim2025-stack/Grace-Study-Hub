@@ -165,3 +165,41 @@ test("a truncated response is surfaced, not written as a half note", async () =>
     /max_tokens/,
   )
 })
+
+// ── media adapter (step 2) ────────────────────────────────────────────────
+
+test("media adapter only claims real media files", async () => {
+  const { MEDIA_EXT } = await import("./ingest.mjs")
+  // Extensions we must handle, and ones that must fall through to other adapters.
+  for (const ext of [".m4a", ".mp3", ".mp4", ".mov", ".wav"]) {
+    assert.ok(MEDIA_EXT.has(ext), `missing media extension: ${ext}`)
+  }
+  for (const ext of [".md", ".pdf", ".txt", ".js", ""]) {
+    assert.ok(!MEDIA_EXT.has(ext), `must not claim: ${ext}`)
+  }
+})
+
+test("a hostile filename cannot escape the raw transcript folder", async () => {
+  const { REPO_ROOT, RAW } = await import("./ingest.mjs")
+  const { slugify, subjectDir } = await import("../api/_note.js")
+  const { join, resolve, sep } = await import("node:path")
+  const rawRoot = resolve(REPO_ROOT, RAW) + sep
+  // Mirrors how main() builds the raw path: both components are sanitized.
+  for (const subject of ["../../.git", "..", "/etc"]) {
+    for (const name of ["../../../.env", "..", "a/../../b"]) {
+      const rel = join(RAW, subjectDir(subject) || "lectures", "lectures", slugify(name) + ".txt")
+      assert.ok(resolve(REPO_ROOT, rel).startsWith(rawRoot), `escaped raw/: ${rel}`)
+    }
+  }
+})
+
+test("transcripts stay out of git", async () => {
+  const { execFile } = await import("node:child_process")
+  const { promisify } = await import("node:util")
+  const { REPO_ROOT, RAW } = await import("./ingest.mjs")
+  const run = promisify(execFile)
+  // A recording's transcript is private; publishing it would leak the lecture.
+  const probe = `${RAW}/business-law/lectures/2026-01-01-probe.txt`
+  const { stdout } = await run("git", ["check-ignore", "-v", probe], { cwd: REPO_ROOT })
+  assert.match(stdout, /llm-wiki/, `raw transcripts must be gitignored, got: ${stdout}`)
+})
