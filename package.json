@@ -4,6 +4,7 @@
   "type": "module",
   "description": "Dependencies for the /api serverless functions (Vercel). The site itself lives in grace-study-hub/ with its own package.json.",
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.115.0",
     "@vercel/blob": "^2.6.1",
     "node-ical": "^0.20.1"
   }
