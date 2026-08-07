@@ -213,23 +213,32 @@ test("transcripts stay out of git", async () => {
 
 test("claude-code output is refused when a tool ran", async () => {
   const { parseClaudeCodeResult } = await import("./ingest.mjs")
-  const leaked = JSON.stringify({
-    is_error: false,
-    num_turns: 2, // a tool executed despite the deny list
-    result: JSON.stringify({ tags: ["x"], body: "note built after reading .env" }),
-  })
-  assert.throws(() => parseClaudeCodeResult(leaked), /도구가 사용됐습니다|num_turns=2/)
+  // Shape of a real leak: the deny list was bypassed and Bash/Read executed.
+  const leaked = [
+    JSON.stringify({ type: "assistant", message: { content: [{ type: "tool_use", name: "Bash" }] } }),
+    JSON.stringify({ type: "assistant", message: { content: [{ type: "tool_use", name: "Read" }] } }),
+    JSON.stringify({
+      type: "result", subtype: "success", is_error: false, num_turns: 2,
+      result: JSON.stringify({ tags: ["x"], body: "note built after reading .env" }),
+    }),
+  ].join("\n")
+  assert.throws(() => parseClaudeCodeResult(leaked), /도구가 사용됐습니다/)
+  assert.throws(() => parseClaudeCodeResult(leaked), /Bash, Read/)
 })
 
-test("claude-code output is accepted only on a tool-free turn", async () => {
+test("a long tool-free run is NOT mistaken for a tool use", async () => {
   const { parseClaudeCodeResult } = await import("./ingest.mjs")
-  const clean = JSON.stringify({
-    is_error: false,
-    num_turns: 1,
-    total_cost_usd: 0.06,
-    usage: { input_tokens: 10, output_tokens: 20 },
-    result: '```json\n{"tags":["contract"],"body":"## Body"}\n```',
-  })
+  // Regression guard. num_turns is 2 for a long tool-free prompt AND for a
+  // tool-using one, so an earlier check that keyed on it rejected every real
+  // lecture transcript while still letting a single-turn leak through.
+  const clean = [
+    JSON.stringify({ type: "assistant", message: { content: [{ type: "text", text: "..." }] } }),
+    JSON.stringify({
+      type: "result", subtype: "success", is_error: false,
+      num_turns: 2, total_cost_usd: 0.1, usage: { input_tokens: 9, output_tokens: 8 },
+      result: '```json\n{"tags":["contract"],"body":"## Body"}\n```',
+    }),
+  ].join("\n")
   const out = parseClaudeCodeResult(clean)
   assert.deepEqual(out.tags, ["contract"])
   assert.equal(out.body, "## Body")
@@ -237,13 +246,14 @@ test("claude-code output is accepted only on a tool-free turn", async () => {
 
 test("claude-code errors surface instead of becoming a note", async () => {
   const { parseClaudeCodeResult } = await import("./ingest.mjs")
+  const res = (o) => JSON.stringify({ type: "result", ...o })
   assert.throws(
-    () => parseClaudeCodeResult(JSON.stringify({ is_error: true, num_turns: 1, result: "boom" })),
+    () => parseClaudeCodeResult(res({ is_error: true, result: "boom" })),
     /claude 실행 오류/,
   )
-  assert.throws(() => parseClaudeCodeResult("not json"), /JSON 출력을 읽지 못했습니다/)
+  assert.throws(() => parseClaudeCodeResult("not json at all"), /result 이벤트를 찾지 못했습니다/)
   assert.throws(
-    () => parseClaudeCodeResult(JSON.stringify({ is_error: false, num_turns: 1, result: "hi" })),
+    () => parseClaudeCodeResult(res({ is_error: false, result: "hi" })),
     /JSON 객체를 찾지 못했습니다/,
   )
 })

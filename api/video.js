@@ -4,7 +4,7 @@
 // stitching its audio segments.
 //
 // The caption extraction itself lives in ./_youtube.js, shared with the local
-// CLI (scripts/yt-note.mjs). Read the header comment there for why the local
+// CLI (scripts/ingest.mjs). Read the header comment there for why the local
 // path exists: YouTube bot-gates datacenter IPs, so this endpoint fails for
 // many videos and answers with BOT_GATE_HINT telling you to run the CLI.
 //

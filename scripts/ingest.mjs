@@ -488,9 +488,10 @@ export async function generate({ title, transcript, vocab, model, designSpec, ex
 //                                    BLOCKED. Model answered "NOTOOLS".
 //
 // A blocklist is still fragile — a new tool name in a future release silently
-// reopens it — so prevention is paired with DETECTION: a tool-free turn reports
-// num_turns == 1, and any tool use pushes it to 2+. We refuse output from a run
-// that used a tool rather than trusting the deny list alone.
+// reopens it — so prevention is paired with DETECTION: the run is read back as
+// stream-json and refused if any `tool_use` block appears. (num_turns looks like
+// it would do the same job and does not: it is 2 for a long tool-free prompt and
+// 2 for a tool-using one. See parseClaudeCodeResult.)
 const DENY_TOOLS = [
   "Bash", "Read", "Write", "Edit", "MultiEdit", "NotebookEdit", "Glob", "Grep",
   "WebFetch", "WebSearch", "Task", "Agent", "Monitor", "SendUserFile", "Artifact",
@@ -499,24 +500,51 @@ const DENY_TOOLS = [
 ]
 
 // The load-bearing check, kept pure so scripts/ingest.test.mjs can drive it with
-// fabricated envelopes instead of spawning `claude`.
-export function parseClaudeCodeResult(raw) {
-  let env
-  try {
-    env = JSON.parse(raw)
-  } catch {
-    throw new Error("claude -p 의 JSON 출력을 읽지 못했습니다.")
+// fabricated streams instead of spawning `claude`.
+//
+// Input is the NDJSON of `--output-format stream-json --verbose`. That format is
+// used for one reason: it is the only one that reveals whether a tool ran. The
+// plain `--output-format json` envelope does NOT — measured across three runs:
+//
+//   tool ran, canary leaked      num_turns 2, iterations 1
+//   no tool, long transcript     num_turns 2, iterations 1
+//   no tool, short prompt        num_turns 1, iterations 1
+//
+// So `num_turns` tracks prompt shape, not tool use, and an earlier version of
+// this check that keyed on it was both unsound (a leak at num_turns 1 would
+// pass) and a false alarm on every long transcript. The stream carries explicit
+// `tool_use` content blocks instead, which is unambiguous.
+export function parseClaudeCodeResult(ndjson) {
+  const usedTools = []
+  let result = null
+  for (const line of String(ndjson).split("\n")) {
+    const t = line.trim()
+    if (!t) continue
+    let e
+    try {
+      e = JSON.parse(t)
+    } catch {
+      continue // non-JSON noise on the stream is not fatal
+    }
+    for (const b of e?.message?.content || []) {
+      if (b?.type === "tool_use") usedTools.push(b.name || "?")
+    }
+    if (e?.type === "result") result = e
   }
-  if (env.is_error) throw new Error(`claude 실행 오류: ${String(env.result).slice(0, 300)}`)
-  // Detection half of the defense: a tool-free turn is num_turns === 1, and any
-  // tool use pushes it to 2+. Refuse rather than trust the deny list alone.
-  if (env.num_turns !== 1) {
+
+  // Detection half of the defense: the deny list is a blocklist, so a tool name
+  // added in a future release could slip past it. Refuse rather than write a
+  // note whose generation touched the filesystem or network.
+  if (usedTools.length) {
     throw new Error(
-      `생성 중 도구가 사용됐습니다 (num_turns=${env.num_turns}). ` +
+      `생성 중 도구가 사용됐습니다 (${[...new Set(usedTools)].join(", ")}). ` +
         `deny 목록이 뚫렸을 수 있으니 노트를 만들지 않았습니다 — --provider anthropic 을 쓰세요.`,
     )
   }
-  const text = String(env.result || "")
+  if (!result) throw new Error("claude -p 스트림에서 result 이벤트를 찾지 못했습니다.")
+  if (result.is_error) throw new Error(`claude 실행 오류: ${String(result.result).slice(0, 300)}`)
+
+  const text = String(result.result || "")
   const m = text.match(/\{[\s\S]*\}/) // tolerate a stray fence or preamble
   if (!m) throw new Error("모델 응답에서 JSON 객체를 찾지 못했습니다.")
   const parsed = JSON.parse(m[0])
@@ -524,9 +552,9 @@ export function parseClaudeCodeResult(raw) {
     tags: Array.isArray(parsed.tags) ? parsed.tags : [],
     body: String(parsed.body || ""),
     usage: {
-      input_tokens: env.usage?.input_tokens,
-      output_tokens: env.usage?.output_tokens,
-      note: `구독 사용 (환산 $${(env.total_cost_usd ?? 0).toFixed(3)})`,
+      input_tokens: result.usage?.input_tokens,
+      output_tokens: result.usage?.output_tokens,
+      note: `구독 사용 (환산 $${(result.total_cost_usd ?? 0).toFixed(3)})`,
     },
   }
 }
@@ -557,7 +585,8 @@ export async function generateWithClaudeCode({ title, transcript, vocab, model, 
 
   const args = [
     "-p",
-    "--output-format", "json",
+    "--output-format", "stream-json",
+    "--verbose",
     "--settings", settings,
     "--setting-sources", "",
     "--append-system-prompt", SYSTEM,

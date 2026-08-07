@@ -1,5 +1,5 @@
 // YouTube caption extraction, shared by /api/video (serverless) and
-// scripts/yt-note.mjs (local CLI). Underscore prefix keeps Vercel from routing
+// scripts/ingest.mjs (local CLI). Underscore prefix keeps Vercel from routing
 // this file as a function.
 //
 // We read the video's caption track (manual or auto-generated) through
@@ -9,8 +9,9 @@
 // IMPORTANT — where this runs matters. YouTube answers InnerTube requests from
 // datacenter IPs (Vercel included) with "Sign in to confirm you're not a bot",
 // so the serverless path fails for most videos. From a normal home connection
-// the same code works. That is why scripts/yt-note.mjs exists: it reuses this
-// module on your own machine and posts the result to /api/add.
+// the same code works. That is why scripts/ingest.mjs exists: it reuses this
+// module on your own machine, generates the note locally, and commits it —
+// no /api/add round trip, so no Groq quota and no add-password needed.
 
 // Public InnerTube key (the constant every YouTube web client ships with).
 const INNERTUBE_KEY = "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8"
@@ -61,7 +62,7 @@ const UA =
 // How the caller should recover when YouTube refuses a server-side request.
 export const BOT_GATE_HINT =
   "YouTube가 서버 요청을 봇으로 차단했습니다 (Sign in to confirm you're not a bot). " +
-  "이 링크는 내 컴퓨터에서 `node scripts/yt-note.mjs <링크>` 로 만들거나, " +
+  "이 링크는 내 컴퓨터에서 `node scripts/ingest.mjs <링크>` 로 만들거나, " +
   "영상 페이지의 “...더보기 → 스크립트 표시” 자막을 복사해 ‘노트 작성’ 탭에 붙여넣어 주세요."
 
 // Pull the 11-char video id out of any common YouTube URL shape.

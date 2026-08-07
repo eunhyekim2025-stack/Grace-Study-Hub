@@ -163,7 +163,7 @@ const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) =>
             <p class="sh-modal-hint">
               ⚠️ YouTube는 서버(Vercel) IP에서 오는 요청을 <b>봇으로 차단</b>하는 일이 잦습니다. 여기서
               “Sign in to confirm you're not a bot”이 뜨면 내 컴퓨터에서{" "}
-              <code>node scripts/yt-note.mjs &lt;링크&gt;</code> 를 실행하세요 — 같은 방식으로 노트를
+              <code>node scripts/ingest.mjs &lt;링크&gt;</code> 를 실행하세요 — 같은 방식으로 노트를
               만들지만 자막을 내 IP로 받아오기 때문에 차단되지 않아요.
             </p>
           </div>
