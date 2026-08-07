@@ -20,7 +20,8 @@
 //   --subject <slug>      wiki subject folder, e.g. business-law
 //   --title "..."         note title (default: the source's own title)
 //   --tags "a, b"         extra tags (auto-tags are added on top)
-//   --model <id>          Anthropic model (default: claude-opus-5)
+//   --provider <p>        anthropic (API key) | claude-code (subscription)
+//   --model <id>          model (default: claude-opus-5)
 //   --save <file>         write the raw transcript to a file (for NotebookLM)
 //   --dry-run             fetch + generate, print the note, write nothing
 //   --no-commit           write the file but don't commit
@@ -83,7 +84,7 @@ if (!process.env.ANTHROPIC_API_KEY && existsSync(ENV_FILE)) {
   }
 }
 
-const FLAGS_WITH_VALUE = ["subject", "title", "tags", "model", "save", "whisper-model", "language"]
+const FLAGS_WITH_VALUE = ["subject", "title", "tags", "model", "save", "whisper-model", "language", "provider"]
 
 function parseArgs(argv) {
   const opts = { dryRun: false, commit: true, push: true }
@@ -121,7 +122,8 @@ const usage = () =>
       "  --subject <slug>   과목 폴더 (예: business-law)",
       "  --title <제목>     노트 제목 (기본: 원본 제목)",
       '  --tags "a, b"      태그 추가 (자동 태그가 위에 더해집니다)',
-      "  --model <id>       Anthropic 모델 (기본: " + DEFAULT_MODEL + ")",
+      "  --provider <p>     anthropic (API 키·크레딧) 또는 claude-code (구독). 기본: $INGEST_PROVIDER 또는 anthropic",
+      "  --model <id>       모델 (기본: " + DEFAULT_MODEL + ")",
       "  --save <파일>      전사본을 이 경로에도 저장 (NotebookLM에 넣을 때)",
       "  --language <코드>  전사 언어 en·ko 등 (기본: auto — 섞인 음성은 지정 권장)",
       "  --whisper-model <경로>  whisper.cpp 모델 (기본: raw/.models/ggml-small.bin)",
@@ -356,6 +358,115 @@ export async function generate({ title, transcript, vocab, model, designSpec, cl
   }
 }
 
+// ── Generator, provider 2: headless Claude Code (runs on your subscription) ──
+// Same job as generate(), no API credits needed. Getting this SAFE took some
+// finding out — measured, not assumed:
+//
+//   --disallowed-tools <long list>   LEAKED. It is a blocklist, and Claude Code
+//                                    has tools not on it (Monitor ran `cat`).
+//   --allowed-tools ""               LEAKED. Does not restrict the tool set.
+//   --permission-mode manual|dontAsk|plan
+//                                    LEAKED. All three read the file.
+//   --settings <exhaustive deny> + --setting-sources ''
+//                                    BLOCKED. Model answered "NOTOOLS".
+//
+// A blocklist is still fragile — a new tool name in a future release silently
+// reopens it — so prevention is paired with DETECTION: a tool-free turn reports
+// num_turns == 1, and any tool use pushes it to 2+. We refuse output from a run
+// that used a tool rather than trusting the deny list alone.
+const DENY_TOOLS = [
+  "Bash", "Read", "Write", "Edit", "MultiEdit", "NotebookEdit", "Glob", "Grep",
+  "WebFetch", "WebSearch", "Task", "Agent", "Monitor", "SendUserFile", "Artifact",
+  "Skill", "ToolSearch", "BashOutput", "KillShell", "TodoWrite", "ExitPlanMode",
+  "SlashCommand",
+]
+
+// The load-bearing check, kept pure so scripts/ingest.test.mjs can drive it with
+// fabricated envelopes instead of spawning `claude`.
+export function parseClaudeCodeResult(raw) {
+  let env
+  try {
+    env = JSON.parse(raw)
+  } catch {
+    throw new Error("claude -p 의 JSON 출력을 읽지 못했습니다.")
+  }
+  if (env.is_error) throw new Error(`claude 실행 오류: ${String(env.result).slice(0, 300)}`)
+  // Detection half of the defense: a tool-free turn is num_turns === 1, and any
+  // tool use pushes it to 2+. Refuse rather than trust the deny list alone.
+  if (env.num_turns !== 1) {
+    throw new Error(
+      `생성 중 도구가 사용됐습니다 (num_turns=${env.num_turns}). ` +
+        `deny 목록이 뚫렸을 수 있으니 노트를 만들지 않았습니다 — --provider anthropic 을 쓰세요.`,
+    )
+  }
+  const text = String(env.result || "")
+  const m = text.match(/\{[\s\S]*\}/) // tolerate a stray fence or preamble
+  if (!m) throw new Error("모델 응답에서 JSON 객체를 찾지 못했습니다.")
+  const parsed = JSON.parse(m[0])
+  return {
+    tags: Array.isArray(parsed.tags) ? parsed.tags : [],
+    body: String(parsed.body || ""),
+    usage: {
+      input_tokens: env.usage?.input_tokens,
+      output_tokens: env.usage?.output_tokens,
+      note: `구독 사용 (환산 $${(env.total_cost_usd ?? 0).toFixed(3)})`,
+    },
+  }
+}
+
+export async function generateWithClaudeCode({ title, transcript, vocab, model, designSpec }) {
+  // An empty working directory: no project CLAUDE.md (this repo's tells Claude to
+  // answer in Korean, which would wreck an English wiki note) and nothing of
+  // value to read even if a tool did slip through.
+  const work = join(tmpdir(), `ingest-cc-${process.pid}`)
+  await mkdir(work, { recursive: true })
+  const settings = join(work, "deny.json")
+  await writeFile(
+    settings,
+    JSON.stringify({ permissions: { defaultMode: "manual", deny: DENY_TOOLS } }),
+    "utf8",
+  )
+
+  const prompt =
+    `The note is titled ${JSON.stringify(title)}.\n\n` +
+    `Choose 3-6 short topical tags. STRONGLY prefer reusing tags from this existing ` +
+    `vocabulary; only invent a new tag when nothing fits (at most 2 new):\n` +
+    `${vocab.join(", ") || "(none yet)"}\n` +
+    designSpec +
+    `\n\nReply with ONLY a JSON object, no code fence, no commentary: ` +
+    `{"tags": ["..."], "body": "<the note body as markdown>"}` +
+    `\n\n<transcript>\n${transcript}\n</transcript>`
+
+  const args = [
+    "-p",
+    "--output-format", "json",
+    "--settings", settings,
+    "--setting-sources", "",
+    "--append-system-prompt", SYSTEM,
+    ...(model ? ["--model", model] : []),
+  ]
+
+  try {
+    const raw = await new Promise((res, rej) => {
+      const p = spawn("claude", args, { cwd: work })
+      let out = "", err = ""
+      p.stdout.on("data", (d) => (out += d))
+      p.stderr.on("data", (d) => (err += d))
+      p.on("error", (e) =>
+        rej(new Error(e.code === "ENOENT" ? "claude CLI 를 찾을 수 없습니다." : e.message)),
+      )
+      p.on("close", (c) =>
+        c === 0 ? res(out) : rej(new Error(`claude 가 코드 ${c} 로 종료: ${err.slice(0, 300)}`)),
+      )
+      p.stdin.end(prompt)
+    })
+
+    return parseClaudeCodeResult(raw)
+  } finally {
+    await rm(work, { recursive: true, force: true })
+  }
+}
+
 // ── Writer: the only component that touches the filesystem ────────────────
 // Resolves the note path and REFUSES anything outside llm-wiki/wiki/. notePath()
 // already slugs each component; this is the backstop that makes the guarantee
@@ -434,8 +545,15 @@ async function main() {
     usage()
     process.exit(opts.help ? 0 : 1)
   }
-  if (!process.env.ANTHROPIC_API_KEY) {
-    fail("ANTHROPIC_API_KEY 가 없습니다. `.env` 에 넣거나 export 하세요.")
+  const provider = opts.provider || process.env.INGEST_PROVIDER || "anthropic"
+  if (!["anthropic", "claude-code"].includes(provider)) {
+    fail(`알 수 없는 --provider: ${provider} (anthropic | claude-code)`)
+  }
+  if (provider === "anthropic" && !process.env.ANTHROPIC_API_KEY) {
+    fail(
+      "ANTHROPIC_API_KEY 가 없습니다. `.env` 에 넣거나, 구독으로 돌리려면 " +
+        "--provider claude-code 를 쓰세요.",
+    )
   }
 
   const src = await extract(opts.source, opts)
@@ -464,9 +582,14 @@ async function main() {
   const vocab = await knownTags()
   const { DESIGN_SPEC } = await import("../api/_note.js")
 
-  console.log(`▸ 노트를 생성하는 중… (${opts.model || DEFAULT_MODEL}, 기존 태그 ${vocab.length}개 참고)`)
+  console.log(
+    `▸ 노트를 생성하는 중… (${provider}` +
+      `${provider === "anthropic" ? `, ${opts.model || DEFAULT_MODEL}` : ""}` +
+      `, 기존 태그 ${vocab.length}개 참고)`,
+  )
   const t0 = Date.now()
-  const out = await generate({
+  const gen = provider === "claude-code" ? generateWithClaudeCode : generate
+  const out = await gen({
     title,
     transcript: src.transcript,
     vocab,
@@ -476,7 +599,8 @@ async function main() {
   const secs = Math.round((Date.now() - t0) / 1000)
   console.log(
     `  ${secs}초 · in ${out.usage.input_tokens?.toLocaleString()} / out ` +
-      `${out.usage.output_tokens?.toLocaleString()} tokens · 태그 ${out.tags.join(", ")}`,
+      `${out.usage.output_tokens?.toLocaleString()} tokens` +
+      `${out.usage.note ? ` · ${out.usage.note}` : ""} · 태그 ${out.tags.join(", ")}`,
   )
 
   const userTags = String(opts.tags || "").split(",").map(normTag).filter(Boolean)

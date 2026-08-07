@@ -203,3 +203,47 @@ test("transcripts stay out of git", async () => {
   const { stdout } = await run("git", ["check-ignore", "-v", probe], { cwd: REPO_ROOT })
   assert.match(stdout, /llm-wiki/, `raw transcripts must be gitignored, got: ${stdout}`)
 })
+
+// ── claude-code provider (subscription path) ──────────────────────────────
+// Measured, not assumed: --disallowed-tools, --allowed-tools "", and every
+// --permission-mode all FAILED to stop `claude -p` from reading a canary file.
+// Only an exhaustive deny list via --settings blocked it — and a blocklist goes
+// stale the moment a release adds a tool name. So the run is also REFUSED when
+// num_turns says a tool ran (tool-free is 1; any tool use is 2+).
+
+test("claude-code output is refused when a tool ran", async () => {
+  const { parseClaudeCodeResult } = await import("./ingest.mjs")
+  const leaked = JSON.stringify({
+    is_error: false,
+    num_turns: 2, // a tool executed despite the deny list
+    result: JSON.stringify({ tags: ["x"], body: "note built after reading .env" }),
+  })
+  assert.throws(() => parseClaudeCodeResult(leaked), /도구가 사용됐습니다|num_turns=2/)
+})
+
+test("claude-code output is accepted only on a tool-free turn", async () => {
+  const { parseClaudeCodeResult } = await import("./ingest.mjs")
+  const clean = JSON.stringify({
+    is_error: false,
+    num_turns: 1,
+    total_cost_usd: 0.06,
+    usage: { input_tokens: 10, output_tokens: 20 },
+    result: '```json\n{"tags":["contract"],"body":"## Body"}\n```',
+  })
+  const out = parseClaudeCodeResult(clean)
+  assert.deepEqual(out.tags, ["contract"])
+  assert.equal(out.body, "## Body")
+})
+
+test("claude-code errors surface instead of becoming a note", async () => {
+  const { parseClaudeCodeResult } = await import("./ingest.mjs")
+  assert.throws(
+    () => parseClaudeCodeResult(JSON.stringify({ is_error: true, num_turns: 1, result: "boom" })),
+    /claude 실행 오류/,
+  )
+  assert.throws(() => parseClaudeCodeResult("not json"), /JSON 출력을 읽지 못했습니다/)
+  assert.throws(
+    () => parseClaudeCodeResult(JSON.stringify({ is_error: false, num_turns: 1, result: "hi" })),
+    /JSON 객체를 찾지 못했습니다/,
+  )
+})
