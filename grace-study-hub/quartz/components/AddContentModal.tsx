@@ -208,6 +208,13 @@ const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) =>
             안 돼요. · <b>🖼 이미지·오디오 첨부</b>: 필기 사진·다이어그램·오디오를 위키에 올려요. 올린 뒤
             뜨는 <code>![[파일명]]</code>을 아무 노트에 붙여넣으면 그 자리에 표시됩니다.
           </p>
+          <p class="sh-modal-hint">
+            💻 <b>내 컴퓨터에서 하면 더 되는 것들</b> — <code>node scripts/ingest.mjs &lt;파일 또는 링크&gt;</code>
+            <br />
+            <b>녹음 파일</b>(.m4a·.mp3·.mp4 …)을 올려서 노트 만들기, <b>스캔 PDF·필기 사진 OCR</b>,
+            그리고 위 <b>영상 링크</b>가 봇 차단으로 실패할 때 — 전부 로컬에서 됩니다. 업로드가 없어서
+            파일 크기 제한도 없고, 긴 강의도 쪼개지 않고 한 번에 정리해요.
+          </p>
           <div class="sh-modal-actions">
             <button class="sh-btn sh-btn-new" data-pdf-generate>📄 PDF → 노트 생성</button>
             <button class="sh-btn sh-btn-ghost" data-add-submit="file">🖼 이미지·오디오 첨부</button>

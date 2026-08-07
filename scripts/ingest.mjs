@@ -15,7 +15,7 @@
 // local generator already did better).
 //
 // Usage:
-//   node scripts/ingest.mjs <youtube-url | audio-or-video-file> [options]
+//   node scripts/ingest.mjs <youtube-url | audio | video | pdf | image> [options]
 //
 //   --subject <slug>      wiki subject folder, e.g. business-law
 //   --title "..."         note title (default: the source's own title)
@@ -43,7 +43,7 @@ import Anthropic from "@anthropic-ai/sdk"
 import { execFile, spawn } from "node:child_process"
 import { existsSync } from "node:fs"
 import { mkdir, readdir, readFile, rm, stat, writeFile } from "node:fs/promises"
-import { tmpdir } from "node:os"
+import { homedir, tmpdir } from "node:os"
 import { basename, dirname, extname, join, relative, resolve, sep } from "node:path"
 import { promisify } from "node:util"
 import { fileURLToPath } from "node:url"
@@ -84,7 +84,7 @@ if (!process.env.ANTHROPIC_API_KEY && existsSync(ENV_FILE)) {
   }
 }
 
-const FLAGS_WITH_VALUE = ["subject", "title", "tags", "model", "save", "whisper-model", "language", "provider"]
+const FLAGS_WITH_VALUE = ["subject", "title", "tags", "model", "save", "whisper-model", "language", "provider", "pages", "ocr-lang"]
 
 function parseArgs(argv) {
   const opts = { dryRun: false, commit: true, push: true }
@@ -101,7 +101,7 @@ function parseArgs(argv) {
       if (!FLAGS_WITH_VALUE.includes(name)) fail(`알 수 없는 옵션: ${a}`)
       const v = argv[++i]
       if (v === undefined) fail(`${a} 뒤에 값이 필요합니다.`)
-      opts[name === "whisper-model" ? "whisperModel" : name] = v
+      opts[{ "whisper-model": "whisperModel", "ocr-lang": "ocrLang" }[name] || name] = v
     } else rest.push(a)
   }
   opts.source = rest[0]
@@ -118,7 +118,7 @@ const usage = () =>
     [
       "사용법: node scripts/ingest.mjs <소스> [옵션]",
       "",
-      "  <소스>  YouTube 링크  또는  오디오·비디오 파일 경로",
+      "  <소스>  YouTube 링크 · 오디오/비디오 · PDF · 이미지 파일 경로",
       "",
       "  --subject <slug>   과목 폴더 (예: business-law)",
       "  --title <제목>     노트 제목 (기본: 원본 제목)",
@@ -127,6 +127,8 @@ const usage = () =>
       "  --model <id>       모델 (기본: " + DEFAULT_MODEL + ")",
       "  --save <파일>      전사본을 이 경로에도 저장 (NotebookLM에 넣을 때)",
       "  --language <코드>  전사 언어 en·ko 등 (기본: auto — 섞인 음성은 지정 권장)",
+      "  --pages <n-m>      PDF 쪽 범위 (예: 1-20). 생략하면 전체",
+      "  --ocr-lang <코드>  OCR 언어 (기본: en-US,ko-KR)",
       "  --whisper-model <경로>  whisper.cpp 모델 (기본: raw/.models/ggml-small.bin)",
       "  --exercises        노트 끝에 연습문제 3~5개(풀이 포함) 추가",
       "  --dry-run          노트를 만들어 출력만 하고 파일은 쓰지 않음",
@@ -274,9 +276,114 @@ async function mediaAdapter(source, opts) {
   }
 }
 
+// ── OCR: images and scanned PDFs, via the macOS Vision framework ──────────
+// Vision over tesseract because it ships with macOS (nothing to install), reads
+// Korean and English out of the box, and is more accurate on photographed pages.
+// Interpreting ocr.swift costs ~40s per run, so it is compiled once and cached.
+async function ocrBinary() {
+  const src = join(REPO_ROOT, "scripts", "ocr.swift")
+  if (!existsSync(src)) fail(`OCR 도우미가 없습니다: ${src}`)
+  const cache = join(homedir(), ".cache", "grace-ingest")
+  const bin = join(cache, "ocr")
+  const fresh =
+    existsSync(bin) && (await stat(bin)).mtimeMs >= (await stat(src)).mtimeMs
+  if (!fresh) {
+    await mkdir(cache, { recursive: true })
+    console.log("▸ OCR 도우미를 컴파일하는 중… (최초 1회, ~15초)")
+    await run("swiftc", ["-O", src, "-o", bin])
+  }
+  return bin
+}
+
+// Join words split across lines ("deci-\nsion" → "decision"), then collapse the
+// rest of the line breaks. Without this the note is full of hyphen fragments.
+export const flattenOcr = (s) =>
+  s
+    .replace(//g, "\n")
+    .replace(/(\p{L})-\n(\p{L})/gu, "$1$2")
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .join(" ")
+
+export const IMAGE_EXT = new Set([".png", ".jpg", ".jpeg", ".heic", ".heif", ".tif", ".tiff", ".webp", ".gif", ".bmp"])
+
+async function imageAdapter(source, opts) {
+  if (!existsSync(source) || !IMAGE_EXT.has(extname(source).toLowerCase())) return null
+  const bin = await ocrBinary()
+  console.log(`▸ 이미지를 OCR 하는 중… (Vision, 로컬)`)
+  let out = ""
+  await run(bin, ["--lang", opts.ocrLang || "en-US,ko-KR", source], (l) => (out += l + "\n"))
+  const transcript = flattenOcr(out)
+  if (transcript.length < 20) fail("이미지에서 글자를 찾지 못했습니다.")
+  const name = basename(source, extname(source))
+  return {
+    kind: "ocr",
+    title: name.replace(/[_-]+/g, " ").trim(),
+    transcript,
+    note: "로컬 OCR (macOS Vision)",
+    rawName: `${new Date().toISOString().slice(0, 10)}-${slugify(name)}.txt`,
+    sourceLabel: basename(source),
+  }
+}
+
+// Text PDFs go through pdftotext — no OCR, no loss. Only when a PDF turns out to
+// have (almost) no text layer do we rasterize and OCR it, because OCR is both
+// slower and less accurate than reading the text that is already there.
+const OCR_DPI = 300 // measured: 200 garbles small italics, 400 adds cost without accuracy
+
+async function pdfAdapter(source, opts) {
+  if (!existsSync(source) || extname(source).toLowerCase() !== ".pdf") return null
+  const name = basename(source, ".pdf")
+  const range = String(opts.pages || "").match(/^(\d+)(?:-(\d+))?$/)
+  const pageArgs = range ? ["-f", range[1], "-l", range[2] || range[1]] : []
+
+  const work = join(tmpdir(), `ingest-pdf-${process.pid}`)
+  await mkdir(work, { recursive: true })
+  try {
+    const txt = join(work, "text.txt")
+    await run("pdftotext", [...pageArgs, source, txt]).catch(() => {})
+    let transcript = existsSync(txt) ? flattenOcr(await readFile(txt, "utf8")) : ""
+    let via = "pdftotext (텍스트 레이어)"
+
+    if (transcript.length < 200) {
+      console.log("▸ 텍스트 레이어가 없습니다 — 스캔 PDF로 보고 OCR 합니다…")
+      const bin = await ocrBinary()
+      await run("pdftoppm", [...pageArgs, "-r", String(OCR_DPI), "-png", source, join(work, "p")])
+      const pages = (await readdir(work)).filter((f) => f.endsWith(".png")).sort()
+      if (!pages.length) fail("PDF를 이미지로 변환하지 못했습니다.")
+      console.log(`  ${pages.length}쪽 · 쪽당 1~2초 예상`)
+      let out = ""
+      await run(
+        bin,
+        ["--lang", opts.ocrLang || "en-US,ko-KR", ...pages.map((p) => join(work, p))],
+        (l) => (out += l + "\n"),
+      )
+      transcript = flattenOcr(out)
+      via = `Vision OCR ${pages.length}쪽 @${OCR_DPI}dpi`
+    }
+    if (transcript.length < 50) fail("PDF에서 글자를 얻지 못했습니다.")
+
+    return {
+      kind: "pdf",
+      title: name.replace(/[_-]+/g, " ").trim(),
+      transcript,
+      note: via,
+      rawName: `${new Date().toISOString().slice(0, 10)}-${slugify(name)}.txt`,
+      sourceLabel: basename(source),
+    }
+  } finally {
+    await rm(work, { recursive: true, force: true })
+  }
+}
+
 async function extract(source, opts) {
   const media = await mediaAdapter(source, opts)
   if (media) return media
+  const pdf = await pdfAdapter(source, opts)
+  if (pdf) return pdf
+  const image = await imageAdapter(source, opts)
+  if (image) return image
   const yt = await youtubeAdapter(source)
   if (yt) return yt
   fail(

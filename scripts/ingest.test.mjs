@@ -247,3 +247,25 @@ test("claude-code errors surface instead of becoming a note", async () => {
     /JSON 객체를 찾지 못했습니다/,
   )
 })
+
+// ── OCR adapters (step 3) ─────────────────────────────────────────────────
+
+test("OCR line-joining repairs hyphenated line breaks", async () => {
+  const { flattenOcr } = await import("./ingest.mjs")
+  // Vision returns one observation per visual line, so a justified column
+  // arrives as "deci-\nsion". Left alone the note fills with hyphen fragments.
+  assert.equal(flattenOcr("an expert in deci-\nsion making"), "an expert in decision making")
+  assert.equal(flattenOcr("line one\nline two"), "line one line two")
+  assert.equal(flattenOcr("page one\u000Cpage two"), "page one page two")
+  // A trailing hyphen with no following letter must not eat the next line.
+  assert.equal(flattenOcr("dash -\nnext"), "dash - next")
+})
+
+test("adapters claim the right extensions and nothing else", async () => {
+  const { IMAGE_EXT, MEDIA_EXT } = await import("./ingest.mjs")
+  for (const ext of [".png", ".jpg", ".heic", ".tiff"]) assert.ok(IMAGE_EXT.has(ext), ext)
+  // A PDF must fall to the PDF adapter (text layer first), never to image OCR.
+  assert.ok(!IMAGE_EXT.has(".pdf"), "PDF must not be treated as a plain image")
+  // The sets must not overlap, or dispatch order silently decides behavior.
+  for (const ext of IMAGE_EXT) assert.ok(!MEDIA_EXT.has(ext), `overlap: ${ext}`)
+})
