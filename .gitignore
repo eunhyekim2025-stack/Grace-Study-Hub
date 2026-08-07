@@ -10,10 +10,16 @@
 #    (grace-study-hub/.gitignore still drops node_modules/, public/, etc.)
 !/grace-study-hub
 
-# 3) Inside llm-wiki, allow ONLY the wiki notes — not graph/raw/scripts/.obsidian
+# 3) Inside llm-wiki, allow the wiki notes — not graph/raw/.obsidian
 !/llm-wiki
 /llm-wiki/*
 !/llm-wiki/wiki
+# 3a) …plus the automation scripts. lecture-watch.sh is load-bearing for the
+#     ingest safety story (it is what routes recordings through ingest.mjs
+#     instead of a tool-enabled model), so it must not live only on one laptop.
+#     Its logs stay out.
+!/llm-wiki/scripts
+/llm-wiki/scripts/*.log
 
 # 4) Keep this allowlist + the Vercel build config tracked
 !/.gitignore
