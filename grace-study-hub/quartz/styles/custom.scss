@@ -2374,6 +2374,37 @@ a.sh-subjtab {
     padding: 18px 22px;
   }
 
+  // clickable variant — a card that is itself a link to another note
+  a.dc-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background-image: none;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease,
+      transform 0.15s ease;
+
+    &::after {
+      content: "→";
+      float: right;
+      margin-left: 8px;
+      color: var(--secondary);
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+
+    &:hover {
+      border-color: var(--secondary);
+      box-shadow: 0 3px 12px color-mix(in srgb, var(--secondary) 18%, transparent);
+      transform: translateY(-2px);
+
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+
   // numbered section header (circle + serif title + optional note)
   .dc-section {
     display: flex;

@@ -1,88 +1,90 @@
 ---
-title: "Module 3 — 종합원가계산과 완성품환산량 (EU)"
+title: "Module 3 — Process Costing & Equivalent Units"
 tags: [management-accounting, module-3, process-costing, equivalent-units, production-report]
 sources: ["Managerial Accounting: Comprehensive Study Guide (Modules 1–12)"]
 updated: 2026-08-12
 ---
 
 <div class="dc-view">
-<div><div class="dc-title">Module 3 · 종합원가계산</div><div class="dc-sub">"반쯤 만들다 만 것"에 원가를 얼마나 붙일 것인가</div></div>
+<div><div class="dc-title">Module 3 · Process Costing</div><div class="dc-sub">How much cost belongs to something that is only half made?</div></div>
 <div class="dc-cols">
-<div class="dc-card"><div class="dc-eyebrow">문제</div>월말에 공장을 멈추니 <b>반쯤 만든 재공품</b>이 잔뜩. 완제품 4개만큼 원가를 붙이면 너무 많다.</div>
-<div class="dc-card"><div class="dc-eyebrow">해법 · 완성품환산량 EU</div>"반쯤 된 것 4개 = 완제품 2개어치의 일"로 바꿔서 센다 <span class="dc-chip amber">4 × 0.50 = 2 EU</span></div>
+<div class="dc-card"><div class="dc-eyebrow">The problem</div>Stop the factory at month end and you find piles of <b>half-finished work</b>. Charging them like finished units would be far too much.</div>
+<div class="dc-card"><div class="dc-eyebrow">The fix · Equivalent Units</div>Convert "4 units at 50%" into "2 finished units' worth of work" and count that instead <span class="dc-chip amber">4 × 0.50 = 2 EU</span></div>
 </div>
-<div class="dc-section"><span class="dc-num">1</span><h2>왜 재료와 가공을 따로 세나</h2><span class="dc-hint">반쯤 구워진 쿠키</span></div>
+<div class="dc-section"><span class="dc-num">1</span><h2>Why materials and conversion are counted separately</h2><span class="dc-hint">the half-baked cookie</span></div>
 <div class="dc-cols">
-<div class="dc-card"><div class="dc-eyebrow">🥣 재료 Materials</div>밀가루·설탕·버터는 <b>맨 처음에 전부</b> 들어간다 → 오븐 속 쿠키도 재료 기준으로는 <b>100% 완성</b></div>
-<div class="dc-card"><div class="dc-eyebrow">🔥 가공원가 Conversion (DL + MO)</div>굽는 노동과 가스비는 <b>시간에 따라 조금씩</b> → 같은 쿠키가 가공 기준으로는 <b>60%</b></div>
+<div class="dc-card"><div class="dc-eyebrow">🥣 Materials</div>Flour, sugar and butter all go in <b>at the very start</b> → a cookie in the oven is already <b>100% complete</b> on materials</div>
+<div class="dc-card"><div class="dc-eyebrow">🔥 Conversion (DL + MO)</div>Baking labour and oven gas are added <b>evenly over time</b> → the same cookie may be only <b>60% converted</b></div>
 </div>
-<div class="dc-callout">같은 재공품 100개라도 <b>재료 EU = 100개, 가공 EU = 60개</b>. 그래서 완성품환산량은 반드시 두 열로 계산한다.</div>
-<div class="dc-section"><span class="dc-num">2</span><h2>제조원가보고서 5단계</h2><span class="dc-hint">순서만 외우면 된다</span></div>
+<div class="dc-callout">The same 100 units in process are <b>100 EU of materials but 60 EU of conversion</b>. That is why equivalent units are always computed in two columns.</div>
+<div class="dc-section"><span class="dc-num">2</span><h2>The five-step production report</h2><span class="dc-hint">learn the order and the rest follows</span></div>
 <div class="dc-flow">
-<div class="dc-step"><div class="dc-step-n">1</div><div class="dc-step-t">물량 파악</div><div class="dc-step-d">몇 개를 다뤘나</div></div>
+<div class="dc-step"><div class="dc-step-n">1</div><div class="dc-step-t">Physical Units</div><div class="dc-step-d">how many did we handle</div></div>
 <div class="dc-arrow">→</div>
-<div class="dc-step"><div class="dc-step-n">2</div><div class="dc-step-t">완성품환산량</div><div class="dc-step-d">실제 일한 양은</div></div>
+<div class="dc-step"><div class="dc-step-n">2</div><div class="dc-step-t">Equivalent Units</div><div class="dc-step-d">how much work was really done</div></div>
 <div class="dc-arrow">→</div>
-<div class="dc-step"><div class="dc-step-n">3</div><div class="dc-step-t">총원가 집계</div><div class="dc-step-d">돈은 총 얼마</div></div>
+<div class="dc-step"><div class="dc-step-n">3</div><div class="dc-step-t">Costs to Account For</div><div class="dc-step-d">how much money in total</div></div>
 <div class="dc-arrow">→</div>
-<div class="dc-step"><div class="dc-step-n">4</div><div class="dc-step-t">단위당 원가</div><div class="dc-step-d">1개당 얼마</div></div>
+<div class="dc-step"><div class="dc-step-n">4</div><div class="dc-step-t">Cost per EU</div><div class="dc-step-d">how much per unit of work</div></div>
 <div class="dc-arrow">→</div>
-<div class="dc-step"><div class="dc-step-n">5</div><div class="dc-step-t">원가 배분</div><div class="dc-step-d">누구에게 얼마씩</div></div>
+<div class="dc-step"><div class="dc-step-n">5</div><div class="dc-step-t">Cost Reconciliation</div><div class="dc-step-d">who gets how much</div></div>
 </div>
-<div class="dc-callout ok">3단계 총원가와 5단계 배분 합계가 <b>반드시 일치</b>해야 한다 — 자체 검산 장치.</div>
+<div class="dc-callout ok">Step 3 and step 5 <b>must agree to the penny</b> — a built-in check on your own arithmetic.</div>
 </div>
 
-# Module 3 — 종합원가계산과 완성품환산량
+# Module 3 — Process Costing & Equivalent Units
 
-> [[management-accounting/index|← Management Accounting]] · 이전: [[m02-cost-concepts-job-order-costing|Module 2]] · 다음: [[m04-activity-based-costing|Module 4 — ABC]]
+> [[management-accounting/index|← Management Accounting]] · Previous: [[m02-cost-concepts-job-order-costing|Module 2]] · Next: [[m04-activity-based-costing|Module 4 — ABC]]
 
-요가매트나 휘발유처럼 **똑같은 제품을 대량으로** 만들 때 씁니다. 개별 작업을 추적하는 대신
-공정 전체 원가를 총 생산량으로 나눠버립니다. 문제는 딱 하나 — **월말의 미완성품**입니다.
+Used when you mass-produce **identical** items — yoga mats, gasoline, crayons. Instead of tracking
+individual jobs you divide the whole process cost by total output. Exactly one thing complicates it:
+**the units that are only partly finished at month end.**
 
 ---
 
-## 완성품환산량 (Equivalent Units, EU)
+## Equivalent Units (EU)
 
-완성품환산량은 **부분적으로 완성된 재공품에 대해 실제로 수행된 작업량**을 나타냅니다.
+Equivalent units represent **the amount of work done on partially finished goods.**
 
-### 비유 ① 울타리 페인트칠
+### Analogy 1 — the fence
 
-두 명의 작업자가 널빤지 **4장을 각각 50%씩** 칠했다면 → **2 완성품환산량** (4 × 0.50).
-완전히 칠한 2장과 **일한 양이 같습니다.**
+If two workers paint **4 boards to 50% completion**, they have completed **2 equivalent units**
+($4 \times 0.50$). It is the same quantity of work as painting 2 boards completely.
 
-### 비유 ② 반쯤 구워진 쿠키
+### Analogy 2 — the half-baked cookie
 
-- **재료**는 맨 처음에 100% 투입됩니다 → 오븐 속 쿠키도 재료 기준 **100% 완성**
-- **가공원가(Conversion = DL + MO)**는 시간에 따라 균등하게 들어갑니다 → 같은 쿠키가 가공 기준 **60%**
+- **Materials** are often **100% complete at the start** — a cookie in the oven already has all its ingredients.
+- **Conversion costs (Direct Labour + Manufacturing Overhead)** are added **evenly** — the same cookie may be only **60% "converted."**
 
-> [!important] 시험에서 "왜 두 열로 계산하나요?"의 답
-> **완성도가 항목마다 다르기 때문**입니다. 재료용 EU와 가공용 EU를 **반드시 따로** 구합니다.
+> [!important] The answer to "why two columns?"
+> Because **the percentage of completion differs by cost type.** You always compute EU for
+> **materials** and EU for **conversion** separately.
 
-$$\text{완성품환산량} = \text{물량} \times \text{완성도(백분율)}$$
+$$\text{Equivalent Units} = \text{Physical Units} \times \text{Percentage Complete}$$
 
 ---
 
-## 제조원가보고서 5단계 (Production Report)
+## The five-step production report
 
-| 단계 | 이름 | 하는 일 |
+| Step | Name | What it does |
 |---|---|---|
-| **1** | 물량 파악 (Physical Units) | 이번 달에 다룬 총 개수를 맞춰본다. "들어온 개수 = 나간 개수 + 남은 개수" |
-| **2** | 완성품환산량 (Equivalent Units) | **재료용**과 **가공용**을 각각 계산 |
-| **3** | 총원가 집계 (Costs to Account For) | 기초재공품 원가 + 당기 투입 원가 = 나눠줄 총 돈 |
-| **4** | 환산량 단위당 원가 (Cost per EU) | 3단계 ÷ 2단계. "1개어치 일에 얼마 들었나" |
-| **5** | 원가 배분 (Cost Reconciliation) | ① 완성돼 나간 것과 ② 기말 재공품에 배분 |
+| **1** | Physical Units | Reconcile the total units to account for — units in = units out + units remaining |
+| **2** | Equivalent Units | Calculate EU for **materials** and for **conversion** |
+| **3** | Costs to Account For | Beginning WIP cost + costs added this period = the total pot to divide |
+| **4** | Cost per EU | Step 3 ÷ step 2 — "what did one unit of work cost?" |
+| **5** | Cost Reconciliation | Assign cost to ① units transferred out and ② ending Work in Process |
 
-**한 문장 요약:** 몇 개를 다뤘고(1) → 실제 일한 양은 얼마고(2) → 돈은 총 얼마고(3) →
-1개당 얼마고(4) → 그래서 누구에게 얼마씩(5).
+**In one sentence:** how many did we handle (1) → how much work was really done (2) → how much money
+is there (3) → how much per unit (4) → so who gets how much (5).
 
-> [!tip] 검산
-> 5단계에서 배분한 금액의 합이 3단계 총원가와 **정확히 같아야** 합니다.
-> 안 맞으면 어딘가 틀린 것이니, 답을 제출하기 전에 반드시 확인하세요.
+> [!tip] Always check
+> The amounts you assign in step 5 must sum **exactly** to the total from step 3.
+> If they do not, something upstream is wrong — check before you submit.
 
 ---
 
-## 관련 노트
+## Related notes
 
-- [[m02-cost-concepts-job-order-costing|Module 2]] — 개별 vs 종합의 선택 기준, 가공원가 정의
+- [[m02-cost-concepts-job-order-costing|Module 2]] — choosing between job order and process costing; definition of conversion cost
 - [[m04-activity-based-costing|Module 4 — ABC]]
-- [[cheatsheet-formulas|공식 치트시트 & 용어사전]]
+- [[cheatsheet-formulas|Formula Cheat Sheet & Glossary]]
