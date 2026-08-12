@@ -129,95 +129,26 @@ const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) =>
 
           <div class="sh-rec-or">또는</div>
 
-          {/* ② Video link → captions → auto lecture note (reuses /api/add) */}
-          <div class="sh-rec">
-            <div class="sh-rec-head">🔗 영상 링크 → 강의 노트 자동 생성</div>
-            <div class="sh-field">
-              <label for="sh-video-url">YouTube 링크</label>
-              <input
-                id="sh-video-url"
-                class="sh-input"
-                type="url"
-                placeholder="https://www.youtube.com/watch?v=…"
-              />
-            </div>
-            <div class="sh-field">
-              <label for="sh-video-title">노트 제목 (선택 — 비우면 영상 제목 사용)</label>
-              <input id="sh-video-title" class="sh-input" placeholder="예: SQL 기초 5강 - 인덱스" />
-            </div>
-            <div class="sh-rec-controls">
-              <button class="sh-btn sh-btn-new" data-video-generate>
-                🔗 링크로 노트 생성
-              </button>
-              <button class="sh-btn sh-btn-ghost" data-video-chapters>
-                📚 챕터별 노트 생성 (긴 영상)
-              </button>
-            </div>
-            <div class="sh-rec-status" id="sh-video-status"></div>
-            <p class="sh-modal-hint">
-              영상의 <b>자막</b>(자동 생성 포함)을 읽어 노트로 정리해요. 노트는 <b>영어로 생성</b>됩니다.
-              긴 영상은 <b>챕터별 노트 생성</b>으로 나누면 영상 챕터(없으면 ~30분 단위)마다 노트 1개씩
-              만들어요 — 중간에 멈춰도 다시 누르면 <b>이어서</b> 생성합니다.
-              <b>자막이 없는 영상</b>은 만들 수 없어요. Vercel에 <b>GROQ_API_KEY</b>가 설정돼 있어야 합니다.
-            </p>
-            <p class="sh-modal-hint">
-              ⚠️ YouTube는 서버(Vercel) IP에서 오는 요청을 <b>봇으로 차단</b>하는 일이 잦습니다. 여기서
-              “Sign in to confirm you're not a bot”이 뜨면 내 컴퓨터에서{" "}
-              <code>node scripts/ingest.mjs &lt;링크&gt;</code> 를 실행하세요 — 같은 방식으로 노트를
-              만들지만 자막을 내 IP로 받아오기 때문에 차단되지 않아요.
-            </p>
-          </div>
-
-          <div class="sh-rec-or">또는</div>
-
-          {/* ③ Web page / SQLBolt → notes */}
-          <div class="sh-rec">
-            <div class="sh-rec-head">🔗 웹 페이지 · SQLBolt → 노트 자동 생성</div>
-            <div class="sh-field">
-              <label for="sh-web-url">웹 링크</label>
-              <input
-                id="sh-web-url"
-                class="sh-input"
-                type="url"
-                placeholder="https://sqlbolt.com/ 또는 아티클 URL"
-              />
-            </div>
-            <div class="sh-rec-controls">
-              <button class="sh-btn sh-btn-new" data-web-generate>🔗 링크로 노트 생성</button>
-            </div>
-            <div class="sh-rec-status" id="sh-web-status"></div>
-            <p class="sh-modal-hint">
-              웹 페이지 본문을 읽어 AI 노트로 정리해요. <b>SQLBolt 링크</b>(sqlbolt.com)를 넣으면
-              <b>모든 레슨(약 17개)</b>을 레슨별 노트로 자동 생성합니다 (중단 시 다시 누르면 이어서).
-              위 <b>과목</b> 선택을 따라가니 SQL 노트로 넣으려면 <b>SQL</b>을 고르세요. JS로만 렌더되는
-              사이트는 본문을 못 읽을 수 있어요.
-            </p>
-          </div>
-
-          <div class="sh-rec-or">또는</div>
-
-          {/* ④ Upload / turn a file into notes */}
+          {/* ④ Attach an image/audio asset that notes embed with ![[...]] */}
           <div class="sh-field">
             <label for="sh-file-input">파일</label>
             <input id="sh-file-input" class="sh-input" type="file" />
           </div>
-          <div class="sh-rec-status" id="sh-pdf-status"></div>
           <p class="sh-modal-hint">
-            <b>📄 PDF → 노트 생성</b>: PDF의 <b>글자</b>를 읽어 AI로 정리한 노트를 만들어요 (긴 문서는
-            자동으로 여러 노트로 분할 · 중단 시 다시 누르면 이어서 생성). 스캔 이미지 PDF는 글자가 없어
-            안 돼요. · <b>🖼 이미지·오디오 첨부</b>: 필기 사진·다이어그램·오디오를 위키에 올려요. 올린 뒤
+            <b>🖼 이미지·오디오 첨부</b> — 필기 사진·다이어그램·오디오를 위키에 올려요. 올린 뒤
             뜨는 <code>![[파일명]]</code>을 아무 노트에 붙여넣으면 그 자리에 표시됩니다.
           </p>
           <p class="sh-modal-hint">
-            💻 <b>내 컴퓨터에서 하면 더 되는 것들</b> — <code>node scripts/ingest.mjs &lt;파일 또는 링크&gt;</code>
+            📝 <b>PDF·영상·웹의 AI 자동 노트는 이제 여기서 만들지 않아요.</b> 봇 차단·토큰·용량
+            한계로 자주 실패해서, 더 안정적이고 품질 좋은 방식으로 옮겼습니다 —
             <br />
-            <b>녹음 파일</b>(.m4a·.mp3·.mp4 …)을 올려서 노트 만들기, <b>스캔 PDF·필기 사진 OCR</b>,
-            그리고 위 <b>영상 링크</b>가 봇 차단으로 실패할 때 — 전부 로컬에서 됩니다. 업로드가 없어서
-            파일 크기 제한도 없고, 긴 강의도 쪼개지 않고 한 번에 정리해요.
+            ① 자료(PDF·녹음·영상 링크)를 <b>Claude에게 직접</b> 주면 dc-view 스타일 노트로 정리해
+            바로 배포합니다. ② 또는 내 컴퓨터에서{" "}
+            <code>node scripts/ingest.mjs &lt;파일 또는 링크&gt;</code> — 스캔 PDF·필기 사진 OCR,
+            긴 강의 전사까지 파일 크기·봇 차단 제한 없이 로컬에서 처리해요.
           </p>
           <div class="sh-modal-actions">
-            <button class="sh-btn sh-btn-new" data-pdf-generate>📄 PDF → 노트 생성</button>
-            <button class="sh-btn sh-btn-ghost" data-add-submit="file">🖼 이미지·오디오 첨부</button>
+            <button class="sh-btn sh-btn-new" data-add-submit="file">🖼 이미지·오디오 첨부</button>
             <button class="sh-btn sh-btn-ghost" data-add-close>취소</button>
           </div>
         </div>
