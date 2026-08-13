@@ -410,6 +410,26 @@ $sh-gut: 52px;
   line-height: 1;
   padding: 2px 9px;
 }
+// "Edit in Google Calendar" deep link — the schedule feed is read-only (ICS),
+// so all create/move/delete happens in Google Calendar; this just jumps there.
+.sh-sched-gcal {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid var(--lightgray);
+  border-radius: 7px;
+  padding: 2px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--gray);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  &:hover {
+    background: color-mix(in oklch, var(--secondary) 8%, transparent);
+    color: var(--secondary);
+  }
+}
 
 // ── papyrus roll (collapse / expand) ──
 .sh-sched-roll {

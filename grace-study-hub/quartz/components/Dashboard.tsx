@@ -82,6 +82,15 @@ const Dashboard: QuartzComponent = ({ fileData, allFiles, displayClass }: Quartz
               <button data-cal-gap="-" title="Less spacing">−</button>
               <button data-cal-gap="+" title="More spacing">+</button>
             </div>
+            <a
+              class="sh-sched-gcal"
+              href="https://calendar.google.com/calendar/u/0/r"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Google Calendar에서 편집 (새 탭) — 일정 추가·수정·삭제"
+            >
+              📅 편집
+            </a>
             <button class="sh-sched-refresh" id="sh-sched-refresh" title="Refresh" hidden>
               ⟳
             </button>
