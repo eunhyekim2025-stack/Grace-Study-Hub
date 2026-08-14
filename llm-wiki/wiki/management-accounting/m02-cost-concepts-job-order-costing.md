@@ -126,6 +126,25 @@ All three stores obey the same equation — which is also what a Module 3 produc
 
 The finished-goods line has one named intermediate step: beginning FG **+** cost of goods manufactured **= cost of goods available for sale**, then **−** ending FG **= COGS**. That final figure is what leaves the balance sheet and lands on the income statement.
 
+### The same chain with real numbers
+
+The three stores are not three separate problems — **each answer feeds the next line**. Run them top to bottom once and COGS falls out at the end:
+
+```
+Raw materials used (DM)          280,000   ← Beg RM 32,000 + Purchases 276,000 − End RM 28,000
+  + Direct labour                375,000
+  + Manufacturing overhead       180,000
+= Total manufacturing costs      835,000
+  + Beginning WIP                125,000
+  − Ending WIP                  (200,000)
+= Cost of goods manufactured     760,000
+  + Beginning finished goods     130,000
+  − Ending finished goods       (150,000)
+= Cost of goods sold             740,000
+```
+
+> Selling (150,000) and admin (45,000) costs **never enter this chain** — they are period costs and drop straight onto the income statement below. The only trap is letting them sneak into "total manufacturing costs".
+
 ### Where COGS lands — the traditional income statement
 
 | Traditional format | £ |
