@@ -1,8 +1,8 @@
 ---
 title: "Formula Cheat Sheet & Glossary (Modules 1–12)"
 tags: [management-accounting, cheatsheet, formulas, glossary, exam-prep]
-sources: ["Managerial Accounting: Comprehensive Study Guide (Modules 1–12)"]
-updated: 2026-08-12
+sources: ["Managerial Accounting: Comprehensive Study Guide (Modules 1–12)", "SMU ACCT102 (BT) Week 1 — Cost concepts and Cost flows"]
+updated: 2026-08-14
 ---
 
 <div class="dc-view">
@@ -65,15 +65,23 @@ updated: 2026-08-12
 | **Conversion Cost** | DL + MO |
 | **Product Cost** | Cost incurred inside the factory; sits in inventory until sold |
 | **Period Cost** | Admin, selling and R&D; expensed in the period incurred |
+| **Cost Object** | Anything you want a cost measured for — a product, customer, job, department or division |
+| **Selling Cost** | Cost to secure the order and deliver the product (advertising, sales salaries, delivery) |
+| **Administrative Cost** | Executive, organisational and clerical cost of running the company |
 | **Work in Process (WIP)** | Partly finished units still in production |
 | **Finished Goods (FG)** | Completed units awaiting sale |
 | **Cost of Goods Sold (COGS)** | Product cost that has become an expense because the unit sold |
+| **Cost of Goods Available for Sale** | Beginning finished goods + cost of goods manufactured (the pool COGS is drawn from) |
 | **Job Order Costing** | Costing for unique, customised production batches |
 | **Process Costing** | Costing for mass-produced, identical items |
 | **Equivalent Units (EU)** | Work done, expressed as a number of completed units |
 | **Activity-Based Costing (ABC)** | Allocating overhead through multiple activity rates |
 | **Plantwide Rate** | A single overhead rate for the whole factory |
 | **Cost Driver** | The activity that causes a cost to be incurred |
+| **Relevant / Irrelevant Cost** | Differs between alternatives (use it) / is the same under each (ignore it) |
+| **Differential (Incremental) Cost** | The difference in cost between two alternatives — always relevant |
+| **Opportunity Cost** | The benefit given up by choosing one alternative over another (never in the books) |
+| **Sunk Cost** | Already incurred and unchangeable — always irrelevant to a decision |
 | **Relevant Range** | The activity band in which the linearity assumption holds |
 | **Mixed / Step-Fixed Cost** | Fixed + variable elements / cost that jumps at thresholds |
 | **High-Low Method** | Estimating a cost equation from the highest and lowest activity points |
@@ -96,6 +104,7 @@ updated: 2026-08-12
 - [ ] The cost trinity is DM · DL · MO — and the difficulty is always **MO**
 - [ ] Product vs period turns on the **factory wall**; that is a **different axis** from variable vs fixed
 - [ ] A product cost only becomes an expense **when the unit sells** — until then it is an asset
+- [ ] For decisions: **sunk = ignore**, **opportunity = add it in**, only **differential** costs decide
 - [ ] Equivalent units: materials and conversion computed **separately**
 - [ ] Job order = every unit different · Process = every unit identical
 - [ ] High-low picks its two points by **activity (X)**

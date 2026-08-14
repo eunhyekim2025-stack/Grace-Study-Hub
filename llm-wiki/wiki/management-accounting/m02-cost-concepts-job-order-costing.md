@@ -1,8 +1,8 @@
 ---
 title: "Module 2 — Cost Concepts & Job Order Costing (POHR)"
-tags: [management-accounting, module-2, cost-concepts, job-order-costing, pohr, overhead]
-sources: ["Managerial Accounting: Comprehensive Study Guide (Modules 1–12)"]
-updated: 2026-08-12
+tags: [management-accounting, module-2, cost-concepts, job-order-costing, pohr, overhead, cost-object, period-cost, relevant-cost, opportunity-cost, sunk-cost]
+sources: ["Managerial Accounting: Comprehensive Study Guide (Modules 1–12)", "SMU ACCT102 (BT) Week 1 — Cost concepts and Cost flows"]
+updated: 2026-08-14
 ---
 
 <div class="dc-view">
@@ -49,9 +49,14 @@ From Module 1 through 12, every calculation comes back to identifying these thre
 | **Direct Labour (DL)** | Product · variable | The chef's wages for the minutes spent cooking this burger |
 | **Manufacturing Overhead (MO)** | Product · mixed/fixed | Gas for the grill, lighting, cleaning supplies, factory rent |
 
-**Direct vs indirect turns on one thing: can you trace it?**
-"100g of beef went into this burger" — countable, so direct.
+**Direct vs indirect is always relative to a _cost object_.**
+A **cost object** is anything you want a cost figure for — a product, a customer, a job, a department, a division.
+A cost is **direct** if it can be *easily and conveniently traced* to that object, and **indirect** if it cannot.
+"100g of beef went into this burger" — countable, so direct to the burger.
 "How much electricity did this burger use?" — not countable, so indirect.
+
+> [!tip] Always ask "direct to **what**?"
+> The same cost changes class with the object. A factory supervisor's salary is *indirect* to any single burger, but *direct* to the factory as a whole. Direct/indirect is a property of the **cost–object pair**, never of the cost alone.
 
 > [!important] The whole difficulty of this course lives in MO
 > DM and DL are just counting. The real question is always **how much of MO to assign to whom**,
@@ -75,6 +80,16 @@ From Module 1 through 12, every calculation comes back to identifying these thre
 What actually differs is **when the cost becomes an expense**. A product cost sits in inventory until the
 unit sells; a period cost hits the income statement this month. That timing gap is the seed of the
 [[m07-variable-vs-absorption-costing|overproduction trap in Module 7]].
+
+### Two kinds of period cost — and a second axis
+
+Period costs split into two:
+
+- **Selling costs** — everything needed to *get the order and deliver the product*: advertising, sales-staff salaries, samples, delivery to customers.
+- **Administrative costs** — executive, organisational and clerical costs of *running the company*: CEO salary, HR, finance, legal and audit fees.
+
+> [!note] Direct/indirect is not only a manufacturing question
+> Selling and administrative costs can **themselves** be direct or indirect to a cost object. A regional sales manager's salary is a *direct* cost of that sales region but an *indirect* cost of any single product sold there. Traceability (direct vs indirect) and location (manufacturing vs non-manufacturing) are **independent** questions.
 
 ### Classification traps
 
@@ -109,6 +124,20 @@ All three stores obey the same equation — which is also what a Module 3 produc
 | Work in Process | Beginning WIP + (DM+DL+MO) | Ending WIP | **Cost of goods manufactured** |
 | Finished Goods | Beginning FG + cost of goods manufactured | Ending FG | **Cost of goods sold (COGS)** |
 
+The finished-goods line has one named intermediate step: beginning FG **+** cost of goods manufactured **= cost of goods available for sale**, then **−** ending FG **= COGS**. That final figure is what leaves the balance sheet and lands on the income statement.
+
+### Where COGS lands — the traditional income statement
+
+| Traditional format | £ |
+|---|---|
+| Sales | 100,000 |
+| − Cost of goods sold *(product cost)* | (70,000) |
+| **= Gross margin** | **30,000** |
+| − Selling & administrative expenses *(period cost)* | (20,000) |
+| **= Net operating income** | **10,000** |
+
+Product costs are expensed **through COGS**; period costs are expensed **below the gross-margin line**, in the period incurred. Module 7 rearranges this *same* data into the **contribution format** — grouped by cost behaviour (variable/fixed) instead of by function — see [[m07-variable-vs-absorption-costing|Module 7]].
+
 ---
 
 ## The Predetermined Overhead Rate (POHR)
@@ -137,6 +166,28 @@ $$\text{POHR} = \frac{\text{Estimated Total Manufacturing Overhead}}{\text{Estim
 > **"Can a customer point at it and call it *mine*?"**
 > A custom wedding cake is somebody's cake → job order costing.
 > A litre of petrol at a pump has no owner worth distinguishing → process costing.
+
+---
+
+## Cost classifications for decision making
+
+The classifications above sort costs for *reporting*. A decision needs a different sort: does the cost **change the answer** to a choice between alternatives? This vocabulary is introduced here and applied in the later decision modules.
+
+| Term | Meaning | Rule of thumb |
+|---|---|---|
+| **Relevant cost** | Differs between the alternatives **and** lies in the future | **Use it** |
+| **Irrelevant cost** | The same under every alternative | Ignore it |
+| **Differential (incremental) cost** | The difference in cost between two alternatives | Always relevant · can be fixed **or** variable |
+| **Differential revenue** | The difference in revenue between two alternatives | Always relevant |
+| **Opportunity cost** | The benefit given up by choosing one option over another | Real, but **never appears in the accounting records** — add it in by hand |
+| **Sunk cost** | Already incurred; no future decision can change it | **Always irrelevant** — ignore it |
+
+> [!tip] Three traps the quick-checks aim at
+> - A cost that is **identical under both options** — e.g. the annual car-licensing fee when choosing *drive vs train* for one trip — is **irrelevant**.
+> - A **sunk** cost is what you have already *paid*. The **resale value** of that same asset today is **not** sunk — it is a differential/opportunity cost of keeping it.
+> - "Upsize the meal for $1.20?" — only the **differential** $1.20 versus the extra benefit matters; the $10 already committed to the meal does not.
+
+Every cost has a place in each purpose of classification: assigning to cost objects (direct/indirect) · accounting for a factory (manufacturing/non-manufacturing) · financial statements (product/period) · **decisions (relevant/irrelevant)** · predicting behaviour (variable/fixed/mixed → [[m05-cost-behaviour-estimation|Module 5]]).
 
 ---
 
