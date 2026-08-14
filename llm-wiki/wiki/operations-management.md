@@ -1,7 +1,7 @@
 ---
 title: ⚙️ Operations Management
 tags: [ops, moc, index]
-updated: 2026-07-03
+updated: 2026-08-14
 kind: 주제
 pagerank: 0.0048
 betweenness: 0.0002
@@ -16,11 +16,18 @@ community: 1
 > goods and services — **Content → Sources**
 
 ## Content — Concepts (ops-concepts/)
-| Page | Description |
-|------|-------------|
-| [[ops-concepts/README]] | Concept index — starter page; notes land here as sources are ingested |
+> SMU **OPIM 201** (Cachon & Terwiesch). The four core process topics build on one idea: find the bottleneck, then manage it under real-world variability and demand.
+
+| # | Page | Description |
+|---|------|-------------|
+| 1 | [[ops-concepts/process-analysis]] | Capacity · utilization · **bottleneck** · flow rate · cycle time · Theory of Constraints |
+| 2 | [[ops-concepts/line-balancing]] | Assign tasks to workstations to meet the target rate — LTT/LNF heuristics, efficiency |
+| 3 | [[ops-concepts/waiting-line-management]] | Variability → queues · **Kingman's formula** · Little's Law · pooling |
+| 4 | [[ops-concepts/forecasting]] | Time-series demand — moving averages, exponential smoothing, seasonality, regression, MAD/MSE |
+
+> Full index: [[ops-concepts/README]]
 
 ## Sources (raw/ops/)
 | Source | Description |
 |--------|-------------|
-| _(none yet)_ | Drop course material under `raw/ops/`, then `/ingest` it. |
+| OPIM 201 Sessions 2, 3, 4, 6 | Process Analysis · Line Balancing · Waiting Line Management · Forecasting (Dr. Wee Kwan Eng) |

@@ -1,7 +1,7 @@
 ---
 title: ⚙️ Operations Management — Concept Index
 tags: [ops, moc]
-updated: 2026-07-03
+updated: 2026-08-14
 kind: 주제
 pagerank: 0.0035
 betweenness: 0.0000
@@ -12,14 +12,13 @@ community: 1
 
 # ⚙️ Operations Management — Concept Index
 
-> [[operations-management|← Operations Management hub]] · Seed page for the `ops-concepts/`
-> folder. Concept notes land here as source material is ingested.
+> [[operations-management|← Operations Management hub]] · Concept notes for the `ops-concepts/`
+> folder (SMU OPIM 201, Cachon & Terwiesch).
 
 ## Concepts
 | Page | Description |
 |------|-------------|
-| _(none yet)_ | Add the first concept note via `/ingest`, then link it here. |
-
-> [!todo] Starter page
-> This folder is a placeholder so the subject registers in the graph and Explorer.
-> Replace this table as notes are added.
+| [[process-analysis]] | Capacity, utilization, **bottleneck**, flow rate & cycle time; Theory of Constraints |
+| [[line-balancing]] | Assign tasks to workstations to meet target rate — LTT/LNF heuristics, efficiency |
+| [[waiting-line-management]] | Variability, **Kingman's** waiting-time formula, Little's Law, pooling |
+| [[forecasting]] | Time-series demand — moving averages, exponential smoothing, seasonality, regression, MAD/MSE |
