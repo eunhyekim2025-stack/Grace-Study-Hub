@@ -11,6 +11,9 @@ community: 1
 
 # 📓 Critical Thinking in Real World
 
-> [[index|← Subjects]]
+> [[index|← Subjects]] · Taking real-world texts — op-eds, ads, policy claims — apart and judging the reasoning on its own terms.
 
-New subject — add notes with **+ 새 노트**.
+## Real-world cases
+| Case | What it drills |
+|------|----------------|
+| [[case-drug-legalisation-grayling]] | Reconstructing an argument · descriptive vs normative claims · testing analogies · false dilemma · steelmanning — worked on Grayling's drug-legalisation op-ed |

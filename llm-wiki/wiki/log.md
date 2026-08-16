@@ -382,3 +382,9 @@ community: 1
 - Hub [[sql]] (kind 주제, Concepts table only). Source language kept Korean to match the study material (NotebookLM was fed YouTube "[SQL 기초 강의]" sources).
 - Registered across presentation layers: index.md Subjects grid card (🗄 SQL, hue 210); Explorer label + rank 38 in grace-study-hub/quartz.layout.ts (self-study block, between ops=35 and cross-domain=40); subjects.json entry (term "Self-study") powering Dashboard/SubjectNav/AutoBar/AddContentModal.
 - Content was transcribed/expanded from the mind-map skeleton + standard MySQL knowledge (sub-nodes weren't expanded in the source screenshot), not a verbatim copy of the NotebookLM chat.
+
+## [2026-08-16] note | Critical Thinking in Real World — first real-world case (Grayling drug-legalisation op-ed)
+- Request: read The Observer op-ed (A. C. Grayling, "Why a high society is a free society", 19 May 2002) and, under the Critical Thinking in Real World subject, write up the content + how it connects to the class.
+- Source fetched via curl (guardian.com blocked to WebFetch/Wayback); full body recovered. Cited as URL in frontmatter `sources:` (no raw/ file — external web source).
+- New note [[critical-thinking-in-real-world/case-drug-legalisation-grayling]] (kind 주장): reconstructs the argument (8 premises → 1 conclusion), classifies descriptive vs normative claims, a probe/fallacy table (load-bearing premise = "drug use concerns only the user"; false dilemma; parity analogy → disanalogy; one-dimensional paracetamol comparison; vague authority), steelmans both sides, then an 8-step transferable toolkit ("how to apply to this class"). dc-view hero, English body per schema.
+- First content note in the CTRW subject (folder had only index.md). Updated folder hub [[critical-thinking-in-real-world/index]] with a Real-world cases table; index.md home card desc "New subject" → "Real-world cases 1". Cross-linked to [[law-concepts/ch06-negligence]] (harm-to-third-parties analogue).
