@@ -1348,6 +1348,58 @@ textarea.sh-input {
     display: none;
   }
 }
+// Rescued transcripts: a recording whose note save failed is parked here until
+// it is retried or discarded, so a lecture is never lost to a bad token.
+.sh-drafts {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, oklch(0.65 0.15 65) 45%, transparent);
+  border-radius: 8px;
+  background: color-mix(in srgb, oklch(0.65 0.15 65) 8%, transparent);
+}
+.sh-draft-head {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--darkgray);
+  margin-bottom: 8px;
+}
+.sh-draft {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 0;
+
+  & + & {
+    border-top: 1px solid color-mix(in srgb, var(--gray) 25%, transparent);
+  }
+}
+.sh-draft-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  font-size: 0.78rem;
+
+  b {
+    word-break: break-word;
+  }
+  span {
+    color: var(--gray);
+    font-size: 0.72rem;
+  }
+}
+.sh-draft-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  .sh-btn {
+    padding: 5px 10px;
+    font-size: 0.72rem;
+  }
+}
 .sh-rec-or {
   text-align: center;
   font-size: 0.72rem;

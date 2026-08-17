@@ -46,6 +46,7 @@ function openModal(tab: string, subject?: string) {
   if (pw && !pw.value) pw.value = localStorage.getItem(PW_KEY) || ""
   syncPwField()
   status("")
+  renderDrafts()
   setTab(tab)
   // Preselect the subject in both note + upload pickers when opened for a subject.
   if (subject) {
@@ -488,6 +489,143 @@ async function startRecording() {
   }, 1000)
 }
 
+// ── Draft rescue: a transcript must outlive a failed save ─────────────────
+// The stitched transcript used to exist only as a local in stopRecording(), so
+// any /api/add failure (expired GitHub token, network drop, closed tab) threw
+// away the whole lecture. Now it is written to localStorage the moment it
+// exists and cleared only once the note is actually committed. Whatever is left
+// over is offered back in the modal with a one-click retry.
+const DRAFT_KEY = "sh-rec-drafts"
+const DRAFT_MAX = 5
+
+type RecDraft = {
+  id: string
+  title: string
+  subject: string
+  transcript: string
+  audio: string[]
+  savedAt: number
+}
+
+function readDrafts(): RecDraft[] {
+  try {
+    const list = JSON.parse(localStorage.getItem(DRAFT_KEY) || "[]")
+    return Array.isArray(list) ? (list as RecDraft[]) : []
+  } catch {
+    return []
+  }
+}
+
+// Keep only the newest DRAFT_MAX. On a quota error, retry with just this one
+// draft — losing older rescues beats losing the recording that just failed.
+function writeDrafts(list: RecDraft[]) {
+  const trimmed = list.slice(-DRAFT_MAX)
+  try {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(trimmed))
+  } catch {
+    try {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(trimmed.slice(-1)))
+    } catch {
+      /* nothing else we can do; the in-page copy is still shown */
+    }
+  }
+}
+
+function saveDraft(d: RecDraft) {
+  writeDrafts([...readDrafts().filter((x) => x.id !== d.id), d])
+}
+
+function dropDraft(id: string) {
+  writeDrafts(readDrafts().filter((x) => x.id !== id))
+}
+
+function escDraft(s: string): string {
+  return s.replace(
+    /[&<>"']/g,
+    (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c] as string,
+  )
+}
+
+function renderDrafts() {
+  const box = document.getElementById("sh-rec-drafts")
+  if (!box) return
+  const drafts = readDrafts().sort((a, b) => b.savedAt - a.savedAt)
+  box.hidden = !drafts.length
+  if (!drafts.length) {
+    box.innerHTML = ""
+    return
+  }
+  box.innerHTML =
+    `<div class="sh-draft-head">💾 저장하지 못한 녹음 ${drafts.length}건 — 전사 내용이 이 브라우저에 남아 있어요</div>` +
+    drafts
+      .map((d) => {
+        const when = new Date(d.savedAt).toLocaleString("ko-KR", {
+          month: "numeric",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+        return `<div class="sh-draft" data-draft-id="${escDraft(d.id)}">
+  <div class="sh-draft-meta"><b>${escDraft(d.title || "제목 없음")}</b><span>${escDraft(when)} · ${d.transcript.length.toLocaleString()}자</span></div>
+  <div class="sh-draft-actions">
+    <button class="sh-btn sh-btn-new" data-draft-retry>저장 재시도</button>
+    <button class="sh-btn sh-btn-ghost" data-draft-copy>텍스트 복사</button>
+    <button class="sh-btn sh-btn-ghost" data-draft-drop>버리기</button>
+  </div>
+</div>`
+      })
+      .join("")
+}
+
+// Re-send a rescued transcript to /api/add. Identical payload to the original
+// save, so a draft made before the token broke goes through untouched once it
+// is fixed. The draft is only dropped after GitHub confirms the commit.
+async function retryDraft(id: string, btn: HTMLButtonElement) {
+  const draft = readDrafts().find((d) => d.id === id)
+  if (!draft) return renderDrafts()
+  const password = (val("sh-add-pw") || localStorage.getItem(PW_KEY) || "").trim()
+  if (!password) {
+    revealPwField()
+    recStatus("추가 비밀번호를 입력한 뒤 다시 눌러주세요.", "err")
+    return
+  }
+  const original = btn.textContent
+  btn.disabled = true
+  btn.textContent = "저장 중…"
+  try {
+    const res = await fetch("/api/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        type: "note",
+        title: draft.title,
+        subject: draft.subject,
+        tags: "lecture, recording",
+        content: draft.transcript,
+        mode: "lecture",
+        ...(draft.audio?.length ? { audio: draft.audio } : {}),
+        password,
+      }),
+    })
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok) {
+      recStatus("재시도 실패: " + (data.error || res.status) + " · 전사 내용은 그대로 보관됩니다.", "err")
+      btn.disabled = false
+      btn.textContent = original
+      return
+    }
+    localStorage.setItem(PW_KEY, password)
+    syncPwField()
+    dropDraft(id)
+    renderDrafts()
+    recStatus("저장됨 → " + (data.path || "") + " · 1–2분 뒤 사이트에 반영됩니다.", "ok")
+  } catch {
+    recStatus("네트워크 오류 · 전사 내용은 그대로 보관됩니다.", "err")
+    btn.disabled = false
+    btn.textContent = original
+  }
+}
+
 async function stopRecording() {
   if (!REC.active) return
   const password = (val("sh-add-pw") || localStorage.getItem(PW_KEY) || "").trim()
@@ -539,6 +677,19 @@ async function stopRecording() {
       .map((a) => a.path as string)
   }
 
+  // Stash the transcript BEFORE trying to save it: from here on the lecture
+  // survives a failed commit, a network drop, or the tab being closed.
+  const draft: RecDraft = {
+    id: String(Date.now()),
+    title: val("sh-rec-title").trim(),
+    subject: val("sh-file-subject"),
+    transcript,
+    audio,
+    savedAt: Date.now(),
+  }
+  saveDraft(draft)
+  renderDrafts()
+
   recStatus("정리 중… 강의 노트를 만들고 있어요 (10~40초)")
   try {
     const res = await fetch("/api/add", {
@@ -546,8 +697,8 @@ async function stopRecording() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         type: "note",
-        title: val("sh-rec-title").trim(),
-        subject: val("sh-file-subject"),
+        title: draft.title,
+        subject: draft.subject,
         tags: "lecture, recording",
         content: transcript,
         mode: "lecture",
@@ -557,17 +708,22 @@ async function stopRecording() {
     })
     const data = await res.json().catch(() => ({}))
     if (!res.ok) {
-      recStatus("저장 실패: " + (data.error || res.status), "err")
+      recStatus(
+        "저장 실패: " + (data.error || res.status) + " · 전사 내용은 아래에 임시 보관했어요.",
+        "err",
+      )
       return
     }
     localStorage.setItem(PW_KEY, password)
     syncPwField()
+    dropDraft(draft.id)
+    renderDrafts()
     const backup = audio.length ? ` · 🎙 녹음본 ${audio.length}조각 비공개 백업됨` : ""
     recStatus("저장됨 → " + (data.path || "") + backup + " · 1–2분 뒤 사이트에 반영됩니다.", "ok")
     const t = document.getElementById("sh-rec-title") as HTMLInputElement | null
     if (t) t.value = ""
   } catch {
-    recStatus("네트워크 오류. 배포된 사이트에서 시도하세요.", "err")
+    recStatus("네트워크 오류 · 전사 내용은 아래에 임시 보관했어요.", "err")
   }
 }
 
@@ -688,6 +844,28 @@ if (!w.__shAddInit) {
     if (!btn) return
     e.preventDefault()
     deleteNote(btn)
+  })
+  // Rescued-transcript rows: retry the save, copy the text out, or discard.
+  document.addEventListener("click", (e) => {
+    const btn = (e.target as HTMLElement)?.closest<HTMLButtonElement>(
+      "[data-draft-retry],[data-draft-copy],[data-draft-drop]",
+    )
+    if (!btn) return
+    e.preventDefault()
+    const id = btn.closest<HTMLElement>(".sh-draft")?.dataset.draftId
+    if (!id) return
+    if (btn.hasAttribute("data-draft-retry")) {
+      retryDraft(id, btn)
+    } else if (btn.hasAttribute("data-draft-copy")) {
+      const d = readDrafts().find((x) => x.id === id)
+      navigator.clipboard?.writeText(d?.transcript || "").then(() => {
+        btn.textContent = "복사됨 ✓"
+        setTimeout(() => (btn.textContent = "텍스트 복사"), 1500)
+      }, () => {})
+    } else if (confirm("이 전사 내용을 지울까요? 되돌릴 수 없습니다.")) {
+      dropDraft(id)
+      renderDrafts()
+    }
   })
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeModal()
