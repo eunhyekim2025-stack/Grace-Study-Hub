@@ -13,6 +13,13 @@ community: 1
 
 > [[index|← Subjects]] · Taking real-world texts — op-eds, ads, policy claims — apart and judging the reasoning on its own terms.
 
+## Seminars
+> Notes from class itself — what was actually said and shown, chapter notes as the backing reference.
+
+| # | Note | Core |
+|---|------|------|
+| 1 | [[seminar-01-what-critical-thinking-is]] | three active moves · toolkit + attitude · domain neutrality · common sense fails (3 tests) · statements · facts vs opinions · vagueness vs ambiguity · the argument |
+
 ## Textbook — chapter notes
 > Mooney, Williams & Burik, *An Introduction to Critical and Creative Thinking* (McGraw-Hill, 2015). One note per chapter — concepts, procedures and worked mini-examples. Exercises are in the textbook; the answer key is held privately for feedback (solve them, then send your work).
 
