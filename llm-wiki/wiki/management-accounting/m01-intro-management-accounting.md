@@ -2,7 +2,7 @@
 title: "Module 1 — Introduction to Management Accounting"
 tags: [management-accounting, module-1, financial-vs-managerial, stakeholders]
 sources: ["Managerial Accounting: Comprehensive Study Guide (Modules 1–12)"]
-updated: 2026-08-12
+updated: 2026-08-18
 ---
 
 <div class="dc-view">
@@ -49,7 +49,7 @@ There are two kinds of accounting. The names sound similar, but they split clean
 | **Primary user** | Outsiders — investors, lenders, government | Insiders — managers |
 | **Type of decision** | Decisions *about* the company (buy/sell shares) | Decisions *for* the company (staffing, product placement) |
 | **Scope** | Whole company (the big picture) | Segmented (a specific store, iPad Pro sales) |
-| **Data example** | Apple's $98B profit, $3.55 EPS | Weekly iPad Pro sales in the Vancouver store |
+| **Data example** | Apple's $93.7B net income, $6.08 diluted EPS (FY2024) | Weekly iPad Pro sales in the Vancouver store |
 | **Rules / regulation** | Strict — GAAP, IFRS, SEC | Loose / optional — whatever management needs |
 | **Timing** | Historical, past focus | Future, present **and** past |
 | **Reporting speed** | Delayed, slow (audited results) | Immediate, fast |
