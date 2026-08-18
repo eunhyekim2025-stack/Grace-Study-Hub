@@ -182,6 +182,19 @@ export default async function handler(req, res) {
           recordings.length > 1 ? "s" : ""
         }) in your Vercel Blob store — not published here.\n\n`
       : ""
+    // Segments whose transcription failed. The client reports them so the gap is
+    // visible in the note itself — otherwise the note reads as complete while a
+    // two-minute stretch of the lecture is silently missing. The audio is still
+    // archived, so the gap is recoverable via /api/recordings.
+    const gaps = Array.isArray(body.gaps)
+      ? body.gaps.map((n) => parseInt(n, 10)).filter((n) => Number.isFinite(n))
+      : []
+    const gapNote = gaps.length
+      ? `> [!warning] \u26a0\ufe0f ${gaps.length} segment${gaps.length > 1 ? "s" : ""} failed to ` +
+        `transcribe (#${gaps.join(", #")}) \u2014 about ${gaps.length * 2} minutes of this lecture ` +
+        `are missing below. The audio is archived, so re-transcribe from the private Blob ` +
+        `store to fill the gap.\n\n`
+      : ""
     const fm =
       `---\n` +
       `title: ${JSON.stringify(title)}\n` +
@@ -191,7 +204,7 @@ export default async function handler(req, res) {
         ? `recording:\n${recordings.map((p) => `  - ${JSON.stringify(p)}`).join("\n")}\n`
         : "") +
       `---\n\n`
-    const md = fm + recNote + finalContent + "\n"
+    const md = fm + recNote + gapNote + finalContent + "\n"
     path = notePath(WIKI, body.subject, title)
     contentBase64 = Buffer.from(md, "utf8").toString("base64")
     commitMsg = `Add note: ${title} (via site)`

@@ -289,7 +289,7 @@ const REC: {
   stream: MediaStream | null
   chunks: Blob[]
   segIndex: number
-  jobs: Promise<{ i: number; text: string }>[]
+  jobs: Promise<{ i: number; text: string; failed?: boolean }>[]
   // Optional private-audio backup: each segment is also uploaded to /api/archive
   // (private Vercel Blob). archiveOn flips off the moment archiving is
   // unavailable (no Blob store / any failure) so it never blocks the note.
@@ -345,7 +345,14 @@ function toggleRecUI(on: boolean) {
   if (title) title.disabled = on
 }
 
-function transcribeBlob(blob: Blob, i: number, password: string): Promise<{ i: number; text: string }> {
+// Resolves { failed: true } rather than an empty string when a segment cannot be
+// transcribed. An empty string would be filtered out silently and the finished
+// note would look complete with two minutes of the lecture missing.
+function transcribeBlob(
+  blob: Blob,
+  i: number,
+  password: string,
+): Promise<{ i: number; text: string; failed?: boolean }> {
   return new Promise((resolve) => {
     const reader = new FileReader()
     reader.onload = async () => {
@@ -358,16 +365,17 @@ function transcribeBlob(blob: Blob, i: number, password: string): Promise<{ i: n
         })
         const data = await res.json().catch(() => ({}))
         if (!res.ok) {
-          recStatus("전사 실패: " + (data.error || res.status), "err")
-          resolve({ i, text: "" })
+          recStatus("전사 실패(조각 " + (i + 1) + "): " + (data.error || res.status), "err")
+          resolve({ i, text: "", failed: true })
           return
         }
-        resolve({ i, text: data.text || "" })
+        const text = (data.text || "").trim()
+        resolve({ i, text, failed: !text })
       } catch {
-        resolve({ i, text: "" })
+        resolve({ i, text: "", failed: true })
       }
     }
-    reader.onerror = () => resolve({ i, text: "" })
+    reader.onerror = () => resolve({ i, text: "", failed: true })
     reader.readAsDataURL(blob)
   })
 }
@@ -379,6 +387,7 @@ function archiveBlob(
   blob: Blob,
   i: number,
   password: string,
+  attempt = 0,
 ): Promise<{ i: number; path: string | null }> {
   return new Promise((resolve) => {
     const reader = new FileReader()
@@ -398,19 +407,41 @@ function archiveBlob(
           }),
         })
         if (!res.ok) {
-          REC.archiveOn = false // no store, wrong store type, or transient error
-          resolve({ i, path: null })
+          // 501 means no Blob store is configured — nothing will ever work, so
+          // stop trying. Anything else is transient (network blip, cold start,
+          // rate limit); giving up on it used to disable the backup for the
+          // WHOLE remaining lecture off a single hiccup.
+          if (res.status === 501) {
+            REC.archiveOn = false
+            resolve({ i, path: null })
+          } else {
+            resolve(retryArchive(blob, i, password, attempt))
+          }
           return
         }
         const data = await res.json().catch(() => ({}))
         resolve({ i, path: data.archived ? data.path : null })
       } catch {
-        resolve({ i, path: null })
+        resolve(retryArchive(blob, i, password, attempt))
       }
     }
     reader.onerror = () => resolve({ i, path: null })
     reader.readAsDataURL(blob)
   })
+}
+
+// One delayed retry per segment. Recording keeps running while this waits, so
+// the pause costs nothing; without it a single blip lost the rest of the backup.
+function retryArchive(
+  blob: Blob,
+  i: number,
+  password: string,
+  attempt: number,
+): Promise<{ i: number; path: string | null }> {
+  if (attempt >= 1) return Promise.resolve({ i, path: null })
+  return new Promise((resolve) =>
+    setTimeout(() => resolve(archiveBlob(blob, i, password, attempt + 1)), 3000),
+  )
 }
 
 function startSegment(password: string) {
@@ -504,6 +535,7 @@ type RecDraft = {
   subject: string
   transcript: string
   audio: string[]
+  gaps: number[]
   savedAt: number
 }
 
@@ -604,6 +636,7 @@ async function retryDraft(id: string, btn: HTMLButtonElement) {
         content: draft.transcript,
         mode: "lecture",
         ...(draft.audio?.length ? { audio: draft.audio } : {}),
+        ...(draft.gaps?.length ? { gaps: draft.gaps } : {}),
         password,
       }),
     })
@@ -657,8 +690,12 @@ async function stopRecording() {
       }),
     ),
   )
-  const transcript = results
-    .sort((a, b) => a.i - b.i)
+  const ordered = results.sort((a, b) => a.i - b.i)
+  // Segment numbers we could not transcribe. They are reported to /api/add so
+  // the finished note carries a visible warning — a silently shortened note is
+  // worse than an obviously incomplete one, and the audio is still archived.
+  const gaps = ordered.filter((r) => r.failed).map((r) => r.i + 1)
+  const transcript = ordered
     .map((r) => r.text)
     .filter(Boolean)
     .join(" ")
@@ -685,6 +722,7 @@ async function stopRecording() {
     subject: val("sh-file-subject"),
     transcript,
     audio,
+    gaps,
     savedAt: Date.now(),
   }
   saveDraft(draft)
@@ -703,6 +741,7 @@ async function stopRecording() {
         content: transcript,
         mode: "lecture",
         ...(audio.length ? { audio } : {}),
+        ...(gaps.length ? { gaps } : {}),
         password,
       }),
     })
@@ -719,7 +758,11 @@ async function stopRecording() {
     dropDraft(draft.id)
     renderDrafts()
     const backup = audio.length ? ` · 🎙 녹음본 ${audio.length}조각 비공개 백업됨` : ""
-    recStatus("저장됨 → " + (data.path || "") + backup + " · 1–2분 뒤 사이트에 반영됩니다.", "ok")
+    const gapWarn = gaps.length ? ` · ⚠️ ${gaps.length}조각 전사 실패 (노트에 표시됨)` : ""
+    recStatus(
+      "저장됨 → " + (data.path || "") + backup + gapWarn + " · 1–2분 뒤 사이트에 반영됩니다.",
+      gaps.length ? "err" : "ok",
+    )
     const t = document.getElementById("sh-rec-title") as HTMLInputElement | null
     if (t) t.value = ""
   } catch {
