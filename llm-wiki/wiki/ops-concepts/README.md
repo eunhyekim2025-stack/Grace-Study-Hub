@@ -18,7 +18,7 @@ community: 1
 ## Concepts
 | Page | Description |
 |------|-------------|
-| [[process-analysis]] | Capacity, utilization, **bottleneck**, flow rate & cycle time; Theory of Constraints |
+| [[process-analysis]] | **Process choice** (job shop / batch / line, MTS-ATO-MTO, product–process matrix, order winners) · flow unit · **Little's Law** & inventory turns · capacity, utilization, **bottleneck**; Theory of Constraints |
 | [[line-balancing]] | Assign tasks to workstations to meet target rate — LTT/LNF heuristics, efficiency |
 | [[waiting-line-management]] | Variability, **Kingman's** waiting-time formula, Little's Law, pooling |
 | [[forecasting]] | Time-series demand — moving averages, exponential smoothing, seasonality, regression, MAD/MSE |

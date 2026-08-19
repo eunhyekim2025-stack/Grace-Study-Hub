@@ -20,7 +20,7 @@ community: 1
 
 | # | Page | Description |
 |---|------|-------------|
-| 1 | [[ops-concepts/process-analysis]] | Capacity · utilization · **bottleneck** · flow rate · cycle time · Theory of Constraints |
+| 1 | [[ops-concepts/process-analysis]] | **Process choice** (job shop/batch/line · MTS-ATO-MTO · product–process matrix · order winners) · flow unit · **Little's Law** · inventory turns · capacity · utilization · **bottleneck** · Theory of Constraints |
 | 2 | [[ops-concepts/line-balancing]] | Assign tasks to workstations to meet the target rate — LTT/LNF heuristics, efficiency |
 | 3 | [[ops-concepts/waiting-line-management]] | Variability → queues · **Kingman's formula** · Little's Law · pooling |
 | 4 | [[ops-concepts/forecasting]] | Time-series demand — moving averages, exponential smoothing, seasonality, regression, MAD/MSE |
@@ -30,4 +30,4 @@ community: 1
 ## Sources (raw/ops/)
 | Source | Description |
 |--------|-------------|
-| OPIM 201 Sessions 2, 3, 4, 6 | Process Analysis · Line Balancing · Waiting Line Management · Forecasting (Dr. Wee Kwan Eng) |
+| OPIM 201 Sessions 1, 2, 3, 4, 6 | Process Choice & Little's Law · Process Analysis · Line Balancing · Waiting Line Management · Forecasting (Dr. Wee Kwan Eng) |
