@@ -2,7 +2,7 @@
 title: "Line Balancing — Assigning Tasks to Workstations"
 tags: [operations-management, opim201, line-balancing, cycle-time, precedence, heuristics, production-levelling]
 sources: ["SMU OPIM 201 Session 3 — Line Balancing"]
-updated: 2026-08-14
+updated: 2026-08-19
 kind: 개념
 ---
 
@@ -36,13 +36,22 @@ kind: 개념
 
 **Line balancing** allocates tasks across workstations to *balance the workload* while meeting the target flow rate. It is the "staffing to demand" half of **production levelling** — setting a steady target output rate for a period so planning stays tractable and production stays consistent. Levers include automating/outsourcing slow tasks, adding workers or overtime, and **specialisation** (breaking down the bottleneck task). Because target demand shifts across periods, **capacity flexibility** — cross-training and a temporary/flexible workforce — matters for the long run.
 
+> [!info] Why "balance" is the word — the intuition before any formula
+> A line moves at the pace of its **slowest station**, because every station has to hand its unit on at the same moment. Suppose four stations take **30 · 128 · 40 · 50** seconds. A finished bike comes off the end every **128 s** — the slowest station's time — no matter how fast the other three are. Meanwhile:
+>
+> - station 1 works 30 s and then **stands idle for 98 s**, every single cycle;
+> - stations 3 and 4 are idle 88 s and 78 s;
+> - only station 2 is busy the whole time.
+>
+> **Balancing does not make anyone work faster.** It moves work *off* the tall station and *onto* the short ones, so the peak comes down and everyone's idle time shrinks together. The line's speed is set by the tallest bar; the line's cost is set by the total height of all the bars. Balancing lowers the first without raising the second.
+
 ---
 
 ## Vocabulary
 
 | Term | Meaning |
 |---|---|
-| **(Target) cycle time, CT** | Time between successive finished units coming off the end of the line. Set by demand: $CT = \dfrac{\text{available time}}{\text{target output}}$ |
+| **(Target) cycle time, CT** | Time between successive finished units coming off the end of the line. Set by demand: $CT = \dfrac{\text{available time}}{\text{target output}}$ — a **time per unit**, e.g. "one bike every 128 seconds". It is a *budget*: no station may exceed it |
 | **Task time, $t_k$** | Time to complete task $k$ |
 | **Eligible task** | A task all of whose predecessors are already placed in the current or an earlier station |
 | **Efficiency** | $\dfrac{\sum t_k}{N_a \times CT}$ — the line's average utilization ($N_a$ = actual # stations) |
@@ -61,6 +70,15 @@ Huffy runs one 8-hour shift/day; daily production plan = **225** bicycles. Nine 
 |---|---|---|---|---|---|---|---|---|---|
 | Time (s) | 60 | 45 | 35 | 92 | 55 | 70 | 30 | 25 | 65 |
 | Predecessors | — | 1 | 1 | 3 | 3 | 2,4 | 6 | 5,6 | 7,8 |
+
+> [!info] How to read the precedence diagram below
+> Each **circle is a task**, labelled *number · seconds*. An **arrow from A to B means "A must be finished before B can start"** — you cannot fit the wheel before the frame is welded. That is all it says.
+>
+> - Task **1 has no arrows coming in** → it can start immediately.
+> - Task **6 has two arrows in (from 2 and 4)** → it waits for *both*.
+> - Two tasks with **no path between them** (say 2 and 5) are independent and may go in either order, or in the same station.
+>
+> A task is **eligible** when every arrow pointing at it comes from a task already placed. The whole balancing procedure is: repeatedly look at the eligible set, pick one by a rule, place it, refresh the set.
 
 ```mermaid
 graph LR
@@ -116,6 +134,17 @@ Total idle = 23 + 1 + 3 + 8 = **35 s**, using **4 stations** = $N_{\min}$ → th
 **Why the optimum can exceed $N_{\min}$.** $N_{\min}$ is a lower bound only; the real optimum may need more stations because task times are **discrete** (they don't divide evenly into CT) and **precedence** forbids some groupings.
 
 **Handling leftover idle time:** give idle workers quality-control or background work, **cross-train** them to help busy stations, or redesign the process.
+
+> [!important] What the balance tells you about flow time and WIP
+> Once the line is balanced, [[process-analysis|Little's Law]] hands you two more numbers. Take the **idealised paced line**: a conveyor, one unit at each of $N$ stations, every unit spending exactly $CT$ at each station, no buffers and no transport time. Then
+>
+> $$T = N \times CT \qquad\text{and}\qquad I = R \times T = \frac{1}{CT} \times (N \times CT) = N$$
+>
+> For Huffy: $T = 4 \times 128 = 512\text{ s} \approx \mathbf{8.5\ minutes}$ for one bike to traverse the line, and $I = \mathbf{4}$ bikes in process — **one at each station**, exactly as the picture suggests.
+>
+> **These are a floor, not a general result.** Buffers between stations, blocking and starving, variable task times, parallel stations, or an unpaced worker-paced line all add waiting — so real flow time and real WIP come out **higher** than $N\times CT$ and $N$. Treat the ideal numbers as the best case the design allows.
+>
+> This is also the clearest case of the $CT \neq T$ distinction: **splitting the work into more, smaller stations leaves $CT$ alone** (the line still ships every 128 s) **but lengthens $T$ and raises WIP**. More stations buys you finer balancing and lower skill requirements, and it costs you lead time and work-in-process.
 
 ## Related notes
 

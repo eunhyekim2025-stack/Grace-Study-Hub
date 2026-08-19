@@ -213,6 +213,87 @@ Once the flow unit is fixed, three performance measures follow — and they are 
 
 ---
 
+## How to draw a process flow diagram
+
+Everything below is arithmetic on a picture, so draw the picture first. The notation is three symbols:
+
+| Symbol | Means | Example |
+|---|---|---|
+| **▭ box** | an **activity / resource** — something is *done* to the flow unit here | "toast the bread, 3 min" |
+| **▽ triangle** | an **inventory / buffer** — flow units *wait* here, nothing is done to them | the queue at the till |
+| **→ arrow** | the **direction the flow unit moves** | — |
+
+**The five steps:**
+
+1. **Name the flow unit** (§ above). Everything in the diagram must be measurable in it.
+2. **Mark where it enters and where it leaves.** That defines the process boundary — and therefore what "flow time" means.
+3. **List the activities in order**, one box each.
+4. **Put a triangle wherever units can pile up** — before any step that might be busy when a unit arrives.
+5. **Label each box** with its **processing time** and **how many parallel resources** work there.
+
+> [!example] A sandwich shop
+> ```
+>            ▽          ▭             ▽            ▭          ▽        ▭
+> customers ─┤ queue ├─►│ take order│─┤ waiting ├─►│ assemble │─┤ ├─►│ pay │─► out
+>  arrive     (buffer)   1 min, ×1     (buffer)     3 min, ×2          1 min, ×1
+> ```
+> Capacities: take order 60 units/hr · assemble $2 \times \frac{60}{3} = 40$ units/hr · pay 60 units/hr.
+> **The bottleneck is assembly at 40/hr** — and you can see *why* the triangle in front of it is the one that fills up. A diagram you can read this off is worth more than any formula.
+
+---
+
+## Units discipline — the single biggest source of beginner errors
+
+Before any calculation, know what each quantity *is a measure of*:
+
+| Quantity | Unit | Say it out loud as |
+|---|---|---|
+| **Processing time** $p$ | time **per unit** | "5 minutes per sandwich" |
+| **Capacity** | units **per time** | "12 sandwiches per hour" |
+| **Flow rate** $R$ | units **per time** | "10 sandwiches an hour actually get made" |
+| **Cycle time** $CT$ | time **per unit** | "one sandwich comes out every 6 minutes" |
+| **Flow time** $T$ | time | "a customer is in the shop 20 minutes" |
+| **Inventory** $I$ | units | "4 customers are inside right now" |
+| **Utilization** $u$ | *no unit* — a fraction | "the till is busy 80% of the time" |
+
+Two reciprocal pairs sit inside that table, and they are the whole trick:
+
+$$\text{Capacity} = \frac{1}{\text{Processing time}} \qquad\qquad R = \frac{1}{CT}$$
+
+> [!tip] Why capacity is one divided by processing time
+> If one sandwich takes **5 minutes**, then in **60 minutes** you finish $60 \div 5 = 12$ of them. Per *minute*, that is $1/5$ of a sandwich. **Capacity is just processing time turned upside down** — "time per unit" flipped into "units per time".
+>
+> This is also the fastest sanity check you own: if a number should be a *rate* and you have written down something in minutes, you have flipped a fraction somewhere.
+
+### Five kinds of "time" that beginners collapse into one
+
+This is the confusion that causes the most wrong answers. There are two different clocks:
+
+```
+ONE UNIT'S CLOCK   —   how long this customer's visit takes
+   enter ──┬── wait ──┬── processed ──┬── wait ──┬── processed ──┬── exit
+           │ (queue)  │  p at step 1  │ (queue)  │  p at step 2  │
+           └───────────────── flow time T = all of it ───────────┘
+
+THE SYSTEM'S CLOCK —   how often events happen at the door
+   arrivals    ●────a────●────a────●────a────●      a = interarrival time
+   departures     ▲───CT───▲───CT───▲───CT───▲      CT = cycle time = 1/R
+```
+
+| Term | Whose clock | Question it answers |
+|---|---|---|
+| **Processing time** $p$ | one unit, one step | how long does *this step* take? |
+| **Waiting time** $T_q$ | one unit | how long did it sit doing nothing? |
+| **Flow time** $T$ | one unit, whole process | how long from entering to leaving? ($= T_q + \text{all } p$) |
+| **Cycle time** $CT$ | the system | how often does a finished unit come *out*? |
+| **Interarrival time** $a$ | the system | how often does a new unit come *in*? |
+
+> [!warning] The two traps
+> - **Flow time ≠ sum of processing times.** Waiting is usually most of it. A 20-minute hospital visit can contain 4 minutes of doctor.
+> - **Cycle time ≠ flow time.** Adding stations to a line makes $T$ longer and leaves $CT$ untouched (the conveyor example below). $CT$ belongs to the factory; $T$ belongs to the customer.
+
+---
+
 ## Process vocabulary — the definitions everything is built on
 
 | Term | Definition | Formula |
@@ -235,6 +316,8 @@ Once the flow unit is fixed, three performance measures follow — and they are 
 
 > [!warning] Inventory is an asset to an accountant and a liability to an operations manager
 > On the balance sheet inventory is an asset ([[m02-cost-concepts-job-order-costing|product cost sits in inventory until the unit sells]]). In operations it should usually be read as a **liability**: it is capital parked in the system, and by Little's Law it is *also* the reason your flow time is long. Both readings are correct about different things — the accounting one about ownership, the operations one about consequence.
+>
+> That immediately raises the obvious beginner question — *then why does anyone hold any?* Answered in **five reasons to hold inventory**, below.
 
 ---
 
@@ -334,6 +417,23 @@ Plot inventory turns against gross margin across retailers (Gaur, Fisher & Raman
 - A retailer **below** the curve is simply underperforming, and can improve *either* axis without giving up the other. A retailer **on** it must choose.
 
 This is the competitive-frontier picture from *How do we choose?* above, drawn with operational axes — which is the point: a firm's inventory policy is a restatement of its competitive strategy, not a separate decision.
+
+### So why hold inventory at all? Five reasons
+
+If inventory is capital parked in the system, why is the right answer never zero? Because inventory is doing five different jobs, and only two of them are about uncertainty:
+
+| # | Type | Why it exists | Example |
+|:--:|---|---|---|
+| 1 | **Pipeline inventory** | Units are inside simply **because getting through takes time**. Unavoidable — it *is* Little's Law: $I = R \times T$ | 20 cars in the tunnel; goods on a ship from Shenzhen |
+| 2 | **Seasonal inventory** | Demand swings but capacity is roughly flat, so you **build ahead of the peak** | ice cream stocked in spring; toys made in September |
+| 3 | **Cycle inventory** | You order or produce in **batches** because each order or setup costs something fixed | buying a month of rice at once rather than a cup a day |
+| 4 | **Decoupling inventory / buffer** | A stock **between two steps** stops one from starving or blocking the other when it stops | the WIP kept in front of the bottleneck (→ Theory of Constraints below) |
+| 5 | **Safety inventory** | Demand and supply are **uncertain**, so you hold a cushion for the surprise | extra stock so a demand spike doesn't lose the sale |
+
+> [!important] The distinction that resolves the contradiction
+> Reasons **1–3 exist even in a perfectly predictable world** — they follow from physics (things take time), from demand shape, and from fixed ordering costs. Reasons **4–5 exist only because of variability** (→ [[waiting-line-management]]).
+>
+> So "inventory is waste" is too crude. The right question is never *how do I get to zero* but **which of the five is this, and is that reason still true?** Lean attacks reasons 3–5 by shrinking batch sizes and removing variability; it can never remove reason 1 without making the process itself faster.
 
 ---
 

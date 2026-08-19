@@ -1,8 +1,8 @@
 ---
 title: "Waiting Line Management — Variability, Queues & Pooling"
-tags: [operations-management, opim201, waiting-line, queuing, variability, kingman, littles-law, pooling]
+tags: [operations-management, opim201, waiting-line, queuing, variability, coefficient-of-variation, kingman, littles-law, pooling, psychology-of-waiting]
 sources: ["SMU OPIM 201 Session 4 — Waiting Line Management (Cachon & Terwiesch, Ch. 9)"]
-updated: 2026-08-14
+updated: 2026-08-19
 kind: 개념
 ---
 
@@ -39,6 +39,18 @@ $$CV = \frac{\text{standard deviation}}{\text{mean}}, \qquad CV_a = \frac{\text{
 
 (Analogous to preferring days-of-supply over raw inventory: a ratio travels better than a raw number.) Variability comes from **arrivals** (volume swings, randomness, product mix), **tasks** (inherent variation, no SOP, rework) and **resources** (breakdowns, absence, set-ups).
 
+> [!tip] What a CV actually *feels* like
+> Take a shop where customers arrive **every 10 minutes on average**. The CV tells you how trustworthy that "every 10 minutes" is:
+>
+> | $CV_a$ | Std dev | What the door looks like |
+> |---|---|---|
+> | **0** | 0 min | A metronome. 10:00, 10:10, 10:20 — exactly. Appointment systems aim here. |
+> | **0.5** | 5 min | Gaps are mostly 5–15 min. Loose but recognisable rhythm. |
+> | **1** | 10 min | **Completely random** — gaps of 1 minute and of 30 minutes are both perfectly ordinary. This is what independent walk-in customers look like, and it is the **default assumption** whenever a problem does not say otherwise. |
+> | **> 1** | > 10 min | **Burstier than random** — a lecture ends and forty people arrive at once, then nothing for an hour. |
+>
+> So "$CV_a = 1$" is not an exotic modelling choice. It is the plain statement *people show up independently and we cannot predict when*.
+
 ---
 
 ## The waiting line model — notation
@@ -65,6 +77,21 @@ Three multiplicative levers — pull any of them down and the wait drops:
 - **↑ effective capacity** (raise $m$ or cut $p$) → shorter wait, directly *and* by lowering $u$.
 - **↓ utilization** (as $u \to 1$, the factor $\frac{u^{\dots}}{1-u}$ **explodes**) → this is why you can never run a variable system at 100%.
 - **↓ variability** ($CV_a$ or $CV_p$) → shorter wait at the same average load.
+
+> [!important] Why the utilization term **explodes** — the one intuition to keep
+> The middle factor behaves roughly like $\dfrac{u}{1-u}$. The denominator $1-u$ is the fraction of time the server is **free**, and free time is the *only* thing that can absorb a burst of arrivals. Squeeze it out and there is nothing left to recover with.
+>
+> | Utilization $u$ | Spare capacity $1-u$ | Waiting factor $\frac{u}{1-u}$ |
+> |---|---|---|
+> | 50% | 50% | 1.0 |
+> | 80% | 20% | 4.0 |
+> | 90% | 10% | 9.0 |
+> | **95%** | 5% | **19.0** |
+> | 99% | 1% | 99.0 |
+>
+> Read the last three rows carefully. Going from **90% to 95%** busy — a change most managers would call a rounding error — **roughly doubles** the wait. Going from **95% to 99%** multiplies it by more than **five**. Nothing about the work changed; only the slack that used to absorb the randomness disappeared.
+>
+> The everyday version: a motorway at 50% occupancy flows freely, and at 95% occupancy it stops dead — with the *same* number of lanes and the *same* cars. **A queue is not a capacity shortage. It is a slack shortage.**
 
 ### Little's Law gives the queue length
 
@@ -108,6 +135,24 @@ An online retailer serves two markets, each 4 customers/hr. Three layouts (all $
 - Use the waiting-time formula to get a feel for the system, test scenarios, and **balance utilization against responsiveness**.
 - **Levers to improve performance:** pool/cross-train (↑$m$) · self-service to cut arrivals (↑$a$) · appointment systems to cut arrival randomness (↓$CV_a$) · standardisation & training to cut service time and its randomness (↓$p$, ↓$CV_p$).
 - **Managerial response:** understand where variability comes from and eliminate what you can; **accommodate the rest by holding excess capacity**.
+
+### When you cannot shorten the wait, change how it feels
+
+*(Supplementary — David Maister's "psychology of waiting lines", not from the session slides, but it is where most real service improvements come from.)*
+
+The formula predicts the **actual** wait. Customer satisfaction tracks the **perceived** wait, and the two come apart in predictable ways:
+
+| Waits feel **longer** when… | So the fix is… |
+|---|---|
+| the time is **unoccupied** | mirrors by the lifts, menus handed out in the queue, screens in the waiting room |
+| the wait is **before** the service starts rather than inside it | seat people and start *something* — take the order, begin the intake form |
+| the customer is **anxious** ("did they forget me?") | acknowledge arrival; a number, a nod, a ticket |
+| the length is **unknown** | "your call is 3rd in queue", the posted 25-minute sign at Disney |
+| the wait is **unexplained** | say *why* — "the doctor is with an emergency" |
+| the wait feels **unfair** — someone who came later is served first | a **single pooled line**, which is why pooling wins twice: shorter $T_q$ *and* visibly fair |
+| the customer is **alone** | shared waiting areas, group seating |
+
+Note the last row but one: the single-queue design that [[process-analysis|Little's Law]] and pooling recommend for hard mathematical reasons is *also* the one that feels fairest. The rare case where the efficient answer and the human answer coincide.
 
 ## Related notes
 

@@ -2,7 +2,7 @@
 title: "Forecasting — Time-Series Demand Methods"
 tags: [operations-management, opim201, forecasting, time-series, exponential-smoothing, seasonality, linear-regression]
 sources: ["SMU OPIM 201 Session 6 — Forecasting"]
-updated: 2026-08-14
+updated: 2026-08-19
 kind: 개념
 ---
 
@@ -33,6 +33,11 @@ kind: 개념
 
 ## Stationary series — demand = constant + noise
 
+> [!info] "Stationary" in plain words
+> A series is **stationary** when it has **no trend and no season** — it wanders around a fixed level and keeps coming back to it. Monthly sales of toothpaste: some months up, some down, but no direction. The opposite is a series that is *going somewhere* (trend) or that *repeats a shape* every year (seasonality), and those need different tools.
+>
+> The practical test is to plot it. If a straight ruler laid on the plot is flat, treat it as stationary.
+
 When demand just reverts to a mean, use one of three:
 
 | Method | Rule | Notes |
@@ -40,6 +45,39 @@ When demand just reverts to a mean, use one of three:
 | **Simple moving average (SMA)** | average of the last $N$ periods | large $N$ = smoother but slower to react; small $N$ = jumpy |
 | **Weighted moving average (WMA)** | weighted average of last few periods, **weights sum to 1** | more weight on recent data; SMA is the equal-weight special case |
 | **Exponential smoothing (ES)** | see formula below | needs only the last forecast + last actual |
+
+### Worked example — all three on one dataset
+
+Monthly demand for six months:
+
+| Month | 1 | 2 | 3 | 4 | 5 | 6 |
+|---|---|---|---|---|---|---|
+| Demand | 100 | 130 | 90 | 120 | 110 | 140 |
+
+**Forecast month 7.**
+
+| Method | Calculation | Forecast |
+|---|---|---|
+| **3-month SMA** | $(120+110+140)\div3$ | **123.3** |
+| **5-month SMA** | $(130+90+120+110+140)\div5$ | **118.0** |
+| **WMA**, weights 0.5 / 0.3 / 0.2 on months 6 / 5 / 4 | $0.5(140)+0.3(110)+0.2(120)$ | **127.0** |
+| **Exponential smoothing**, $\alpha=0.3$ | run below | **118.2** |
+
+The exponential-smoothing run, starting from $F_1 = A_1 = 100$ and applying $F_t = F_{t-1} + \alpha(A_{t-1}-F_{t-1})$ each month:
+
+| $t$ | $F_{t-1}$ | $A_{t-1}$ | error | $F_t = F_{t-1} + 0.3 \times$ error |
+|---|---|---|---|---|
+| 2 | 100 | 100 | 0 | 100.0 |
+| 3 | 100.0 | 130 | +30.0 | 109.0 |
+| 4 | 109.0 | 90 | −19.0 | 103.3 |
+| 5 | 103.3 | 120 | +16.7 | 108.3 |
+| 6 | 108.3 | 110 | +1.7 | 108.8 |
+| **7** | 108.8 | 140 | +31.2 | **118.2** |
+
+> [!tip] What the four numbers tell you
+> - **The 3-month SMA (123.3) reacts harder than the 5-month one (118.0)** — a short window throws away the old low months, so it chases the recent jump. Longer window = smoother = slower.
+> - **The WMA is the highest (127.0)** because it puts half its weight on the single most recent month, which happened to be the peak. That is the risk of weighting recency heavily: you inherit the last month's luck.
+> - **Every method lags a turning point.** Forecast month 6 with a 3-month SMA and you get $(90+120+110)/3 = 106.7$ against an actual of **140** — a miss of 33. No averaging method can see a jump coming; it can only notice one after it has happened. This lag is the price of smoothing, not a bug you can tune away.
 
 ### Exponential smoothing
 
@@ -61,7 +99,7 @@ MAD is the average size of the miss; **MSE squares the errors so it punishes lar
 
 ## Trend — linear regression
 
-Fit $Y = a + bX$ by least squares (X = the period number, numbered **consecutively** 1, 2, 3 …):
+Fit $Y = a + bX$ by **least squares** — the line that makes the **sum of the squared vertical gaps** between the line and the actual points as small as possible. (Squared, so that a miss above and a miss below cannot cancel out, and so that one big miss counts for more than several small ones — the same reason MSE punishes large errors.) $X$ = the period number, numbered **consecutively** 1, 2, 3 …:
 
 $$b = \frac{\sum xy - n\,\bar{x}\,\bar{y}}{\sum x^{2} - n\,\bar{x}^{2}}, \qquad a = \bar{y} - b\,\bar{x}$$
 
@@ -88,6 +126,28 @@ When **both** a trend and a season are present: **separate them, project each, r
 3. **Re-seasonalize** — multiply each trend forecast back by the season's factor.
 
 *Worked (12 quarters → forecast Q13–16).* Seasonal factors $S_1{=}0.82,\ S_2{=}1.10,\ S_3{=}0.97,\ S_4{=}1.12$. Regression on the de-seasonalized demand gives $b=342.2,\ a=554.9$. So for Q14: trend $= 554.9 + 342.2\times14 = 5345.7$, then re-seasonalize $\times S_2$: $5345.7\times1.10 \approx \mathbf{5880}$. (Q15 ≈ 5517, Q16 ≈ 6754.)
+
+---
+
+## Four principles that hold for every forecast
+
+Worth internalising before trusting any number above.
+
+| # | Principle | What it changes about your behaviour |
+|:--:|---|---|
+| 1 | **Every forecast is wrong.** | Never report a bare number. Report the number **and its expected error** (MAD/MSE) — a forecast of 500 ± 10 and one of 500 ± 300 support completely different decisions. |
+| 2 | **Aggregate forecasts are more accurate than detailed ones.** | Total store sales are far easier to predict than sales of one SKU in one colour, because individual errors **cancel**. Forecast at the level you can, then split down. |
+| 3 | **Short horizons beat long ones.** | Accuracy decays with distance. So **delay commitments** as long as you can — this is exactly why assemble-to-order beats make-to-stock when demand is uncertain (→ [[process-analysis]]). |
+| 4 | **A forecast is not a target.** | "What we think will happen" and "what we want to happen" are different objects. Merging them is how a sales quota quietly becomes the demand plan, and how [[m08-budgeting|every budget beneath it]] inherits the error. |
+
+> [!tip] Principle 2 is a cousin of pooling
+> Aggregating demand and [[waiting-line-management|pooling servers]] are **related pooling effects**, and both are worth recognising as "combining things smooths variation" — but the mechanisms differ, so do not treat them as one theorem:
+>
+> | | Aggregate forecasting | Pooled queues |
+> |---|---|---|
+> | What is combined | **demand streams** | **servers and their queue** |
+> | Why it helps | partially independent errors **cancel** in the sum | idle capacity can immediately take the **next arrival**, so no server sits idle while someone waits |
+> | The gain is in | forecast **accuracy** | waiting **time** |
 
 ---
 
