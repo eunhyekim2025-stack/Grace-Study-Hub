@@ -409,3 +409,8 @@ community: 1
 - Content overlaps [[management-accounting/m02-cost-concepts-job-order-costing]] `## Cost classifications for decision making`, which already carries the same worked examples (car licensing fee, resale-vs-sunk, meal upsize). So the new note does NOT duplicate the reference table — it keeps what only the recording has: the lecturer's framing of opportunity cost as absent from the records, the non-financial-benefit point, the three quick-checks as answered in class, and his marking policy (any logical method accepted; workings are what make partial credit possible).
 - New note [[management-accounting/seminar-01-costs-for-decision-making]] (kind 개념), cross-linked to m01/m02/m05/cheatsheet. Added a "From class" card to the Management accounting hub.
 - Source audio + transcript kept OUT of the public repo at `llm-wiki/raw/acct102/lectures/` (gitignored).
+
+## [2026-08-19] cleanup | remove site-made test/misfiled notes + de-bloat repo
+- [[management-of-people-at-work/mpw-1-1]] — moved out of critical-thinking-in-real-world/ (wrong subject picked in the site modal; content is an MPW textbook definition) into its correct subject folder. No wikilinks referenced it.
+- Deleted management-accounting/ma-1-1.md ("Okay.") and ma-1-2.md ("Bye.") — empty test recordings.
+- Removed critical-thinking-in-real-world/CTRW_Lecture_1_Slides.pptx (3 MB binary) from the public repo; archived privately at ~/.claude/projects/-Users-youngmin-grace-ai/reference/ctrw/ (course slides — copyright + repo-bloat; kept off the deployed site). NOTE: the blob still exists in git history (commit 6cba61f); a full history purge (filter-repo + force-push) is a separate destructive step, not done here.
