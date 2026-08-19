@@ -360,17 +360,13 @@ Add a **second, parallel worker** (3 min/unit) to Step II. Effective processing 
 
 Goldratt's **five focusing steps** (a continuous-improvement loop):
 
-<div class="dc-flow">
-<div class="dc-step"><div class="dc-step-n">1</div><div class="dc-step-t">Identify</div><div class="dc-step-d">find the constraint</div></div>
-<div class="dc-arrow">→</div>
-<div class="dc-step"><div class="dc-step-n">2</div><div class="dc-step-t">Exploit</div><div class="dc-step-d">get the most from it</div></div>
-<div class="dc-arrow">→</div>
-<div class="dc-step"><div class="dc-step-n">3</div><div class="dc-step-t">Subordinate</div><div class="dc-step-d">everything else serves it</div></div>
-<div class="dc-arrow">→</div>
-<div class="dc-step"><div class="dc-step-n">4</div><div class="dc-step-t">Elevate</div><div class="dc-step-d">add capacity to it</div></div>
-<div class="dc-arrow">↺</div>
-<div class="dc-step"><div class="dc-step-n">5</div><div class="dc-step-t">Repeat</div><div class="dc-step-d">the bottleneck has moved</div></div>
-</div>
+| # | Step | What it means |
+|---|------|---------------|
+| 1 | **Identify** | find the constraint (the bottleneck) |
+| 2 | **Exploit** | get the most out of it — no idle time, no waste |
+| 3 | **Subordinate** | everything else runs to serve the constraint |
+| 4 | **Elevate** | add capacity to the constraint |
+| 5 | **Repeat** | ↺ the bottleneck has likely moved — start again |
 
 - **Always keep the bottleneck fully utilized** — an idle minute there is lost output for the entire system. Buffering it with a little WIP inventory in front protects it from starving.
 - Piling WIP in front of a **non-bottleneck** does nothing for throughput.
