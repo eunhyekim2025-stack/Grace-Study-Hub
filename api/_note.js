@@ -59,6 +59,22 @@ export function notePath(wikiRoot, subject, title) {
   return [wikiRoot, subjectDir(subject), slugify(title) + ".md"].filter(Boolean).join("/")
 }
 
+// A subject's Homework binder folder. Derived from the concept folder so it
+// sorts adjacent to it in the Explorer: "ops-concepts" → "ops-homework",
+// "critical-thinking-in-real-world" → "critical-thinking-in-real-world-homework".
+// The folder appears (with its pre-registered label in quartz.layout.ts) the
+// moment the first homework note lands in it — no separate "create section" step.
+export function homeworkDir(subject) {
+  const base = subjectDir(subject)
+  if (!base) return "homework"
+  return base.endsWith("-concepts") ? base.replace(/-concepts$/, "-homework") : base + "-homework"
+}
+
+// The wiki-relative path a homework note gets written to (inside WIKI, slugged).
+export function homeworkPath(wikiRoot, subject, title) {
+  return [wikiRoot, homeworkDir(subject), slugify(title) + ".md"].filter(Boolean).join("/")
+}
+
 // Shared "quality bar" appended to both prompts: it makes the model produce
 // notes that are readable AT A GLANCE — an optional visual "Diagram view" block,
 // a key-takeaways callout, tight sections, tables for comparisons, and a

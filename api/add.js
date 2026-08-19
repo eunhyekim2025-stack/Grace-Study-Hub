@@ -9,7 +9,7 @@
 //
 // Runtime: Node (native fetch + Buffer, no npm dependencies).
 
-import { DESIGN_SPEC, normTag, notePath, sanitizeDcView, subjectDir, unfence } from "./_note.js"
+import { DESIGN_SPEC, homeworkPath, normTag, notePath, sanitizeDcView, subjectDir, unfence } from "./_note.js"
 
 const REPO = "eunhyekim2025-stack/Grace-Study-Hub"
 const BRANCH = "main"
@@ -169,7 +169,14 @@ export default async function handler(req, res) {
         : (await suggestTags(title, finalContent, body.knownTags, process.env.GROQ_API_KEY))
             .map(normTag)
             .filter(Boolean)
-    const tagList = [...new Set([...userTags, ...autoTags])].slice(0, 8)
+    // Homework notes are routed into the subject's <base>-homework/ folder and
+    // always carry the "homework" tag (so /tags/homework lists them) plus a
+    // status so the binder reads as a to-do list.
+    const isHw = !!body.homework
+    const tagList = [...new Set([...(isHw ? ["homework"] : []), ...userTags, ...autoTags])].slice(
+      0,
+      8,
+    )
     // Private audio backup: /api/archive uploaded each recording segment to the
     // private Blob store and the client passes back their pathnames. We record
     // them in frontmatter (a private-store path is useless without the token, so
@@ -199,15 +206,16 @@ export default async function handler(req, res) {
       `---\n` +
       `title: ${JSON.stringify(title)}\n` +
       (tagList.length ? `tags: [${tagList.map((t) => JSON.stringify(t)).join(", ")}]\n` : "") +
+      (isHw ? `type: homework\nstatus: to-read\n` : "") +
       `created: ${new Date().toISOString().slice(0, 10)}\n` +
       (recordings.length
         ? `recording:\n${recordings.map((p) => `  - ${JSON.stringify(p)}`).join("\n")}\n`
         : "") +
       `---\n\n`
     const md = fm + recNote + gapNote + finalContent + "\n"
-    path = notePath(WIKI, body.subject, title)
+    path = isHw ? homeworkPath(WIKI, body.subject, title) : notePath(WIKI, body.subject, title)
     contentBase64 = Buffer.from(md, "utf8").toString("base64")
-    commitMsg = `Add note: ${title} (via site)`
+    commitMsg = `${isHw ? "Add homework note" : "Add note"}: ${title} (via site)`
   } else if (body.type === "file") {
     const { filename, dataBase64 } = body
     if (!filename || !dataBase64) {

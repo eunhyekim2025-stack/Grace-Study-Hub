@@ -160,6 +160,7 @@ function submitNote(btn: HTMLButtonElement) {
       tags: val("sh-note-tags"),
       content,
       polish,
+      homework: checked("sh-note-homework"), // route into the subject's <base>-homework/ folder
       knownTags: knownTags(), // reuse the existing vocabulary for auto-tagging
     },
     btn,

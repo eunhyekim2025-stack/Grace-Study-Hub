@@ -71,6 +71,13 @@ const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) =>
             <label for="sh-note-subject">과목</label>
             <Subjects id="sh-note-subject" />
           </div>
+          <label class="sh-check">
+            <input type="checkbox" id="sh-note-homework" />
+            <span>
+              <b>📩 숙제노트로 저장</b>
+              <small>이 노트를 해당 과목의 <b>Homework</b> 폴더에 저장합니다. 그 과목의 첫 숙제노트면 왼쪽 목차에 "과목 · Homework" 섹션이 자동으로 생겨요.</small>
+            </span>
+          </label>
           <div class="sh-field">
             <label for="sh-note-tags">태그 (쉼표로 구분)</label>
             <input id="sh-note-tags" class="sh-input" placeholder="예: 개념, 시험대비 — 비워두면 AI가 자동 추가" />

@@ -42,6 +42,16 @@ const explorerOptions = {
       drivers: "🛰️ Early Warning · Drivers",
       signals: "🛰️ Early Warning · Signals",
       systems: "🛰️ Systems Thinking",
+      // 📩 Homework binders — dormant labels; a folder appears the moment the
+      // first homework note (site checkbox → <base>-homework/) lands in it.
+      "law-homework": "⚖️ Business Law · Homework",
+      "da-homework": "📊 Decision Analysis (DA) · Homework",
+      "fa-homework": "💰 Financial Accounting (FA) · Homework",
+      "ops-homework": "⚙️ Operations Management · Homework",
+      "sql-homework": "🗄 SQL · Homework",
+      "management-accounting-homework": "📓 Management Accounting · Homework",
+      "critical-thinking-in-real-world-homework": "📓 Critical Thinking · Homework",
+      "management-of-people-at-work-homework": "📓 People at Work · Homework",
     }
     const label = labels[node.slugSegment]
     if (label) node.displayName = label
@@ -52,10 +62,15 @@ const explorerOptions = {
       "law-concepts": 10,
       cases: 11,
       statutes: 12,
+      "law-homework": 13,
       "da-concepts": 20,
+      "da-homework": 21,
       "fa-concepts": 30,
+      "fa-homework": 31,
       "ops-concepts": 35,
+      "ops-homework": 36,
       "sql-concepts": 38,
+      "sql-homework": 39,
       "cross-domain": 40,
       concepts: 50,
       models: 51,
