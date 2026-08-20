@@ -1952,11 +1952,30 @@ textarea.sh-input {
   }
 
   // Avoid awkward breaks through headings, images and code blocks.
-  h1, h2, h3, h4 {
+  h1, h2, h3, h4, h5, h6 {
     break-after: avoid;
   }
-  pre, blockquote, table, img, figure {
+  pre, blockquote, img, figure {
     break-inside: avoid;
+  }
+  // Long tables must FLOW across pages, not jump whole to the next one. A tall
+  // table with `break-inside: avoid` that can't fit the remaining space gets
+  // pushed entirely to a new page, stranding its heading at the top and leaving
+  // a big blank below (the reported PDF gap). So let tables break, but keep each
+  // row intact and repeat the header row on every page.
+  table {
+    break-inside: auto;
+  }
+  thead {
+    display: table-header-group;
+  }
+  tr {
+    break-inside: avoid;
+  }
+  // Tidy paragraph/list breaks so a lone line isn't left dangling.
+  p, li {
+    orphans: 3;
+    widows: 3;
   }
 }
 
