@@ -95,7 +95,6 @@ def main():
 
     name = a.name or ("textbook" if a.kind == "textbook" else pdf.stem)
     out = RAW / ".index" / a.subject
-    out.mkdir(parents=True, exist_ok=True)
 
     print(f"reading {pdf} …")
     pages, toc = extract(pdf)
@@ -125,6 +124,10 @@ def main():
         sys.exit(2)
 
     offset, conf = printed_offset(pages)
+
+    # Only now — a refused index must leave no directory behind, or the empty
+    # folder later reads as "this subject is indexed".
+    out.mkdir(parents=True, exist_ok=True)
 
     with (out / f"{name}.pages.jsonl").open("w", encoding="utf-8") as fh:
         for i, t in enumerate(pages, start=1):
