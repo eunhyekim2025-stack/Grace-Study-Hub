@@ -13,4 +13,14 @@ community: 1
 
 > [[index|← Subjects]]
 
-New subject — add notes with **+ 새 노트**.
+## Readings & concepts
+
+| Note | What it covers |
+| --- | --- |
+| [[management-of-people-at-work/evidence-based-management\|Evidence-Based Management (Pfeffer & Sutton)]] | Deciding from best evidence, not habit/hype/belief; six substitutes; forced ranking; four practices |
+
+## Lecture notes
+
+| Note | Date |
+| --- | --- |
+| [[management-of-people-at-work/mpw-1-1\|mpw #1-1]] | 2026-08-18 |
