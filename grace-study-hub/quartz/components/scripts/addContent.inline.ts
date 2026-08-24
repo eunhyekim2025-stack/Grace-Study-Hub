@@ -290,7 +290,7 @@ const REC: {
   stream: MediaStream | null
   chunks: Blob[]
   segIndex: number
-  jobs: Promise<{ i: number; text: string; failed?: boolean }>[]
+  jobs: Promise<{ i: number; text: string; failed?: boolean; error?: string }>[]
   // Optional private-audio backup: each segment is also uploaded to /api/archive
   // (private Vercel Blob). archiveOn flips off the moment archiving is
   // unavailable (no Blob store / any failure) so it never blocks the note.
@@ -353,7 +353,7 @@ function transcribeBlob(
   blob: Blob,
   i: number,
   password: string,
-): Promise<{ i: number; text: string; failed?: boolean }> {
+): Promise<{ i: number; text: string; failed?: boolean; error?: string }> {
   return new Promise((resolve) => {
     const reader = new FileReader()
     reader.onload = async () => {
@@ -366,17 +366,19 @@ function transcribeBlob(
         })
         const data = await res.json().catch(() => ({}))
         if (!res.ok) {
-          recStatus("전사 실패(조각 " + (i + 1) + "): " + (data.error || res.status), "err")
-          resolve({ i, text: "", failed: true })
+          const error = String(data.error || res.status)
+          recStatus("전사 실패(조각 " + (i + 1) + "): " + error, "err")
+          resolve({ i, text: "", failed: true, error })
           return
         }
         const text = (data.text || "").trim()
+        // ok with no text = Whisper heard silence in this segment; not an error.
         resolve({ i, text, failed: !text })
-      } catch {
-        resolve({ i, text: "", failed: true })
+      } catch (e) {
+        resolve({ i, text: "", failed: true, error: "네트워크 오류: " + (e as Error).message })
       }
     }
-    reader.onerror = () => resolve({ i, text: "", failed: true })
+    reader.onerror = () => resolve({ i, text: "", failed: true, error: "오디오 읽기 실패" })
     reader.readAsDataURL(blob)
   })
 }
@@ -702,7 +704,16 @@ async function stopRecording() {
     .join(" ")
     .trim()
   if (!transcript) {
-    recStatus("전사 결과가 비었습니다. Vercel의 GROQ_API_KEY를 확인하세요.", "err")
+    // Distinguish the real failure modes instead of always blaming the key.
+    // A segment that returned an error (bad key, decommissioned model, Groq
+    // rejecting the audio) carries `error`; a segment that came back ok-but-empty
+    // was just silence. Surface whichever actually happened.
+    const errs = Array.from(new Set(ordered.map((r) => r.error).filter(Boolean)))
+    if (errs.length) {
+      recStatus("전사 실패 — 서버 응답: " + errs.join(" · "), "err")
+    } else {
+      recStatus("전사 결과가 비었습니다 — 녹음에서 음성이 감지되지 않았습니다 (마이크·볼륨 확인).", "err")
+    }
     return
   }
   // Collect the private-audio backup refs (if archiving was available).
