@@ -1,8 +1,8 @@
 ---
 title: "Ch6 — Reconstructing & Constructing Arguments, Writing Evaluative Essays"
-tags: [critical-thinking-in-real-world, ctrw-textbook, standard-argument-form, reconstruction, essay-writing, how-much-to-claim]
-sources: ["Mooney, Williams & Burik, An Introduction to Critical and Creative Thinking (McGraw-Hill, 2015) — Ch.6 Reconstructing and Constructing Arguments and Writing Evaluative Essays"]
-updated: 2026-08-16
+tags: [critical-thinking-in-real-world, ctrw-textbook, standard-argument-form, reconstruction, principle-of-charity, essay-writing, how-much-to-claim]
+sources: ["Mooney, Williams & Burik, An Introduction to Critical and Creative Thinking (McGraw-Hill, 2015) — Ch.6 Reconstructing and Constructing Arguments and Writing Evaluative Essays", "Patra, CTRW Seminar 2 slides (2026) — The Principle of Charity & sources of greyness"]
+updated: 2026-08-24
 kind: 절차
 ---
 
@@ -38,6 +38,26 @@ To evaluate an argument you must first see how it's *meant* to work. Real passag
 - **Simple arguments:** basic premises first, conclusion last; interpret ambiguous statements charitably (pick the reading that makes the argument **deductively sound** without twisting the words).
 - **Complex arguments:** treat as a **main argument + supporting sub-arguments**. Reconstruct the **main** line first, then a sub-argument for each **intermediate conclusion**. (The book works Augustine on astrology, Aquinas's efficient-cause proof, and — usefully for this course — [[case-drug-legalisation-grayling|Grayling's drug-legalisation op-ed]] itself.)
 - **Guard rail:** reconstruction risks *misrepresentation* — stay sensitive to the arguer's intention; don't build a different argument than the one intended.
+
+### The Principle of Charity — and its limits
+
+Charity means **resolving any unclarity so the other person's argument comes out as strong as it sensibly can** — because the point is to test whether the *conclusion* is worth accepting, not to score a cheap win. More generally, it commits you to reading someone's words in the most sensible way available.
+
+In practice, charity is what lets you **redeem** an argument that suffers any of these common **sources of "greyness"** (the list is not exhaustive — supply the missing piece the arguer plainly intended):
+
+| Greyness | Charitable fix |
+|---|---|
+| inference indicator not explicit | insert the `[so]` / `[because]` the reasoning implies |
+| a **premise** left unstated (implicit premise) | add the unstated premise the conclusion needs (e.g. "you'll be lonely if unmarried" behind "don't want to be lonely → should marry") |
+| an **intermediate conclusion** left unstated | make the hidden middle step explicit |
+| the **conclusion** itself left unstated | state the point the reasons are driving at ("bigger burgers are better + BK's are biggest → BK's are best") |
+| unclear whether reasoning is **linked or convergent** | pick the structure that best fits the intent |
+| unclear whether reasoning is **deductive or inductive** | read it as the stronger of the two |
+
+**But be charitable with caution:**
+1. **Don't expect charity for your *own* argument.** It is *your* job to make yours as clear as it can be.
+2. **Use charity only when you can't just ask** the arguer to clarify — clarification beats guessing.
+3. **Don't let your "fix" make the argument worse.** Rescuing "this cat has a bloated belly, so it's pregnant" by supplying "*all* cats with bloated bellies are pregnant" hands them an obviously false premise — that's not charity.
 
 ## Constructing (building your own)
 

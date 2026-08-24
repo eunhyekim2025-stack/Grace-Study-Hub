@@ -1,8 +1,8 @@
 ---
 title: "Ch2 — Diagramming Reasoning"
 tags: [critical-thinking-in-real-world, ctrw-textbook, argument-mapping, serial, divergent, linked, convergent]
-sources: ["Mooney, Williams & Burik, An Introduction to Critical and Creative Thinking (McGraw-Hill, 2015) — Ch.2 Diagramming Reasoning"]
-updated: 2026-08-16
+sources: ["Mooney, Williams & Burik, An Introduction to Critical and Creative Thinking (McGraw-Hill, 2015) — Ch.2 Diagramming Reasoning", "Patra, CTRW Seminar 2 slides (2026) — Argument Structures & Arrow Diagrams"]
+updated: 2026-08-24
 kind: 개념
 ---
 
@@ -38,6 +38,15 @@ kind: 개념
 3. **Add missing inference indicators** in `[square brackets]` to make the reasoning explicit.
 4. A **conditional** ("If P then Q") and a **disjunction** ("Either P or Q") are each **one** numbered statement — never split.
 5. Draw arrows from reason(s) down to conclusion; the **final conclusion is always at the bottom** of the diagram regardless of where it appeared in the text.
+
+### Three roles — read them straight off the arrows
+Once the diagram is drawn, every statement is exactly one of three kinds, and the **arrow direction alone** tells you which:
+
+| Role | Arrow test |
+|---|---|
+| **Final conclusion (FC)** | arrows only go **in** — nothing leads out of it |
+| **Intermediate conclusion (IC)** | arrows go **in *and* out** — it is supported, and it in turn supports |
+| **Unsupported / basic premise (UP)** | arrows only go **out** — nothing supports it |
 
 ## The four patterns — every argument is built from these
 

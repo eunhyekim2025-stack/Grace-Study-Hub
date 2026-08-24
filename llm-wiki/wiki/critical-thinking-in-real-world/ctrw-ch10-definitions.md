@@ -1,8 +1,8 @@
 ---
 title: "Ch10 — Definitions"
-tags: [critical-thinking-in-real-world, ctrw-textbook, definitions, ambiguity, vagueness, genus-species, precising-definition]
-sources: ["Mooney, Williams & Burik, An Introduction to Critical and Creative Thinking (McGraw-Hill, 2015) — Ch.10 Definitions"]
-updated: 2026-08-16
+tags: [critical-thinking-in-real-world, ctrw-textbook, definitions, ambiguity, vagueness, genus-species, precising-definition, stipulative-definition]
+sources: ["Mooney, Williams & Burik, An Introduction to Critical and Creative Thinking (McGraw-Hill, 2015) — Ch.10 Definitions", "Patra, CTRW Seminar 2 slides (2026) — Definitions: criteria, circularity, methods"]
+updated: 2026-08-24
 kind: 개념
 ---
 
@@ -45,6 +45,9 @@ A definition should be:
 
 > A definition can be **both** too broad *and* too narrow ("a cup is a container for liquids" — buckets get in; ice-cream cups get out).
 
+> [!info] "Circular" is subtler than the textbook says
+> The textbook's rule — *circular iff the definiendum reappears in the definiens* — is itself a poor definition. It's **too broad**: "a true statement is a statement that is not false" is circular *without* repeating "true." And it's **too narrow**: "an Australian Cattle Dog is a breed of *dog* bred to herd *cattle*" repeats words yet is not circular. Better: **a definition is circular iff the definiens presumes you already understand the meaning of the term being defined.**
+
 ## Clarity — four sources of unclarity
 1. **Poor grammar** — no clear subject ("Sick leave is sitting in the pub all day").
 2. **Metaphor / poetic language** — "The Residents Committee is the jewel of grassroots organisation" tells you it's *like* a jewel, not what it *is*.
@@ -55,12 +58,25 @@ A definition should be:
 - **Ambiguous** = **more than one meaning**, each of which may be perfectly precise ("Omar went to a **bank**" — riverbank *or* financial institution).
 - **Vague** = **one meaning, with borderline cases** you can't decide ("that skirt is **short**"; "a **heap** of sand" — how many grains?). Vagueness is what a **precising definition** fixes: stipulate a sharper boundary ("a tall person = a man ≥ 6ft or a woman ≥ 5ft 8in"). Even most "precise" terms (hot, red, clean) are a little vague — it just usually doesn't matter.
 
-## Three methods of producing definitions
-| Method | How | Strength / limit |
+> [!warning] Beware the opposite error: unreasonable precision
+> More precise is **not automatically better**. "A foetus is an organism in the womb that develops into a human being" can be sharpened to "…**between the 12th and 14th week** of development" — but that added precision is **arbitrary and controversial**, smuggling in a contested claim rather than clarifying. Precify only up to what the context genuinely needs.
+
+## Methods of producing definitions
+
+Three top-level **approaches** — and the *descriptive* one has two techniques inside it:
+
+| Approach | How | Strength / limit |
 |---|---|---|
 | **Ostensive** | point to an example — "*It's one of those*" | good for hard-to-verbalise terms (colours, "sepia"); but risks being read too broad/narrow, and useless in writing |
-| **Genus, species & difference** | place the term as a **species** of a larger **genus**, then state the **difference** ("a cat is a *feline mammal* that is *unable to roar*") | the workhorse — pick a genus you know is too broad, then narrow in stages until neither too broad nor too narrow |
-| **Necessary & sufficient conditions** | list the conditions that are individually **necessary** and jointly **sufficient** ("bachelor = unmarried **and** male **and** adult") | rigorous; ties directly to [[ctrw-ch05-forms-of-argument|Ch5]]'s necessary/sufficient |
+| **Descriptive** · *genus, species & difference* | place the term as a **species** of a larger **genus**, then state the **difference** ("a cat is a *feline mammal* that is *unable to roar*") | the workhorse — pick a genus you know is too broad, then narrow in stages until neither too broad nor too narrow |
+| **Descriptive** · *necessary & sufficient conditions* | list the conditions that are individually **necessary** and jointly **sufficient** ("bachelor = unmarried **and** male **and** adult") | rigorous; ties directly to [[ctrw-ch05-forms-of-argument|Ch5]]. Only a *sufficient* condition → too broad; only a *necessary* one → too narrow |
+| **Stipulative** | **assign** a meaning by decree rather than reporting existing usage ("for this policy, a *'senior'* means anyone ≥ 60") | you *set* the meaning, so it can't be "wrong" — but others need not accept it; keep it useful and non-misleading |
+
+> **Descriptive vs stipulative** is the key contrast: a *descriptive* definition tries to capture what a term is **consensually** understood to mean (and can be right or wrong); a *stipulative* one **lays down** a meaning for your own purposes.
+
+**When to stipulate:** a **new word** (a coinage), a **new meaning** for an existing word, a **contested** word (religion, art), or a **vague/ambiguous** term you need pinned down (e.g. fixing "sexual harassment" for a code of conduct). A precising definition (above) is really stipulation aimed at vagueness.
+
+**Which method?** It depends on **(i) your audience** (child vs expert vs layperson), **(ii) your purpose** (communicate, guide behaviour, strike consensus), and **(iii) what you're defining** (a concrete object vs a contested abstraction like "God" or "brunch").
 
 **Worked (genus-difference, stepwise narrowing):** *wine* → "a liquid" (too broad) → "a beverage" (drop "liquid" — redundant) → "…made from grapes" → "an **alcoholic** beverage made from grapes" → "…**fermented** from grapes **but not distilled**" (now excludes brandy). Stop when nothing that fits the definiens is a non-wine.
 
@@ -71,7 +87,8 @@ A definition should be:
 ## Key takeaways
 - Define key terms to avoid **talking past each other**; dictionaries **report**, they don't **settle**.
 - A good definition meets **six criteria** — clear, precise, not too broad/narrow, non-circular, not unfairly emotive.
-- **Ambiguity** = several meanings; **vagueness** = fuzzy borderline — fix vagueness with a **precising definition**.
+- **Ambiguity** = several meanings; **vagueness** = fuzzy borderline — fix vagueness with a **precising definition**, but don't over-precify into arbitrary/controversial claims.
+- Methods: **ostensive**, **descriptive** (genus+difference *or* necessary/sufficient conditions), and **stipulative** (lay down a meaning) — choose by audience, purpose, and what you're defining.
 - Prefer **genus + difference** (narrow in stages); in a debate, refuse a **loaded or question-begging** definition and demand a neutral one.
 
 ## Related notes
