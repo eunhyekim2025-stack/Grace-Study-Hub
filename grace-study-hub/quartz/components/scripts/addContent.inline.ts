@@ -308,7 +308,7 @@ const REC: {
   levelRAF: number
   heardSound: boolean // true once any audio above the noise floor was seen
   lastSoundAt: number
-  trackLost: boolean // the mic track fired mute/ended mid-recording
+  trackEnded: boolean // the mic track fully ended mid-recording (won't recover)
 } = {
   active: false,
   rec: null,
@@ -328,7 +328,7 @@ const REC: {
   levelRAF: 0,
   heardSound: false,
   lastSoundAt: 0,
-  trackLost: false,
+  trackEnded: false,
 }
 
 function recStatus(msg: string, kind: "" | "ok" | "err" = "") {
@@ -484,7 +484,7 @@ function startMeter(stream: MediaStream) {
 
     REC.heardSound = false
     REC.lastSoundAt = Date.now()
-    REC.trackLost = false
+    REC.trackEnded = false
 
     const meter = document.getElementById("sh-rec-meter")
     const fill = document.getElementById("sh-rec-level")
@@ -506,18 +506,20 @@ function startMeter(stream: MediaStream) {
       }
       if (fill) fill.style.width = Math.min(100, Math.round(rms * 320)) + "%"
 
+      // The level meter is the ground truth: recent sound = it's genuinely being
+      // captured, and any warning clears itself the instant sound returns.
+      const recentSound = REC.heardSound && now - REC.lastSoundAt < DROPOUT_MS
       let warn = false
       let msg = "마이크 확인 중…"
-      if (REC.trackLost) {
+      if (REC.trackEnded) {
         warn = true
-        msg = "⚠️ 마이크 연결이 끊겼어요 — 정지 후 재시작하세요"
-      } else if (!REC.heardSound && now - REC.startedAt > START_GRACE_MS) {
+        msg = "⚠️ 마이크 연결이 종료됐어요 — 정지 후 재시작하세요"
+      } else if (!recentSound && now - REC.startedAt > START_GRACE_MS) {
         warn = true
-        msg = "⚠️ 소리가 안 잡혀요 — 마이크를 확인하고 정지→재시작하세요"
-      } else if (REC.heardSound && now - REC.lastSoundAt > DROPOUT_MS) {
-        warn = true
-        msg = "⚠️ 한동안 무음이에요 — 마이크가 끊겼는지 확인하세요"
-      } else if (REC.heardSound) {
+        msg = REC.heardSound
+          ? "⚠️ 지금 소리가 안 잡혀요 — 마이크 확인 (돌아오면 자동 해제)"
+          : "⚠️ 소리가 안 잡혀요 — 마이크를 확인하고 정지→재시작하세요"
+      } else if (recentSound) {
         msg = "🎙 소리 감지 중 — 정상 녹음"
       }
       if (meter) meter.classList.toggle("warn", warn)
@@ -616,11 +618,12 @@ async function startRecording() {
   }
   // A mic that drops mid-lecture (another app grabs it, device unplugged) fires
   // these — the meter turns red so it's noticed while there's still time to fix.
-  track.addEventListener("mute", () => {
-    REC.trackLost = true
-  })
+  // A dropped/muted mic just shows up as silence in the level meter below, which
+  // self-heals the moment audio returns — so we DON'T latch on the noisy `mute`
+  // event (it often fires transiently at startup and never gets a matching
+  // `unmute`). Only a fully ENDED track is hard-flagged, since it won't recover.
   track.addEventListener("ended", () => {
-    REC.trackLost = true
+    REC.trackEnded = true
   })
 
   REC.mime = pickMime()
