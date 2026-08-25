@@ -897,9 +897,17 @@ async function stopRecording() {
     renderDrafts()
     const backup = audio.length ? ` · 🎙 녹음본 ${audio.length}조각 비공개 백업됨` : ""
     const gapWarn = gaps.length ? ` · ⚠️ ${gaps.length}조각 전사 실패 (노트에 표시됨)` : ""
+    // The server tidies the transcript into a study note; on a long recording it
+    // can't (token limit) and saves raw. Say so rather than implying it's done.
+    const tidyWarn =
+      data.tidied === false
+        ? data.tidyReason === "too-long"
+          ? " · ⚠️ 녹음이 길어 자동 정리 생략 — 원본 전사로 저장됨"
+          : " · ⚠️ 자동 정리 실패 — 원본 전사로 저장됨"
+        : ""
     recStatus(
-      "저장됨 → " + (data.path || "") + backup + gapWarn + " · 1–2분 뒤 사이트에 반영됩니다.",
-      gaps.length ? "err" : "ok",
+      "저장됨 → " + (data.path || "") + backup + gapWarn + tidyWarn + " · 1–2분 뒤 사이트에 반영됩니다.",
+      gaps.length || data.tidied === false ? "err" : "ok",
     )
     const t = document.getElementById("sh-rec-title") as HTMLInputElement | null
     if (t) t.value = ""

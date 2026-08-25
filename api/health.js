@@ -8,7 +8,7 @@
 //     (env.GROQ_API_KEY:true) does NOT mean the key works — it can be expired,
 //     revoked, or mistyped, which is the real cause behind an "empty transcript".
 const WHISPER_MODEL = process.env.GROQ_WHISPER_MODEL || "whisper-large-v3"
-const CHAT_MODEL = process.env.GROQ_MODEL || "llama-3.3-70b-versatile"
+const CHAT_MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-120b"
 
 async function checkGroq() {
   const key = process.env.GROQ_API_KEY

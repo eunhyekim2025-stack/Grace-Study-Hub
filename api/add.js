@@ -21,9 +21,27 @@ const WIKI = "llm-wiki/wiki"
 //   "tidy"    — ① NotebookLM paste: reformat only, invent nothing.
 //   "lecture" — 🔴 in-site recording: turn a rough speech transcript into
 //               well-structured study notes (summarize + organize).
+// The chat model. NOTE: this Groq account can only use the openai/gpt-oss-*
+// models — the llama-* ids return 404 "do not have access", which silently sent
+// every tidy call to the raw fallback. gpt-oss-120b is capped at ~8000 tokens
+// per minute, so one request must stay well under that (input + output).
+const CHAT_MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-120b"
+// Largest transcript we try to tidy in a single request and still fit the TPM
+// ceiling (~3.5k input tokens + ~3.5k output < 8k). A longer lecture cannot be
+// summarized server-side on this tier, so it is kept as raw text and flagged.
+const TIDY_BUDGET_CHARS = 14000
+
+// Returns { body, tidied, reason }. `tidied:false` means the caller should mark
+// the note as raw (needs manual tidying) instead of passing it off as finished.
 async function noteFromText(title, raw, apiKey, mode = "tidy") {
-  if (!apiKey) return raw
+  if (!apiKey) return { body: raw, tidied: false, reason: "no-groq-key" }
   const lecture = mode === "lecture"
+  const text = String(raw)
+  if (text.length > TIDY_BUDGET_CHARS) {
+    // Too long for one budget-sized request; don't produce a misleading
+    // half-note. Keep the full transcript and let the caller flag it.
+    return { body: raw, tidied: false, reason: "too-long" }
+  }
 
   const prompt = lecture
     ? `You are turning a raw lecture transcript into clean study notes for a Quartz ` +
@@ -36,7 +54,7 @@ async function noteFromText(title, raw, apiKey, mode = "tidy") {
       `repetitions) but keep ALL substantive content. Do NOT invent facts that are ` +
       `not present in the transcript.` +
       DESIGN_SPEC +
-      `\n\nTRANSCRIPT:\n"""\n${String(raw).slice(0, 60000)}\n"""`
+      `\n\nTRANSCRIPT:\n"""\n${text}\n"""`
     : `You are reformatting a study note for a Quartz markdown wiki. The note is ` +
       `titled "${title}". Below is raw text pasted from NotebookLM (a summary/notes). ` +
       `RESTRUCTURE and CLEAN UP the formatting — do NOT add, remove, or invent any ` +
@@ -44,28 +62,29 @@ async function noteFromText(title, raw, apiKey, mode = "tidy") {
       `callout titles, and glossary in that language too). Fix obvious spacing/OCR ` +
       `artifacts only.` +
       DESIGN_SPEC +
-      `\n\nRAW TEXT:\n"""\n${String(raw).slice(0, 12000)}\n"""`
+      `\n\nRAW TEXT:\n"""\n${text}\n"""`
 
-  const model = process.env.GROQ_MODEL || "llama-3.3-70b-versatile"
   try {
     const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: { "content-type": "application/json", authorization: `Bearer ${apiKey}` },
       body: JSON.stringify({
-        model,
+        model: CHAT_MODEL,
         messages: [{ role: "user", content: prompt }],
-        max_tokens: lecture ? 8000 : 4000,
+        max_tokens: 3500,
         // Low temperature = more faithful, less rambling → tighter notes.
         temperature: lecture ? 0.3 : 0.2,
       }),
     })
-    const data = await res.json()
-    if (!res.ok) return raw
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok) {
+      return { body: raw, tidied: false, reason: data?.error?.message || `groq-${res.status}` }
+    }
     let out = data.choices?.[0]?.message?.content || ""
     out = sanitizeDcView(unfence(out))
-    return out || raw
-  } catch {
-    return raw
+    return out ? { body: out, tidied: true } : { body: raw, tidied: false, reason: "empty-output" }
+  } catch (e) {
+    return { body: raw, tidied: false, reason: "exception: " + e.message }
   }
 }
 
@@ -88,13 +107,12 @@ async function suggestTags(title, body, knownTags, apiKey) {
     `- lowercase kebab-case, no "#". Prefer subject/topic tags over generic words.\n` +
     `- Output ONLY a JSON array of strings, e.g. ["contract","singapore"].\n\n` +
     `TITLE: ${title}\nNOTE:\n"""\n${String(body).slice(0, 6000)}\n"""`
-  const model = process.env.GROQ_MODEL || "llama-3.3-70b-versatile"
   try {
     const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: { "content-type": "application/json", authorization: `Bearer ${apiKey}` },
       body: JSON.stringify({
-        model,
+        model: CHAT_MODEL,
         messages: [{ role: "user", content: prompt }],
         max_tokens: 200,
         temperature: 0.2,
@@ -140,6 +158,8 @@ export default async function handler(req, res) {
   }
 
   let path, contentBase64, commitMsg
+  let tidied = true // whether an AI-tidy actually produced the note body
+  let tidyReason
   // Known subjects map to their legacy folder; subjects created via the site
   // use their slug as the folder. subjectDir() also forces the value to safe
   // path segments, so a crafted subject can't walk out of the wiki.
@@ -158,9 +178,27 @@ export default async function handler(req, res) {
     // "polish" tidies a pasted NotebookLM summary. Otherwise save as-is.
     const aiMode = body.mode === "lecture" ? "lecture" : "tidy"
     const wantAI = body.mode === "lecture" || body.polish
-    const finalContent = wantAI
+    const ai = wantAI
       ? await noteFromText(title, content, process.env.GROQ_API_KEY, aiMode)
-      : content
+      : { body: content, tidied: false }
+    const finalContent = ai.body
+    // If we WANTED an AI tidy but it didn't happen, say so in the note instead of
+    // passing raw transcript off as a finished note. `too-long` is the free-tier
+    // token ceiling; other reasons are surfaced verbatim for debugging.
+    const rawFallback = wantAI && !ai.tidied
+    tidied = !rawFallback
+    tidyReason = rawFallback ? ai.reason : undefined
+    const tidyNote = rawFallback
+      ? `> [!warning] ⚠️ Auto-tidy did not run — this is the raw ${
+          aiMode === "lecture" ? "lecture transcript" : "text"
+        }, not a finished note.${
+          ai.reason === "too-long"
+            ? " The recording was too long to summarize automatically on the current plan; tidy it manually or record shorter segments."
+            : ai.reason
+              ? ` (reason: ${ai.reason})`
+              : ""
+        }\n\n`
+      : ""
     // Auto-tags (free, Groq): reuse the client-supplied vocabulary. User-typed
     // tags are authoritative and come first; suggestions fill in, deduped & capped.
     const autoTags =
@@ -207,12 +245,13 @@ export default async function handler(req, res) {
       `title: ${JSON.stringify(title)}\n` +
       (tagList.length ? `tags: [${tagList.map((t) => JSON.stringify(t)).join(", ")}]\n` : "") +
       (isHw ? `type: homework\nstatus: to-read\n` : "") +
+      (rawFallback ? `needs_tidy: true\n` : "") +
       `created: ${new Date().toISOString().slice(0, 10)}\n` +
       (recordings.length
         ? `recording:\n${recordings.map((p) => `  - ${JSON.stringify(p)}`).join("\n")}\n`
         : "") +
       `---\n\n`
-    const md = fm + recNote + gapNote + finalContent + "\n"
+    const md = fm + recNote + gapNote + tidyNote + finalContent + "\n"
     path = isHw ? homeworkPath(WIKI, body.subject, title) : notePath(WIKI, body.subject, title)
     contentBase64 = Buffer.from(md, "utf8").toString("base64")
     commitMsg = `${isHw ? "Add homework note" : "Add note"}: ${title} (via site)`
@@ -255,5 +294,7 @@ export default async function handler(req, res) {
     return res.status(gh.status).json({ error: (data.message || "GitHub error") + hint, path })
   }
 
-  return res.status(200).json({ ok: true, path, commit: data.commit && data.commit.html_url })
+  return res
+    .status(200)
+    .json({ ok: true, path, commit: data.commit && data.commit.html_url, tidied, tidyReason })
 }
