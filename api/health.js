@@ -8,6 +8,7 @@
 //     (env.GROQ_API_KEY:true) does NOT mean the key works — it can be expired,
 //     revoked, or mistyped, which is the real cause behind an "empty transcript".
 const WHISPER_MODEL = process.env.GROQ_WHISPER_MODEL || "whisper-large-v3"
+const CHAT_MODEL = process.env.GROQ_MODEL || "llama-3.3-70b-versatile"
 
 async function checkGroq() {
   const key = process.env.GROQ_API_KEY
@@ -29,12 +30,40 @@ async function checkGroq() {
       }
     }
     const ids = Array.isArray(data.data) ? data.data.map((m) => m.id) : []
-    return {
+    const out = {
       keyPresent: true,
       keyValid: true,
       whisperModel: WHISPER_MODEL,
       whisperModelAvailable: ids.includes(WHISPER_MODEL),
+      chatModel: CHAT_MODEL,
+      chatModelAvailable: ids.includes(CHAT_MODEL),
     }
+    // Also probe the chat model that /api/add uses to tidy transcripts, and read
+    // back Groq's rate-limit headers — the per-request/per-minute token ceiling
+    // is what makes a long lecture's tidy call fail and fall back to raw text.
+    try {
+      const c = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: { "content-type": "application/json", authorization: `Bearer ${key.trim()}` },
+        body: JSON.stringify({
+          model: CHAT_MODEL,
+          messages: [{ role: "user", content: "ping" }],
+          max_tokens: 1,
+        }),
+      })
+      const cd = await c.json().catch(() => ({}))
+      out.chat = {
+        ok: c.ok,
+        status: c.status,
+        error: c.ok ? undefined : cd?.error?.message || `Groq ${c.status}`,
+        limitTokensPerMin: c.headers.get("x-ratelimit-limit-tokens") || null,
+        remainingTokens: c.headers.get("x-ratelimit-remaining-tokens") || null,
+        limitReqPerMin: c.headers.get("x-ratelimit-limit-requests") || null,
+      }
+    } catch (e) {
+      out.chat = { ok: false, error: "chat probe 실패: " + e.message }
+    }
+    return out
   } catch (e) {
     return { keyPresent: true, keyValid: false, reason: "Groq 연결 오류: " + e.message }
   }
