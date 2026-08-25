@@ -1,7 +1,7 @@
 ---
 title: "Formula Cheat Sheet & Glossary (Modules 1–12)"
 tags: [management-accounting, cheatsheet, formulas, glossary, exam-prep]
-sources: ["Managerial Accounting: Comprehensive Study Guide (Modules 1–12)", "SMU ACCT102 (BT) Week 1 — Cost concepts and Cost flows", "SMU ACCT102 (BT) Week 2 & 3 — Cost behaviour"]
+sources: ["Managerial Accounting: Comprehensive Study Guide (Modules 1–12)", "SMU ACCT102 (BT) Week 1 — Cost concepts and Cost flows", "SMU ACCT102 (BT) Week 2 & 3 — Cost behaviour", "SMU ACCT102 (BT) Week 2 & 3 — CVP Analysis"]
 updated: 2026-08-25
 ---
 
@@ -43,13 +43,22 @@ updated: 2026-08-25
 | **High-low slope ($b$)** | (Cost at high activity − cost at low activity) ÷ (high activity − low activity) | Selected by **activity**, not by cost |
 | **High-low intercept ($a$)** | Total cost at a point − ($b$ × that activity) | Either point must give the same $a$ — free check |
 | **Contribution Margin (CM)** | Sales − Variable Costs | The money that pays off fixed costs |
-| **CM Ratio** | CM ÷ Sales | What survives out of every £1 of sales |
+| **The CVP equation** | Profit = (Unit CM × Q) − Fixed Expenses | **The root.** Profit = 0 → break-even; Profit = target → target profit |
+| **CVP equation, in dollars** | Profit = (Sales × CM Ratio) − Fixed Expenses | Same equation when you are handed revenue instead of units |
+| **CM Ratio** | CM ÷ Sales (or unit CM ÷ price) | What survives out of every £1 of sales |
+| **Variable Expense Ratio** | Variable expenses ÷ Sales | **CM Ratio = 1 − Variable Expense Ratio** — the two sum to 100% |
 | **Break-even (units)** | Fixed Expenses ÷ CM per unit | Debt ÷ repayment per unit |
 | **Break-even (£)** | Fixed Expenses ÷ CM Ratio | Same idea, in money |
+| **Break-even % (BE%)** | Fixed Expenses ÷ **total CM** | % of *today's* sales needed. Apply it to both revenue and units |
 | **Target profit (units)** | (Fixed Expenses + Target Operating Income) ÷ CM per unit | Debt + what you want to earn |
+| **Target profit (£)** | (Fixed Expenses + Target Operating Income) ÷ CM Ratio | Same, in money |
+| **Target profit %** | (Fixed Expenses + Target Operating Income) ÷ **total CM** | The percentage twin — 120% of current sales |
 | **After-tax → pre-tax** | Target Operating Income = Net Income ÷ (1 − tax rate) | £300,000 ÷ 0.75 = £400,000 |
-| **Margin of Safety** | Current sales − break-even sales | How far you can fall |
+| **Margin of Safety** | Current sales − break-even sales (units: total units − BE units) | How far you can fall |
+| **Margin of Safety %** | MoS in £ ÷ Total sales | **BE% = 1 − MoS%** — compute one, get the other free |
 | **Degree of Operating Leverage** | CM ÷ Operating Income | The **multiplier** from sales change to profit change |
+| **Using DOL** | %Δ Profit = %Δ Sales × DOL | +10% sales × DOL 5 = **+50% profit** |
+| **Overall CM Ratio (multi-product)** | Total CM ÷ Total sales | Weighted by **revenue**, not a plain average of the products' ratios |
 | **Weighted Average CM** | Σ (sales-mix share × CM per unit) | Treat several products as one |
 | **Inventory equation** | Beginning + added − ending = what left | Applies to raw materials, WIP and finished goods alike |
 
@@ -94,10 +103,18 @@ updated: 2026-08-25
 | **Least-Squares Regression** | Fits the line minimising the sum of squared errors using **all** data points — the most accurate of the three methods |
 | **$R^2$** | Goodness of fit — the share of variation in cost explained by variation in the activity. $R^2 = 0.92$ → 92% explained |
 | **Contribution Margin (CM)** | Sales less variable costs |
+| **Traditional Format** | Income statement grouped by **function** (COGS vs selling/admin) → gross margin. For **external** reporting |
+| **Contribution Format** | Income statement grouped by **behaviour** (variable vs fixed) → contribution margin. For **internal** planning and decisions |
+| **Variable Expense Ratio** | Variable expenses as a percentage of sales; 1 − CM ratio |
+| **CVP Assumptions** | ① price constant ② costs linear and cleanly split ③ sales mix constant — every "why might this be wrong?" answer lives here |
+| **CVP Graph** | Sales line and total-expense line plotted against volume; they cross at break-even |
+| **Profit Graph** | The simpler single line — profit itself against volume, starting at −Fixed and crossing zero at break-even |
 | **Break-even Point** | The volume at which operating income is exactly zero |
-| **Margin of Safety** | How far sales can drop before break-even |
-| **Operating Leverage** | How strongly profit reacts to a change in sales |
-| **Sales Mix** | The proportion in which different products are sold |
+| **Break-even % (BE%)** | The share of current sales needed to break even; **1 − MoS%** |
+| **Margin of Safety** | How far sales can drop before break-even — in £, in units, or as a % |
+| **Cost Structure** | The relative proportion of fixed and variable costs. High fixed = more upside and more risk; low fixed = greater income stability |
+| **Operating Leverage** | How strongly profit reacts to a change in sales — measured **at a given sales level**, and it falls as sales rise above break-even |
+| **Sales Mix** | The proportion in which different products are sold. The mix **in dollars differs from the mix in units** — use the one that matches what you are splitting |
 | **Absorption Costing** | Fixed MO treated as a product cost (GAAP) |
 | **Variable (Marginal) Costing** | Fixed MO treated as a period cost (internal) |
 | **Master Budget** | The full set of coordinated budgets for the period |
@@ -119,8 +136,12 @@ updated: 2026-08-25
 - [ ] Three splitting methods disagree **by design**; regression is the most accurate because it uses **all** the points — but ACCT102 does **not** test regression computation
 - [ ] Fixed costs split into **committed** (stuck) and **discretionary** (cuttable now)
 - [ ] Contribution margin = sales − variable costs → pays fixed costs, remainder is profit
+- [ ] Break-even is just **target profit with the target set to zero** — two formulas, not six
+- [ ] The **percentage method** gives revenue *and* units from one number: BE% × sales, BE% × units
+- [ ] **BE% = 1 − MoS%**, and **CM ratio = 1 − variable expense ratio**
 - [ ] After-tax targets convert with **÷ (1 − tax rate)** *first*
-- [ ] High leverage means **high amplitude**, not high profitability
+- [ ] High leverage means **high amplitude**, not high profitability — and DOL is measured **at a given sales level**, not fixed
+- [ ] Multi-product: sales mix **in dollars ≠ in units**; use the one matching what you are splitting
 - [ ] Production > sales → **absorption** income is higher
 - [ ] Every budget starts from the **sales budget**
 

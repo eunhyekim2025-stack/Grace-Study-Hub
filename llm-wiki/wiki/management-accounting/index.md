@@ -22,14 +22,14 @@ updated: 2026-08-25
 <a class="dc-card" href="./m04-activity-based-costing"><div class="dc-eyebrow">Module 4</div><b>Activity-Based Costing</b><br>ABC · cost drivers</a>
 <div class="dc-section"><span class="dc-num">2</span><h2>How cost behaves</h2><span class="dc-hint">Modules 5–7</span></div>
 <a class="dc-card" href="./m05-cost-behaviour-estimation"><div class="dc-eyebrow">Module 5</div><b>Cost Behaviour &amp; Estimation</b><br>Relevant range · high-low · scattergraph · regression</a>
-<a class="dc-card" href="./m06-cvp-analysis"><div class="dc-eyebrow">Module 6</div><b>Cost-Volume-Profit Analysis</b><br>Break-even · margin of safety · leverage</a>
+<a class="dc-card" href="./m06-cvp-analysis"><div class="dc-eyebrow">Module 6</div><b>Cost-Volume-Profit Analysis</b><br>Break-even · CVP graph · cost structure · sales mix</a>
 <a class="dc-card" href="./m07-variable-vs-absorption-costing"><div class="dc-eyebrow">Module 7</div><b>Variable vs Absorption Costing</b><br>The overproduction trap</a>
 <div class="dc-section"><span class="dc-num">★</span><h2>From class</h2><span class="dc-hint">seminar recordings</span></div>
 <a class="dc-card" href="./seminar-01-costs-for-decision-making"><div class="dc-eyebrow">Seminar 1</div><b>Costs for Decision Making</b><br>Relevant vs irrelevant · the lecturer's marking policy</a>
 <div class="dc-section"><span class="dc-num">3</span><h2>Planning and evaluation</h2><span class="dc-hint">Modules 8–12</span></div>
 <a class="dc-card" href="./m08-budgeting"><div class="dc-eyebrow">Module 8</div><b>Budgeting</b><br>The sales budget is the north star</a>
 <a class="dc-card" href="./m09-12-performance-management"><div class="dc-eyebrow">Modules 9–12</div><b>Advanced Performance Management</b><br>Variance analysis · responsibility accounting</a>
-<a class="dc-card" href="./cheatsheet-formulas"><div class="dc-eyebrow">Reference</div><b>Formula Cheat Sheet &amp; Glossary</b><br>16 formulas · glossary · pre-exam checklist</a>
+<a class="dc-card" href="./cheatsheet-formulas"><div class="dc-eyebrow">Reference</div><b>Formula Cheat Sheet &amp; Glossary</b><br>26 formulas · glossary · pre-exam checklist</a>
 </div>
 
 # 📓 Management accounting
