@@ -17,7 +17,11 @@
 import ical from "node-ical"
 
 const WINDOW_DAYS = 14 // how far ahead to show
-const MAX_EVENTS = 40
+// Safety cap on the payload only. It must be high enough to cover EVERY event in
+// the [now-7d, now+14d] window — otherwise, because events are sorted ascending
+// before slicing, the cap silently drops the LATEST days (a busy week with a few
+// daily-recurring events easily passes 40, which cut Thu–Sun off the view).
+const MAX_EVENTS = 500
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" })
