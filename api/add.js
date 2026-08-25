@@ -177,10 +177,14 @@ export default async function handler(req, res) {
     // AI pass: "lecture" summarizes a recording transcript into study notes;
     // "polish" tidies a pasted NotebookLM summary. Otherwise save as-is.
     const aiMode = body.mode === "lecture" ? "lecture" : "tidy"
-    const wantAI = body.mode === "lecture" || body.polish
-    const ai = wantAI
-      ? await noteFromText(title, content, process.env.GROQ_API_KEY, aiMode)
-      : { body: content, tidied: false }
+    // pretidied = the client already ran the (chunked) tidy for a long lecture,
+    // so accept the content as the finished note and skip the server tidy.
+    const wantAI = (body.mode === "lecture" || body.polish) && !body.pretidied
+    const ai = body.pretidied
+      ? { body: content, tidied: true }
+      : wantAI
+        ? await noteFromText(title, content, process.env.GROQ_API_KEY, aiMode)
+        : { body: content, tidied: false }
     const finalContent = ai.body
     // If we WANTED an AI tidy but it didn't happen, say so in the note instead of
     // passing raw transcript off as a finished note. `too-long` is the free-tier

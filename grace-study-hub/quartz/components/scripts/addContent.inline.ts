@@ -786,6 +786,58 @@ async function retryDraft(id: string, btn: HTMLButtonElement) {
   }
 }
 
+// A lecture too long for the server to tidy in one request (Groq free-tier token
+// ceiling) is tidied HERE in the browser, which has no 60s function limit:
+// split into budget-sized chunks, tidy each via /api/tidy — pacing off any 429 —
+// then combine into one note. Returns tidied Markdown, or null if it couldn't
+// (caller then saves the raw transcript, honestly flagged).
+const TIDY_MAX_CHARS = 14000
+async function tidyLongTranscript(
+  title: string,
+  transcript: string,
+  password: string,
+): Promise<string | null> {
+  const CHUNK = 12000
+  const chunks: string[] = []
+  for (let i = 0; i < transcript.length; i += CHUNK) chunks.push(transcript.slice(i, i + CHUNK))
+
+  const callTidy = async (text: string, mode: "chunk" | "final"): Promise<string | null> => {
+    for (let attempt = 0; attempt < 4; attempt++) {
+      let data: { ok?: boolean; body?: string; retryAfterMs?: number } = {}
+      try {
+        const res = await fetch("/api/tidy", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ password, title, text, mode }),
+        })
+        if (!res.ok) return null
+        data = await res.json().catch(() => ({}))
+      } catch {
+        return null
+      }
+      if (data.ok) return String(data.body || "")
+      // Rate-limited: wait the server-advised delay, then retry the same chunk.
+      await new Promise((r) => setTimeout(r, Math.min(30000, Math.max(3000, data.retryAfterMs || 8000))))
+    }
+    return null
+  }
+
+  const sections: string[] = []
+  for (let i = 0; i < chunks.length; i++) {
+    recStatus(`긴 강의 정리 중… (${i + 1}/${chunks.length} 조각) — 몇 분 걸릴 수 있어요`)
+    const s = await callTidy(chunks[i], "chunk")
+    if (s === null) return null // give up → caller saves the raw transcript
+    sections.push(s)
+  }
+  const combined = sections.join("\n\n")
+  if (combined.length <= 20000) {
+    recStatus("긴 강의 정리 마무리 중…")
+    const finalNote = await callTidy(combined, "final")
+    if (finalNote) return finalNote
+  }
+  return sections.map((s, i) => `## Part ${i + 1}\n\n${s}`).join("\n\n")
+}
+
 async function stopRecording() {
   if (!REC.active) return
   const password = (val("sh-add-pw") || localStorage.getItem(PW_KEY) || "").trim()
@@ -870,6 +922,18 @@ async function stopRecording() {
   renderDrafts()
 
   recStatus("정리 중… 강의 노트를 만들고 있어요 (10~40초)")
+  // A short lecture is tidied server-side by /api/add. A long one exceeds the
+  // free-tier token ceiling, so tidy it in the browser first and send the
+  // finished note with pretidied:true (the server then skips its own tidy).
+  let noteContent = transcript
+  let pretidied = false
+  if (transcript.length > TIDY_MAX_CHARS) {
+    const tidiedLong = await tidyLongTranscript(draft.title, transcript, password)
+    if (tidiedLong) {
+      noteContent = tidiedLong
+      pretidied = true
+    }
+  }
   try {
     const res = await fetch("/api/add", {
       method: "POST",
@@ -879,8 +943,9 @@ async function stopRecording() {
         title: draft.title,
         subject: draft.subject,
         tags: "lecture, recording",
-        content: transcript,
+        content: noteContent,
         mode: "lecture",
+        ...(pretidied ? { pretidied: true } : {}),
         ...(audio.length ? { audio } : {}),
         ...(gaps.length ? { gaps } : {}),
         password,
