@@ -533,6 +533,52 @@ function startMeter(stream: MediaStream) {
   }
 }
 
+// Preflight: sample the mic for up to `ms` and report whether ANY audio above
+// the noise floor arrived. A dead/muted track (the recurring "empty recording"
+// cause) stays flat; a live mic picks up at least ambient room noise. Fail-open
+// (resolve true) if we can't test, so it never blocks recording by mistake.
+function micHasSignal(stream: MediaStream, ms: number): Promise<boolean> {
+  return new Promise((resolve) => {
+    try {
+      const AC =
+        (window as unknown as { AudioContext?: typeof AudioContext }).AudioContext ||
+        (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
+      if (!AC) return resolve(true)
+      const ac = new AC()
+      const src = ac.createMediaStreamSource(stream)
+      const an = ac.createAnalyser()
+      an.fftSize = 1024
+      src.connect(an)
+      const buf = new Uint8Array(an.fftSize)
+      const start = Date.now()
+      let peak = 0
+      const done = (ok: boolean) => {
+        try {
+          ac.close()
+        } catch {
+          /* ignore */
+        }
+        resolve(ok)
+      }
+      const tick = () => {
+        an.getByteTimeDomainData(buf)
+        let sum = 0
+        for (let i = 0; i < buf.length; i++) {
+          const v = (buf[i] - 128) / 128
+          sum += v * v
+        }
+        peak = Math.max(peak, Math.sqrt(sum / buf.length))
+        if (peak > NOISE_FLOOR * 1.5) return done(true)
+        if (Date.now() - start > ms) return done(peak > NOISE_FLOOR)
+        requestAnimationFrame(tick)
+      }
+      tick()
+    } catch {
+      resolve(true)
+    }
+  })
+}
+
 function stopMeter() {
   if (REC.levelRAF) cancelAnimationFrame(REC.levelRAF)
   REC.levelRAF = 0
@@ -625,6 +671,20 @@ async function startRecording() {
   track.addEventListener("ended", () => {
     REC.trackEnded = true
   })
+
+  // Preflight the mic BEFORE committing to the recording: a dead/muted track
+  // (the recurring "empty recording → could not process file" failure) delivers
+  // no audio. Catch it now instead of after a whole lecture is lost.
+  recStatus("🎙 마이크 확인 중… 잠깐 소리를 내보세요 (2초)")
+  const live = await micHasSignal(REC.stream, 2500)
+  if (!live) {
+    recStatus(
+      "⚠️ 마이크에서 소리가 안 잡혀요 — 녹음을 시작하지 않았어요. 입력 장치·음소거를 확인하고(다른 앱이 마이크를 쓰면 종료) 다시 [녹음 시작]을 눌러주세요.",
+      "err",
+    )
+    REC.stream.getTracks().forEach((t) => t.stop())
+    return
+  }
 
   REC.mime = pickMime()
   REC.active = true
