@@ -1,8 +1,8 @@
 ---
 title: "Formula Cheat Sheet & Glossary (Modules 1–12)"
 tags: [management-accounting, cheatsheet, formulas, glossary, exam-prep]
-sources: ["Managerial Accounting: Comprehensive Study Guide (Modules 1–12)", "SMU ACCT102 (BT) Week 1 — Cost concepts and Cost flows"]
-updated: 2026-08-14
+sources: ["Managerial Accounting: Comprehensive Study Guide (Modules 1–12)", "SMU ACCT102 (BT) Week 1 — Cost concepts and Cost flows", "SMU ACCT102 (BT) Week 2 & 3 — Cost behaviour"]
+updated: 2026-08-25
 ---
 
 <div class="dc-view">
@@ -11,7 +11,7 @@ updated: 2026-08-14
 <div class="dc-card"><div class="dc-eyebrow">Root ① Contribution Margin</div>Sales − Variable Costs<br><span class="dc-chip">break-even, target profit, margin of safety and leverage all fall out of this one</span></div>
 <div class="dc-card"><div class="dc-eyebrow">Root ② POHR</div>Estimated MO ÷ Estimated base</div>
 <div class="dc-card"><div class="dc-eyebrow">Root ③ Equivalent Units</div>Physical units × % complete</div>
-<div class="dc-card"><div class="dc-eyebrow">Root ④ Cost equation</div>Y = mX + b</div>
+<div class="dc-card"><div class="dc-eyebrow">Root ④ Cost equation</div>Y = a + bX<br><span class="dc-chip">a = total fixed · b = variable per unit</span></div>
 </div>
 <div class="dc-section"><span class="dc-num">1</span><h2>The five most-missed points</h2><span class="dc-hint">read these last before the exam</span></div>
 <div class="dc-cols">
@@ -39,8 +39,9 @@ updated: 2026-08-14
 | **Equivalent Units (EU)** | Physical units × percentage complete | Materials and conversion **separately** |
 | **Conversion Cost** | Direct Labour + Manufacturing Overhead | What it costs to *convert* materials into product |
 | **Prime Cost** | Direct Materials + Direct Labour | Only the directly traceable costs |
-| **Cost equation** | $Y = mX + b$ | Total cost = variable per unit × activity + total fixed |
-| **High-low slope** | (Cost at high activity − cost at low activity) ÷ (high activity − low activity) | Selected by **activity**, not by cost |
+| **Cost equation** | $Y = a + bX$ | Total cost = total fixed ($a$) + variable per unit ($b$) × activity. The study guide writes the same line as $Y = mX + b$ |
+| **High-low slope ($b$)** | (Cost at high activity − cost at low activity) ÷ (high activity − low activity) | Selected by **activity**, not by cost |
+| **High-low intercept ($a$)** | Total cost at a point − ($b$ × that activity) | Either point must give the same $a$ — free check |
 | **Contribution Margin (CM)** | Sales − Variable Costs | The money that pays off fixed costs |
 | **CM Ratio** | CM ÷ Sales | What survives out of every £1 of sales |
 | **Break-even (units)** | Fixed Expenses ÷ CM per unit | Debt ÷ repayment per unit |
@@ -77,14 +78,21 @@ updated: 2026-08-14
 | **Equivalent Units (EU)** | Work done, expressed as a number of completed units |
 | **Activity-Based Costing (ABC)** | Allocating overhead through multiple activity rates |
 | **Plantwide Rate** | A single overhead rate for the whole factory |
-| **Cost Driver** | The activity that causes a cost to be incurred |
+| **Cost Driver / Activity Base** | The activity that causes a cost to be incurred — units produced, machine hours, miles driven, labour hours. Nothing is "variable" until you say *variable with respect to what* |
 | **Relevant / Irrelevant Cost** | Differs between alternatives (use it) / is the same under each (ignore it) |
 | **Differential (Incremental) Cost** | The difference in cost between two alternatives — always relevant |
 | **Opportunity Cost** | The benefit given up by choosing one alternative over another (never in the books) |
 | **Sunk Cost** | Already incurred and unchangeable — always irrelevant to a decision |
-| **Relevant Range** | The activity band in which the linearity assumption holds |
+| **Relevant Range** | The activity band in which the linearity assumption holds. For a fixed cost, the stretch over which its graph is **flat** |
+| **Curvilinear Cost Function** | The economist's bendy real cost curve; the accountant substitutes a straight line that tracks it inside the relevant range |
+| **Committed Fixed Cost** | Long-term, cannot be significantly reduced in the short term (property tax, building depreciation) |
+| **Discretionary Fixed Cost** | Alterable in the short term by current managerial decisions (advertising, CSR, training) |
+| **Step-Variable Cost** | A resource obtainable only in chunks (workers) — a staircase, but with **narrow** steps that can be adjusted **quickly**, unlike a fixed cost |
 | **Mixed / Step-Fixed Cost** | Fixed + variable elements / cost that jumps at thresholds |
-| **High-Low Method** | Estimating a cost equation from the highest and lowest activity points |
+| **High-Low Method** | Estimating a cost equation from the highest and lowest activity points — 2 data points only |
+| **Scattergraph Plot** | Plotting Y against X and fitting a line by eye — a **diagnostic** for whether the relationship is linear at all |
+| **Least-Squares Regression** | Fits the line minimising the sum of squared errors using **all** data points — the most accurate of the three methods |
+| **$R^2$** | Goodness of fit — the share of variation in cost explained by variation in the activity. $R^2 = 0.92$ → 92% explained |
 | **Contribution Margin (CM)** | Sales less variable costs |
 | **Break-even Point** | The volume at which operating income is exactly zero |
 | **Margin of Safety** | How far sales can drop before break-even |
@@ -108,6 +116,8 @@ updated: 2026-08-14
 - [ ] Equivalent units: materials and conversion computed **separately**
 - [ ] Job order = every unit different · Process = every unit identical
 - [ ] High-low picks its two points by **activity (X)**
+- [ ] Three splitting methods disagree **by design**; regression is the most accurate because it uses **all** the points — but ACCT102 does **not** test regression computation
+- [ ] Fixed costs split into **committed** (stuck) and **discretionary** (cuttable now)
 - [ ] Contribution margin = sales − variable costs → pays fixed costs, remainder is profit
 - [ ] After-tax targets convert with **÷ (1 − tax rate)** *first*
 - [ ] High leverage means **high amplitude**, not high profitability
