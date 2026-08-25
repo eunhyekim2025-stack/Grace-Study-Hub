@@ -38,30 +38,32 @@ async function checkGroq() {
       chatModel: CHAT_MODEL,
       chatModelAvailable: ids.includes(CHAT_MODEL),
     }
-    // Also probe the chat model that /api/add uses to tidy transcripts, and read
-    // back Groq's rate-limit headers — the per-request/per-minute token ceiling
-    // is what makes a long lecture's tidy call fail and fall back to raw text.
-    try {
-      const c = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-        method: "POST",
-        headers: { "content-type": "application/json", authorization: `Bearer ${key.trim()}` },
-        body: JSON.stringify({
-          model: CHAT_MODEL,
-          messages: [{ role: "user", content: "ping" }],
-          max_tokens: 1,
-        }),
-      })
-      const cd = await c.json().catch(() => ({}))
-      out.chat = {
-        ok: c.ok,
-        status: c.status,
-        error: c.ok ? undefined : cd?.error?.message || `Groq ${c.status}`,
-        limitTokensPerMin: c.headers.get("x-ratelimit-limit-tokens") || null,
-        remainingTokens: c.headers.get("x-ratelimit-remaining-tokens") || null,
-        limitReqPerMin: c.headers.get("x-ratelimit-limit-requests") || null,
+    // Probe candidate chat models with a 1-token completion so we can see which
+    // this account can actually use (the configured one 404'd, silently sending
+    // every /api/add tidy call to the raw-text fallback).
+    const candidates = [
+      CHAT_MODEL,
+      "llama-3.1-8b-instant",
+      "openai/gpt-oss-120b",
+      "openai/gpt-oss-20b",
+      "llama-3.3-70b-versatile",
+    ].filter((m, i, a) => a.indexOf(m) === i)
+    out.chatProbe = {}
+    for (const m of candidates) {
+      try {
+        const c = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+          method: "POST",
+          headers: { "content-type": "application/json", authorization: `Bearer ${key.trim()}` },
+          body: JSON.stringify({ model: m, messages: [{ role: "user", content: "ping" }], max_tokens: 1 }),
+        })
+        out.chatProbe[m] = {
+          ok: c.ok,
+          status: c.status,
+          limitTokensPerMin: c.headers.get("x-ratelimit-limit-tokens") || null,
+        }
+      } catch (e) {
+        out.chatProbe[m] = { ok: false, error: e.message }
       }
-    } catch (e) {
-      out.chat = { ok: false, error: "chat probe 실패: " + e.message }
     }
     return out
   } catch (e) {
