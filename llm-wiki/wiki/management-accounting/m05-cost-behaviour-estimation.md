@@ -126,7 +126,7 @@ A **step-variable cost** arises when a resource can only be obtained **in chunks
 
 | | True variable | Step-variable |
 |---|---|---|
-| **Example** | Direct materials | Workers, maintenance labour |
+| **Example** | Direct materials | Casual/part-time workers, maintenance labour |
 | **Graph** | A smooth straight line from the origin | A staircase |
 | **Divisibility** | Buy exactly what you need | Only whole chunks |
 
@@ -137,6 +137,9 @@ A **step-variable cost** arises when a resource can only be obtained **in chunks
 > 2. **How "chunky" is the cost?** The steps for fixed costs are **wider** than those of step-variable costs.
 >
 > The mental image: **a part-time worker (step-variable) vs a property lease (fixed)**.
+>
+> Note that labour is not *inherently* step-variable — it is step-variable only when staffing can
+> actually be adjusted quickly. Salaried or contracted maintenance staff behave as a **step-fixed** cost.
 
 ---
 
@@ -249,7 +252,9 @@ $$Y = 4{,}395.67 + 6.02X$$
 | Least-squares regression | All, by formula | $Y = 4{,}395.67 + 6.02X$ | \$4,395.67 |
 
 The three disagree, and that is **expected** — each uses a differing amount of the data. Least-squares
-regression provides the **most accurate** estimate because it uses all the data points.
+regression provides the **most accurate** estimate because it uses all the data points — provided the
+relationship really is linear and no single outlier is dragging the line. That is what the scattergraph
+was for.
 
 ---
 
