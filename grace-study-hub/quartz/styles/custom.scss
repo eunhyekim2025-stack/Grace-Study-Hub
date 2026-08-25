@@ -1348,6 +1348,42 @@ textarea.sh-input {
     display: none;
   }
 }
+// Live mic-input meter: shown while recording so silence is obvious immediately.
+.sh-rec-meter {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sh-rec-meter-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--darkgray) 18%, transparent);
+  overflow: hidden;
+}
+.sh-rec-meter-fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: oklch(0.62 0.15 150); // green = hearing you
+  transition:
+    width 0.08s linear,
+    background 0.2s ease;
+}
+.sh-rec-meter-label {
+  font-size: 0.72rem;
+  color: var(--darkgray);
+  white-space: nowrap;
+}
+.sh-rec-meter.warn .sh-rec-meter-fill {
+  background: oklch(0.6 0.19 25); // red = no sound / dropout
+}
+.sh-rec-meter.warn .sh-rec-meter-label {
+  color: oklch(0.55 0.17 25);
+  font-weight: 600;
+}
 // Rescued transcripts: a recording whose note save failed is parked here until
 // it is retried or discarded, so a lecture is never lost to a bad token.
 .sh-drafts {

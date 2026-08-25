@@ -126,6 +126,14 @@ const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) =>
                 ■ 정지 &amp; 노트 생성
               </button>
             </div>
+            {/* Live input-level meter — proof the mic is actually being heard.
+                Hidden until recording starts; turns red on silence/dropout. */}
+            <div class="sh-rec-meter" id="sh-rec-meter" hidden>
+              <span class="sh-rec-meter-track">
+                <span class="sh-rec-meter-fill" id="sh-rec-level"></span>
+              </span>
+              <span class="sh-rec-meter-label" id="sh-rec-meter-label">마이크 확인 중…</span>
+            </div>
             <div class="sh-rec-status" id="sh-rec-status"></div>
             {/* Transcripts whose save failed — kept in localStorage, retried here */}
             <div class="sh-drafts" id="sh-rec-drafts" hidden></div>

@@ -302,6 +302,13 @@ const REC: {
   startedAt: number
   rotate: number
   tick: number
+  // Live-audio guard: a level meter + silence watchdog so a dead/muted mic is
+  // caught within seconds instead of after the whole lecture is lost.
+  ac: AudioContext | null
+  levelRAF: number
+  heardSound: boolean // true once any audio above the noise floor was seen
+  lastSoundAt: number
+  trackLost: boolean // the mic track fired mute/ended mid-recording
 } = {
   active: false,
   rec: null,
@@ -317,6 +324,11 @@ const REC: {
   startedAt: 0,
   rotate: 0,
   tick: 0,
+  ac: null,
+  levelRAF: 0,
+  heardSound: false,
+  lastSoundAt: 0,
+  trackLost: false,
 }
 
 function recStatus(msg: string, kind: "" | "ok" | "err" = "") {
@@ -447,6 +459,96 @@ function retryArchive(
   )
 }
 
+// Live input-level meter + silence watchdog. Best-effort and self-contained: any
+// failure here must never block the recording itself. Runs off a Web Audio
+// AnalyserNode on the same MediaStream the recorder captures, so the bar reflects
+// exactly what is (or isn't) being recorded.
+const NOISE_FLOOR = 0.012 // RMS below this = effectively silence
+const START_GRACE_MS = 4000 // no sound at all this long after start → warn
+const DROPOUT_MS = 20000 // heard sound before, but silent this long → warn
+
+function startMeter(stream: MediaStream) {
+  try {
+    const AC =
+      (window as unknown as { AudioContext?: typeof AudioContext; webkitAudioContext?: typeof AudioContext })
+        .AudioContext ||
+      (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
+    if (!AC) return
+    const ac = new AC()
+    REC.ac = ac
+    const src = ac.createMediaStreamSource(stream)
+    const an = ac.createAnalyser()
+    an.fftSize = 1024
+    src.connect(an)
+    const buf = new Uint8Array(an.fftSize)
+
+    REC.heardSound = false
+    REC.lastSoundAt = Date.now()
+    REC.trackLost = false
+
+    const meter = document.getElementById("sh-rec-meter")
+    const fill = document.getElementById("sh-rec-level")
+    const label = document.getElementById("sh-rec-meter-label")
+    if (meter) meter.hidden = false
+
+    const loop = () => {
+      an.getByteTimeDomainData(buf)
+      let sum = 0
+      for (let i = 0; i < buf.length; i++) {
+        const v = (buf[i] - 128) / 128
+        sum += v * v
+      }
+      const rms = Math.sqrt(sum / buf.length)
+      const now = Date.now()
+      if (rms > NOISE_FLOOR) {
+        REC.lastSoundAt = now
+        REC.heardSound = true
+      }
+      if (fill) fill.style.width = Math.min(100, Math.round(rms * 320)) + "%"
+
+      let warn = false
+      let msg = "마이크 확인 중…"
+      if (REC.trackLost) {
+        warn = true
+        msg = "⚠️ 마이크 연결이 끊겼어요 — 정지 후 재시작하세요"
+      } else if (!REC.heardSound && now - REC.startedAt > START_GRACE_MS) {
+        warn = true
+        msg = "⚠️ 소리가 안 잡혀요 — 마이크를 확인하고 정지→재시작하세요"
+      } else if (REC.heardSound && now - REC.lastSoundAt > DROPOUT_MS) {
+        warn = true
+        msg = "⚠️ 한동안 무음이에요 — 마이크가 끊겼는지 확인하세요"
+      } else if (REC.heardSound) {
+        msg = "🎙 소리 감지 중 — 정상 녹음"
+      }
+      if (meter) meter.classList.toggle("warn", warn)
+      if (label) label.textContent = msg
+
+      REC.levelRAF = requestAnimationFrame(loop)
+    }
+    REC.levelRAF = requestAnimationFrame(loop)
+  } catch {
+    /* meter is optional; recording continues without it */
+  }
+}
+
+function stopMeter() {
+  if (REC.levelRAF) cancelAnimationFrame(REC.levelRAF)
+  REC.levelRAF = 0
+  try {
+    REC.ac?.close()
+  } catch {
+    /* ignore */
+  }
+  REC.ac = null
+  const meter = document.getElementById("sh-rec-meter")
+  if (meter) {
+    meter.hidden = true
+    meter.classList.remove("warn")
+  }
+  const fill = document.getElementById("sh-rec-level")
+  if (fill) fill.style.width = "0%"
+}
+
 function startSegment(password: string) {
   const opts: MediaRecorderOptions = { audioBitsPerSecond: 32000 }
   if (REC.mime) opts.mimeType = REC.mime
@@ -503,6 +605,24 @@ async function startRecording() {
     }
     return
   }
+  // Track health: an empty recording almost always starts as a dead track. Abort
+  // on a track that is already ended/absent; a live-but-muted track is left to
+  // the meter watchdog (muted can be a transient state before audio flows).
+  const track = REC.stream.getAudioTracks()[0]
+  if (!track || track.readyState !== "live") {
+    recStatus("마이크 트랙을 열 수 없어요. 입력 장치를 확인하고 다시 시도하세요.", "err")
+    REC.stream.getTracks().forEach((t) => t.stop())
+    return
+  }
+  // A mic that drops mid-lecture (another app grabs it, device unplugged) fires
+  // these — the meter turns red so it's noticed while there's still time to fix.
+  track.addEventListener("mute", () => {
+    REC.trackLost = true
+  })
+  track.addEventListener("ended", () => {
+    REC.trackLost = true
+  })
+
   REC.mime = pickMime()
   REC.active = true
   REC.segIndex = 0
@@ -513,6 +633,7 @@ async function startRecording() {
   REC.subject = val("sh-file-subject")
   REC.startedAt = Date.now()
   toggleRecUI(true)
+  startMeter(REC.stream)
   startSegment(password)
   REC.rotate = window.setInterval(() => {
     if (REC.rec && REC.rec.state !== "inactive") REC.rec.stop()
@@ -675,6 +796,7 @@ async function stopRecording() {
     })
   }
   REC.stream?.getTracks().forEach((t) => t.stop())
+  stopMeter()
   toggleRecUI(false)
 
   const total = REC.jobs.length
@@ -711,6 +833,10 @@ async function stopRecording() {
     const errs = Array.from(new Set(ordered.map((r) => r.error).filter(Boolean)))
     if (errs.length) {
       recStatus("전사 실패 — 서버 응답: " + errs.join(" · "), "err")
+    } else if (!REC.heardSound) {
+      // The live meter never saw audio: the mic was dead/muted for the whole
+      // session. This is the case that used to be misdiagnosed as a key problem.
+      recStatus("녹음 내내 소리가 잡히지 않았습니다 — 마이크가 꺼졌거나 다른 앱이 점유했을 수 있어요. 마이크 확인 후 다시 녹음하세요.", "err")
     } else {
       recStatus("전사 결과가 비었습니다 — 녹음에서 음성이 감지되지 않았습니다 (마이크·볼륨 확인).", "err")
     }
