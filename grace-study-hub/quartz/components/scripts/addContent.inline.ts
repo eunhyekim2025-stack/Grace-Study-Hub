@@ -463,9 +463,12 @@ function retryArchive(
 // failure here must never block the recording itself. Runs off a Web Audio
 // AnalyserNode on the same MediaStream the recorder captures, so the bar reflects
 // exactly what is (or isn't) being recorded.
-const NOISE_FLOOR = 0.012 // RMS below this = effectively silence
-const START_GRACE_MS = 4000 // no sound at all this long after start → warn
-const DROPOUT_MS = 20000 // heard sound before, but silent this long → warn
+// Tuned for LECTURE capture: the user is silent and the speaker is across a
+// room, so real audio is quiet. A dead/muted track still reads a flat ~0, so a
+// low floor separates "live but quiet" from "dead" without false alarms.
+const NOISE_FLOOR = 0.004 // RMS below this = effectively silence
+const START_GRACE_MS = 6000 // no sound at all this long after start → warn
+const DROPOUT_MS = 30000 // heard sound before, but silent this long → warn
 
 function startMeter(stream: MediaStream) {
   try {
@@ -568,8 +571,10 @@ function micHasSignal(stream: MediaStream, ms: number): Promise<boolean> {
           sum += v * v
         }
         peak = Math.max(peak, Math.sqrt(sum / buf.length))
+        // Any clearly-audible frame passes immediately; otherwise accept a live
+        // but faint mic (a dead/muted track stays flat at ~0 and fails).
         if (peak > NOISE_FLOOR * 1.5) return done(true)
-        if (Date.now() - start > ms) return done(peak > NOISE_FLOOR)
+        if (Date.now() - start > ms) return done(peak > NOISE_FLOOR * 0.6)
         requestAnimationFrame(tick)
       }
       tick()
@@ -675,11 +680,11 @@ async function startRecording() {
   // Preflight the mic BEFORE committing to the recording: a dead/muted track
   // (the recurring "empty recording → could not process file" failure) delivers
   // no audio. Catch it now instead of after a whole lecture is lost.
-  recStatus("🎙 마이크 확인 중… 잠깐 소리를 내보세요 (2초)")
-  const live = await micHasSignal(REC.stream, 2500)
+  recStatus("🎙 마이크 확인 중… (4초) — 강의 소리가 들리면 통과합니다")
+  const live = await micHasSignal(REC.stream, 4000)
   if (!live) {
     recStatus(
-      "⚠️ 마이크에서 소리가 안 잡혀요 — 녹음을 시작하지 않았어요. 입력 장치·음소거를 확인하고(다른 앱이 마이크를 쓰면 종료) 다시 [녹음 시작]을 눌러주세요.",
+      "⚠️ 마이크에서 소리가 전혀 안 잡혀요 — 녹음을 시작하지 않았어요. 입력 장치(다른 앱이 마이크를 쓰면 종료·아이폰 마이크면 MacBook Pro로 변경)를 확인하고 다시 [녹음 시작]을 눌러주세요.",
       "err",
     )
     REC.stream.getTracks().forEach((t) => t.stop())
