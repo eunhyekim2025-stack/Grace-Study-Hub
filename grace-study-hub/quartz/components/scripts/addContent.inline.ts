@@ -305,7 +305,10 @@ const REC: {
   // Live-audio guard: a level meter + silence watchdog so a dead/muted mic is
   // caught within seconds instead of after the whole lecture is lost.
   ac: AudioContext | null
+  analyser: AnalyserNode | null // one shared analyser for preflight + live meter
+  analyserBuf: Uint8Array | null
   levelRAF: number
+  meterRan: boolean // the level meter actually ran (so heardSound is meaningful)
   heardSound: boolean // true once any audio above the noise floor was seen
   lastSoundAt: number
   trackEnded: boolean // the mic track fully ended mid-recording (won't recover)
@@ -325,7 +328,10 @@ const REC: {
   rotate: 0,
   tick: 0,
   ac: null,
+  analyser: null,
+  analyserBuf: null,
   levelRAF: 0,
+  meterRan: false,
   heardSound: false,
   lastSoundAt: 0,
   trackEnded: false,
@@ -470,117 +476,109 @@ const NOISE_FLOOR = 0.004 // RMS below this = effectively silence
 const START_GRACE_MS = 6000 // no sound at all this long after start → warn
 const DROPOUT_MS = 30000 // heard sound before, but silent this long → warn
 
-function startMeter(stream: MediaStream) {
+// One shared Web Audio monitor for the whole recording: the preflight AND the
+// live meter both read this analyser, so we never open two AudioContexts on the
+// same stream. Resumed explicitly — a suspended context reads flat silence and
+// would make a perfectly good mic look dead.
+function setupAudioMonitor(stream: MediaStream): boolean {
   try {
     const AC =
-      (window as unknown as { AudioContext?: typeof AudioContext; webkitAudioContext?: typeof AudioContext })
-        .AudioContext ||
+      (window as unknown as { AudioContext?: typeof AudioContext }).AudioContext ||
       (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
-    if (!AC) return
+    if (!AC) return false
     const ac = new AC()
-    REC.ac = ac
+    void ac.resume?.().catch(() => {})
     const src = ac.createMediaStreamSource(stream)
     const an = ac.createAnalyser()
     an.fftSize = 1024
     src.connect(an)
-    const buf = new Uint8Array(an.fftSize)
-
-    REC.heardSound = false
-    REC.lastSoundAt = Date.now()
-    REC.trackEnded = false
-
-    const meter = document.getElementById("sh-rec-meter")
-    const fill = document.getElementById("sh-rec-level")
-    const label = document.getElementById("sh-rec-meter-label")
-    if (meter) meter.hidden = false
-
-    const loop = () => {
-      an.getByteTimeDomainData(buf)
-      let sum = 0
-      for (let i = 0; i < buf.length; i++) {
-        const v = (buf[i] - 128) / 128
-        sum += v * v
-      }
-      const rms = Math.sqrt(sum / buf.length)
-      const now = Date.now()
-      if (rms > NOISE_FLOOR) {
-        REC.lastSoundAt = now
-        REC.heardSound = true
-      }
-      if (fill) fill.style.width = Math.min(100, Math.round(rms * 320)) + "%"
-
-      // The level meter is the ground truth: recent sound = it's genuinely being
-      // captured, and any warning clears itself the instant sound returns.
-      const recentSound = REC.heardSound && now - REC.lastSoundAt < DROPOUT_MS
-      let warn = false
-      let msg = "마이크 확인 중…"
-      if (REC.trackEnded) {
-        warn = true
-        msg = "⚠️ 마이크 연결이 종료됐어요 — 정지 후 재시작하세요"
-      } else if (!recentSound && now - REC.startedAt > START_GRACE_MS) {
-        warn = true
-        msg = REC.heardSound
-          ? "⚠️ 지금 소리가 안 잡혀요 — 마이크 확인 (돌아오면 자동 해제)"
-          : "⚠️ 소리가 안 잡혀요 — 마이크를 확인하고 정지→재시작하세요"
-      } else if (recentSound) {
-        msg = "🎙 소리 감지 중 — 정상 녹음"
-      }
-      if (meter) meter.classList.toggle("warn", warn)
-      if (label) label.textContent = msg
-
-      REC.levelRAF = requestAnimationFrame(loop)
-    }
-    REC.levelRAF = requestAnimationFrame(loop)
+    REC.ac = ac
+    REC.analyser = an
+    REC.analyserBuf = new Uint8Array(an.fftSize)
+    return true
   } catch {
-    /* meter is optional; recording continues without it */
+    return false
   }
 }
 
-// Preflight: sample the mic for up to `ms` and report whether ANY audio above
-// the noise floor arrived. A dead/muted track (the recurring "empty recording"
-// cause) stays flat; a live mic picks up at least ambient room noise. Fail-open
-// (resolve true) if we can't test, so it never blocks recording by mistake.
-function micHasSignal(stream: MediaStream, ms: number): Promise<boolean> {
-  return new Promise((resolve) => {
-    try {
-      const AC =
-        (window as unknown as { AudioContext?: typeof AudioContext }).AudioContext ||
-        (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
-      if (!AC) return resolve(true)
-      const ac = new AC()
-      const src = ac.createMediaStreamSource(stream)
-      const an = ac.createAnalyser()
-      an.fftSize = 1024
-      src.connect(an)
-      const buf = new Uint8Array(an.fftSize)
-      const start = Date.now()
-      let peak = 0
-      const done = (ok: boolean) => {
-        try {
-          ac.close()
-        } catch {
-          /* ignore */
-        }
-        resolve(ok)
-      }
-      const tick = () => {
-        an.getByteTimeDomainData(buf)
-        let sum = 0
-        for (let i = 0; i < buf.length; i++) {
-          const v = (buf[i] - 128) / 128
-          sum += v * v
-        }
-        peak = Math.max(peak, Math.sqrt(sum / buf.length))
-        // Any clearly-audible frame passes immediately; otherwise accept a live
-        // but faint mic (a dead/muted track stays flat at ~0 and fails).
-        if (peak > NOISE_FLOOR * 1.5) return done(true)
-        if (Date.now() - start > ms) return done(peak > NOISE_FLOOR * 0.6)
-        requestAnimationFrame(tick)
-      }
-      tick()
-    } catch {
-      resolve(true)
+// Current RMS (0..~1) of the shared analyser, or -1 if it isn't set up.
+function readRms(): number {
+  const an = REC.analyser
+  const buf = REC.analyserBuf
+  if (!an || !buf) return -1
+  an.getByteTimeDomainData(buf)
+  let sum = 0
+  for (let i = 0; i < buf.length; i++) {
+    const v = (buf[i] - 128) / 128
+    sum += v * v
+  }
+  return Math.sqrt(sum / buf.length)
+}
+
+function startMeter() {
+  if (!REC.analyser) return // no monitor (unsupported) → skip; meterRan stays false
+  REC.meterRan = true
+  REC.heardSound = false
+  REC.lastSoundAt = Date.now()
+  REC.trackEnded = false
+
+  const meter = document.getElementById("sh-rec-meter")
+  const fill = document.getElementById("sh-rec-level")
+  const label = document.getElementById("sh-rec-meter-label")
+  if (meter) meter.hidden = false
+
+  const loop = () => {
+    const rms = readRms()
+    const now = Date.now()
+    if (rms > NOISE_FLOOR) {
+      REC.lastSoundAt = now
+      REC.heardSound = true
     }
+    if (fill) fill.style.width = Math.min(100, Math.round(Math.max(0, rms) * 320)) + "%"
+
+    // The level meter is the ground truth: recent sound = it's genuinely being
+    // captured, and any warning clears itself the instant sound returns.
+    const recentSound = REC.heardSound && now - REC.lastSoundAt < DROPOUT_MS
+    let warn = false
+    let msg = "마이크 확인 중…"
+    if (REC.trackEnded) {
+      warn = true
+      msg = "⚠️ 마이크 연결이 종료됐어요 — 정지 후 재시작하세요"
+    } else if (!recentSound && now - REC.startedAt > START_GRACE_MS) {
+      warn = true
+      msg = REC.heardSound
+        ? "⚠️ 지금 소리가 안 잡혀요 — 마이크 확인 (돌아오면 자동 해제)"
+        : "⚠️ 소리가 안 잡혀요 — 마이크를 확인하고 정지→재시작하세요"
+    } else if (recentSound) {
+      msg = "🎙 소리 감지 중 — 정상 녹음"
+    }
+    if (meter) meter.classList.toggle("warn", warn)
+    if (label) label.textContent = msg
+
+    REC.levelRAF = requestAnimationFrame(loop)
+  }
+  REC.levelRAF = requestAnimationFrame(loop)
+}
+
+// Preflight: sample the shared analyser for up to `ms` and report whether ANY
+// audio above the noise floor arrived. A dead/muted track (the recurring "empty
+// recording" cause) stays flat ~0; a live mic — even a distant lecturer — clears
+// the low floor. Fail-open (resolve true) if the monitor isn't set up.
+function micHasSignal(ms: number): Promise<boolean> {
+  return new Promise((resolve) => {
+    if (!REC.analyser) return resolve(true)
+    const start = Date.now()
+    let peak = 0
+    const tick = () => {
+      const rms = readRms()
+      if (rms >= 0) peak = Math.max(peak, rms)
+      // Any clearly-audible frame passes immediately; otherwise accept a live but
+      // faint mic (a dead/muted track stays flat at ~0 and fails).
+      if (peak > NOISE_FLOOR * 1.5) return resolve(true)
+      if (Date.now() - start > ms) return resolve(peak > NOISE_FLOOR * 0.6)
+      requestAnimationFrame(tick)
+    }
+    tick()
   })
 }
 
@@ -593,6 +591,8 @@ function stopMeter() {
     /* ignore */
   }
   REC.ac = null
+  REC.analyser = null
+  REC.analyserBuf = null
   const meter = document.getElementById("sh-rec-meter")
   if (meter) {
     meter.hidden = true
@@ -677,16 +677,19 @@ async function startRecording() {
     REC.trackEnded = true
   })
 
-  // Preflight the mic BEFORE committing to the recording: a dead/muted track
-  // (the recurring "empty recording → could not process file" failure) delivers
-  // no audio. Catch it now instead of after a whole lecture is lost.
+  // Set up the shared audio monitor now (preflight + live meter both use it), and
+  // preflight the mic BEFORE committing: a dead/muted track (the recurring "empty
+  // recording → could not process file" failure) delivers no audio. Catch it now
+  // instead of after a whole lecture is lost.
+  setupAudioMonitor(REC.stream)
   recStatus("🎙 마이크 확인 중… (4초) — 강의 소리가 들리면 통과합니다")
-  const live = await micHasSignal(REC.stream, 4000)
+  const live = await micHasSignal(4000)
   if (!live) {
     recStatus(
       "⚠️ 마이크에서 소리가 전혀 안 잡혀요 — 녹음을 시작하지 않았어요. 입력 장치(다른 앱이 마이크를 쓰면 종료·아이폰 마이크면 MacBook Pro로 변경)를 확인하고 다시 [녹음 시작]을 눌러주세요.",
       "err",
     )
+    stopMeter() // close the shared AudioContext we opened for the preflight
     REC.stream.getTracks().forEach((t) => t.stop())
     return
   }
@@ -701,7 +704,7 @@ async function startRecording() {
   REC.subject = val("sh-file-subject")
   REC.startedAt = Date.now()
   toggleRecUI(true)
-  startMeter(REC.stream)
+  startMeter()
   startSegment(password)
   REC.rotate = window.setInterval(() => {
     if (REC.rec && REC.rec.state !== "inactive") REC.rec.stop()
@@ -817,6 +820,8 @@ async function retryDraft(id: string, btn: HTMLButtonElement) {
   btn.disabled = true
   btn.textContent = "저장 중…"
   try {
+    // Same tidy decision as the first save (short → server, long → browser).
+    const { content, pretidied } = await buildLectureBody(draft.title, draft.transcript, password)
     const res = await fetch("/api/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -825,8 +830,9 @@ async function retryDraft(id: string, btn: HTMLButtonElement) {
         title: draft.title,
         subject: draft.subject,
         tags: "lecture, recording",
-        content: draft.transcript,
+        content,
         mode: "lecture",
+        ...(pretidied ? { pretidied: true, autoTags: false } : {}),
         ...(draft.audio?.length ? { audio: draft.audio } : {}),
         ...(draft.gaps?.length ? { gaps: draft.gaps } : {}),
         password,
@@ -903,6 +909,21 @@ async function tidyLongTranscript(
   return sections.map((s, i) => `## Part ${i + 1}\n\n${s}`).join("\n\n")
 }
 
+// Single place that decides how a lecture transcript becomes the note body, so
+// the first save and the draft-retry behave identically: short → let the server
+// tidy it; long → tidy in the browser and mark it pretidied.
+async function buildLectureBody(
+  title: string,
+  transcript: string,
+  password: string,
+): Promise<{ content: string; pretidied: boolean }> {
+  if (transcript.length > TIDY_MAX_CHARS) {
+    const tidied = await tidyLongTranscript(title, transcript, password)
+    if (tidied) return { content: tidied, pretidied: true }
+  }
+  return { content: transcript, pretidied: false }
+}
+
 async function stopRecording() {
   if (!REC.active) return
   const password = (val("sh-add-pw") || localStorage.getItem(PW_KEY) || "").trim()
@@ -953,9 +974,10 @@ async function stopRecording() {
     const errs = Array.from(new Set(ordered.map((r) => r.error).filter(Boolean)))
     if (errs.length) {
       recStatus("전사 실패 — 서버 응답: " + errs.join(" · "), "err")
-    } else if (!REC.heardSound) {
-      // The live meter never saw audio: the mic was dead/muted for the whole
-      // session. This is the case that used to be misdiagnosed as a key problem.
+    } else if (REC.meterRan && !REC.heardSound) {
+      // The live meter ran the whole session and never saw audio: the mic was
+      // dead/muted. (Only trust this when the meter actually ran — otherwise a
+      // working recording would be mislabeled as silent.)
       recStatus("녹음 내내 소리가 잡히지 않았습니다 — 마이크가 꺼졌거나 다른 앱이 점유했을 수 있어요. 마이크 확인 후 다시 녹음하세요.", "err")
     } else {
       recStatus("전사 결과가 비었습니다 — 녹음에서 음성이 감지되지 않았습니다 (마이크·볼륨 확인).", "err")
@@ -987,18 +1009,11 @@ async function stopRecording() {
   renderDrafts()
 
   recStatus("정리 중… 강의 노트를 만들고 있어요 (10~40초)")
-  // A short lecture is tidied server-side by /api/add. A long one exceeds the
-  // free-tier token ceiling, so tidy it in the browser first and send the
-  // finished note with pretidied:true (the server then skips its own tidy).
-  let noteContent = transcript
-  let pretidied = false
-  if (transcript.length > TIDY_MAX_CHARS) {
-    const tidiedLong = await tidyLongTranscript(draft.title, transcript, password)
-    if (tidiedLong) {
-      noteContent = tidiedLong
-      pretidied = true
-    }
-  }
+  const { content: noteContent, pretidied } = await buildLectureBody(
+    draft.title,
+    transcript,
+    password,
+  )
   try {
     const res = await fetch("/api/add", {
       method: "POST",
@@ -1010,7 +1025,7 @@ async function stopRecording() {
         tags: "lecture, recording",
         content: noteContent,
         mode: "lecture",
-        ...(pretidied ? { pretidied: true } : {}),
+        ...(pretidied ? { pretidied: true, autoTags: false } : {}),
         ...(audio.length ? { audio } : {}),
         ...(gaps.length ? { gaps } : {}),
         password,
