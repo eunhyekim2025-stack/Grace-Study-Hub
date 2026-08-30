@@ -111,6 +111,7 @@ Behaviour is **not** person *or* situation; it is how the two **fit**.
 
 ## Related notes
 
+- [[management-of-people-at-work/ch05-personality-and-individual-differences|Ch 5 — Personality and Individual Differences]] — the full textbook treatment of the Big Five, Dark Triad, and person–situation fit
 - [[management-of-people-at-work/mpw-2-2|MPW 2-2 — Diversity in Organizations]] — the second half of this seminar
 - [[management-of-people-at-work/evidence-based-management|Evidence-Based Management]] — collect the *right* data before deciding (why MBTI is the wrong data)
 - [[management-of-people-at-work/mpw-1-1|What an organization is]]

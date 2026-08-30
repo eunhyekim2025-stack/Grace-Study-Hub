@@ -119,4 +119,4 @@ Every step above generalises to **any** real-world op-ed, ad, policy memo, or vi
 ## Related notes
 
 - [[index|Critical Thinking in Real World — hub]] — the course's other real-world specimens
-- [[ch06-negligence|Law · Negligence]] — the "harm to third parties" / duty-of-care line P1 leans on has a precise legal analogue
+- [[law-concepts/ch06-negligence/negligence|Law · Negligence]] — the "harm to third parties" / duty-of-care line P1 leans on has a precise legal analogue

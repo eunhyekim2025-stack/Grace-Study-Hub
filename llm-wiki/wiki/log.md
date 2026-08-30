@@ -414,3 +414,14 @@ community: 1
 - [[management-of-people-at-work/mpw-1-1]] — moved out of critical-thinking-in-real-world/ (wrong subject picked in the site modal; content is an MPW textbook definition) into its correct subject folder. No wikilinks referenced it.
 - Deleted management-accounting/ma-1-1.md ("Okay.") and ma-1-2.md ("Bye.") — empty test recordings.
 - Removed critical-thinking-in-real-world/CTRW_Lecture_1_Slides.pptx (3 MB binary) from the public repo; archived privately at ~/.claude/projects/-Users-youngmin-grace-ai/reference/ctrw/ (course slides — copyright + repo-bloat; kept off the deployed site). NOTE: the blob still exists in git history (commit 6cba61f); a full history purge (filter-repo + force-push) is a separate destructive step, not done here.
+
+## [2026-08-30] lint | 정기 점검 (with obsidian)
+- 발견된 문제: 55건 (kind 경고 46 · orphan 6 · broken link 1 · 약한 교차참조 2 · 인용밀도 4 · stale 카드 1 — 일부 중복)
+- 수정된 항목: 51건
+- kind 경고 46건 → `ontology.py`에 `KIND_ALIAS`(개념·교재→의미) 추가로 단일-출처 해소 (46개 파일 미수정). sync.py가 canonical kind 저장.
+- stale 녹음 stub 3건([[ops-concepts/2-1]] · [[ops-concepts/make-up-2-1]] · [[ops-concepts/make-up-2-2]]) → `[!deprecated]`로 강등, 정식 노트([[ops-concepts/ops-2-1]]/[[ops-concepts/ops-2-1b]]/[[ops-concepts/ops-2-2]])로 리다이렉트. Blob에서 전체 재전사한 버전이 이들을 대체.
+- broken link 1건: [[critical-thinking-in-real-world/case-drug-legalisation-grayling]]의 `[[ch06-negligence]]`(폴더명, 파일 아님) → `[[law-concepts/ch06-negligence/negligence]]`로 수정.
+- orphan 해소: CTRW 실제 케이스 2건([[critical-thinking-in-real-world/what-is-mark-zuckerberg-confused-about]] · [[critical-thinking-in-real-world/when-is-a-claim-worth-considering-as-maybe-fact]]) → CTRW index 표에 추가; [[law-concepts/intro]](BL 첫 수업 녹음) → business-law 허브에 Lecture notes 섹션 신설·링크.
+- 약한 교차참조 2건: [[management-of-people-at-work/mpw-2-1]]→ch05, [[management-of-people-at-work/mpw-2-2]]→ch02 역링크 추가(교재 챕터는 이미 강의노트로 링크 중이었음, 단방향 → 양방향).
+- index.md MPW 카드 "New subject" → "Textbook (18 ch) · Concepts · Lecture notes"로 갱신.
+- 추천 탐색 주제: MA 노트 인용밀도(m07-variable-vs-absorption-costing 무인용 연속 8) — Garrison 18판 교재 재작성 대기 중이라 앵커 보강 보류; cross-domain/integrated-quiz는 quiz 성격상 저밀도 정상(합리화 함정 아님).

@@ -43,3 +43,5 @@ community: 1
 | Case | What it drills |
 |------|----------------|
 | [[case-drug-legalisation-grayling]] | Reconstructing an argument · descriptive vs normative claims · testing analogies · false dilemma · steelmanning — worked on Grayling's drug-legalisation op-ed |
+| [[what-is-mark-zuckerberg-confused-about]] | Intention vs outcome · when "simplifying" a system masks the errors it makes — read against Meta's fact-checking policy shift |
+| [[when-is-a-claim-worth-considering-as-maybe-fact]] | The line between claim and fact · "universal truth" as a persuasion device · why appeals to the undeniable still need scrutiny |

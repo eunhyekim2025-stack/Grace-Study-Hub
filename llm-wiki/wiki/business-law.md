@@ -72,3 +72,8 @@ community: 2
 | [[law-concepts/ch12-mistake/mistake-quiz-scenarios]] | Ch 12 Mistake PQ-style scenarios — 13 questions, IRAC model answers, issue-spotting checklist |
 | [[law-concepts/ch12-mistake/mistake-quiz-irac]] | Ch 12 Mistake IRAC drill — 8 questions, key-facts vs holding table, boundary cases |
 | [[law-concepts/quiz-methodology]] | IRAC drill design methodology — 4 design principles, chapter boundary-case pairs, /quiz skill |
+
+## Lecture notes (from class recordings)
+| Note | Date | Covers |
+|------|------|--------|
+| [[law-concepts/intro\|Intro]] | 2026-08-26 | First-class introduction — course goals, self-introduction |

@@ -100,5 +100,6 @@ Two error types matter: **random error** (cancels out) vs **systematic error** (
 
 ## Related notes
 
+- [[management-of-people-at-work/ch02-diversity-equity-inclusion|Ch 2 — Diversity, Equity, and Inclusion]] — the full textbook treatment of surface/deep diversity, stereotype threat, and inclusion
 - [[management-of-people-at-work/mpw-2-1|MPW 2-1 — Personality & the Big Five]] — the first half of this seminar
 - [[management-of-people-at-work/evidence-based-management|Evidence-Based Management]] — pay dispersion & cooperation, evidence over dogma
