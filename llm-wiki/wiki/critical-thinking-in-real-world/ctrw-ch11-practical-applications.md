@@ -1,9 +1,16 @@
 ---
 title: "Ch11 — Practical Applications"
-tags: [critical-thinking-in-real-world, ctrw-textbook, socratic-questioning, argumentative-essay, moral-reasoning, legal-reasoning, relativism]
-sources: ["Mooney, Williams & Burik, An Introduction to Critical and Creative Thinking (McGraw-Hill, 2015) — Ch.11 Practical Applications"]
-updated: 2026-08-16
+tags: [critical-thinking-in-real-world, ctrw-textbook, socratic-questioning, argumentative-essay, moral-reasoning, legal-reasoning, relativism, is-ought, hume]
+sources: ["Mooney, Williams & Burik, An Introduction to Critical and Creative Thinking (McGraw-Hill, 2015) — Ch.11 Practical Applications", "CTRW Seminar 3 Slides (Sovan Patra, SMU) — Deduction v Induction: the normative conclusion & Hume's is–ought gap (private archive, not deployed)"]
+updated: 2026-08-31
 kind: 절차
+relations:
+  part-of: [critical-thinking-in-real-world/index]
+pagerank: 0.0024
+betweenness: 0.0004
+eigenvector: 0.0339
+degree: 13
+community: 6
 ---
 
 <div class="dc-view">
@@ -28,7 +35,7 @@ kind: 절차
 
 # Ch11 — Practical Applications
 
-> [[index|← Critical Thinking in Real World]] · Textbook Ch.11. Puts the whole book to work. Exercises woven through (private answer key held for feedback).
+> [[critical-thinking-in-real-world/index|← Critical Thinking in Real World]] · Textbook Ch.11. Puts the whole book to work. Exercises woven through (private answer key held for feedback).
 
 ---
 
@@ -52,7 +59,8 @@ An argumentative essay argues a position on a **contested** issue (if it weren't
 4. **Stage 4 — Revise (don't underestimate it).** Let it sit; read with an audience's eyes; spell out what only *you* know; check your premises really *do* support your conclusion; hunt your own fallacies; show it to a friend.
 
 ## Moral reasoning
-- **Ethical principles are the hidden premises.** A moral conclusion needs at least one **moral** premise — "my parents are elderly" (fact) only reaches "I ought to care for them" once you add "adult children should care for their elderly parents" (principle). Surfacing that principle makes the argument valid *and* exposes it to challenge.
+- **Ethical principles are the hidden premises — Hume's is–ought gap.** David Hume's rule: **"no *ought* can be inferred from an *is*"** (the "is–ought gap" or *Hume's guillotine*). So a **normative** conclusion (one using *ought, must, should, good, desirable*) can be **established only by a valid — i.e. deductive — inference that includes a normative principle** as a premise. "Emma trusts you very much" (an *is*) reaches "you should not cheat on her" (an *ought*) only once you add "if someone trusts you very much, you should not cheat on them" (the principle). Surfacing that principle makes the argument valid *and* exposes it to challenge.
+- **Why normative disputes rarely settle.** Faced with a normative argument you can push back two ways: dispute the **'is' claim** ("is a foetus a living human being?") or dispute the **normative principle**. When the principle or 'is' claim is *controversial*, there is usually **no argument for it that all reasonable, well-informed people accept as sound** — so the justification bottoms out in either **begging the question** or an **appeal to intuition**. At that floor, controversial normative principles function as **personal preferences about the kind of world you want — descriptions of who you are**, not facts to be proven. (This is *why* moral debate persists; it does not make every position equally defensible — see the **self-defeating relativism** point below.)
 - **The consistency principle — "treat like cases alike."** You can't judge one case one way and a similar case differently *unless* there's a **morally relevant difference**. This is [[ctrw-ch07-fallacies|argument from analogy]] applied to ethics, and the core of justice (objecting to being punished when you did nothing to deserve it).
 - **Dilemmas via disjunction.** Frame a hard choice as "either A or B," but note that casting it as a tidy [[ctrw-ch05-forms-of-argument|disjunctive syllogism]] can *hide* the moral weight — the real work is **justifying which horn**, using the details of the circumstances, not the deductive form.
 - **Argument from Tradition is a fallacy** ("we've always done it, so it's right"). It also arises with **cultural relativism** — but distinguish two things: *cultural* relativism is **descriptive** (moralities vary across cultures — true and compatible with universal principles); *ethical* relativism is the further **normative** claim that no framework is better than another. Ethical relativism is **self-defeating**: "all moral claims are relative" is itself an *absolute* claim, and "we must tolerate every culture" is an absolute value smuggled in.

@@ -1,9 +1,16 @@
 ---
 title: "Ch1 — Basic Concepts of Reasoning"
-tags: [critical-thinking-in-real-world, ctrw-textbook, argument, deduction, induction, validity, soundness, cogency]
-sources: ["Mooney, Williams & Burik, An Introduction to Critical and Creative Thinking (McGraw-Hill, 2015) — Ch.1 Basic Concepts of Reasoning"]
-updated: 2026-08-16
+tags: [critical-thinking-in-real-world, ctrw-textbook, argument, deduction, induction, validity, soundness, cogency, acceptability]
+sources: ["Mooney, Williams & Burik, An Introduction to Critical and Creative Thinking (McGraw-Hill, 2015) — Ch.1 Basic Concepts of Reasoning", "CTRW Seminar 3 Slides (Sovan Patra, SMU) — Acceptable/Good Arguments; validity vs strength; deduction vs induction (private archive, not deployed)"]
+updated: 2026-08-31
 kind: 개념
+relations:
+  part-of: [critical-thinking-in-real-world/index]
+pagerank: 0.0062
+betweenness: 0.0014
+eigenvector: 0.0329
+degree: 16
+community: 6
 ---
 
 <div class="dc-view">
@@ -27,7 +34,7 @@ kind: 개념
 
 # Ch1 — Basic Concepts of Reasoning
 
-> [[index|← Critical Thinking in Real World]] · Textbook Ch.1. Sets up every term used later. Companion exercises: **1.1–1.7** (answers held privately for feedback — solve them and send your work).
+> [[critical-thinking-in-real-world/index|← Critical Thinking in Real World]] · Textbook Ch.1. Sets up every term used later. Companion exercises: **1.1–1.7** (answers held privately for feedback — solve them and send your work).
 
 ---
 
@@ -98,6 +105,25 @@ The arguer's **intention** decides which it is (aiming at certainty = deductive;
 - **Conjecture** — a special inductive case where the arguer accumulates evidence *without* intending the argument to be strong yet (signalled by "perhaps," "maybe").
 - **Reliability / cogency** — probability is *always relative to total information*. An inference is **unreliable** if the premises omit extra info you have that would **lower** the conclusion's likelihood (the salty-gherkin that you happen to know was soaked in *syrup*). Cogency requires the premises not to hide such info.
 
+## Acceptability, made precise
+
+The seminar sharpens "good argument" into three exact conditions — one per part of the argument:
+
+| Part | Acceptable **iff** | Nature |
+|---|---|---|
+| **Premise** | it is **true** | **binary** — a premise is acceptable or not, never both |
+| **Inference** | it is **(relatively) strong** | **comes in degrees** — more or less acceptable |
+| **Conclusion** | it has been **established** | the *output* of the two above |
+
+- The chain: an **established conclusion** needs a **good argument** (acceptable inference **+** acceptable premises), and premise-acceptability is **independent** of inference-acceptability — the two are checked separately (the *two independent questions* from the summary block above).
+- **Acceptability ≠ truth.** If a conclusion *is* established, it is either **guaranteed** (deductive) or **highly likely** (inductive) to be actually true. But if a conclusion is **un**established, that tells you nothing about the world — it may *still* happen to be actually true or actually false. A bad argument for a true conclusion is still a bad argument.
+
+> [!info] The class mnemonic — "die die" vs "got chance"
+> Deductive = the arguer wants the conclusion accepted as **guaranteed** ("*die die* must be accepted"). Inductive = accepted as **highly likely** ("*got chance* can be accepted"). Both intend **true premises**; the *only* difference is the intended **strength of the inference**.
+
+> [!warning] Validity belongs to inferences, not statements
+> There is **no such thing as a "valid statement" or a "valid question."** *Valid* / *invalid* describe an **inference** (and, by extension, a deductive argument) — never a single claim, and never truth. A statement is true or false; only the *link* between statements can be valid.
+
 ## Putting it together — the good-argument decision tree
 
 ```mermaid
@@ -125,6 +151,10 @@ When no indicators and no clear form tell you which mode it is, **the Principle 
 
 - Deduction wins two ways: a valid inference supports its conclusion better than even a strong inductive one, and sound arguments give *true* conclusions vs merely *probable* ones.
 - But induction is indispensable: it **expands knowledge** (generalising "all metals expand when heated" from cases), whereas a deduction's conclusion is already contained in its premises. And where genuine uncertainty rules (disaster-relief triage), forcing deductive "certainty" is the wrong tool.
+
+> [!example] What good is a *sound* argument? — it tells you nothing new
+> *"Tharman got the most votes in the election; whoever gets the most votes wins; so Tharman won."* This is **sound** (valid + true premises), yet the conclusion is already **buried in the premises** — "got the most votes" just *is* winning. A sound deduction re-describes what you already granted; it never adds a fact about the world.
+> Contrast: *"Tharman got 70% of the votes; so Pritam voted for Tharman."* This is **not** sound and not even valid — but if strong it would be **cogent**, and it genuinely reaches *beyond* the premise to a new claim. That is the standing trade-off: **deduction = certain but non-ampliative; induction = ampliative but uncertain.**
 
 ## Key takeaways
 
