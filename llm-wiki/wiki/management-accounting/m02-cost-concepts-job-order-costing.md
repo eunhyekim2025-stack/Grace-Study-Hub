@@ -1,8 +1,15 @@
 ---
 title: "Module 2 — Cost Concepts & Job Order Costing (POHR)"
-tags: [management-accounting, module-2, cost-concepts, job-order-costing, pohr, overhead, cost-object, period-cost, relevant-cost, opportunity-cost, sunk-cost]
-sources: ["Managerial Accounting: Comprehensive Study Guide (Modules 1–12)", "SMU ACCT102 (BT) Week 1 — Cost concepts and Cost flows"]
-updated: 2026-08-14
+tags: [management-accounting, module-2, cost-concepts, job-order-costing, pohr, overhead, applied-overhead, normal-costing, underapplied-overhead, job-cost-sheet, cost-object, period-cost, relevant-cost, opportunity-cost, sunk-cost]
+sources: ["Garrison, Noreen & Brewer, Managerial Accounting, 18th ed. — Ch.2 Job-Order Costing: Calculating Unit Product Costs; Ch.3 Cost Flows & External Reporting (raw/acct102/)", "Managerial Accounting: Comprehensive Study Guide (Modules 1–12)", "SMU ACCT102 (BT) Week 1 — Cost concepts and Cost flows"]
+updated: 2026-09-02
+relations:
+  part-of: [management-accounting/index]
+pagerank: 0.0118
+betweenness: 0.0023
+eigenvector: 0.0267
+degree: 18
+community: 5
 ---
 
 <div class="dc-view">
@@ -170,6 +177,48 @@ $$\text{POHR} = \frac{\text{Estimated Total Manufacturing Overhead}}{\text{Estim
 - POHR = 100,000 ÷ 5,000 = **£20 per direct labour hour**
 - A job that consumed 3 labour hours is charged 3 × 20 = **£60 of overhead**
 - No waiting for the electricity bill.
+
+### The paper trail — how a job's cost is actually recorded
+
+Job-order costing runs on four **source documents** (Garrison 18e, Ch 2):
+
+| Document | Role |
+|---|---|
+| **Bill of materials** | lists the quantity of each direct material a unit needs |
+| **Materials requisition form** | authorises materials out of the storeroom and **charges them to one named job** |
+| **Job cost sheet** | that job's own ledger — accumulates its DM, DL and applied MO, then yields the **unit product cost** |
+| **Employee time ticket** | hour-by-hour record of labour: direct-labour hours post to the job; indirect labour (e.g. maintenance) goes to MO, not the job |
+
+### Applying overhead — "normal costing"
+
+The POHR is used to **apply** overhead to each job as work happens:
+
+$$\text{Overhead applied to a job} = \text{POHR} \times \text{actual allocation base the job used}$$
+
+The £60 above *is* applied overhead. Costing a job at **actual DM + actual DL + _applied_ MO** is called **normal costing** — the overhead figure is a *share of the year's estimate*, never the job's own actual overhead. (If overhead could be traced to one job it would be a direct cost, not overhead.) — Garrison 18e, Ch 2
+
+> [!important] Why estimate overhead instead of using the actual figure?
+> An actual monthly/quarterly rate would swing with **seasonal** costs (winter heating, summer cooling) and with output — so two identical jobs finished in different months would carry different overhead, and a job's cost wouldn't be known until the period closed. A predetermined rate fixes both: one stable rate, available the moment the order lands.
+
+### Underapplied & overapplied overhead
+
+Because the POHR is built on estimates, overhead **applied** to jobs almost never equals overhead **actually incurred**. The year-end gap has a name (Garrison 18e, Ch 3):
+
+- **Underapplied** — applied **<** actual → jobs were charged **too little** overhead
+- **Overapplied** — applied **>** actual → jobs were charged **too much**
+
+> [!example] Year-end reconciliation
+> Say the year's *actual* MO turns out to be **£108,000**, and **5,200** labour hours were worked. Applied = 5,200 × £20 = **£104,000**. Applied £104,000 < actual £108,000 → **£4,000 underapplied**.
+> *(Garrison's own case: Ruger Corp applied $90,000 at $6/machine-hour but incurred $95,000 → $5,000 underapplied.)*
+
+**Two causes:** much of overhead is **fixed**, so it doesn't move with the allocation base the rate assumes; and overhead **spending** can run above or below plan.
+
+**Disposing of the leftover** — the balance in the Manufacturing Overhead account is **closed to Cost of Goods Sold**:
+
+- **Underapplied** → **add** to COGS → gross margin **falls** (too little was charged to jobs, so top it up)
+- **Overapplied** → **subtract** from COGS → gross margin **rises**
+
+*(The more precise alternative spreads the balance across WIP, Finished Goods and COGS by their overhead content; closing straight to COGS is the common shortcut.)*
 
 ---
 
