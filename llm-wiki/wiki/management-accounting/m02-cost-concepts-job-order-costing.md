@@ -1,7 +1,7 @@
 ---
 title: "Module 2 — Cost Concepts & Job Order Costing (POHR)"
 tags: [management-accounting, module-2, cost-concepts, job-order-costing, pohr, overhead, applied-overhead, normal-costing, underapplied-overhead, job-cost-sheet, cost-object, period-cost, relevant-cost, opportunity-cost, sunk-cost]
-sources: ["Garrison, Noreen & Brewer, Managerial Accounting, 18th ed. — Ch.2 Job-Order Costing: Calculating Unit Product Costs; Ch.3 Cost Flows & External Reporting (raw/acct102/)", "Managerial Accounting: Comprehensive Study Guide (Modules 1–12)", "SMU ACCT102 (BT) Week 1 — Cost concepts and Cost flows"]
+sources: ["Garrison, Noreen & Brewer, Managerial Accounting, 18th ed. — Ch.2 Job-Order Costing: Calculating Unit Product Costs; Ch.3 Cost Flows & External Reporting", "Managerial Accounting: Comprehensive Study Guide (Modules 1–12)", "SMU ACCT102 (BT) Week 1 — Cost concepts and Cost flows"]
 updated: 2026-09-02
 relations:
   part-of: [management-accounting/index]
