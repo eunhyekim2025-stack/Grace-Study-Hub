@@ -1145,10 +1145,205 @@ async function deleteNote(btn: HTMLButtonElement) {
   }
 }
 
+// ── Inline note editing ───────────────────────────────────────────────────
+// A ✏️ button on each note card (RecentNotes) and on the note page opens an
+// in-place editor WITHOUT navigating away: it fetches the note's current title +
+// markdown from /api/edit (mode:"get"), shows them in a title input + textarea,
+// and on Save posts back (mode:"save") which overwrites the file via GitHub
+// (getFile→sha→PUT). Cancel restores the original view untouched. Reuses the
+// same ADD_SECRET the rest of the modal caches in localStorage.
+
+function editStatus(el: HTMLElement, msg: string, kind: "" | "ok" | "err" = "") {
+  el.textContent = msg
+  el.className = "sh-edit-status" + (kind ? " " + kind : "")
+}
+
+// Build the inline editor DOM for one note. `li` is the RecentNotes card whose
+// `.section` we hide while editing (null on a note page). Uses createElement +
+// .value (never innerHTML) so note content can never inject markup.
+function buildEditor(
+  path: string,
+  title: string,
+  content: string,
+  li: HTMLElement | null,
+  onTitleSaved: (t: string) => void,
+): HTMLElement {
+  const wrap = document.createElement("div")
+  wrap.className = "sh-edit"
+
+  const titleWrap = document.createElement("div")
+  titleWrap.className = "sh-edit-field"
+  const titleLabel = document.createElement("label")
+  titleLabel.textContent = "제목"
+  const titleInput = document.createElement("input")
+  titleInput.className = "sh-input sh-edit-title"
+  titleInput.value = title
+  titleWrap.append(titleLabel, titleInput)
+
+  const bodyWrap = document.createElement("div")
+  bodyWrap.className = "sh-edit-field"
+  const bodyLabel = document.createElement("label")
+  bodyLabel.textContent = "내용 (Markdown)"
+  const bodyInput = document.createElement("textarea")
+  bodyInput.className = "sh-input sh-edit-body"
+  bodyInput.rows = li ? 10 : 18
+  bodyInput.value = content
+  bodyWrap.append(bodyLabel, bodyInput)
+
+  const statusEl = document.createElement("div")
+  statusEl.className = "sh-edit-status"
+
+  const actions = document.createElement("div")
+  actions.className = "sh-edit-actions"
+  const saveBtn = document.createElement("button")
+  saveBtn.className = "sh-btn sh-btn-new"
+  saveBtn.textContent = "저장"
+  const cancelBtn = document.createElement("button")
+  cancelBtn.className = "sh-btn sh-btn-ghost"
+  cancelBtn.textContent = "취소"
+  actions.append(saveBtn, cancelBtn)
+
+  wrap.append(titleWrap, bodyWrap, statusEl, actions)
+
+  const closeEditor = () => {
+    wrap.remove()
+    if (li) {
+      const sec = li.querySelector<HTMLElement>(".section")
+      if (sec) sec.hidden = false
+    }
+  }
+  cancelBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    closeEditor()
+  })
+  saveBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    saveEdit(path, titleInput, bodyInput, statusEl, saveBtn, onTitleSaved)
+  })
+  return wrap
+}
+
+async function saveEdit(
+  path: string,
+  titleInput: HTMLInputElement,
+  bodyInput: HTMLTextAreaElement,
+  statusEl: HTMLElement,
+  saveBtn: HTMLButtonElement,
+  onTitleSaved: (t: string) => void,
+) {
+  const title = titleInput.value.trim()
+  const content = bodyInput.value
+  if (!title || !content.trim()) {
+    editStatus(statusEl, "제목과 내용을 입력하세요.", "err")
+    return
+  }
+  let password = (localStorage.getItem(PW_KEY) || "").trim()
+  if (!password) {
+    password = (window.prompt("추가 비밀번호를 입력하세요") || "").trim()
+    if (!password) return
+  }
+  saveBtn.disabled = true
+  editStatus(statusEl, "저장 중… (사이트가 1–2분 뒤 재배포됩니다)")
+  try {
+    const res = await fetch("/api/edit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ mode: "save", path, title, content, password }),
+    })
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok) {
+      if (res.status === 401) localStorage.removeItem(PW_KEY)
+      editStatus(statusEl, "저장 실패: " + (data.error || res.status), "err")
+      saveBtn.disabled = false
+      return
+    }
+    localStorage.setItem(PW_KEY, password)
+    onTitleSaved(title)
+    editStatus(statusEl, "저장됨 → " + (data.path || path) + " · 1–2분 뒤 사이트에 반영됩니다.", "ok")
+  } catch {
+    editStatus(statusEl, "네트워크 오류. 배포된 사이트에서 시도하세요.", "err")
+    saveBtn.disabled = false
+  }
+}
+
+async function openEditor(btn: HTMLButtonElement) {
+  const path = btn.dataset.editPath
+  if (!path || btn.dataset.editBusy) return
+  // Already open for this note? Toggle it closed (find the sibling editor).
+  const li = btn.closest<HTMLElement>(".recent-li")
+  const host = li || btn.closest<HTMLElement>(".sh-note-actions")?.parentElement || document.body
+  const existing = (li || host).querySelector<HTMLElement>(".sh-edit")
+  if (existing) {
+    existing.querySelector<HTMLButtonElement>(".sh-btn-ghost")?.click()
+    return
+  }
+
+  let password = (localStorage.getItem(PW_KEY) || "").trim()
+  if (!password) {
+    password = (window.prompt("추가 비밀번호를 입력하세요") || "").trim()
+    if (!password) return
+  }
+
+  const original = btn.textContent
+  btn.dataset.editBusy = "1"
+  btn.disabled = true
+  btn.textContent = "…"
+  try {
+    const res = await fetch("/api/edit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ mode: "get", path, password }),
+    })
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok) {
+      if (res.status === 401) localStorage.removeItem(PW_KEY)
+      alert("불러오기 실패: " + (data.error || res.status))
+      return
+    }
+    localStorage.setItem(PW_KEY, password)
+    const curTitle = typeof data.title === "string" && data.title ? data.title : btn.dataset.editTitle || ""
+    const onTitleSaved = (t: string) => {
+      // Reflect the new title in the DOM right away (the rebuild lags 1–2 min).
+      if (li) {
+        const link = li.querySelector<HTMLElement>(".desc h3 a")
+        if (link) link.textContent = t
+        const editBtn = li.querySelector<HTMLElement>(".sh-edit-btn")
+        if (editBtn) editBtn.setAttribute("data-edit-title", t)
+      } else {
+        const h1 = document.querySelector<HTMLElement>("article h1, .page-title, h1")
+        if (h1) h1.textContent = t
+      }
+    }
+    const editor = buildEditor(path, curTitle, String(data.content || ""), li, onTitleSaved)
+    if (li) {
+      const sec = li.querySelector<HTMLElement>(".section")
+      if (sec) sec.hidden = true
+      li.appendChild(editor)
+    } else {
+      const actions = btn.closest<HTMLElement>(".sh-note-actions")
+      if (actions) actions.after(editor)
+      else btn.after(editor)
+    }
+    editor.querySelector<HTMLElement>(".sh-edit-title")?.focus()
+  } catch {
+    alert("네트워크 오류. 배포된 사이트에서 시도하세요.")
+  } finally {
+    delete btn.dataset.editBusy
+    btn.disabled = false
+    btn.textContent = original
+  }
+}
+
 const w = window as unknown as { __shAddInit?: boolean }
 if (!w.__shAddInit) {
   w.__shAddInit = true
   document.addEventListener("click", onClick)
+  document.addEventListener("click", (e) => {
+    const btn = (e.target as HTMLElement)?.closest<HTMLButtonElement>(".sh-edit-btn")
+    if (!btn) return
+    e.preventDefault()
+    openEditor(btn)
+  })
   document.addEventListener("click", (e) => {
     const el = (e.target as HTMLElement)?.closest("[data-rec-start],[data-rec-stop]")
     if (!el) return

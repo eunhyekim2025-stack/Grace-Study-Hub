@@ -1855,6 +1855,110 @@ textarea.sh-input {
   }
 }
 
+// ── Inline note editing (✏️ on cards + note pages) ─────────────
+// Card pencil: a quiet icon button next to the note title in listings.
+.sh-edit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.4rem;
+  padding: 2px 5px;
+  font-size: 0.8rem;
+  line-height: 1;
+  vertical-align: middle;
+  color: var(--gray);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  cursor: pointer;
+  opacity: 0.55;
+  transition:
+    opacity 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease;
+
+  &:hover {
+    opacity: 1;
+    background: var(--highlight);
+    border-color: var(--lightgray);
+  }
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+// Page pencil: sits in the actions row beside 🗑 노트 삭제, matching its size.
+.sh-note-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+
+  .sh-delnote {
+    margin: 0;
+  }
+}
+.sh-edit-btn-page {
+  margin-left: 0;
+  padding: 5px 12px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  font-family: inherit;
+  opacity: 1;
+  border-color: var(--lightgray);
+
+  &:hover {
+    color: var(--tertiary);
+    border-color: color-mix(in srgb, var(--sh-accent) 40%, var(--lightgray));
+    background: color-mix(in srgb, var(--sh-accent) 8%, transparent);
+  }
+}
+// The in-place editor panel injected by addContent.inline.ts.
+.sh-edit {
+  margin: 0.6rem 0 0.4rem;
+  padding: 0.9rem 1rem 1rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--sh-accent) 4%, var(--light));
+
+  .sh-edit-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 0.7rem;
+
+    & > label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--darkgray);
+    }
+  }
+  .sh-edit-body {
+    resize: vertical;
+    min-height: 8rem;
+    font-family:
+      ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+  .sh-edit-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+  }
+  .sh-edit-status {
+    min-height: 1.2em;
+    font-size: 0.8rem;
+
+    &.ok {
+      color: oklch(0.55 0.13 150);
+    }
+    &.err {
+      color: oklch(0.55 0.18 25);
+    }
+  }
+}
+
 // ── Print / Export button + menu (note pages) ──────────────────
 .sh-printnote {
   display: inline-block;
@@ -1959,6 +2063,9 @@ textarea.sh-input {
   .right.sidebar,
   .page-footer,
   .sh-delnote,
+  .sh-note-actions,
+  .sh-edit,
+  .sh-edit-btn,
   .sh-printnote,
   .sh-subjbar-wrap,
   .breadcrumb-container,
