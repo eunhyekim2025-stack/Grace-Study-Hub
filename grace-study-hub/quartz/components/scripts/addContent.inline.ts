@@ -1334,6 +1334,73 @@ async function openEditor(btn: HTMLButtonElement) {
   }
 }
 
+// ── Subject Auto-Generate: quiz + revision summary ────────────────────────
+// The two buttons in SubjectAutoBar build a note from the subject's OWN wiki
+// notes via /api/generate. "Build quiz →" opens a compact count/difficulty
+// panel (no note-modal reuse); "Summarize subject" fires directly after a
+// confirm. Both reuse the cached ADD_SECRET (prompt if missing).
+
+function genSecret(): string {
+  let pw = (val("sh-add-pw") || localStorage.getItem(PW_KEY) || "").trim()
+  if (!pw) pw = (window.prompt("추가 비밀번호를 입력하세요") || "").trim()
+  return pw
+}
+
+function genStatusEl(): HTMLElement | null {
+  return document.querySelector<HTMLElement>("[data-sh-gen-status]")
+}
+
+function genStatus(msg: string, kind: "" | "ok" | "err" = "") {
+  const el = genStatusEl()
+  if (!el) return
+  el.hidden = !msg
+  el.textContent = msg
+  el.className = "sh-gen-status" + (kind ? " " + kind : "")
+}
+
+async function runGenerate(
+  kind: "quiz" | "summary",
+  subject: string,
+  btn: HTMLButtonElement,
+  opts: Record<string, unknown>,
+) {
+  if (!subject) return
+  const password = genSecret()
+  if (!password) {
+    genStatus("추가 비밀번호가 필요합니다.", "err")
+    return
+  }
+  btn.disabled = true
+  genStatus(kind === "quiz" ? "퀴즈 생성 중… (20~40초)" : "요약 생성 중… (20~40초)")
+  try {
+    const res = await fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ kind, subject, ...opts, password }),
+    })
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok) {
+      if (res.status === 401) localStorage.removeItem(PW_KEY)
+      genStatus("실패: " + (data.error || res.status), "err")
+      return
+    }
+    localStorage.setItem(PW_KEY, password)
+    const el = genStatusEl()
+    if (el) {
+      const href = "/" + String(data.noteSlug || "")
+      el.hidden = false
+      el.className = "sh-gen-status ok"
+      el.innerHTML =
+        `생성됨 → <a href="${escHtml(href)}">${escHtml(String(data.title || "노트"))}</a>` +
+        ` · 1–2분 뒤 사이트에 반영됩니다.`
+    }
+  } catch {
+    genStatus("네트워크 오류. 배포된 사이트에서 시도하세요.", "err")
+  } finally {
+    btn.disabled = false
+  }
+}
+
 const w = window as unknown as { __shAddInit?: boolean }
 if (!w.__shAddInit) {
   w.__shAddInit = true
@@ -1390,6 +1457,39 @@ if (!w.__shAddInit) {
     } else if (confirm("이 전사 내용을 지울까요? 되돌릴 수 없습니다.")) {
       dropDraft(id)
       renderDrafts()
+    }
+  })
+  // Subject Auto-Generate buttons (SubjectAutoBar): quiz panel toggle, quiz
+  // generate, and one-click summarize.
+  document.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement
+    const toggle = target?.closest<HTMLElement>("[data-sh-quiz-toggle]")
+    if (toggle) {
+      e.preventDefault()
+      const panel = document.querySelector<HTMLElement>("[data-sh-quiz-panel]")
+      if (panel) {
+        panel.hidden = !panel.hidden
+        toggle.setAttribute("aria-expanded", String(!panel.hidden))
+      }
+      return
+    }
+    const gen = target?.closest<HTMLButtonElement>("[data-sh-quiz-generate]")
+    if (gen) {
+      e.preventDefault()
+      const countRaw = document.querySelector<HTMLInputElement>("[data-sh-quiz-count]")?.value || "5"
+      let count = parseInt(countRaw, 10)
+      if (!Number.isFinite(count)) count = 5
+      count = Math.max(1, Math.min(20, count))
+      const difficulty =
+        document.querySelector<HTMLSelectElement>("[data-sh-quiz-difficulty]")?.value || "medium"
+      runGenerate("quiz", gen.dataset.shSubject || "", gen, { count, difficulty })
+      return
+    }
+    const sum = target?.closest<HTMLButtonElement>("[data-sh-summarize]")
+    if (sum) {
+      e.preventDefault()
+      if (!confirm("이 과목의 노트로 복습 요약 노트를 생성할까요? (20~40초)")) return
+      runGenerate("summary", sum.dataset.shSubject || "", sum, {})
     }
   })
   document.addEventListener("keydown", (e) => {

@@ -2360,6 +2360,50 @@ table thead tr {
   }
 }
 
+// Auto-Generate: quiz options panel + shared status line (under the dark bar)
+.sh-genquiz {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--lightgray);
+  border-radius: 12px;
+  background: var(--light);
+}
+.sh-genquiz-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--darkgray);
+
+  input,
+  select {
+    margin: 0;
+  }
+  input[type="number"] {
+    width: 90px;
+  }
+}
+.sh-gen-status {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--darkgray);
+
+  &.ok {
+    color: var(--secondary);
+  }
+  &.err {
+    color: #c0392b;
+  }
+  a {
+    font-weight: 700;
+  }
+}
+
 // section tabs (Concepts / Cases / Statutes / Quizzes)
 .sh-subjtabs {
   display: flex;
