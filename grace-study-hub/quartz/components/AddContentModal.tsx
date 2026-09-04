@@ -135,6 +135,74 @@ const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) =>
               (한국어로 말해도 영어로 번역·정리). <b>첫 녹음 시</b> 브라우저가 마이크 권한을 물으면
               <b>“허용”</b>을 눌러주세요. Vercel에 <b>GROQ_API_KEY</b>가 설정돼 있어야 합니다.
             </p>
+
+            {/* Panels that work WHILE recording continues (no page navigation).
+                Toggles reveal an in-place calendar (view/edit) and a note browser
+                (read via iframe). Neither touches the recorder state/intervals. */}
+            <div class="sh-rec-tools">
+              <button
+                type="button"
+                class="sh-btn sh-btn-ghost sh-rec-tool-toggle"
+                data-sh-cal-toggle
+                aria-expanded="false"
+              >
+                📅 일정 보기·편집
+              </button>
+              <button
+                type="button"
+                class="sh-btn sh-btn-ghost sh-rec-tool-toggle"
+                data-sh-notes-toggle
+                aria-expanded="false"
+              >
+                📖 노트 훑어보기
+              </button>
+            </div>
+
+            {/* (A) Calendar view + edit — Google Calendar API via /api/calendar */}
+            <div class="sh-cal-panel" data-sh-cal-panel hidden>
+              <div class="sh-cal-panel-status" data-sh-cal-status></div>
+              <div class="sh-cal-list" data-sh-cal-list></div>
+              <div class="sh-cal-add">
+                <div class="sh-cal-add-head">+ 새 일정</div>
+                <input class="sh-input" data-sh-cal-title placeholder="일정 제목" />
+                <div class="sh-cal-add-row">
+                  <label>
+                    <span>시작</span>
+                    <input class="sh-input" type="datetime-local" data-sh-cal-start />
+                  </label>
+                  <label>
+                    <span>종료</span>
+                    <input class="sh-input" type="datetime-local" data-sh-cal-end />
+                  </label>
+                </div>
+                <button type="button" class="sh-btn sh-btn-new" data-sh-cal-create>
+                  일정 추가
+                </button>
+              </div>
+            </div>
+
+            {/* (B) Note-review — contentIndex.json list → iframe reader */}
+            <div class="sh-notes-panel" data-sh-notes-panel hidden>
+              <div class="sh-notes-browse" data-sh-notes-browse>
+                <input
+                  class="sh-input sh-notes-search"
+                  data-sh-notes-search
+                  placeholder="노트 제목 검색…"
+                />
+                <div class="sh-notes-list" data-sh-notes-list>
+                  <p class="sh-modal-hint">불러오는 중…</p>
+                </div>
+              </div>
+              <div class="sh-notes-reader" data-sh-notes-reader hidden>
+                <div class="sh-notes-reader-bar">
+                  <button type="button" class="sh-btn sh-btn-ghost" data-sh-notes-back>
+                    ← 목록
+                  </button>
+                  <span class="sh-notes-reader-title" data-sh-notes-reader-title></span>
+                </div>
+                <iframe class="sh-notes-frame" data-sh-notes-frame title="노트 미리보기"></iframe>
+              </div>
+            </div>
           </div>
 
           <div class="sh-rec-or">또는</div>
