@@ -3001,3 +3001,255 @@ a.sh-subjtab {
 :root[saved-theme="dark"] .dc-view .dc-card {
   background: color-mix(in srgb, var(--light) 92%, #fff);
 }
+
+// ═══════════════════════════════════════════════════════════════
+// MOBILE RESPONSIVE PASS (phones ~320–480px)
+// All rules below are scoped inside mobile media queries so the desktop
+// layout is untouched. The base layer already guards global overflow
+// (base.scss: html{overflow-x:hidden;width:100vw}, img{max-width:100%},
+// pre/.table-container{overflow-x:auto}, overflow-wrap:break-word); the
+// rules here make each bespoke .sh-* component reflow (stack/wrap, grids →
+// single column) instead of clipping or overflowing.
+// ═══════════════════════════════════════════════════════════════
+
+// ── Tablet / large-phone step ──────────────────────────────────
+@media all and (max-width: 600px) {
+  // Fixed top bar: allow it to grow to two rows and let its inner flex wrap.
+  // Everything (body padding-top, sidebar top offset) keys off --sh-topbar-h,
+  // so bumping it here keeps content clear of the taller bar automatically.
+  :root {
+    --sh-topbar-h: 104px;
+  }
+  .page-header > header {
+    height: auto;
+    min-height: 56px;
+    padding: 8px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-content: center;
+  }
+  .page-header > header .flex-component {
+    flex-wrap: wrap;
+    gap: 8px !important;
+    row-gap: 8px;
+  }
+  .page-header > header .search {
+    flex: 1 1 80px;
+    min-width: 0;
+    max-width: none;
+  }
+  // Top action buttons drop to their own full-width row and split it evenly.
+  .sh-topactions {
+    flex: 1 1 100%;
+    gap: 8px;
+  }
+  .sh-topactions .sh-btn {
+    flex: 1 1 0;
+    justify-content: center;
+    min-width: 0;
+    padding: 8px 10px;
+  }
+
+  // Stat cards: keep two-up but tighten so the numbers never overflow.
+  .sh-stat {
+    padding: 12px 14px;
+  }
+  .sh-stat-value {
+    font-size: 1.5rem;
+  }
+
+  // In-page modal: pad-to-edge shell, wrapping tabs, stacked actions.
+  .sh-modal {
+    padding: 12px;
+  }
+  .sh-modal-card {
+    padding: 18px 16px 18px;
+    max-height: 92vh;
+  }
+  .sh-modal-tabs {
+    flex-wrap: wrap;
+  }
+  .sh-modal-actions {
+    flex-wrap: wrap;
+    .sh-btn {
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+  }
+
+  // Recorder controls: stack the record/stop buttons full width.
+  .sh-rec-controls {
+    flex-wrap: wrap;
+    .sh-btn {
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+  }
+
+  // In-recording note-review iframe: cap height and never exceed the panel.
+  .sh-notes-frame {
+    max-width: 100%;
+    height: 60vh;
+    max-height: 340px;
+  }
+  .sh-notes-reader-bar {
+    flex-wrap: wrap;
+  }
+
+  // Quiz / summary generator bar: each field takes the full row.
+  .sh-genquiz {
+    padding: 12px;
+  }
+  .sh-genquiz-field {
+    flex: 1 1 100%;
+    input,
+    select {
+      width: 100%;
+    }
+    input[type="number"] {
+      width: 100%;
+    }
+  }
+  .sh-genquiz .sh-btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
+
+// ── Phone step ─────────────────────────────────────────────────
+@media all and (max-width: 480px) {
+  // Collapse the wordmark to just the "G" badge to reclaim top-bar width;
+  // the badge keeps its own explicit font-size so font-size:0 hides only text.
+  .page-title a {
+    font-size: 0;
+    gap: 0;
+  }
+  .page-title a::before {
+    font-size: 0.9rem;
+  }
+  .sh-side-toggle {
+    flex: 0 0 auto;
+  }
+
+  // Dashboard header + stats: shrink type, drop stat cards to a single column.
+  .sh-dash-head h1 {
+    font-size: 1.35rem;
+  }
+  .sh-stats {
+    grid-template-columns: 1fr;
+  }
+  // .sh-dash-cols already collapses to one column at 900px; restate the guard.
+  .sh-dash-cols {
+    grid-template-columns: 1fr;
+  }
+  .sh-panel {
+    padding: 16px 16px;
+  }
+
+  // Subject cards → single column (also covered at 600px; keep min-width guard).
+  .sh-card-grid {
+    grid-template-columns: 1fr;
+  }
+  .sh-card {
+    min-width: 0;
+  }
+
+  // Subjects sidebar: full width, allow long labels to shrink.
+  .sh-subjects {
+    width: 100%;
+    min-width: 0;
+  }
+
+  // Recent list: keep rows tidy and wrapping.
+  .sh-recent li {
+    min-width: 0;
+    a {
+      overflow-wrap: anywhere;
+    }
+  }
+
+  // Modal tabs sit comfortably; action buttons stack full width.
+  .sh-modal-tab {
+    padding: 7px 12px;
+    font-size: 0.8rem;
+  }
+  .sh-modal-actions .sh-btn {
+    flex: 1 1 100%;
+  }
+
+  // Recorder: record/stop full width, meter label wraps under the track.
+  .sh-rec {
+    padding: 12px 12px 10px;
+  }
+  .sh-rec-controls .sh-btn {
+    flex: 1 1 100%;
+  }
+  .sh-rec-meter {
+    flex-wrap: wrap;
+  }
+  .sh-rec-meter-track {
+    flex: 1 1 100%;
+  }
+  // .sh-drafts / .sh-draft / .sh-draft-actions / .sh-rec-tools already flex-wrap;
+  // just guard the meta column from pushing the row wide.
+  .sh-draft-meta {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  // In-recording calendar panel: stack items, edit fields, and add-row inputs.
+  .sh-cal-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .sh-cal-item-actions {
+    flex-wrap: wrap;
+  }
+  .sh-cal-add-row label {
+    flex: 1 1 100%;
+  }
+  .sh-cal-edit-actions {
+    flex-wrap: wrap;
+    .sh-btn {
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+  }
+
+  // Note-review panel iframe: tighter cap on the smallest screens.
+  .sh-notes-frame {
+    height: 56vh;
+    max-height: 300px;
+  }
+
+  // Inline note editor: wrap the action buttons, tighten padding.
+  .sh-edit {
+    padding: 0.8rem 0.8rem 0.9rem;
+    .sh-edit-actions {
+      flex-wrap: wrap;
+      .sh-btn {
+        flex: 1 1 auto;
+        justify-content: center;
+      }
+    }
+  }
+  .sh-note-actions {
+    flex-wrap: wrap;
+    .sh-btn,
+    .sh-edit-btn-page {
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+  }
+
+  // Generator status link can wrap rather than push the row wide.
+  .sh-gen-status {
+    overflow-wrap: anywhere;
+  }
+
+  // Copyable embed snippet: break long paths instead of overflowing.
+  .sh-embed-snip {
+    overflow-wrap: anywhere;
+    word-break: break-all;
+  }
+}
