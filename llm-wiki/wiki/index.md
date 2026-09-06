@@ -1,9 +1,13 @@
 ---
-pagerank: 0.0084
+title: "🏠 Study Hub"
+tags: [moc, index]
+updated: 2026-08-30
+kind: 주제
+pagerank: 0.0123
 betweenness: 0.0000
-eigenvector: 0.0705
-degree: 12
-community: 1
+eigenvector: 0.0950
+degree: 13
+community: 2
 ---
 # Index
 
@@ -23,3 +27,12 @@ Study Hub — **pick a subject.** Inside each subject you drill down: *content �
 <!-- add-subject-cards -->
 </div>
 
+## Across all subjects
+
+| Page | What it is |
+| --- | --- |
+| [[homework-dashboard\|🗓 Homework]] | Every assignment across subjects, sorted by due date |
+| [[cross-domain/integrated-quiz\|🎯 Integrated quiz]] | One business case seen through Law · Decision Analysis · Financial Accounting |
+| [[overview\|🗺 Wiki overview]] | How this wiki is organised |
+| [[add-content\|➕ Add a note]] | How to file new material |
+| [[dap-info-session\|🎙 DAP Info Session]] | Data Analytics Programme briefing (2026-09-02) — an extracurricular recording, outside the eight course subjects |

@@ -1,9 +1,9 @@
 ---
-pagerank: 0.0014
-betweenness: 0.0000
-eigenvector: 0.0135
-degree: 9
-community: 1
+pagerank: 0.0009
+betweenness: 0.0022
+eigenvector: 0.2070
+degree: 54
+community: 2
 ---
 # Log
 
@@ -425,3 +425,25 @@ community: 1
 - 약한 교차참조 2건: [[management-of-people-at-work/mpw-2-1]]→ch05, [[management-of-people-at-work/mpw-2-2]]→ch02 역링크 추가(교재 챕터는 이미 강의노트로 링크 중이었음, 단방향 → 양방향).
 - index.md MPW 카드 "New subject" → "Textbook (18 ch) · Concepts · Lecture notes"로 갱신.
 - 추천 탐색 주제: MA 노트 인용밀도(m07-variable-vs-absorption-costing 무인용 연속 8) — Garrison 18판 교재 재작성 대기 중이라 앵커 보강 보류; cross-domain/integrated-quiz는 quiz 성격상 저밀도 정상(합리화 함정 아님).
+
+## [2026-08-30] lint | 정기 점검 2차 (그래프 백본 · 링크 모호성)
+- 발견된 문제: 22건 (관계 미선언 8개 폴더 · orphan 2 · 모호한 `[[index]]` 15곳 · frontmatter 결손 9 · 빈 노트 1 · 인용밀도 4 · driver 라우팅 누락 1)
+- 수정된 항목: 20건
+- **온톨로지 백본**: 타입 관계가 0건이던 8개 과목 폴더(law-concepts·da-concepts·fa-concepts·ops-concepts·sql-concepts·management-accounting·management-of-people-at-work·critical-thinking-in-real-world)의 노트 135개에 `part-of: [<과목 허브>]` 선언. RELATES 151→289건, 4원인 중 질료인 커버리지 139 edges. 콘텐츠 폴더는 이동하지 않음(entity_type 보존).
+- **모호한 링크 15곳**: CTRW 노트 13개 + [[management-accounting/seminar-01-costs-for-decision-making]]의 `[[index|← 과목명]]`이 루트 [[index]]와 basename 충돌 — 라벨은 과목 허브인데 그래프/사이트는 루트로 해석될 수 있었다. 전부 전체 경로(`[[critical-thinking-in-real-world/index|…]]` 등)로 교체.
+- orphan 해소: [[homework-dashboard]] → index.md에 "Across all subjects" 표 신설(숙제·통합퀴즈·overview·add-content). 남은 orphan은 자동 생성물([[graph-viz]]·log)뿐.
+- frontmatter 결손 9건: [[index]]·[[overview]]·concepts/models/papers/prompts/tools README 7개에 title·tags·updated·kind 추가; [[law-concepts/intro]]·[[ops-concepts/ops-1-1]]에 `updated:` 추가.
+- **빈 노트 1건**: [[ops-concepts/ops-1-1]] 본문이 전사 실패로 `you` 한 단어뿐 → `[!uncertain]` 배너로 명시(재전사 또는 삭제 판단은 보류, Blob 녹음은 보존).
+- LLM 레이어 README 5개(concepts·models·papers·prompts·tools)는 실제 페이지 0개인 계획 목록 → `[!stub]` 배너 + `tags: [llm, stub]`(moc 태그 제거로 synthesis 오탐 해소).
+- 인용밀도: [[management-accounting/index]] 경고 해소, [[management-accounting/m07-variable-vs-absorption-costing]] 33%→47%(1차 lint의 보류 항목 처리), [[cross-domain/business-lifecycle]] 47%→53%. [[cross-domain/integrated-quiz]] 19%는 IRAC Application 줄이 바로 위 Rule(판례명 인용)을 적용하는 구조라 장르상 정상 — 합리화 함정 아님.
+- 조기경보 라우팅: [[drivers/ai-legal-automation]]에 `triggers:` 누락(임계는 있는데 발화 시 재검토 대상 없음) → [[cross-domain/ai-disruption-thesis]]·[[business-law]] 지정.
+- 추천 탐색 주제: 과목 노트 96개(law 26·da 36·fa 8·ops 7·mpw 3 등)에 허브 백링크(breadcrumb)가 없다 — SQL/MA/MPW/CTRW 하우스 스타일(`> [[허브|← 과목명]]`)을 나머지에 일괄 적용할지 판단 필요. LLM 레이어 5개 폴더는 소스 ingest 대기.
+
+## [2026-09-06] seminars | 녹음 노트를 과목 허브에 연결
+
+- 고아 녹음 노트 8건을 각 과목 허브의 Seminars 섹션에 등록: [[critical-thinking-in-real-world/3-1]]·[[critical-thinking-in-real-world/3-2]] (CTRW), [[management-accounting/ma-3-1]]·[[management-accounting/ma-3-2]] (MA), [[management-of-people-at-work/mpw-3-1]]·[[management-of-people-at-work/mpw-3-2]] (MPW), [[ops-concepts/ops-3-1]]·[[ops-concepts/ops-3-2]] (Ops). 모두 in-site recorder가 만든 뒤 어느 페이지에서도 링크되지 않던 상태였다.
+- 섹션 제목 통일: `## Lecture notes (from class recordings)` → `## Seminars` ([[business-law]]·[[operations-management]]·[[management-of-people-at-work/index]]). SubjectAutoBar의 탭 라벨이 h2에서 파생되므로 8개 과목 허브가 동일한 "Seminars" 탭을 갖게 됨.
+- [[management-accounting/index]]에는 Seminars 섹션 자체가 없어 신설(다이어그램 뷰 카드 2장 + 본문 표) — 기존 다이어그램 카드는 raw `<a href>`라 그래프 엣지를 만들지 못하므로 마크다운 표를 함께 둠.
+- 비과목 녹음 [[dap-info-session]](Data Analytics Programme 설명회, 2026-09-02)은 어느 과목에도 속하지 않아 [[index]]의 "Across all subjects" 표에 배치.
+- 제외 판단: [[ops-concepts/2-1]]·[[ops-concepts/make-up-2-1]]·[[ops-concepts/make-up-2-2]]는 `deprecated` 태그가 붙은 superseded 원본(ops-2-1/2-1b/2-2가 대체)이라 허브에 노출하지 않음.
+- 추천 탐색 주제: 녹음 노트 6건의 frontmatter `title`이 "MPW #3-1"·"MA #3-2" 같은 자동 생성 라벨 그대로다 — 탐색기·검색에 그렇게 노출되므로 내용 기반 제목으로 교체할지 판단 필요. 또한 이들에는 `sources:`·`kind:`·`relations:`가 없어 그래프에서 과목과 연결되지 않는다.

@@ -1,13 +1,13 @@
 ---
 title: ⚙️ Operations Management
 tags: [ops, moc, index]
-updated: 2026-08-14
+updated: 2026-09-06
 kind: 주제
-pagerank: 0.0048
-betweenness: 0.0002
-eigenvector: 0.0132
-degree: 5
-community: 1
+pagerank: 0.0049
+betweenness: 0.0019
+eigenvector: 0.0343
+degree: 13
+community: 5
 ---
 
 # ⚙️ Operations Management
@@ -27,13 +27,17 @@ community: 1
 
 > Full index: [[ops-concepts/README]]
 
-## Lecture notes (from class recordings)
+## Seminars
+> Notes reconstructed from the in-class recordings.
+
 | Note | Date | Covers |
 |------|------|--------|
 | [[ops-concepts/ops-1-1\|Ops 1-1]] | 2026-08-20 | Session 1 intro |
 | [[ops-concepts/ops-2-1\|Ops 2-1 — Process View & Flow Unit]] | 2026-08-27 | Order winners/qualifiers · process view · choosing the flow unit |
 | [[ops-concepts/ops-2-1b\|Ops 2-1b — Flow Metrics & Little's Law]] | 2026-08-27 | Flow rate/inventory/flow time · **I = R×T** · cycle time · days-of-supply & turns |
 | [[ops-concepts/ops-2-2\|Ops 2-2 — Bottleneck & Capacity]] | 2026-08-27 | Process-flow diagram · capacity · **bottleneck** · *The Goal* · demand- vs capacity-constrained |
+| [[ops-concepts/ops-3-1\|Ops 3-1 — Capacity, Utilization & Break-Even]] | 2026-09-03 | Flow = min(demand, capacity) · utilization vs design capacity · yield loss · the five-step **TOC** cycle · break-even |
+| [[ops-concepts/ops-3-2\|Ops 3-2 — Mixed-Product Capacity & Line Balancing]] | 2026-09-03 | Depreciation & cost basics · weighted longest step · how product mix moves the bottleneck · line balancing · demand flexibility |
 
 ## Sources (raw/ops/)
 | Source | Description |

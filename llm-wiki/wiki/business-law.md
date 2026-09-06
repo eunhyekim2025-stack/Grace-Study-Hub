@@ -1,13 +1,13 @@
 ---
 title: ⚖️ Business Law
 tags: [business-law, moc, index, singapore]
-updated: 2026-07-01
+updated: 2026-09-06
 kind: 주제
-pagerank: 0.0021
-betweenness: 0.0306
-eigenvector: 0.3365
-degree: 52
-community: 2
+pagerank: 0.0014
+betweenness: 0.0124
+eigenvector: 0.3400
+degree: 53
+community: 1
 ---
 
 # ⚖️ Business Law
@@ -73,7 +73,9 @@ community: 2
 | [[law-concepts/ch12-mistake/mistake-quiz-irac]] | Ch 12 Mistake IRAC drill — 8 questions, key-facts vs holding table, boundary cases |
 | [[law-concepts/quiz-methodology]] | IRAC drill design methodology — 4 design principles, chapter boundary-case pairs, /quiz skill |
 
-## Lecture notes (from class recordings)
+## Seminars
+> Notes reconstructed from the in-class recordings.
+
 | Note | Date | Covers |
 |------|------|--------|
 | [[law-concepts/intro\|Intro]] | 2026-08-26 | First-class introduction — course goals, self-introduction |
