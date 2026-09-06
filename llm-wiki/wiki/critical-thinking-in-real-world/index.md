@@ -16,13 +16,13 @@ community: 6
 > [[index|← Subjects]] · Taking real-world texts — op-eds, ads, policy claims — apart and judging the reasoning on its own terms.
 
 ## Seminars
-> Notes from class itself — what was actually said and shown, chapter notes as the backing reference.
+> Notes reconstructed from the in-class recordings — what was actually said and shown, chapter notes as the backing reference.
 
-| # | Note | Core |
-|---|------|------|
-| 1 | [[seminar-01-what-critical-thinking-is]] | three active moves · toolkit + attitude · domain neutrality · common sense fails (3 tests) · statements · facts vs opinions · vagueness vs ambiguity · the argument · **"got argue or not?" drill (9 passages)** |
-| 3 | [[3-1\|Seminar 3-1 — Definitions & Argument Evaluation]] | definition disputes — case-fit vs definition-fit · charitable reconstruction · the arrow rule · the four evaluation questions · **inference strength scale** (maximal → weak) |
-| 3 | [[3-2\|Seminar 3-2 — Validity, Soundness & Cogency]] | validity as *guarantee* · deductive vs inductive **intention** · sound vs cogent · normative vs descriptive conclusions · the four-step evaluation sequence |
+| Note | Date | Covers |
+|------|------|--------|
+| [[critical-thinking-in-real-world/seminar-01-what-critical-thinking-is\|Seminar 1 — What Critical Thinking Is]] | 2026-08-17 | three active moves · toolkit + attitude · domain neutrality · common sense fails (3 tests) · statements · facts vs opinions · vagueness vs ambiguity · the argument · **"got argue or not?" drill (9 passages)** |
+| [[critical-thinking-in-real-world/3-1\|CTRW 3-1 — Definition & Argument Evaluation]] | 2026-08-31 | definition disputes — case-fit vs definition-fit · charitable reconstruction · the arrow rule · the four evaluation questions · **inference strength scale** (maximal → weak) |
+| [[critical-thinking-in-real-world/3-2\|CTRW 3-2 — Validity, Soundness & Cogency]] | 2026-08-31 | validity as *guarantee* · deductive vs inductive **intention** · sound vs cogent · normative vs descriptive conclusions · the four-step evaluation sequence |
 
 ## Textbook — chapter notes
 > Mooney, Williams & Burik, *An Introduction to Critical and Creative Thinking* (McGraw-Hill, 2015). One note per chapter — concepts, procedures and worked mini-examples. Exercises are in the textbook; the answer key is held privately for feedback (solve them, then send your work).

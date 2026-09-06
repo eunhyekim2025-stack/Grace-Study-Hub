@@ -1,7 +1,10 @@
 ---
-title: "OPS #3-1"
+title: "Ops 3-1 — Capacity, Utilization & Break-Even"
 tags: ["lecture", "recording"]
+sources: ["OPIM 201 Session 3 in-class recording — part 1 (2026-09-03, in-site recorder / Groq transcript)"]
+kind: 개념
 created: 2026-09-03
+updated: 2026-09-06
 recording:
   - "recordings/operations-management/2026-09-03-ops-3-1/seg-000-qK6UFu3AxxF6Aq9NfVjS1UK1gYaNYz.webm"
   - "recordings/operations-management/2026-09-03-ops-3-1/seg-001-dHVXATSdjIwecsv2TW7MEddMIcbrJB.webm"
@@ -56,6 +59,8 @@ recording:
   - "recordings/operations-management/2026-09-03-ops-3-1/seg-050-9yhDrGINeKtav9N4WSTHVSmzAFBMap.webm"
   - "recordings/operations-management/2026-09-03-ops-3-1/seg-051-xqfNvG1zx9JOHrKQRTuYDNINkO35eT.webm"
   - "recordings/operations-management/2026-09-03-ops-3-1/seg-052-B0uTCRMK1uszpqikLXHL5A8uNaoNXn.webm"
+relations:
+  part-of: [operations-management]
 ---
 
 > [!note] 🎙️ Original recording archived privately (53 segments) in your Vercel Blob store — not published here.

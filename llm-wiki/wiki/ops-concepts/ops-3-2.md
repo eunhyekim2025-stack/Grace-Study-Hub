@@ -1,7 +1,10 @@
 ---
-title: "OPS #3-2"
+title: "Ops 3-2 — Mixed-Product Capacity & Line Balancing"
 tags: ["lecture", "recording"]
+sources: ["OPIM 201 Session 3 in-class recording — part 2 (2026-09-03, in-site recorder / Groq transcript)"]
+kind: 개념
 created: 2026-09-03
+updated: 2026-09-06
 recording:
   - "recordings/operations-management/2026-09-03-ops-3-2/seg-000-u0H5VPp7MPI3MCqk8RunhDCq62w9zo.webm"
   - "recordings/operations-management/2026-09-03-ops-3-2/seg-001-b1tgh57Rn080L2zDFQjSv5PdVtGSVQ.webm"
@@ -36,6 +39,8 @@ recording:
   - "recordings/operations-management/2026-09-03-ops-3-2/seg-030-T8EwpUFK4snaCaNh0pDGqTVW4ajxBd.webm"
   - "recordings/operations-management/2026-09-03-ops-3-2/seg-031-HALIaymeCEgMT4YAuFYjmMwjGsuMGl.webm"
   - "recordings/operations-management/2026-09-03-ops-3-2/seg-032-r7BmQjeMWevdc0cZVxCtkNKXHQBYjx.webm"
+relations:
+  part-of: [operations-management]
 ---
 
 > [!note] 🎙️ Original recording archived privately (33 segments) in your Vercel Blob store — not published here.

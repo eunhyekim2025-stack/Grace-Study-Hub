@@ -1,7 +1,10 @@
 ---
-title: "MPW #3-2"
+title: "MPW 3-2 — Motivation & Performance"
 tags: ["lecture", "recording"]
+sources: ["MPW Seminar 3 in-class recording — part 2 (2026-09-01, in-site recorder / Groq transcript)"]
+kind: 개념
 created: 2026-09-01
+updated: 2026-09-06
 recording:
   - "recordings/management-of-people-at-work/2026-09-01-mpw-3-2/seg-000-kjcRc1jbr8LiUoqhXwq7u2zI2MMrNZ.webm"
   - "recordings/management-of-people-at-work/2026-09-01-mpw-3-2/seg-001-isoOoNfohn9QYXFVzIo1QTKPM0giM7.webm"
@@ -47,6 +50,8 @@ recording:
   - "recordings/management-of-people-at-work/2026-09-01-mpw-3-2/seg-041-e8v0Ep9UaWNb1ifbQGqGGYrwmAsat7.webm"
   - "recordings/management-of-people-at-work/2026-09-01-mpw-3-2/seg-042-eUAkLqw64SEItBNClTeYZoZrfal7Pq.webm"
   - "recordings/management-of-people-at-work/2026-09-01-mpw-3-2/seg-043-qqFbeeB6Xi1udfKRW5QbOwGS6Y17i8.webm"
+relations:
+  part-of: [management-of-people-at-work/index]
 ---
 
 > [!note] 🎙️ Original recording archived privately (44 segments) in your Vercel Blob store — not published here.

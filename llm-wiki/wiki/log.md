@@ -447,3 +447,12 @@ community: 2
 - 비과목 녹음 [[dap-info-session]](Data Analytics Programme 설명회, 2026-09-02)은 어느 과목에도 속하지 않아 [[index]]의 "Across all subjects" 표에 배치.
 - 제외 판단: [[ops-concepts/2-1]]·[[ops-concepts/make-up-2-1]]·[[ops-concepts/make-up-2-2]]는 `deprecated` 태그가 붙은 superseded 원본(ops-2-1/2-1b/2-2가 대체)이라 허브에 노출하지 않음.
 - 추천 탐색 주제: 녹음 노트 6건의 frontmatter `title`이 "MPW #3-1"·"MA #3-2" 같은 자동 생성 라벨 그대로다 — 탐색기·검색에 그렇게 노출되므로 내용 기반 제목으로 교체할지 판단 필요. 또한 이들에는 `sources:`·`kind:`·`relations:`가 없어 그래프에서 과목과 연결되지 않는다.
+
+## [2026-09-06] seminars | 녹음 노트 제목 정리 + 허브 등록 자동화
+
+- 제목 교체 9건: 녹음기가 붙인 라벨(`"MPW #3-1"`·`"#3-2"`·`"ops #1-1"`)을 노트 내용 기반 제목으로 바꿈 — 예 `"MPW 3-1 — Job Satisfaction & Its Outcomes"`, `"CTRW 3-2 — Validity, Soundness & Cogency"`. 파일 슬러그(`mpw-3-1.md`)는 그대로 두어 URL과 백링크가 유지된다.
+- 같은 9건에 `sources:`(녹음 출처)·`kind: 개념`·`relations: part-of:`(과목 허브) 추가 → 그래프에서 과목에 붙는다. `sync.py` 경고 0건(211 pages, 297 typed relations).
+- Seminars 표 4개를 `| Note | Date | Covers |` 한 형태로 통일하고, 링크를 전부 wiki-상대 전체 경로(`[[management-accounting/ma-3-1|…]]`)로 바꿈 — 자동 삽입의 중복 검사가 `[[<경로>` 문자열로 판정하기 때문.
+- **자동화**: `api/_seminars.js` 신설(순수 문자열 헬퍼) + `api/add.js` 연결. 앞으로 사이트 녹음기로 저장하면 서버가 ① 생성된 `dc-title`을 제목에 붙이고 ② `dc-sub`을 Covers로 삼아 과목 허브 `## Seminars` 표에 행을 넣고 ③ 노트와 허브를 Git Trees API로 **한 커밋**에 올린다(재배포 1회). 허브가 없으면 섹션째 새로 만든다. 재저장 시 이미 등록돼 있으면 행을 넣지 않는다(멱등).
+- 허브 읽기/패치는 best-effort — 실패해도 노트는 기존 단일 파일 경로로 저장된다.
+- 부수 수정: `add.js`의 `aiMode` 미정의 참조(자동 정리 실패 시 500으로 죽던 경로), `_note.js`의 `SUBJECT_DIR`에 `sql → sql-concepts` 누락 추가.

@@ -842,7 +842,13 @@ async function retryDraft(id: string, btn: HTMLButtonElement) {
     syncPwField()
     dropDraft(id)
     renderDrafts()
-    recStatus("저장됨 → " + (data.path || "") + " · 1–2분 뒤 사이트에 반영됩니다.", "ok")
+    recStatus(
+      "저장됨 → " +
+        (data.path || "") +
+        (data.listedIn ? ` · 📑 ${data.listedIn} Seminars에 등록됨` : "") +
+        " · 1–2분 뒤 사이트에 반영됩니다.",
+      "ok",
+    )
   } catch {
     recStatus("네트워크 오류 · 전사 내용은 그대로 보관됩니다.", "err")
     btn.disabled = false
@@ -1046,8 +1052,11 @@ async function stopRecording() {
           ? " · ⚠️ 녹음이 길어 자동 정리 생략 — 원본 전사로 저장됨"
           : " · ⚠️ 자동 정리 실패 — 원본 전사로 저장됨"
         : ""
+    // The server also files the note under the subject hub's Seminars table, so
+    // it is linked from somewhere instead of being reachable only by search.
+    const listed = data.listedIn ? ` · 📑 ${data.listedIn} Seminars에 등록됨` : ""
     recStatus(
-      "저장됨 → " + (data.path || "") + backup + gapWarn + tidyWarn + " · 1–2분 뒤 사이트에 반영됩니다.",
+      "저장됨 → " + (data.path || "") + backup + gapWarn + tidyWarn + listed + " · 1–2분 뒤 사이트에 반영됩니다.",
       gaps.length || data.tidied === false ? "err" : "ok",
     )
     const t = document.getElementById("sh-rec-title") as HTMLInputElement | null

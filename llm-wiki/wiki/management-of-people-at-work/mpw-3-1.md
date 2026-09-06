@@ -1,7 +1,10 @@
 ---
-title: "MPW #3-1"
+title: "MPW 3-1 — Job Satisfaction & Its Outcomes"
 tags: ["lecture", "recording"]
+sources: ["MPW Seminar 3 in-class recording — part 1 (2026-09-01, in-site recorder / Groq transcript)"]
+kind: 개념
 created: 2026-09-01
+updated: 2026-09-06
 recording:
   - "recordings/management-of-people-at-work/2026-09-01-mpw-3-1/seg-000-sjCa2G4kMo4qnc4jPL0zJAdDi63nXk.webm"
   - "recordings/management-of-people-at-work/2026-09-01-mpw-3-1/seg-001-ZLmkyA2RUnFf22Kzd0FkTuJSsIsSyE.webm"
@@ -42,6 +45,8 @@ recording:
   - "recordings/management-of-people-at-work/2026-09-01-mpw-3-1/seg-036-LT9DnSzRer2vwSUbZtFwwQKL0rR39X.webm"
   - "recordings/management-of-people-at-work/2026-09-01-mpw-3-1/seg-037-mhv0mwj4ic2kk3YdXaSU0SovaSkI2i.webm"
   - "recordings/management-of-people-at-work/2026-09-01-mpw-3-1/seg-038-2NtJKWuKEKNMEciqAzyw2CqpR4wPsI.webm"
+relations:
+  part-of: [management-of-people-at-work/index]
 ---
 
 > [!note] 🎙️ Original recording archived privately (39 segments) in your Vercel Blob store — not published here.

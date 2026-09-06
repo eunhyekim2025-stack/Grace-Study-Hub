@@ -13,6 +13,7 @@ export const SUBJECT_DIR = {
   "decision-analysis": "da-concepts",
   "financial-accounting": "fa-concepts",
   "operations-management": "ops-concepts",
+  sql: "sql-concepts",
   "cross-domain": "cross-domain",
   "ai-foresight": "concepts",
   "": "", // uncategorized → wiki root

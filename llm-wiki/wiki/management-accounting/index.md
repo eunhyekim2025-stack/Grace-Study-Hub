@@ -71,8 +71,8 @@ the whole arc runs [[m02-cost-concepts-job-order-costing|Module 2]] → [[m06-cv
 
 > Notes reconstructed from the in-class recordings — what was actually said, with the module notes as the backing reference.
 
-| # | Note | Date | Covers |
-|---|------|------|--------|
-| 1 | [[seminar-01-costs-for-decision-making\|Seminar 1 — Costs for Decision Making]] | 2026-08-19 | Relevant vs irrelevant cost · sunk and opportunity cost · the lecturer's marking policy |
-| 3 | [[ma-3-1\|MA 3-1 — Target Profit, Break-Even & Leverage]] | 2026-09-01 | Target-profit sales · break-even · **margin of safety** · **DOL** · multi-product break-even under a constant sales mix |
-| 3 | [[ma-3-2\|MA 3-2 — CVP Analysis in Depth]] | 2026-09-01 | Contribution margin & CM ratio · equation vs incremental method · NOI impact analysis · target profit · DOL |
+| Note | Date | Covers |
+|------|------|--------|
+| [[management-accounting/seminar-01-costs-for-decision-making\|Seminar 1 — Costs for Decision Making]] | 2026-08-19 | Relevant vs irrelevant cost · sunk and opportunity cost · the lecturer's marking policy |
+| [[management-accounting/ma-3-1\|MA 3-1 — Target Profit, Break-Even & Leverage]] | 2026-09-01 | Target-profit sales · break-even · **margin of safety** · **DOL** · multi-product break-even under a constant sales mix |
+| [[management-accounting/ma-3-2\|MA 3-2 — CVP Analysis in Depth]] | 2026-09-01 | Contribution margin & CM ratio · equation vs incremental method · NOI impact analysis · target profit · DOL |

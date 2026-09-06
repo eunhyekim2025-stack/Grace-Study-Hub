@@ -32,7 +32,7 @@ community: 5
 
 | Note | Date | Covers |
 |------|------|--------|
-| [[ops-concepts/ops-1-1\|Ops 1-1]] | 2026-08-20 | Session 1 intro |
+| [[ops-concepts/ops-1-1\|Ops 1-1 — recording not transcribed]] | 2026-08-20 | Session 1 — the transcript came back empty; audio archived, note kept as a placeholder |
 | [[ops-concepts/ops-2-1\|Ops 2-1 — Process View & Flow Unit]] | 2026-08-27 | Order winners/qualifiers · process view · choosing the flow unit |
 | [[ops-concepts/ops-2-1b\|Ops 2-1b — Flow Metrics & Little's Law]] | 2026-08-27 | Flow rate/inventory/flow time · **I = R×T** · cycle time · days-of-supply & turns |
 | [[ops-concepts/ops-2-2\|Ops 2-2 — Bottleneck & Capacity]] | 2026-08-27 | Process-flow diagram · capacity · **bottleneck** · *The Goal* · demand- vs capacity-constrained |
