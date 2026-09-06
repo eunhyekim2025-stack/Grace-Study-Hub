@@ -14,7 +14,10 @@ const SUBJECTS = subjectsData as Subject[]
 
 const SubjectAutoBar: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps) => {
   const slug = fileData.slug ?? ""
-  const subj = SUBJECTS.find((s) => s.slug === slug)
+  // Match both top-level hubs (slug "operations-management") and folder-index
+  // hubs whose page slug is "<subject>/index" (management-accounting,
+  // critical-thinking-in-real-world, management-of-people-at-work).
+  const subj = SUBJECTS.find((s) => s.slug === slug || slug === `${s.slug}/index`)
   if (!subj) return null
 
   const count = allFiles.filter((f) =>

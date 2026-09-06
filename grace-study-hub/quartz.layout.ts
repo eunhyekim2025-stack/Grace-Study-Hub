@@ -171,6 +171,10 @@ export const defaultListPageLayout: PageLayout = {
       component: Component.TagExplorer(),
       condition: (page) => (page.fileData.slug ?? "").startsWith("tags/"),
     }),
+    // Folder-index subject hubs (management-accounting/index, critical-thinking-in-real-world/index,
+    // management-of-people-at-work/index) are rendered as folder/list pages, so the
+    // Auto-Generate bar + section tabs must live here too. No-op on non-subject list pages.
+    Component.SubjectAutoBar(),
   ],
   left: [Component.SubjectNav()],
   right: [],
