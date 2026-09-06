@@ -43,14 +43,42 @@ const SubjectAutoBar: QuartzComponent = ({ fileData, allFiles }: QuartzComponent
           </span>
         </div>
         <div class="sh-subjbar-actions">
-          <button class="sh-subjbar-btn ghost" data-add-open="upload" data-add-subject={subj.slug}>
+          <button class="sh-subjbar-btn ghost" data-sh-summarize data-sh-subject={subj.slug}>
             Summarize subject
           </button>
-          <button class="sh-subjbar-btn solid" data-add-open="note" data-add-subject={subj.slug}>
+          <button
+            class="sh-subjbar-btn solid"
+            data-sh-quiz-toggle
+            data-sh-subject={subj.slug}
+            aria-expanded="false"
+          >
             Build quiz →
           </button>
         </div>
       </div>
+
+      {/* Quiz options — opens under the bar (does NOT reuse the add-note modal).
+          Pick count + difficulty, Generate posts to /api/generate. */}
+      <div class="sh-genquiz" data-sh-quiz-panel hidden>
+        <label class="sh-genquiz-field">
+          <span>Questions</span>
+          <input class="sh-input" type="number" data-sh-quiz-count min="1" max="20" value="5" />
+        </label>
+        <label class="sh-genquiz-field">
+          <span>Difficulty</span>
+          <select class="sh-input" data-sh-quiz-difficulty>
+            <option value="easy">Easy</option>
+            <option value="medium" selected>
+              Medium
+            </option>
+            <option value="hard">Hard</option>
+          </select>
+        </label>
+        <button class="sh-subjbar-btn solid" data-sh-quiz-generate data-sh-subject={subj.slug}>
+          Generate
+        </button>
+      </div>
+      <div class="sh-gen-status" data-sh-gen-status hidden></div>
 
       {tabs.length > 0 && (
         <div class="sh-subjtabs">

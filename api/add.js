@@ -15,10 +15,9 @@ const REPO = "eunhyekim2025-stack/Grace-Study-Hub"
 const BRANCH = "main"
 const WIKI = "llm-wiki/wiki"
 
-// AI note generation. Two modes, both returning a Markdown BODY (no frontmatter,
-// no top-level "#" title) and both falling back to the raw text if GROQ_API_KEY
-// is missing or the call fails, so a note is never lost:
-//   "tidy"    — ① NotebookLM paste: reformat only, invent nothing.
+// AI note generation. Returns a Markdown BODY (no frontmatter, no top-level "#"
+// title) and falls back to the raw text if GROQ_API_KEY is missing or the call
+// fails, so a note is never lost:
 //   "lecture" — 🔴 in-site recording: turn a rough speech transcript into
 //               well-structured study notes (summarize + organize).
 // The chat model. NOTE: this Groq account can only use the openai/gpt-oss-*
@@ -33,9 +32,8 @@ const TIDY_BUDGET_CHARS = 14000
 
 // Returns { body, tidied, reason }. `tidied:false` means the caller should mark
 // the note as raw (needs manual tidying) instead of passing it off as finished.
-async function noteFromText(title, raw, apiKey, mode = "tidy") {
+async function noteFromText(title, raw, apiKey) {
   if (!apiKey) return { body: raw, tidied: false, reason: "no-groq-key" }
-  const lecture = mode === "lecture"
   const text = String(raw)
   if (text.length > TIDY_BUDGET_CHARS) {
     // Too long for one budget-sized request; don't produce a misleading
@@ -43,26 +41,18 @@ async function noteFromText(title, raw, apiKey, mode = "tidy") {
     return { body: raw, tidied: false, reason: "too-long" }
   }
 
-  const prompt = lecture
-    ? `You are turning a raw lecture transcript into clean study notes for a Quartz ` +
-      `markdown wiki. The note is titled "${title}". The transcript is auto-generated ` +
-      `speech-to-text, so it has filler words, false starts, and no punctuation ` +
-      `structure. Produce faithful, well-organized STUDY NOTES in ENGLISH. If the ` +
-      `lecture is spoken in another language (e.g., Korean), translate the content ` +
-      `into natural English — the entire note (including the diagram block, callout ` +
-      `titles, and glossary) must be in English. Remove filler ("um", "you know", ` +
-      `repetitions) but keep ALL substantive content. Do NOT invent facts that are ` +
-      `not present in the transcript.` +
-      DESIGN_SPEC +
-      `\n\nTRANSCRIPT:\n"""\n${text}\n"""`
-    : `You are reformatting a study note for a Quartz markdown wiki. The note is ` +
-      `titled "${title}". Below is raw text pasted from NotebookLM (a summary/notes). ` +
-      `RESTRUCTURE and CLEAN UP the formatting — do NOT add, remove, or invent any ` +
-      `facts, and keep the SAME LANGUAGE as the input (write the diagram block, ` +
-      `callout titles, and glossary in that language too). Fix obvious spacing/OCR ` +
-      `artifacts only.` +
-      DESIGN_SPEC +
-      `\n\nRAW TEXT:\n"""\n${text}\n"""`
+  const prompt =
+    `You are turning a raw lecture transcript into clean study notes for a Quartz ` +
+    `markdown wiki. The note is titled "${title}". The transcript is auto-generated ` +
+    `speech-to-text, so it has filler words, false starts, and no punctuation ` +
+    `structure. Produce faithful, well-organized STUDY NOTES in ENGLISH. If the ` +
+    `lecture is spoken in another language (e.g., Korean), translate the content ` +
+    `into natural English — the entire note (including the diagram block, callout ` +
+    `titles, and glossary) must be in English. Remove filler ("um", "you know", ` +
+    `repetitions) but keep ALL substantive content. Do NOT invent facts that are ` +
+    `not present in the transcript.` +
+    DESIGN_SPEC +
+    `\n\nTRANSCRIPT:\n"""\n${text}\n"""`
 
   try {
     const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -73,7 +63,7 @@ async function noteFromText(title, raw, apiKey, mode = "tidy") {
         messages: [{ role: "user", content: prompt }],
         max_tokens: 3500,
         // Low temperature = more faithful, less rambling → tighter notes.
-        temperature: lecture ? 0.3 : 0.2,
+        temperature: 0.3,
       }),
     })
     const data = await res.json().catch(() => ({}))
@@ -174,16 +164,15 @@ export default async function handler(req, res) {
       .split(",")
       .map(normTag)
       .filter(Boolean)
-    // AI pass: "lecture" summarizes a recording transcript into study notes;
-    // "polish" tidies a pasted NotebookLM summary. Otherwise save as-is.
-    const aiMode = body.mode === "lecture" ? "lecture" : "tidy"
+    // AI pass: "lecture" summarizes a recording transcript into study notes.
+    // Otherwise save as-is.
     // pretidied = the client already ran the (chunked) tidy for a long lecture,
     // so accept the content as the finished note and skip the server tidy.
-    const wantAI = (body.mode === "lecture" || body.polish) && !body.pretidied
+    const wantAI = body.mode === "lecture" && !body.pretidied
     const ai = body.pretidied
       ? { body: content, tidied: true }
       : wantAI
-        ? await noteFromText(title, content, process.env.GROQ_API_KEY, aiMode)
+        ? await noteFromText(title, content, process.env.GROQ_API_KEY)
         : { body: content, tidied: false }
     const finalContent = ai.body
     // If we WANTED an AI tidy but it didn't happen, say so in the note instead of

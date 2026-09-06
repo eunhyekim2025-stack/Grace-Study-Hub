@@ -8,6 +8,7 @@ import { styleText } from "util"
 import { parseMarkdown } from "./processors/parse"
 import { filterContent } from "./processors/filter"
 import { emitContent } from "./processors/emit"
+import { resolveHeadingLinks } from "./processors/resolveHeadingLinks"
 import cfg from "../quartz.config"
 import { FilePath, joinSegments, slugifyFilePath } from "./util/path"
 import chokidar from "chokidar"
@@ -83,6 +84,10 @@ async function buildQuartz(argv: Argv, mut: Mutex, clientRefresh: () => void) {
 
   const parsedFiles = await parseMarkdown(ctx, filePaths)
   const filteredContent = filterContent(ctx, parsedFiles)
+
+  // resolve "related term" links to the heading that defines them (needs all
+  // files parsed so every note's heading ids are known)
+  resolveHeadingLinks(filteredContent)
 
   await emitContent(ctx, filteredContent)
   console.log(
@@ -261,6 +266,9 @@ async function rebuild(changes: ChangeEvent[], clientRefresh: () => void, buildD
       .filter((file) => file.type === "markdown")
       .map((file) => file.content),
   )
+
+  // re-resolve "related term" links across the whole (updated) content set
+  resolveHeadingLinks(processedFiles)
 
   let emittedFiles = 0
   for (const emitter of cfg.plugins.emitters) {

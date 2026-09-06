@@ -43,6 +43,9 @@ export default ((userOpts?: Partial<Options>) => {
             const title = page.frontmatter?.title ?? i18n(cfg.locale).propertyDefaults.title
             const tags = page.frontmatter?.tags ?? []
 
+            // The note's source path (relative to the wiki root), e.g.
+            // "law-concepts/negligence.md" — what /api/edit needs to overwrite it.
+            const rel = page.relativePath
             return (
               <li class="recent-li">
                 <div class="section">
@@ -51,6 +54,18 @@ export default ((userOpts?: Partial<Options>) => {
                       <a href={resolveRelative(fileData.slug!, page.slug!)} class="internal">
                         {title}
                       </a>
+                      {rel && rel.toLowerCase().endsWith(".md") && (
+                        <button
+                          class="sh-edit-btn"
+                          data-edit-path={rel}
+                          data-edit-title={title}
+                          data-edit-slug={page.slug}
+                          title="이 노트를 편집"
+                          aria-label="이 노트를 편집"
+                        >
+                          ✏️
+                        </button>
+                      )}
                     </h3>
                   </div>
                   {page.dates && (

@@ -11,16 +11,27 @@ const DeleteNote: QuartzComponent = ({ fileData, displayClass }: QuartzComponent
   if (!rel || fileData.slug === "index" || !rel.toLowerCase().endsWith(".md")) return null
   const title = (fileData.frontmatter?.title as string) ?? fileData.slug ?? "this note"
   return (
-    <div class={classNames(displayClass, "sh-delnote")}>
+    <div class={classNames(displayClass, "sh-note-actions")}>
       <button
-        class="sh-delnote-btn"
-        data-del-path={rel}
-        data-del-slug={fileData.slug}
-        data-del-title={title}
-        title="이 노트를 삭제"
+        class="sh-edit-btn sh-edit-btn-page"
+        data-edit-path={rel}
+        data-edit-title={title}
+        data-edit-slug={fileData.slug}
+        title="이 노트를 편집"
       >
-        🗑 노트 삭제
+        ✏️ 노트 편집
       </button>
+      <span class="sh-delnote">
+        <button
+          class="sh-delnote-btn"
+          data-del-path={rel}
+          data-del-slug={fileData.slug}
+          data-del-title={title}
+          title="이 노트를 삭제"
+        >
+          🗑 노트 삭제
+        </button>
+      </span>
     </div>
   )
 }

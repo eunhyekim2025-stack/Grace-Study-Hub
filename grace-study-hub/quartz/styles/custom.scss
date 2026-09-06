@@ -1445,6 +1445,180 @@ textarea.sh-input {
   margin: 4px 0 12px;
 }
 
+// ── In-recording panels: calendar (view+edit) + note review ────────────────
+// Toggled open WHILE a recording runs; nothing here navigates the page.
+.sh-rec-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.sh-rec-tool-toggle {
+  font-size: 0.76rem;
+}
+
+// (A) Calendar panel
+.sh-cal-panel {
+  margin-top: 10px;
+  padding: 12px;
+  border: 1px solid var(--lightgray);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--secondary) 3%, var(--light));
+}
+.sh-cal-panel-status {
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--darkgray);
+  margin-bottom: 8px;
+
+  &.ok {
+    color: oklch(0.55 0.13 150);
+  }
+  &.err {
+    color: oklch(0.55 0.16 25);
+  }
+  &:empty,
+  &[hidden] {
+    display: none;
+  }
+}
+.sh-cal-list {
+  display: flex;
+  flex-direction: column;
+}
+.sh-cal-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 0;
+
+  & + & {
+    border-top: 1px solid color-mix(in srgb, var(--gray) 22%, transparent);
+  }
+}
+.sh-cal-item-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  font-size: 0.8rem;
+
+  b {
+    word-break: break-word;
+  }
+  span {
+    color: var(--gray);
+    font-size: 0.72rem;
+  }
+}
+.sh-cal-item-actions {
+  display: flex;
+  gap: 4px;
+
+  .sh-btn {
+    padding: 3px 8px;
+    font-size: 0.78rem;
+  }
+}
+.sh-cal-edit {
+  flex: 1 0 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+.sh-cal-edit-actions {
+  display: flex;
+  gap: 6px;
+
+  .sh-btn {
+    padding: 5px 10px;
+    font-size: 0.74rem;
+  }
+}
+.sh-cal-add {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid color-mix(in srgb, var(--gray) 22%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sh-cal-add-head {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--dark);
+}
+.sh-cal-add-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1 1 130px;
+    font-size: 0.7rem;
+    color: var(--darkgray);
+  }
+}
+
+// (B) Note-review panel
+.sh-notes-panel {
+  margin-top: 10px;
+  padding: 12px;
+  border: 1px solid var(--lightgray);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--secondary) 3%, var(--light));
+}
+.sh-notes-search {
+  margin-bottom: 8px;
+}
+.sh-notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+.sh-note-row {
+  text-align: left;
+  padding: 7px 8px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--dark);
+  font-size: 0.8rem;
+  cursor: pointer;
+  word-break: break-word;
+
+  &:hover {
+    background: color-mix(in srgb, var(--secondary) 10%, transparent);
+  }
+}
+.sh-notes-reader-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.sh-notes-reader-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--dark);
+  word-break: break-word;
+}
+.sh-notes-frame {
+  width: 100%;
+  height: 420px;
+  border: 1px solid var(--lightgray);
+  border-radius: 8px;
+  background: var(--light);
+}
+
 // ── Note view toggle + auto mind map (Graph view) ──────────────
 .mm-wrap {
   // Bubble palette (theme-aware); overridden for dark mode below.
@@ -1855,6 +2029,110 @@ textarea.sh-input {
   }
 }
 
+// ── Inline note editing (✏️ on cards + note pages) ─────────────
+// Card pencil: a quiet icon button next to the note title in listings.
+.sh-edit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.4rem;
+  padding: 2px 5px;
+  font-size: 0.8rem;
+  line-height: 1;
+  vertical-align: middle;
+  color: var(--gray);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  cursor: pointer;
+  opacity: 0.55;
+  transition:
+    opacity 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease;
+
+  &:hover {
+    opacity: 1;
+    background: var(--highlight);
+    border-color: var(--lightgray);
+  }
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+// Page pencil: sits in the actions row beside 🗑 노트 삭제, matching its size.
+.sh-note-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+
+  .sh-delnote {
+    margin: 0;
+  }
+}
+.sh-edit-btn-page {
+  margin-left: 0;
+  padding: 5px 12px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  font-family: inherit;
+  opacity: 1;
+  border-color: var(--lightgray);
+
+  &:hover {
+    color: var(--tertiary);
+    border-color: color-mix(in srgb, var(--sh-accent) 40%, var(--lightgray));
+    background: color-mix(in srgb, var(--sh-accent) 8%, transparent);
+  }
+}
+// The in-place editor panel injected by addContent.inline.ts.
+.sh-edit {
+  margin: 0.6rem 0 0.4rem;
+  padding: 0.9rem 1rem 1rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--sh-accent) 4%, var(--light));
+
+  .sh-edit-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 0.7rem;
+
+    & > label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--darkgray);
+    }
+  }
+  .sh-edit-body {
+    resize: vertical;
+    min-height: 8rem;
+    font-family:
+      ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+  .sh-edit-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+  }
+  .sh-edit-status {
+    min-height: 1.2em;
+    font-size: 0.8rem;
+
+    &.ok {
+      color: oklch(0.55 0.13 150);
+    }
+    &.err {
+      color: oklch(0.55 0.18 25);
+    }
+  }
+}
+
 // ── Print / Export button + menu (note pages) ──────────────────
 .sh-printnote {
   display: inline-block;
@@ -1959,6 +2237,9 @@ textarea.sh-input {
   .right.sidebar,
   .page-footer,
   .sh-delnote,
+  .sh-note-actions,
+  .sh-edit,
+  .sh-edit-btn,
   .sh-printnote,
   .sh-subjbar-wrap,
   .breadcrumb-container,
@@ -2250,6 +2531,50 @@ table thead tr {
     &:hover {
       background: var(--tertiary);
     }
+  }
+}
+
+// Auto-Generate: quiz options panel + shared status line (under the dark bar)
+.sh-genquiz {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--lightgray);
+  border-radius: 12px;
+  background: var(--light);
+}
+.sh-genquiz-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--darkgray);
+
+  input,
+  select {
+    margin: 0;
+  }
+  input[type="number"] {
+    width: 90px;
+  }
+}
+.sh-gen-status {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--darkgray);
+
+  &.ok {
+    color: var(--secondary);
+  }
+  &.err {
+    color: #c0392b;
+  }
+  a {
+    font-weight: 700;
   }
 }
 
@@ -2675,4 +3000,256 @@ a.sh-subjtab {
 :root[saved-theme="dark"] .dc-view .dc-step,
 :root[saved-theme="dark"] .dc-view .dc-card {
   background: color-mix(in srgb, var(--light) 92%, #fff);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MOBILE RESPONSIVE PASS (phones ~320–480px)
+// All rules below are scoped inside mobile media queries so the desktop
+// layout is untouched. The base layer already guards global overflow
+// (base.scss: html{overflow-x:hidden;width:100vw}, img{max-width:100%},
+// pre/.table-container{overflow-x:auto}, overflow-wrap:break-word); the
+// rules here make each bespoke .sh-* component reflow (stack/wrap, grids →
+// single column) instead of clipping or overflowing.
+// ═══════════════════════════════════════════════════════════════
+
+// ── Tablet / large-phone step ──────────────────────────────────
+@media all and (max-width: 600px) {
+  // Fixed top bar: allow it to grow to two rows and let its inner flex wrap.
+  // Everything (body padding-top, sidebar top offset) keys off --sh-topbar-h,
+  // so bumping it here keeps content clear of the taller bar automatically.
+  :root {
+    --sh-topbar-h: 104px;
+  }
+  .page-header > header {
+    height: auto;
+    min-height: 56px;
+    padding: 8px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-content: center;
+  }
+  .page-header > header .flex-component {
+    flex-wrap: wrap;
+    gap: 8px !important;
+    row-gap: 8px;
+  }
+  .page-header > header .search {
+    flex: 1 1 80px;
+    min-width: 0;
+    max-width: none;
+  }
+  // Top action buttons drop to their own full-width row and split it evenly.
+  .sh-topactions {
+    flex: 1 1 100%;
+    gap: 8px;
+  }
+  .sh-topactions .sh-btn {
+    flex: 1 1 0;
+    justify-content: center;
+    min-width: 0;
+    padding: 8px 10px;
+  }
+
+  // Stat cards: keep two-up but tighten so the numbers never overflow.
+  .sh-stat {
+    padding: 12px 14px;
+  }
+  .sh-stat-value {
+    font-size: 1.5rem;
+  }
+
+  // In-page modal: pad-to-edge shell, wrapping tabs, stacked actions.
+  .sh-modal {
+    padding: 12px;
+  }
+  .sh-modal-card {
+    padding: 18px 16px 18px;
+    max-height: 92vh;
+  }
+  .sh-modal-tabs {
+    flex-wrap: wrap;
+  }
+  .sh-modal-actions {
+    flex-wrap: wrap;
+    .sh-btn {
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+  }
+
+  // Recorder controls: stack the record/stop buttons full width.
+  .sh-rec-controls {
+    flex-wrap: wrap;
+    .sh-btn {
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+  }
+
+  // In-recording note-review iframe: cap height and never exceed the panel.
+  .sh-notes-frame {
+    max-width: 100%;
+    height: 60vh;
+    max-height: 340px;
+  }
+  .sh-notes-reader-bar {
+    flex-wrap: wrap;
+  }
+
+  // Quiz / summary generator bar: each field takes the full row.
+  .sh-genquiz {
+    padding: 12px;
+  }
+  .sh-genquiz-field {
+    flex: 1 1 100%;
+    input,
+    select {
+      width: 100%;
+    }
+    input[type="number"] {
+      width: 100%;
+    }
+  }
+  .sh-genquiz .sh-btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
+
+// ── Phone step ─────────────────────────────────────────────────
+@media all and (max-width: 480px) {
+  // Collapse the wordmark to just the "G" badge to reclaim top-bar width;
+  // the badge keeps its own explicit font-size so font-size:0 hides only text.
+  .page-title a {
+    font-size: 0;
+    gap: 0;
+  }
+  .page-title a::before {
+    font-size: 0.9rem;
+  }
+  .sh-side-toggle {
+    flex: 0 0 auto;
+  }
+
+  // Dashboard header + stats: shrink type, drop stat cards to a single column.
+  .sh-dash-head h1 {
+    font-size: 1.35rem;
+  }
+  .sh-stats {
+    grid-template-columns: 1fr;
+  }
+  // .sh-dash-cols already collapses to one column at 900px; restate the guard.
+  .sh-dash-cols {
+    grid-template-columns: 1fr;
+  }
+  .sh-panel {
+    padding: 16px 16px;
+  }
+
+  // Subject cards → single column (also covered at 600px; keep min-width guard).
+  .sh-card-grid {
+    grid-template-columns: 1fr;
+  }
+  .sh-card {
+    min-width: 0;
+  }
+
+  // Subjects sidebar: full width, allow long labels to shrink.
+  .sh-subjects {
+    width: 100%;
+    min-width: 0;
+  }
+
+  // Recent list: keep rows tidy and wrapping.
+  .sh-recent li {
+    min-width: 0;
+    a {
+      overflow-wrap: anywhere;
+    }
+  }
+
+  // Modal tabs sit comfortably; action buttons stack full width.
+  .sh-modal-tab {
+    padding: 7px 12px;
+    font-size: 0.8rem;
+  }
+  .sh-modal-actions .sh-btn {
+    flex: 1 1 100%;
+  }
+
+  // Recorder: record/stop full width, meter label wraps under the track.
+  .sh-rec {
+    padding: 12px 12px 10px;
+  }
+  .sh-rec-controls .sh-btn {
+    flex: 1 1 100%;
+  }
+  .sh-rec-meter {
+    flex-wrap: wrap;
+  }
+  .sh-rec-meter-track {
+    flex: 1 1 100%;
+  }
+  // .sh-drafts / .sh-draft / .sh-draft-actions / .sh-rec-tools already flex-wrap;
+  // just guard the meta column from pushing the row wide.
+  .sh-draft-meta {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  // In-recording calendar panel: stack items, edit fields, and add-row inputs.
+  .sh-cal-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .sh-cal-item-actions {
+    flex-wrap: wrap;
+  }
+  .sh-cal-add-row label {
+    flex: 1 1 100%;
+  }
+  .sh-cal-edit-actions {
+    flex-wrap: wrap;
+    .sh-btn {
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+  }
+
+  // Note-review panel iframe: tighter cap on the smallest screens.
+  .sh-notes-frame {
+    height: 56vh;
+    max-height: 300px;
+  }
+
+  // Inline note editor: wrap the action buttons, tighten padding.
+  .sh-edit {
+    padding: 0.8rem 0.8rem 0.9rem;
+    .sh-edit-actions {
+      flex-wrap: wrap;
+      .sh-btn {
+        flex: 1 1 auto;
+        justify-content: center;
+      }
+    }
+  }
+  .sh-note-actions {
+    flex-wrap: wrap;
+    .sh-btn,
+    .sh-edit-btn-page {
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+  }
+
+  // Generator status link can wrap rather than push the row wide.
+  .sh-gen-status {
+    overflow-wrap: anywhere;
+  }
+
+  // Copyable embed snippet: break long paths instead of overflowing.
+  .sh-embed-snip {
+    overflow-wrap: anywhere;
+    word-break: break-all;
+  }
 }

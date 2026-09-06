@@ -98,18 +98,14 @@ function val(id: string): string {
   return el ? el.value : ""
 }
 
-async function post(payload: Record<string, unknown>, btn: HTMLButtonElement, polish = false) {
+async function post(payload: Record<string, unknown>, btn: HTMLButtonElement) {
   const password = val("sh-add-pw").trim()
   if (!password) {
     status("비밀번호를 입력하세요.", "err")
     return
   }
   btn.disabled = true
-  status(
-    polish
-      ? "AI가 정리하는 중… (10~30초, 사이트는 1–2분 뒤 재배포됩니다)"
-      : "저장 중… (사이트가 1–2분 뒤 재배포됩니다)",
-  )
+  status("저장 중… (사이트가 1–2분 뒤 재배포됩니다)")
   try {
     const res = await fetch("/api/add", {
       method: "POST",
@@ -151,7 +147,6 @@ function submitNote(btn: HTMLButtonElement) {
     status("제목과 내용을 입력하세요.", "err")
     return
   }
-  const polish = checked("sh-note-polish")
   post(
     {
       type: "note",
@@ -159,12 +154,10 @@ function submitNote(btn: HTMLButtonElement) {
       subject: val("sh-note-subject"),
       tags: val("sh-note-tags"),
       content,
-      polish,
       homework: checked("sh-note-homework"), // route into the subject's <base>-homework/ folder
       knownTags: knownTags(), // reuse the existing vocabulary for auto-tagging
     },
     btn,
-    polish,
   )
 }
 
@@ -1152,10 +1145,545 @@ async function deleteNote(btn: HTMLButtonElement) {
   }
 }
 
+// ── Inline note editing ───────────────────────────────────────────────────
+// A ✏️ button on each note card (RecentNotes) and on the note page opens an
+// in-place editor WITHOUT navigating away: it fetches the note's current title +
+// markdown from /api/edit (mode:"get"), shows them in a title input + textarea,
+// and on Save posts back (mode:"save") which overwrites the file via GitHub
+// (getFile→sha→PUT). Cancel restores the original view untouched. Reuses the
+// same ADD_SECRET the rest of the modal caches in localStorage.
+
+function editStatus(el: HTMLElement, msg: string, kind: "" | "ok" | "err" = "") {
+  el.textContent = msg
+  el.className = "sh-edit-status" + (kind ? " " + kind : "")
+}
+
+// Build the inline editor DOM for one note. `li` is the RecentNotes card whose
+// `.section` we hide while editing (null on a note page). Uses createElement +
+// .value (never innerHTML) so note content can never inject markup.
+function buildEditor(
+  path: string,
+  title: string,
+  content: string,
+  li: HTMLElement | null,
+  onTitleSaved: (t: string) => void,
+): HTMLElement {
+  const wrap = document.createElement("div")
+  wrap.className = "sh-edit"
+
+  const titleWrap = document.createElement("div")
+  titleWrap.className = "sh-edit-field"
+  const titleLabel = document.createElement("label")
+  titleLabel.textContent = "제목"
+  const titleInput = document.createElement("input")
+  titleInput.className = "sh-input sh-edit-title"
+  titleInput.value = title
+  titleWrap.append(titleLabel, titleInput)
+
+  const bodyWrap = document.createElement("div")
+  bodyWrap.className = "sh-edit-field"
+  const bodyLabel = document.createElement("label")
+  bodyLabel.textContent = "내용 (Markdown)"
+  const bodyInput = document.createElement("textarea")
+  bodyInput.className = "sh-input sh-edit-body"
+  bodyInput.rows = li ? 10 : 18
+  bodyInput.value = content
+  bodyWrap.append(bodyLabel, bodyInput)
+
+  const statusEl = document.createElement("div")
+  statusEl.className = "sh-edit-status"
+
+  const actions = document.createElement("div")
+  actions.className = "sh-edit-actions"
+  const saveBtn = document.createElement("button")
+  saveBtn.className = "sh-btn sh-btn-new"
+  saveBtn.textContent = "저장"
+  const cancelBtn = document.createElement("button")
+  cancelBtn.className = "sh-btn sh-btn-ghost"
+  cancelBtn.textContent = "취소"
+  actions.append(saveBtn, cancelBtn)
+
+  wrap.append(titleWrap, bodyWrap, statusEl, actions)
+
+  const closeEditor = () => {
+    wrap.remove()
+    if (li) {
+      const sec = li.querySelector<HTMLElement>(".section")
+      if (sec) sec.hidden = false
+    }
+  }
+  cancelBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    closeEditor()
+  })
+  saveBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    saveEdit(path, titleInput, bodyInput, statusEl, saveBtn, onTitleSaved)
+  })
+  return wrap
+}
+
+async function saveEdit(
+  path: string,
+  titleInput: HTMLInputElement,
+  bodyInput: HTMLTextAreaElement,
+  statusEl: HTMLElement,
+  saveBtn: HTMLButtonElement,
+  onTitleSaved: (t: string) => void,
+) {
+  const title = titleInput.value.trim()
+  const content = bodyInput.value
+  if (!title || !content.trim()) {
+    editStatus(statusEl, "제목과 내용을 입력하세요.", "err")
+    return
+  }
+  let password = (localStorage.getItem(PW_KEY) || "").trim()
+  if (!password) {
+    password = (window.prompt("추가 비밀번호를 입력하세요") || "").trim()
+    if (!password) return
+  }
+  saveBtn.disabled = true
+  editStatus(statusEl, "저장 중… (사이트가 1–2분 뒤 재배포됩니다)")
+  try {
+    const res = await fetch("/api/edit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ mode: "save", path, title, content, password }),
+    })
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok) {
+      if (res.status === 401) localStorage.removeItem(PW_KEY)
+      editStatus(statusEl, "저장 실패: " + (data.error || res.status), "err")
+      saveBtn.disabled = false
+      return
+    }
+    localStorage.setItem(PW_KEY, password)
+    onTitleSaved(title)
+    editStatus(statusEl, "저장됨 → " + (data.path || path) + " · 1–2분 뒤 사이트에 반영됩니다.", "ok")
+  } catch {
+    editStatus(statusEl, "네트워크 오류. 배포된 사이트에서 시도하세요.", "err")
+    saveBtn.disabled = false
+  }
+}
+
+async function openEditor(btn: HTMLButtonElement) {
+  const path = btn.dataset.editPath
+  if (!path || btn.dataset.editBusy) return
+  // Already open for this note? Toggle it closed (find the sibling editor).
+  const li = btn.closest<HTMLElement>(".recent-li")
+  const host = li || btn.closest<HTMLElement>(".sh-note-actions")?.parentElement || document.body
+  const existing = (li || host).querySelector<HTMLElement>(".sh-edit")
+  if (existing) {
+    existing.querySelector<HTMLButtonElement>(".sh-btn-ghost")?.click()
+    return
+  }
+
+  let password = (localStorage.getItem(PW_KEY) || "").trim()
+  if (!password) {
+    password = (window.prompt("추가 비밀번호를 입력하세요") || "").trim()
+    if (!password) return
+  }
+
+  const original = btn.textContent
+  btn.dataset.editBusy = "1"
+  btn.disabled = true
+  btn.textContent = "…"
+  try {
+    const res = await fetch("/api/edit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ mode: "get", path, password }),
+    })
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok) {
+      if (res.status === 401) localStorage.removeItem(PW_KEY)
+      alert("불러오기 실패: " + (data.error || res.status))
+      return
+    }
+    localStorage.setItem(PW_KEY, password)
+    const curTitle = typeof data.title === "string" && data.title ? data.title : btn.dataset.editTitle || ""
+    const onTitleSaved = (t: string) => {
+      // Reflect the new title in the DOM right away (the rebuild lags 1–2 min).
+      if (li) {
+        const link = li.querySelector<HTMLElement>(".desc h3 a")
+        if (link) link.textContent = t
+        const editBtn = li.querySelector<HTMLElement>(".sh-edit-btn")
+        if (editBtn) editBtn.setAttribute("data-edit-title", t)
+      } else {
+        const h1 = document.querySelector<HTMLElement>("article h1, .page-title, h1")
+        if (h1) h1.textContent = t
+      }
+    }
+    const editor = buildEditor(path, curTitle, String(data.content || ""), li, onTitleSaved)
+    if (li) {
+      const sec = li.querySelector<HTMLElement>(".section")
+      if (sec) sec.hidden = true
+      li.appendChild(editor)
+    } else {
+      const actions = btn.closest<HTMLElement>(".sh-note-actions")
+      if (actions) actions.after(editor)
+      else btn.after(editor)
+    }
+    editor.querySelector<HTMLElement>(".sh-edit-title")?.focus()
+  } catch {
+    alert("네트워크 오류. 배포된 사이트에서 시도하세요.")
+  } finally {
+    delete btn.dataset.editBusy
+    btn.disabled = false
+    btn.textContent = original
+  }
+}
+
+// ── Subject Auto-Generate: quiz + revision summary ────────────────────────
+// The two buttons in SubjectAutoBar build a note from the subject's OWN wiki
+// notes via /api/generate. "Build quiz →" opens a compact count/difficulty
+// panel (no note-modal reuse); "Summarize subject" fires directly after a
+// confirm. Both reuse the cached ADD_SECRET (prompt if missing).
+
+function genSecret(): string {
+  let pw = (val("sh-add-pw") || localStorage.getItem(PW_KEY) || "").trim()
+  if (!pw) pw = (window.prompt("추가 비밀번호를 입력하세요") || "").trim()
+  return pw
+}
+
+function genStatusEl(): HTMLElement | null {
+  return document.querySelector<HTMLElement>("[data-sh-gen-status]")
+}
+
+function genStatus(msg: string, kind: "" | "ok" | "err" = "") {
+  const el = genStatusEl()
+  if (!el) return
+  el.hidden = !msg
+  el.textContent = msg
+  el.className = "sh-gen-status" + (kind ? " " + kind : "")
+}
+
+async function runGenerate(
+  kind: "quiz" | "summary",
+  subject: string,
+  btn: HTMLButtonElement,
+  opts: Record<string, unknown>,
+) {
+  if (!subject) return
+  const password = genSecret()
+  if (!password) {
+    genStatus("추가 비밀번호가 필요합니다.", "err")
+    return
+  }
+  btn.disabled = true
+  genStatus(kind === "quiz" ? "퀴즈 생성 중… (20~40초)" : "요약 생성 중… (20~40초)")
+  try {
+    const res = await fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ kind, subject, ...opts, password }),
+    })
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok) {
+      if (res.status === 401) localStorage.removeItem(PW_KEY)
+      genStatus("실패: " + (data.error || res.status), "err")
+      return
+    }
+    localStorage.setItem(PW_KEY, password)
+    const el = genStatusEl()
+    if (el) {
+      const href = "/" + String(data.noteSlug || "")
+      el.hidden = false
+      el.className = "sh-gen-status ok"
+      el.innerHTML =
+        `생성됨 → <a href="${escHtml(href)}">${escHtml(String(data.title || "노트"))}</a>` +
+        ` · 1–2분 뒤 사이트에 반영됩니다.`
+    }
+  } catch {
+    genStatus("네트워크 오류. 배포된 사이트에서 시도하세요.", "err")
+  } finally {
+    btn.disabled = false
+  }
+}
+
+// ── In-recording panels: calendar (view+edit) + note review ───────────────
+// Both live INSIDE the .sh-rec container and are driven only by the listeners
+// below. They never touch REC, the MediaRecorder, or its intervals, and they
+// never navigate the page (the note reader uses an <iframe>), so a recording in
+// progress keeps running the entire time either panel is open.
+
+// Shared secret for the write endpoints (same ADD_SECRET the rest of the modal
+// caches). Prompts once if we don't have it yet.
+function panelSecret(): string {
+  let pw = (val("sh-add-pw") || localStorage.getItem(PW_KEY) || "").trim()
+  if (!pw) pw = (window.prompt("추가 비밀번호를 입력하세요") || "").trim()
+  return pw
+}
+
+type CalEvent = {
+  id: string
+  title: string
+  start: string
+  end: string
+  allDay: boolean
+  location: string
+}
+type NoteItem = { slug: string; title: string }
+
+// The last list we rendered, so the editor can prefill start/end without a
+// fetch; and the cached note index so reopening the browser is instant.
+let calCache: CalEvent[] = []
+let notesCache: NoteItem[] = []
+
+function calStatus(msg: string, kind: "" | "ok" | "err" = "") {
+  const el = document.querySelector<HTMLElement>("[data-sh-cal-status]")
+  if (!el) return
+  el.hidden = !msg
+  el.textContent = msg
+  el.className = "sh-cal-panel-status" + (kind ? " " + kind : "")
+}
+
+// ISO string → value a <input type="datetime-local"> accepts ("YYYY-MM-DDTHH:MM"),
+// in the viewer's local time. Empty string if unparseable.
+function toLocalInput(iso: string): string {
+  const d = new Date(iso)
+  if (isNaN(d.getTime())) return ""
+  const p = (n: number) => String(n).padStart(2, "0")
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`
+}
+
+// A <input type="datetime-local"> gives a bare wall-clock string ("2026-09-10T14:00")
+// with NO zone. Google Calendar rejects start.dateTime without an offset (or a
+// timeZone field), so convert it to a full RFC3339 timestamp WITH the browser's
+// offset — new Date() parses the bare value as local time, and toISOString()
+// preserves that instant as UTC ("…Z"), which Google accepts. Empty → "".
+function toApiDateTime(localValue: string): string {
+  if (!localValue) return ""
+  const d = new Date(localValue)
+  return isNaN(d.getTime()) ? "" : d.toISOString()
+}
+
+function fmtCalWhen(ev: CalEvent): string {
+  const s = new Date(ev.start)
+  if (isNaN(s.getTime())) return ""
+  if (ev.allDay) {
+    return s.toLocaleDateString("ko-KR", { month: "short", day: "numeric", weekday: "short" }) + " · 종일"
+  }
+  const date = s.toLocaleDateString("ko-KR", { month: "short", day: "numeric", weekday: "short" })
+  const time = s.toLocaleTimeString("ko-KR", { hour: "numeric", minute: "2-digit" })
+  return `${date} ${time}`
+}
+
+function renderCalEvents(events: CalEvent[]) {
+  const list = document.querySelector<HTMLElement>("[data-sh-cal-list]")
+  if (!list) return
+  calCache = events
+  if (!events.length) {
+    list.innerHTML = `<p class="sh-modal-hint">앞으로 3주간 일정이 없어요.</p>`
+    return
+  }
+  list.innerHTML = events
+    .map((ev) => {
+      const loc = ev.location ? ` · ${escHtml(ev.location)}` : ""
+      return `<div class="sh-cal-item" data-sh-cal-id="${escHtml(ev.id)}">
+  <div class="sh-cal-item-main">
+    <b>${escHtml(ev.title)}</b>
+    <span>${escHtml(fmtCalWhen(ev))}${loc}</span>
+  </div>
+  <div class="sh-cal-item-actions">
+    <button type="button" class="sh-btn sh-btn-ghost" data-sh-cal-edit>✏️</button>
+    <button type="button" class="sh-btn sh-btn-ghost" data-sh-cal-del>🗑</button>
+  </div>
+</div>`
+    })
+    .join("")
+}
+
+async function loadCalendar() {
+  const password = panelSecret()
+  if (!password) {
+    calStatus("추가 비밀번호가 필요합니다.", "err")
+    return
+  }
+  calStatus("일정 불러오는 중…")
+  try {
+    const res = await fetch("/api/calendar", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "list", password }),
+    })
+    if (res.status === 503) {
+      calStatus("📅 Google Calendar 연동 필요 — Vercel에 GOOGLE_* 환경변수를 설정하세요.", "err")
+      const list = document.querySelector<HTMLElement>("[data-sh-cal-list]")
+      if (list) list.innerHTML = ""
+      return
+    }
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok) {
+      if (res.status === 401) localStorage.removeItem(PW_KEY)
+      calStatus("실패: " + (data.error || res.status), "err")
+      return
+    }
+    localStorage.setItem(PW_KEY, password)
+    calStatus("")
+    renderCalEvents((data.events || []) as CalEvent[])
+  } catch {
+    calStatus("네트워크 오류. 배포된 사이트에서 시도하세요.", "err")
+  }
+}
+
+// One write call to /api/calendar (insert/patch/delete). Refreshes the list on
+// success. Recording is untouched throughout.
+async function calWrite(payload: Record<string, unknown>, okMsg: string): Promise<boolean> {
+  const password = panelSecret()
+  if (!password) {
+    calStatus("추가 비밀번호가 필요합니다.", "err")
+    return false
+  }
+  calStatus("저장 중…")
+  try {
+    const res = await fetch("/api/calendar", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...payload, password }),
+    })
+    if (res.status === 503) {
+      calStatus("📅 Google Calendar 연동 필요 — Vercel에 GOOGLE_* 환경변수를 설정하세요.", "err")
+      return false
+    }
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok) {
+      if (res.status === 401) localStorage.removeItem(PW_KEY)
+      calStatus("실패: " + (data.error || res.status), "err")
+      return false
+    }
+    localStorage.setItem(PW_KEY, password)
+    calStatus(okMsg, "ok")
+    await loadCalendar()
+    return true
+  } catch {
+    calStatus("네트워크 오류. 배포된 사이트에서 시도하세요.", "err")
+    return false
+  }
+}
+
+async function createCalEvent() {
+  const titleEl = document.querySelector<HTMLInputElement>("[data-sh-cal-title]")
+  const startEl = document.querySelector<HTMLInputElement>("[data-sh-cal-start]")
+  const endEl = document.querySelector<HTMLInputElement>("[data-sh-cal-end]")
+  const title = (titleEl?.value || "").trim()
+  const start = toApiDateTime(startEl?.value || "")
+  const end = toApiDateTime(endEl?.value || "")
+  if (!title || !start || !end) {
+    calStatus("제목·시작·종료를 모두 입력하세요.", "err")
+    return
+  }
+  const ok = await calWrite({ action: "insert", title, start, end }, "일정 추가됨")
+  if (ok) {
+    if (titleEl) titleEl.value = ""
+    if (startEl) startEl.value = ""
+    if (endEl) endEl.value = ""
+  }
+}
+
+// Replace the row's display with an inline editor (title + start/end).
+function openCalEditor(row: HTMLElement, id: string) {
+  if (row.querySelector(".sh-cal-edit")) return
+  const titleEl = row.querySelector<HTMLElement>(".sh-cal-item-main b")
+  const curTitle = titleEl?.textContent || ""
+  const editor = document.createElement("div")
+  editor.className = "sh-cal-edit"
+  editor.innerHTML =
+    `<input class="sh-input sh-cal-edit-title" value="${escHtml(curTitle)}" />` +
+    `<div class="sh-cal-add-row">` +
+    `<label><span>시작</span><input class="sh-input sh-cal-edit-start" type="datetime-local" /></label>` +
+    `<label><span>종료</span><input class="sh-input sh-cal-edit-end" type="datetime-local" /></label>` +
+    `</div>` +
+    `<div class="sh-cal-edit-actions">` +
+    `<button type="button" class="sh-btn sh-btn-new" data-sh-cal-save>저장</button>` +
+    `<button type="button" class="sh-btn sh-btn-ghost" data-sh-cal-cancel>취소</button>` +
+    `</div>`
+  row.appendChild(editor)
+  // Prefill the start/end from the row's known event (re-fetch is overkill).
+  const ev = calCache.find((e) => e.id === id)
+  if (ev) {
+    const s = editor.querySelector<HTMLInputElement>(".sh-cal-edit-start")
+    const en = editor.querySelector<HTMLInputElement>(".sh-cal-edit-end")
+    if (s) s.value = toLocalInput(ev.start)
+    if (en) en.value = toLocalInput(ev.end)
+  }
+  editor.querySelector<HTMLInputElement>(".sh-cal-edit-title")?.focus()
+}
+
+async function loadNotes() {
+  const list = document.querySelector<HTMLElement>("[data-sh-notes-list]")
+  if (!list) return
+  if (notesCache.length) {
+    renderNoteList(notesCache, (document.querySelector<HTMLInputElement>("[data-sh-notes-search]")?.value || ""))
+    return
+  }
+  list.innerHTML = `<p class="sh-modal-hint">불러오는 중…</p>`
+  try {
+    const res = await fetch("/static/contentIndex.json")
+    if (!res.ok) throw new Error(String(res.status))
+    const data = (await res.json()) as Record<string, { title?: string; slug?: string }>
+    notesCache = Object.entries(data)
+      .map(([slug, v]) => ({ slug: v.slug || slug, title: v.title || slug }))
+      .filter((n) => n.slug && !n.slug.startsWith("tags/"))
+      .sort((a, b) => a.title.localeCompare(b.title))
+    renderNoteList(notesCache, "")
+  } catch {
+    list.innerHTML = `<p class="sh-modal-hint">노트 목록을 불러오지 못했어요.</p>`
+  }
+}
+
+function renderNoteList(notes: NoteItem[], query: string) {
+  const list = document.querySelector<HTMLElement>("[data-sh-notes-list]")
+  if (!list) return
+  const q = query.trim().toLowerCase()
+  const filtered = q ? notes.filter((n) => n.title.toLowerCase().includes(q)) : notes
+  if (!filtered.length) {
+    list.innerHTML = `<p class="sh-modal-hint">일치하는 노트가 없어요.</p>`
+    return
+  }
+  list.innerHTML = filtered
+    .slice(0, 300)
+    .map(
+      (n) =>
+        `<button type="button" class="sh-note-row" data-sh-note-slug="${escHtml(n.slug)}" data-sh-note-title="${escHtml(n.title)}">${escHtml(n.title)}</button>`,
+    )
+    .join("")
+}
+
+// Open a note for READING inside the panel via <iframe> (no host navigation, so
+// the recording keeps running).
+function openNote(slug: string, title: string) {
+  const browse = document.querySelector<HTMLElement>("[data-sh-notes-browse]")
+  const reader = document.querySelector<HTMLElement>("[data-sh-notes-reader]")
+  const frame = document.querySelector<HTMLIFrameElement>("[data-sh-notes-frame]")
+  const titleEl = document.querySelector<HTMLElement>("[data-sh-notes-reader-title]")
+  if (!browse || !reader || !frame) return
+  frame.src = "/" + slug.replace(/^\/+/, "")
+  if (titleEl) titleEl.textContent = title
+  browse.hidden = true
+  reader.hidden = false
+}
+
+function closeNote() {
+  const browse = document.querySelector<HTMLElement>("[data-sh-notes-browse]")
+  const reader = document.querySelector<HTMLElement>("[data-sh-notes-reader]")
+  const frame = document.querySelector<HTMLIFrameElement>("[data-sh-notes-frame]")
+  if (!browse || !reader) return
+  reader.hidden = true
+  browse.hidden = false
+  if (frame) frame.src = "about:blank" // stop the note from running in the background
+}
+
 const w = window as unknown as { __shAddInit?: boolean }
 if (!w.__shAddInit) {
   w.__shAddInit = true
   document.addEventListener("click", onClick)
+  document.addEventListener("click", (e) => {
+    const btn = (e.target as HTMLElement)?.closest<HTMLButtonElement>(".sh-edit-btn")
+    if (!btn) return
+    e.preventDefault()
+    openEditor(btn)
+  })
   document.addEventListener("click", (e) => {
     const el = (e.target as HTMLElement)?.closest("[data-rec-start],[data-rec-stop]")
     if (!el) return
@@ -1204,6 +1732,127 @@ if (!w.__shAddInit) {
       renderDrafts()
     }
   })
+  // Subject Auto-Generate buttons (SubjectAutoBar): quiz panel toggle, quiz
+  // generate, and one-click summarize.
+  document.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement
+    const toggle = target?.closest<HTMLElement>("[data-sh-quiz-toggle]")
+    if (toggle) {
+      e.preventDefault()
+      const panel = document.querySelector<HTMLElement>("[data-sh-quiz-panel]")
+      if (panel) {
+        panel.hidden = !panel.hidden
+        toggle.setAttribute("aria-expanded", String(!panel.hidden))
+      }
+      return
+    }
+    const gen = target?.closest<HTMLButtonElement>("[data-sh-quiz-generate]")
+    if (gen) {
+      e.preventDefault()
+      const countRaw = document.querySelector<HTMLInputElement>("[data-sh-quiz-count]")?.value || "5"
+      let count = parseInt(countRaw, 10)
+      if (!Number.isFinite(count)) count = 5
+      count = Math.max(1, Math.min(20, count))
+      const difficulty =
+        document.querySelector<HTMLSelectElement>("[data-sh-quiz-difficulty]")?.value || "medium"
+      runGenerate("quiz", gen.dataset.shSubject || "", gen, { count, difficulty })
+      return
+    }
+    const sum = target?.closest<HTMLButtonElement>("[data-sh-summarize]")
+    if (sum) {
+      e.preventDefault()
+      if (!confirm("이 과목의 노트로 복습 요약 노트를 생성할까요? (20~40초)")) return
+      runGenerate("summary", sum.dataset.shSubject || "", sum, {})
+    }
+  })
+  // ── In-recording panels: calendar + note review (never touch REC) ────────
+  // Panel toggles + calendar create/edit/delete + note open/back. All click
+  // handling is delegated so it works on the once-rendered modal.
+  document.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement
+
+    // Toggle the calendar panel (and load on first open).
+    const calToggle = target?.closest<HTMLElement>("[data-sh-cal-toggle]")
+    if (calToggle) {
+      e.preventDefault()
+      const panel = document.querySelector<HTMLElement>("[data-sh-cal-panel]")
+      if (panel) {
+        panel.hidden = !panel.hidden
+        calToggle.setAttribute("aria-expanded", String(!panel.hidden))
+        if (!panel.hidden) loadCalendar()
+      }
+      return
+    }
+    // Toggle the note-review panel (and load the index on first open).
+    const notesToggle = target?.closest<HTMLElement>("[data-sh-notes-toggle]")
+    if (notesToggle) {
+      e.preventDefault()
+      const panel = document.querySelector<HTMLElement>("[data-sh-notes-panel]")
+      if (panel) {
+        panel.hidden = !panel.hidden
+        notesToggle.setAttribute("aria-expanded", String(!panel.hidden))
+        if (!panel.hidden) loadNotes()
+      }
+      return
+    }
+
+    // Calendar: create.
+    if (target?.closest("[data-sh-cal-create]")) {
+      e.preventDefault()
+      createCalEvent()
+      return
+    }
+    // Calendar: open inline editor / delete on a row.
+    const row = target?.closest<HTMLElement>("[data-sh-cal-id]")
+    if (row) {
+      const id = row.dataset.shCalId || ""
+      if (target.closest("[data-sh-cal-edit]")) {
+        e.preventDefault()
+        openCalEditor(row, id)
+        return
+      }
+      if (target.closest("[data-sh-cal-del]")) {
+        e.preventDefault()
+        if (confirm("이 일정을 삭제할까요?")) calWrite({ action: "delete", id }, "일정 삭제됨")
+        return
+      }
+      if (target.closest("[data-sh-cal-cancel]")) {
+        e.preventDefault()
+        row.querySelector(".sh-cal-edit")?.remove()
+        return
+      }
+      if (target.closest("[data-sh-cal-save]")) {
+        e.preventDefault()
+        const ed = row.querySelector<HTMLElement>(".sh-cal-edit")
+        if (!ed) return
+        const title = (ed.querySelector<HTMLInputElement>(".sh-cal-edit-title")?.value || "").trim()
+        const start = toApiDateTime(ed.querySelector<HTMLInputElement>(".sh-cal-edit-start")?.value || "")
+        const end = toApiDateTime(ed.querySelector<HTMLInputElement>(".sh-cal-edit-end")?.value || "")
+        calWrite({ action: "patch", id, title, start, end }, "일정 수정됨")
+        return
+      }
+    }
+
+    // Notes: open one for reading, or go back to the list.
+    const noteRow = target?.closest<HTMLElement>("[data-sh-note-slug]")
+    if (noteRow) {
+      e.preventDefault()
+      openNote(noteRow.dataset.shNoteSlug || "", noteRow.dataset.shNoteTitle || "")
+      return
+    }
+    if (target?.closest("[data-sh-notes-back]")) {
+      e.preventDefault()
+      closeNote()
+      return
+    }
+  })
+  // Notes: live search filter.
+  document.addEventListener("input", (e) => {
+    const search = (e.target as HTMLElement)?.closest<HTMLInputElement>("[data-sh-notes-search]")
+    if (!search) return
+    renderNoteList(notesCache, search.value)
+  })
+
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeModal()
   })
