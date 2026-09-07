@@ -24,6 +24,7 @@ community: 6
 | [[critical-thinking-in-real-world/3-1\|CTRW 3-1 — Definition & Argument Evaluation]] | 2026-08-31 | definition disputes — case-fit vs definition-fit · charitable reconstruction · the arrow rule · the four evaluation questions · **inference strength scale** (maximal → weak) |
 | [[critical-thinking-in-real-world/3-2\|CTRW 3-2 — Validity, Soundness & Cogency]] | 2026-08-31 | validity as *guarantee* · deductive vs inductive **intention** · sound vs cogent · normative vs descriptive conclusions · the four-step evaluation sequence |
 | [[critical-thinking-in-real-world/4-1\|4-1 — Argument‑Attack Analysis]] | 2026-09-07 | How to dissect, evaluate, and counter arguments |
+| [[critical-thinking-in-real-world/ctrw-4-2\|CTRW 4-2]] | 2026-09-07 | Attacks, cogency & diagramming in argument analysis |
 
 ## Textbook — chapter notes
 > Mooney, Williams & Burik, *An Introduction to Critical and Creative Thinking* (McGraw-Hill, 2015). One note per chapter — concepts, procedures and worked mini-examples. Exercises are in the textbook; the answer key is held privately for feedback (solve them, then send your work).
