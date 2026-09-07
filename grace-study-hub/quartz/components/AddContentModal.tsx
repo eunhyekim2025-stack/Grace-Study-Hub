@@ -9,7 +9,7 @@ import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } fro
 // posts to /api/add, which commits into the wiki. See addContent.inline.ts.
 // The "과목" picker is driven by subjects.json so it always lists the real,
 // current subjects (new ones appear automatically; removed ones drop off).
-type Subject = { slug: string; emoji: string; label: string; term?: string }
+type Subject = { slug: string; emoji: string; label: string; term?: string; prefixes: string[] }
 const SUBJECTS = subjectsData as Subject[]
 
 // Existing semesters (newest first) power the "학기" picker for new subjects.
@@ -38,6 +38,11 @@ const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) =>
     ...new Set((allFiles ?? []).flatMap((f) => (f.frontmatter?.tags ?? []) as string[])),
   ].sort()
   const knownTagsJSON = JSON.stringify(knownTags).replace(/</g, "\\u003c")
+  // Subjects + their folder prefixes, baked in for the note-browse panel so it
+  // can group notes by subject client-side (same prefixes SubjectNav counts by).
+  const subjectsJSON = JSON.stringify(
+    SUBJECTS.map((s) => ({ slug: s.slug, emoji: s.emoji, label: s.label, prefixes: s.prefixes })),
+  ).replace(/</g, "\\u003c")
   return (
     <div id="sh-add-modal" class="sh-modal" hidden>
       <div class="sh-modal-backdrop" data-add-close></div>
@@ -183,11 +188,16 @@ const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) =>
 
             {/* (B) Note-review — contentIndex.json list → iframe reader */}
             <div class="sh-notes-panel" data-sh-notes-panel hidden>
+              <script
+                type="application/json"
+                id="sh-subjects-data"
+                dangerouslySetInnerHTML={{ __html: subjectsJSON }}
+              />
               <div class="sh-notes-browse" data-sh-notes-browse>
                 <input
                   class="sh-input sh-notes-search"
                   data-sh-notes-search
-                  placeholder="노트 제목 검색…"
+                  placeholder="과목 선택 · 또는 노트 제목 검색…"
                 />
                 <div class="sh-notes-list" data-sh-notes-list>
                   <p class="sh-modal-hint">불러오는 중…</p>

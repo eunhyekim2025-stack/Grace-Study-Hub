@@ -73,6 +73,12 @@ export default async function handler(req, res) {
       GROQ_API_KEY: present(process.env.GROQ_API_KEY),
       BLOB_READ_WRITE_TOKEN: present(process.env.BLOB_READ_WRITE_TOKEN),
       BLOB_STORE_ID: present(process.env.BLOB_STORE_ID),
+      // Google Calendar OAuth (booleans only — never the values). CALENDAR_ID is
+      // optional (defaults to "primary"), so it does not gate the feature.
+      GOOGLE_CLIENT_ID: present(process.env.GOOGLE_CLIENT_ID),
+      GOOGLE_CLIENT_SECRET: present(process.env.GOOGLE_CLIENT_SECRET),
+      GOOGLE_REFRESH_TOKEN: present(process.env.GOOGLE_REFRESH_TOKEN),
+      GOOGLE_CALENDAR_ID: present(process.env.GOOGLE_CALENDAR_ID),
     },
     // what each feature needs
     features: {
@@ -82,6 +88,11 @@ export default async function handler(req, res) {
       // static token OR OIDC store id — either connects the private Blob store
       recordingBackup:
         present(process.env.BLOB_READ_WRITE_TOKEN) || present(process.env.BLOB_STORE_ID),
+      // in-site calendar view/edit needs the three OAuth secrets (id defaults)
+      calendar:
+        present(process.env.GOOGLE_CLIENT_ID) &&
+        present(process.env.GOOGLE_CLIENT_SECRET) &&
+        present(process.env.GOOGLE_REFRESH_TOKEN),
     },
   }
   // Opt-in live key validation (one extra outbound request to Groq).

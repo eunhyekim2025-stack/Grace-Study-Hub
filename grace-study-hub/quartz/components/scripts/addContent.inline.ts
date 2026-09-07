@@ -1433,11 +1433,30 @@ type CalEvent = {
   location: string
 }
 type NoteItem = { slug: string; title: string }
+type SubjectMeta = { slug: string; emoji: string; label: string; prefixes: string[] }
 
 // The last list we rendered, so the editor can prefill start/end without a
 // fetch; and the cached note index so reopening the browser is instant.
 let calCache: CalEvent[] = []
 let notesCache: NoteItem[] = []
+// Note-browse panel: subject vocabulary (baked into the modal) + which subject
+// is currently drilled into (null = show the subject picker; "*" = 전체 노트).
+let subjectsMeta: SubjectMeta[] = []
+let browseSubject: string | null = null
+
+function loadSubjectsMeta() {
+  if (subjectsMeta.length) return
+  const el = document.getElementById("sh-subjects-data")
+  if (!el?.textContent) return
+  try {
+    subjectsMeta = JSON.parse(el.textContent) as SubjectMeta[]
+  } catch {
+    subjectsMeta = []
+  }
+}
+
+const notesForSubject = (m: SubjectMeta): NoteItem[] =>
+  notesCache.filter((n) => m.prefixes.some((p) => n.slug.startsWith(p)))
 
 function calStatus(msg: string, kind: "" | "ok" | "err" = "") {
   const el = document.querySelector<HTMLElement>("[data-sh-cal-status]")
@@ -1622,8 +1641,10 @@ function openCalEditor(row: HTMLElement, id: string) {
 async function loadNotes() {
   const list = document.querySelector<HTMLElement>("[data-sh-notes-list]")
   if (!list) return
+  loadSubjectsMeta()
+  const q = document.querySelector<HTMLInputElement>("[data-sh-notes-search]")?.value || ""
   if (notesCache.length) {
-    renderNoteList(notesCache, (document.querySelector<HTMLInputElement>("[data-sh-notes-search]")?.value || ""))
+    renderBrowse(q)
     return
   }
   list.innerHTML = `<p class="sh-modal-hint">불러오는 중…</p>`
@@ -1635,28 +1656,60 @@ async function loadNotes() {
       .map(([slug, v]) => ({ slug: v.slug || slug, title: v.title || slug }))
       .filter((n) => n.slug && !n.slug.startsWith("tags/"))
       .sort((a, b) => a.title.localeCompare(b.title))
-    renderNoteList(notesCache, "")
+    renderBrowse(q)
   } catch {
     list.innerHTML = `<p class="sh-modal-hint">노트 목록을 불러오지 못했어요.</p>`
   }
 }
 
-function renderNoteList(notes: NoteItem[], query: string) {
+const noteRowHtml = (n: NoteItem): string =>
+  `<button type="button" class="sh-note-row" data-sh-note-slug="${escHtml(n.slug)}" data-sh-note-title="${escHtml(n.title)}">${escHtml(n.title)}</button>`
+
+// The browse panel has two levels: a subject picker (default), and — once a
+// subject is chosen — that subject's note titles. A typed query at the picker
+// level searches every note's title so you can still jump straight to one.
+function renderBrowse(query: string) {
   const list = document.querySelector<HTMLElement>("[data-sh-notes-list]")
   if (!list) return
   const q = query.trim().toLowerCase()
-  const filtered = q ? notes.filter((n) => n.title.toLowerCase().includes(q)) : notes
-  if (!filtered.length) {
-    list.innerHTML = `<p class="sh-modal-hint">일치하는 노트가 없어요.</p>`
+  const empty = `<p class="sh-modal-hint">일치하는 노트가 없어요.</p>`
+
+  // Level 1 — a subject (or 전체 노트) is selected → note titles.
+  if (browseSubject) {
+    const all = browseSubject === "*"
+    const m = all ? null : subjectsMeta.find((s) => s.slug === browseSubject)
+    const notes = all ? notesCache : m ? notesForSubject(m) : []
+    const label = all ? "🗂 전체 노트" : m ? `${m.emoji} ${m.label}` : ""
+    const filtered = q ? notes.filter((n) => n.title.toLowerCase().includes(q)) : notes
+    const head =
+      `<button type="button" class="sh-note-back" data-sh-subject-back>← 과목 목록</button>` +
+      `<div class="sh-notes-subject-head">${escHtml(label)}<span class="sh-count">${notes.length}</span></div>`
+    list.innerHTML =
+      head + (filtered.length ? filtered.slice(0, 300).map(noteRowHtml).join("") : empty)
     return
   }
-  list.innerHTML = filtered
-    .slice(0, 300)
-    .map(
-      (n) =>
-        `<button type="button" class="sh-note-row" data-sh-note-slug="${escHtml(n.slug)}" data-sh-note-title="${escHtml(n.title)}">${escHtml(n.title)}</button>`,
-    )
-    .join("")
+
+  // Level 0, a query → global title search across all subjects.
+  if (q) {
+    const filtered = notesCache.filter((n) => n.title.toLowerCase().includes(q))
+    list.innerHTML = filtered.length ? filtered.slice(0, 300).map(noteRowHtml).join("") : empty
+    return
+  }
+
+  // Level 0, no query → the subject picker (fall back to a flat list if the
+  // subject vocabulary failed to load).
+  if (!subjectsMeta.length) {
+    list.innerHTML = notesCache.slice(0, 300).map(noteRowHtml).join("")
+    return
+  }
+  const subjectRow = (slug: string, emoji: string, label: string, count: number) =>
+    `<button type="button" class="sh-subject-row" data-sh-subject-slug="${escHtml(slug)}">` +
+    `<span class="sh-subject-emoji">${escHtml(emoji)}</span>` +
+    `<span class="sh-subject-label">${escHtml(label)}</span>` +
+    `<span class="sh-count">${count}</span></button>`
+  list.innerHTML =
+    subjectsMeta.map((m) => subjectRow(m.slug, m.emoji, m.label, notesForSubject(m).length)).join("") +
+    subjectRow("*", "🗂", "전체 노트", notesCache.length)
 }
 
 // Open a note for READING inside the panel via <iframe> (no host navigation, so
@@ -1800,7 +1853,13 @@ if (!w.__shAddInit) {
       if (panel) {
         panel.hidden = !panel.hidden
         notesToggle.setAttribute("aria-expanded", String(!panel.hidden))
-        if (!panel.hidden) loadNotes()
+        if (!panel.hidden) {
+          // Reopen at the subject picker with a clean search box.
+          browseSubject = null
+          const s = document.querySelector<HTMLInputElement>("[data-sh-notes-search]")
+          if (s) s.value = ""
+          loadNotes()
+        }
       }
       return
     }
@@ -1842,7 +1901,26 @@ if (!w.__shAddInit) {
       }
     }
 
-    // Notes: open one for reading, or go back to the list.
+    // Notes: pick a subject → drill into its note titles.
+    const subjRow = target?.closest<HTMLElement>("[data-sh-subject-slug]")
+    if (subjRow) {
+      e.preventDefault()
+      browseSubject = subjRow.dataset.shSubjectSlug || null
+      const s = document.querySelector<HTMLInputElement>("[data-sh-notes-search]")
+      if (s) s.value = ""
+      renderBrowse("")
+      return
+    }
+    // Notes: back from a subject's list to the subject picker.
+    if (target?.closest("[data-sh-subject-back]")) {
+      e.preventDefault()
+      browseSubject = null
+      const s = document.querySelector<HTMLInputElement>("[data-sh-notes-search]")
+      if (s) s.value = ""
+      renderBrowse("")
+      return
+    }
+    // Notes: open one for reading, or go back from the reader to the list.
     const noteRow = target?.closest<HTMLElement>("[data-sh-note-slug]")
     if (noteRow) {
       e.preventDefault()
@@ -1855,11 +1933,12 @@ if (!w.__shAddInit) {
       return
     }
   })
-  // Notes: live search filter.
+  // Notes: live search filter (scoped to the current subject, or global at the
+  // subject picker).
   document.addEventListener("input", (e) => {
     const search = (e.target as HTMLElement)?.closest<HTMLInputElement>("[data-sh-notes-search]")
     if (!search) return
-    renderNoteList(notesCache, search.value)
+    renderBrowse(search.value)
   })
 
   document.addEventListener("keydown", (e) => {

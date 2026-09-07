@@ -1599,6 +1599,71 @@ textarea.sh-input {
     background: color-mix(in srgb, var(--secondary) 10%, transparent);
   }
 }
+// Subject picker rows in the note-browse panel (emoji · label · count).
+.sh-subject-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--dark);
+  font-size: 0.85rem;
+  cursor: pointer;
+
+  &:hover {
+    background: color-mix(in srgb, var(--secondary) 10%, transparent);
+  }
+
+  .sh-subject-emoji {
+    font-size: 0.95rem;
+  }
+  .sh-subject-label {
+    flex: 1;
+    font-weight: 500;
+    word-break: break-word;
+  }
+  .sh-count {
+    font-size: 0.72rem;
+    color: var(--gray);
+    font-variant-numeric: tabular-nums;
+  }
+}
+// "← 과목 목록" back control + the subject header above a drilled-in note list.
+.sh-note-back {
+  align-self: flex-start;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--secondary);
+  font-size: 0.78rem;
+  cursor: pointer;
+
+  &:hover {
+    background: color-mix(in srgb, var(--secondary) 10%, transparent);
+  }
+}
+.sh-notes-subject-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 8px 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--dark);
+  border-bottom: 1px solid var(--lightgray);
+  margin-bottom: 4px;
+
+  .sh-count {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--gray);
+    font-variant-numeric: tabular-nums;
+  }
+}
 .sh-notes-reader-bar {
   display: flex;
   align-items: center;
