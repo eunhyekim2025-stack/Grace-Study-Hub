@@ -57,3 +57,4 @@ community: 0
 | [[management-of-people-at-work/mpw-2-2\|MPW 2-2 — Diversity in Organizations]] | 2026-08-25 | Surface/deep diversity, wisdom of crowds, faultlines, social identity |
 | [[management-of-people-at-work/mpw-3-1\|MPW 3-1 — Job Satisfaction & Its Outcomes]] | 2026-09-01 | Satisfaction drivers beyond pay, OCB vs CWB, nudging and workspace design, value congruence |
 | [[management-of-people-at-work/mpw-3-2\|MPW 3-2 — Motivation & Performance]] | 2026-09-01 | Intensity/direction/persistence, expectancy theory, organizational justice, the dealership reward case |
+| [[management-of-people-at-work/mpw-4-1\|MPW 4-1]] | 2026-09-08 | Motivation, decision‑making models, biases, case studies |
