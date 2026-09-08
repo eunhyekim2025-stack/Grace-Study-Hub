@@ -207,6 +207,27 @@ async function setupSearch(searchElement: Element, currentSlug: FullSlug, data: 
     searchLayout.appendChild(el)
   }
 
+  // Subject-first browse: opening the search box (empty query) shows a subject
+  // picker; tapping a subject lists that subject's note titles right there —
+  // instead of navigating to the hub page (which brings the sidebar with it).
+  // Subjects + their folder prefixes are baked into every page by
+  // AddContentModal as <script id="sh-subjects-data">; the same prefixes
+  // SubjectNav counts by, so the numbers match.
+  type SearchSubject = { slug: string; emoji: string; label: string; prefixes: string[] }
+  let searchSubjects: SearchSubject[] = []
+  try {
+    const el = document.getElementById("sh-subjects-data")
+    if (el?.textContent) searchSubjects = JSON.parse(el.textContent) as SearchSubject[]
+  } catch {
+    searchSubjects = []
+  }
+  const allNotes = (Object.entries(data) as [FullSlug, ContentDetails][])
+    .filter(([slug]) => slug && !slug.startsWith("tags/"))
+    .map(([slug, v]) => ({ slug: slug as FullSlug, title: v.title || slug }))
+    .sort((a, b) => a.title.localeCompare(b.title))
+  const notesForPrefixes = (prefixes: string[]) =>
+    allNotes.filter((n) => prefixes.some((p) => n.slug.startsWith(p)))
+
   const enablePreview = searchLayout.dataset.preview === "true"
   let preview: HTMLDivElement | undefined = undefined
   let previewInner: HTMLDivElement | undefined = undefined
@@ -238,6 +259,8 @@ async function setupSearch(searchElement: Element, currentSlug: FullSlug, data: 
     if (sidebar) sidebar.style.zIndex = "1"
     container.classList.add("active")
     searchBar.focus()
+    // Empty box → offer the subject picker (basic search only, not tag search).
+    if (searchTypeNew === "basic" && searchBar.value.trim() === "") renderSubjectPicker()
   }
 
   let currentHover: HTMLInputElement | null = null
@@ -396,6 +419,61 @@ async function setupSearch(searchElement: Element, currentSlug: FullSlug, data: 
     }
   }
 
+  // Level 0 — the subject picker (shown when the query is empty).
+  function renderSubjectPicker() {
+    if (!searchSubjects.length) return
+    searchLayout.classList.add("display-results")
+    removeAllChildren(results)
+    if (preview) removeAllChildren(preview)
+    const wrap = document.createElement("div")
+    wrap.className = "search-subjects"
+    const mk = (slug: string, emoji: string, label: string, count: number) => {
+      const b = document.createElement("button")
+      b.type = "button"
+      b.className = "search-subject"
+      b.dataset.subjSlug = slug
+      b.innerHTML =
+        `<span class="search-subject-emoji">${emoji}</span>` +
+        `<span class="search-subject-label">${label}</span>` +
+        `<span class="search-subject-count">${count}</span>`
+      b.addEventListener("click", () => renderSubjectNotes(slug))
+      return b
+    }
+    for (const s of searchSubjects)
+      wrap.appendChild(mk(s.slug, s.emoji, s.label, notesForPrefixes(s.prefixes).length))
+    wrap.appendChild(mk("*", "🗂", "전체 노트", allNotes.length))
+    results.appendChild(wrap)
+  }
+
+  // Level 1 — a subject's note titles (reusing the normal result-card, so a
+  // click navigates to the note and closes search exactly like a search hit).
+  function renderSubjectNotes(slug: string) {
+    searchLayout.classList.add("display-results")
+    removeAllChildren(results)
+    if (preview) removeAllChildren(preview)
+    const all = slug === "*"
+    const subj = all ? null : searchSubjects.find((s) => s.slug === slug)
+    const notes = all ? allNotes : subj ? notesForPrefixes(subj.prefixes) : []
+    const back = document.createElement("button")
+    back.type = "button"
+    back.className = "search-back"
+    back.textContent = "← 과목 목록"
+    back.addEventListener("click", () => renderSubjectPicker())
+    results.appendChild(back)
+    if (!notes.length) {
+      const none = document.createElement("p")
+      none.className = "search-subject-empty"
+      none.textContent = "노트가 없어요."
+      results.appendChild(none)
+      return
+    }
+    results.append(
+      ...notes.map((n) =>
+        resultToHTML({ id: 0, slug: n.slug, title: n.title, content: "", tags: [] }),
+      ),
+    )
+  }
+
   async function fetchContent(slug: FullSlug): Promise<Element[]> {
     if (fetchContentCache.has(slug)) {
       return fetchContentCache.get(slug) as Element[]
@@ -438,6 +516,11 @@ async function setupSearch(searchElement: Element, currentSlug: FullSlug, data: 
   async function onType(e: HTMLElementEventMap["input"]) {
     if (!searchLayout || !index) return
     currentSearchTerm = (e.target as HTMLInputElement).value
+    // Emptying the box returns to the subject picker instead of a blank layout.
+    if (currentSearchTerm.trim() === "" && searchType !== "tags") {
+      renderSubjectPicker()
+      return
+    }
     searchLayout.classList.toggle("display-results", currentSearchTerm !== "")
     searchType = currentSearchTerm.startsWith("#") ? "tags" : "basic"
 
