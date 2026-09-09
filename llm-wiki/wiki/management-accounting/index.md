@@ -77,3 +77,4 @@ the whole arc runs [[m02-cost-concepts-job-order-costing|Module 2]] → [[m06-cv
 | [[management-accounting/ma-3-1\|MA 3-1 — Target Profit, Break-Even & Leverage]] | 2026-09-01 | Target-profit sales · break-even · **margin of safety** · **DOL** · multi-product break-even under a constant sales mix |
 | [[management-accounting/ma-3-2\|MA 3-2 — CVP Analysis in Depth]] | 2026-09-01 | Contribution margin & CM ratio · equation vs incremental method · NOI impact analysis · target profit · DOL |
 | [[management-accounting/ma-4-1\|MA 4-1 — Job vs Process Costing & Overhead Handling]] | 2026-09-08 | When to use each system, how costs flow, and how to apply & reconcile overhead |
+| [[management-accounting/ma-4-2\|MA 4-2]] | 2026-09-09 | Overhead allocation: POHR methods & job‑order costing |
