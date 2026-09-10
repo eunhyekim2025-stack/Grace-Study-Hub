@@ -228,20 +228,89 @@ async function submitSubject(btn: HTMLButtonElement) {
   }
 }
 
-function submitFile(btn: HTMLButtonElement) {
+// The git blob SHA of the given bytes — sha1("blob <len>\0" + bytes) — which is
+// exactly the per-file `sha` GitHub reports, so the server can spot a
+// byte-identical upload even under a different name.
+async function gitBlobSha(bytes: Uint8Array): Promise<string> {
+  const header = new TextEncoder().encode(`blob ${bytes.length}\0`)
+  const buf = new Uint8Array(header.length + bytes.length)
+  buf.set(header, 0)
+  buf.set(bytes, header.length)
+  const digest = await crypto.subtle.digest("SHA-1", buf)
+  return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("")
+}
+
+function base64FromBytes(bytes: Uint8Array): string {
+  let bin = ""
+  const chunk = 0x8000
+  for (let i = 0; i < bytes.length; i += chunk) {
+    bin += String.fromCharCode(...bytes.subarray(i, i + chunk))
+  }
+  return btoa(bin)
+}
+
+async function submitFile(btn: HTMLButtonElement) {
   const input = document.getElementById("sh-file-input") as HTMLInputElement | null
   const file = input?.files?.[0]
   if (!file) {
     status("파일을 선택하세요.", "err")
     return
   }
-  const reader = new FileReader()
-  reader.onload = () => {
-    const dataBase64 = String(reader.result).split(",")[1] || ""
-    post({ type: "file", filename: file.name, subject: val("sh-file-subject"), dataBase64 }, btn)
+  const password = val("sh-add-pw").trim()
+  if (!password) {
+    status("비밀번호를 입력하세요.", "err")
+    return
   }
-  reader.onerror = () => status("파일을 읽지 못했습니다.", "err")
-  reader.readAsDataURL(file)
+  const subject = val("sh-file-subject")
+
+  let bytes: Uint8Array
+  try {
+    bytes = new Uint8Array(await file.arrayBuffer())
+  } catch {
+    status("파일을 읽지 못했습니다.", "err")
+    return
+  }
+
+  // Warn (A): if the same file is already here — same name, or byte-identical —
+  // ask before uploading; the user can still go ahead (a name clash then saves
+  // under a new name, never overwriting).
+  let uploadAnyway = false
+  try {
+    const blobSha = await gitBlobSha(bytes)
+    const res = await fetch("/api/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: "file", check: true, filename: file.name, subject, blobSha, password }),
+    })
+    const data = (await res.json().catch(() => ({}))) as {
+      nameMatch?: string | null
+      contentMatch?: string | null
+      error?: string
+    }
+    if (res.status === 401) {
+      revealPwField()
+      status("실패: " + (data.error || 401), "err")
+      return
+    }
+    if (res.ok && (data.contentMatch || data.nameMatch)) {
+      const msg = data.contentMatch
+        ? `이미 내용이 완전히 같은 파일이 있어요: "${data.contentMatch}".\n그래도 올릴까요?`
+        : `같은 이름의 파일이 이미 있어요: "${data.nameMatch}".\n올리면 다른 이름으로 저장됩니다(덮어쓰지 않음). 계속할까요?`
+      if (!confirm(msg)) {
+        status("저장을 취소했어요.", "")
+        return
+      }
+      uploadAnyway = true
+    }
+  } catch {
+    // Check failed (offline etc.) — fall through and let the normal upload run,
+    // where the server's name-clash guard still protects against overwrites.
+  }
+
+  post(
+    { type: "file", filename: file.name, subject, dataBase64: base64FromBytes(bytes), uploadAnyway },
+    btn,
+  )
 }
 
 function onClick(e: MouseEvent) {

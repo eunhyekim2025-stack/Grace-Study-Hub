@@ -43,6 +43,36 @@ async function getFile(path, token) {
   return { text: Buffer.from(data.content, "base64").toString("utf8"), sha: data.sha }
 }
 
+// List the files directly inside a wiki subfolder — name + git blob SHA per
+// entry — so an upload can be checked for a name clash or a byte-identical
+// duplicate (GitHub's per-entry `sha` IS the git blob sha, which the browser
+// can reproduce from the file bytes). Returns [] if the folder doesn't exist.
+async function listDir(dir, token) {
+  const p = [WIKI, dir].filter(Boolean).join("/")
+  const res = await gh(`/repos/${REPO}/contents/${encodeURI(p)}?ref=${BRANCH}`, token)
+  if (!res.ok) return []
+  const data = await res.json().catch(() => [])
+  return Array.isArray(data)
+    ? data.filter((d) => d.type === "file").map((d) => ({ name: d.name, sha: d.sha }))
+    : []
+}
+
+// A filename not already taken in `dir`: "note.png" → "note-1.png", "-2"… So
+// "upload anyway" after a name-clash warning adds a distinct file instead of
+// overwriting (or failing with a 422).
+async function uniqueName(dir, safe, token) {
+  const names = new Set((await listDir(dir, token)).map((e) => e.name))
+  if (!names.has(safe)) return safe
+  const dot = safe.lastIndexOf(".")
+  const stem = dot > 0 ? safe.slice(0, dot) : safe
+  const ext = dot > 0 ? safe.slice(dot) : ""
+  for (let i = 1; i <= 99; i++) {
+    const n = `${stem}-${i}${ext}`
+    if (!names.has(n)) return n
+  }
+  return `${stem}-${Date.now()}${ext}`
+}
+
 // Commit several files at once (Git Trees API), so a note and the hub row that
 // lists it land together and trigger ONE redeploy instead of two.
 async function commitFiles(files, message, token) {
@@ -359,14 +389,32 @@ export default async function handler(req, res) {
     }
   } else if (body.type === "file") {
     const { filename, dataBase64 } = body
-    if (!filename || !dataBase64) {
-      return res.status(400).json({ error: "filename and data are required." })
+    if (!filename) {
+      return res.status(400).json({ error: "filename is required." })
     }
     const safe = String(filename).replace(/[^\p{L}\p{N}._-]+/gu, "_")
-    path = [WIKI, dir, safe].filter(Boolean).join("/")
+
+    // Duplicate check only — no commit. Reports a same-name file and/or a
+    // byte-identical file (matched by git blob SHA the browser computed) in the
+    // target folder, so the UI can warn before uploading. See submitFile().
+    if (body.check) {
+      const entries = await listDir(dir, token)
+      const nameMatch = entries.find((e) => e.name === safe)?.name || null
+      const contentMatch = body.blobSha
+        ? entries.find((e) => e.sha === body.blobSha)?.name || null
+        : null
+      return res.status(200).json({ ok: true, nameMatch, contentMatch })
+    }
+
+    if (!dataBase64) {
+      return res.status(400).json({ error: "data is required." })
+    }
+    // "upload anyway" after a warning → never overwrite: rename around a clash.
+    const finalSafe = body.uploadAnyway ? await uniqueName(dir, safe, token) : safe
+    path = [WIKI, dir, finalSafe].filter(Boolean).join("/")
     // strip any "data:...;base64," prefix the browser may have added
     contentBase64 = String(dataBase64).replace(/^data:[^;]*;base64,/, "")
-    commitMsg = `Upload file: ${safe} (via site)`
+    commitMsg = `Upload file: ${finalSafe} (via site)`
   } else {
     return res.status(400).json({ error: "Unknown request type." })
   }
