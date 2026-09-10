@@ -63,6 +63,69 @@ async function checkGroq() {
   }
 }
 
+// Live Google Calendar OAuth diagnostic. Reproduces exactly what api/calendar.js
+// does — a refresh_token → access_token exchange with the RAW env values — and
+// returns Google's own error verbatim, so "The OAuth client was not found"
+// (bad/deleted client_id), "invalid_client: Unauthorized" (bad secret) and
+// "invalid_grant" (revoked/expired refresh token) are told apart. Only the
+// non-secret SHAPE of each value is reported (length, expected prefix/suffix,
+// stray-whitespace flag) — never the secret or refresh-token values themselves;
+// the client_id head is public by design (it is sent to browsers in OAuth).
+async function checkCalendar() {
+  const clientId = process.env.GOOGLE_CLIENT_ID || ""
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET || ""
+  const refreshToken = process.env.GOOGLE_REFRESH_TOKEN || ""
+  const shape = {
+    clientId: {
+      present: !!clientId.trim(),
+      length: clientId.length,
+      trimmedLength: clientId.trim().length, // ≠ length ⇒ stray spaces/newline
+      endsWithGoogleusercontent: clientId.trim().endsWith(".apps.googleusercontent.com"),
+      head: clientId.trim().slice(0, 14), // public numeric prefix e.g. "1234567890-abc"
+    },
+    clientSecret: {
+      present: !!clientSecret.trim(),
+      length: clientSecret.length,
+      trimmedLength: clientSecret.trim().length,
+      looksLikeGoogleSecret: clientSecret.trim().startsWith("GOCSPX-"),
+    },
+    refreshToken: {
+      present: !!refreshToken.trim(),
+      length: refreshToken.length,
+      trimmedLength: refreshToken.trim().length,
+      startsWith1Slash: refreshToken.trim().startsWith("1//"),
+    },
+  }
+  if (!clientId || !clientSecret || !refreshToken) {
+    return { ...shape, tokenExchange: { skipped: "one of the three is missing" } }
+  }
+  try {
+    // RAW values (no trim) — same as api/calendar.js, so the error matches prod.
+    const r = await fetch("https://oauth2.googleapis.com/token", {
+      method: "POST",
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        client_id: clientId,
+        client_secret: clientSecret,
+        refresh_token: refreshToken,
+        grant_type: "refresh_token",
+      }),
+    })
+    const d = await r.json().catch(() => ({}))
+    return {
+      ...shape,
+      tokenExchange: {
+        ok: r.ok && !!d.access_token,
+        status: r.status,
+        error: d.error || null,
+        errorDescription: d.error_description || null,
+      },
+    }
+  } catch (e) {
+    return { ...shape, tokenExchange: { ok: false, error: "connect-failed", errorDescription: e.message } }
+  }
+}
+
 export default async function handler(req, res) {
   const present = (v) => typeof v === "string" && v.trim().length > 0
   const out = {
@@ -98,6 +161,10 @@ export default async function handler(req, res) {
   // Opt-in live key validation (one extra outbound request to Groq).
   if (String(req.query?.check || "").includes("groq")) {
     out.groq = await checkGroq()
+  }
+  // Opt-in live Google Calendar OAuth diagnostic (?check=calendar).
+  if (String(req.query?.check || "").includes("calendar")) {
+    out.calendar = await checkCalendar()
   }
   res.status(200).json(out)
 }
