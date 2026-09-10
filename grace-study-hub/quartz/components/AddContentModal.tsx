@@ -141,18 +141,10 @@ const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) =>
               <b>“허용”</b>을 눌러주세요. Vercel에 <b>GROQ_API_KEY</b>가 설정돼 있어야 합니다.
             </p>
 
-            {/* Panels that work WHILE recording continues (no page navigation).
-                Toggles reveal an in-place calendar (view/edit) and a note browser
-                (read via iframe). Neither touches the recorder state/intervals. */}
+            {/* A panel that works WHILE recording continues (no page
+                navigation): a note browser to read past notes. Does not touch
+                the recorder state/intervals. */}
             <div class="sh-rec-tools">
-              <button
-                type="button"
-                class="sh-btn sh-btn-ghost sh-rec-tool-toggle"
-                data-sh-cal-toggle
-                aria-expanded="false"
-              >
-                📅 일정 보기·편집
-              </button>
               <button
                 type="button"
                 class="sh-btn sh-btn-ghost sh-rec-tool-toggle"
@@ -163,30 +155,7 @@ const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) =>
               </button>
             </div>
 
-            {/* (A) Calendar view + edit — Google Calendar API via /api/calendar */}
-            <div class="sh-cal-panel" data-sh-cal-panel hidden>
-              <div class="sh-cal-panel-status" data-sh-cal-status></div>
-              <div class="sh-cal-list" data-sh-cal-list></div>
-              <div class="sh-cal-add">
-                <div class="sh-cal-add-head">+ 새 일정</div>
-                <input class="sh-input" data-sh-cal-title placeholder="일정 제목" />
-                <div class="sh-cal-add-row">
-                  <label>
-                    <span>시작</span>
-                    <input class="sh-input" type="datetime-local" data-sh-cal-start />
-                  </label>
-                  <label>
-                    <span>종료</span>
-                    <input class="sh-input" type="datetime-local" data-sh-cal-end />
-                  </label>
-                </div>
-                <button type="button" class="sh-btn sh-btn-new" data-sh-cal-create>
-                  일정 추가
-                </button>
-              </div>
-            </div>
-
-            {/* (B) Note-review — contentIndex.json list → iframe reader */}
+            {/* Note-review — contentIndex.json list → in-place reader */}
             <div class="sh-notes-panel" data-sh-notes-panel hidden>
               <script
                 type="application/json"
