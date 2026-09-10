@@ -1,0 +1,45 @@
+SMU Classification: Restricted
+
+
+
+                                                Formulae
+
+
+R = 1/CT                                                      Inventory Turns = 1/T
+
+T = I*CT                                                      I=RT
+
+Capacity =
+
+
+Effective Processing Time at activity =
+
+                                         Fixed Costs
+Break-Even Quantity
+                         Sales Price per Unit – Variable Cost Per Unit
+
+
+                                                                                          ∑
+Nmin = ti/CT                                                              Efficiency =
+
+
+Cost of labor =
+
+
+Utilization =                    or
+
+
+Utilization =
+                  
+
+
+
+Tq =
+
+
+CV =
+
+
+
+
+                                                        1

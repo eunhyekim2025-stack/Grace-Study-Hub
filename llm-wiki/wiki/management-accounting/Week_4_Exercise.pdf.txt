@@ -1,0 +1,132 @@
+SMU Classification: Restricted
+
+EXERCISE 1: JOB-ORDER COSTING
+Woodie Corp. builds customized carpentry and received a job for 2 chairs.
+ Per unit                Table                      Chair
+ Wood                    4 kg                       1 kg
+ Senior carpenter        1 hour                     1 hour
+ Junior carpenter        2.5 hours                  2 hours
+
+
+Information from purchasing and human resource departments are as follows.
+ Wood, $ per kg                      $20
+ Senior carpenter, $ per hour        $100
+ Junior carpenter, $ per hour        $25
+POHR for total manufacturing overheads is also applied at $10 per Junior carpenter hours.
+
+
+Determine the total cost of the job.
+
+
+
+
+                                            ACCT 102 (BT) - Not for circulation
+                                           SMU Classification: Restricted
+
+EXERCISE 2: APPLIED MANUFACTURING OVERHEADS
+For June, Ace Inc. had the following budgets.
+
+      For materials, Ace budgeted $50,300 of direct materials and $27,300 of indirect materials used in
+       production.
+      Direct labour is budgeted at $150,150, while indirect labour for production is $40,950.
+      Other manufacturing overheads was estimated to be $77,350.
+
+The firm budgeted a consumption of 9,100 direct labour hours, and 45,500 machine hours to produce
+40,000 units.
+
+In reality, Ace Inc only used 8,500 direct labour hours, 42,000 machine hours to produce 37,500 units.
+Ace also incurs the following actual costs incurred for June:
+
+      Direct materials of $40,400 and indirect materials used in production of $25,200.
+      Direct labour of $140,250 and indirect labour for production is $36,600.
+      Other manufacturing overheads of $70,200
+
+Ace Inc. uses normal costing. Total manufacturing overhead is allocated based on machine hours. Ace Inc.
+uses the direct method to write off over-/under-applied overhead to COGS.
+
+Determine the over/under-applied MOH for June. What will be the impact on COGS?
+
+
+
+
+                                          ACCT 102 (BT) - Not for circulation
+                                          SMU Classification: Restricted
+
+EXERCISE 3: JOB-ORDER AND APPLIED MANUFACTURING OVERHEADS
+Woody Corp. builds customized carpentry. For March, the financials were as follows.
+
+                                         Actual ($)             Budget ($)
+ Direct materials                           600                    500
+ Direct labor @ $15 per hour               1,050                  1,125
+ Utilities                                  270                    300
+ Workshop rental                            800                    800
+ Misc. manufacturing expenses               380                    400
+
+
+At the beginning of March, Woody Corp had 1 outstanding job (Job #10). In March, Woody Corp finished
+Job #10 and began and finished Job #11. Both were delivered to the customers before the month ended.
+
+                                        Job #10 ($)                  Job #11 ($)
+ Work done before March:
+  Direct materials                         $100
+  Direct labour @ $15 per hour             $300
+  Applied MOH                              $400
+ Work done during March:
+  Direct materials                         $250                          $350
+  Direct labour hours                     28 DLH                        42 DLH
+
+
+The firm uses normal costing. Total manufacturing overhead is allocated based on direct labor hours.
+
+1. What is the total manufacturing overheads applied during March to Job #10 and Job #11 respectively?
+
+
+
+
+2. Determine the total cost of Job #10 and Job #11
+
+
+
+
+                                         ACCT 102 (BT) - Not for circulation
+                                        SMU Classification: Restricted
+
+3. Determine the following balances for Woody Corp.
+      a. Work-in- process, as at 1 March
+      b. Work-in-process, as at 31 March
+      c. Finished goods, as at 31 March
+
+
+
+
+4. Woody Corp uses the direct method to write off over-/under-applied overhead to COGS. Determine the
+   COGS for the month of March.
+
+
+
+
+                                       ACCT 102 (BT) - Not for circulation
+                                             SMU Classification: Restricted
+
+EXERCISE 4: PREDETERMINED OVERHEAD RATES
+A manufacturing startup has just built a new factory that can run 20,000 machine hours at full capacity.
+
+As a startup, the firm believes it will be running at 60% of its full capacity next year. Other budgeted figures
+for the year are as follows:
+
+ Units produced and sold             4,000
+ Direct materials, per unit          $3
+ Direct labor, per unit              $4
+ Manufacturing overheads             $42,000
+ Selling expenses                    $30,000
+Manufacturing overheads are driven and allocated based on machine hours.
+
+Calculate the budgeted product cost when the pre-determined manufacturing overhead rate is based on
+
+   a) Estimated activity
+   b) Capacity
+
+
+
+
+                                            ACCT 102 (BT) - Not for circulation

@@ -76,6 +76,58 @@ async function listMarkdown(prefix, token) {
     .map((i) => i.path)
 }
 
+// ── Format exemplars: past exercises/exams the quiz should imitate ─────────
+// Detected purely by FILENAME so the student never points at them — they just
+// upload files named like these. The quiz then mirrors their question formats.
+const EXEMPLAR_RE =
+  /(exercise|quiz|midterm|final|exam|tutorial|practice|problem[\s_-]*set|worksheet|past[\s_-]*paper)/i
+const MAX_EXEMPLARS = 2
+const EXEMPLAR_BUDGET = 2500 // total chars of exemplar text fed to the model
+
+// Every file directly inside a folder (not just .md), so we can spot exam files.
+async function listFiles(prefix, token) {
+  const dir = String(prefix).replace(/\/+$/, "")
+  if (!dir) return []
+  const res = await gh(`/repos/${REPO}/contents/${encodeURI(dir)}?ref=${BRANCH}`, token)
+  if (!res.ok) return []
+  const items = await res.json().catch(() => [])
+  return Array.isArray(items) ? items.filter((i) => i.type === "file") : []
+}
+
+// Up to MAX_EXEMPLARS past exercises/exams across the subject's folders, as
+// TEXT, capped to EXEMPLAR_BUDGET. We only read text formats (.md / .txt): a
+// scanned or font-subset PDF cannot be parsed reliably in a dep-free serverless
+// function, so exam PDFs are turned into a "<name>.pdf.txt" sidecar by the local
+// scripts/make-exam-sidecars.mjs (poppler pdftotext, with OCR fallback), which
+// this then reads. A PDF without a sidecar is simply skipped (quiz falls back to
+// the plain format). The sidecar's own name still matches EXEMPLAR_RE, so it is
+// picked up here directly.
+async function gatherExemplars(prefixes, token) {
+  const found = []
+  for (const p of prefixes) {
+    for (const f of await listFiles(p, token)) {
+      const ext = (f.name.split(".").pop() || "").toLowerCase()
+      if ((ext === "md" || ext === "txt") && EXEMPLAR_RE.test(f.name)) found.push(f)
+    }
+  }
+  if (!found.length) return { text: "", names: [] }
+  const parts = []
+  const names = []
+  let budget = EXEMPLAR_BUDGET
+  for (const f of found) {
+    if (names.length >= MAX_EXEMPLARS || budget <= 0) break
+    const file = await getFile(f.path, token)
+    if (!file) continue
+    const text = stripFrontmatter(file.text).trim()
+    if (!text) continue
+    const slice = text.slice(0, budget)
+    budget -= slice.length
+    names.push(f.name)
+    parts.push(`### ${f.name}\n${slice}`)
+  }
+  return { text: parts.join("\n\n"), names }
+}
+
 // Resolve a subject slug → { prefixes, label }. Authoritative source is the
 // repo's subjects.json (has multi-folder subjects like Business Law); falls back
 // to the api/_note.js SUBJECT_DIR mapping so it still works if that read fails.
@@ -117,7 +169,7 @@ function titleOf(md, path) {
 // Concatenate the subject's notes under a hard char budget. Fully includes notes
 // while budget remains; once spent, later notes contribute only their title, so
 // the model still knows the full scope of the subject.
-async function gatherNotes(prefixes, token) {
+async function gatherNotes(prefixes, token, maxChars = MAX_INPUT_CHARS) {
   const paths = []
   for (const p of prefixes) {
     for (const fp of await listMarkdown(p, token)) {
@@ -128,7 +180,7 @@ async function gatherNotes(prefixes, token) {
   }
   if (!paths.length) return { text: "", count: 0 }
 
-  let budget = MAX_INPUT_CHARS
+  let budget = maxChars
   const parts = []
   for (const fp of paths) {
     const file = await getFile(fp, token)
@@ -173,16 +225,34 @@ const fm = (title, tags, extra = "") =>
     .toISOString()
     .slice(0, 10)}\n---\n\n${extra}`
 
-async function genQuiz(label, notes, count, difficulty, apiKey) {
+async function genQuiz(label, notes, count, difficulty, apiKey, exemplars) {
   const guide = DIFFICULTY[difficulty] || DIFFICULTY.medium
+  const hasEx = !!(exemplars && exemplars.text)
+  // When we have the student's past exercises/exams, teach the model to imitate
+  // their formats (question types, phrasing, options) with NEW, notes-based
+  // content. Otherwise keep the plain short-answer Q&A.
+  const formatBlock = hasEx
+    ? `\n\nThe student's OWN past exercises/exams for this subject are below. Infer their ` +
+      `QUESTION FORMATS and STYLE — the mix of question types (multiple-choice, ` +
+      `true/false, fill-in-the-blank, short-answer, calculation, case/scenario), how ` +
+      `prompts are phrased, whether options are lettered, whether working is expected — ` +
+      `and write your NEW questions in the SAME formats and rough proportions. Do NOT ` +
+      `copy their questions; mirror only the format. Every fact must still come from the ` +
+      `NOTES.\n\nPAST EXERCISES/EXAMS:\n"""\n${exemplars.text}\n"""`
+    : ""
+  const schema = hasEx
+    ? `{"questions": [{"type": "<mcq|truefalse|fill|short|calc|scenario>", "q": "<question>", "options": ["A. …", "B. …"], "a": "<concise answer — for choice questions name the correct option and give a brief why>"}, ...]}`
+    : `{"questions": [{"q": "<question>", "a": "<concise answer>"}, ...]}`
   const prompt =
     `You are writing a revision quiz for a student studying "${label}", based ONLY on ` +
     `their own study notes below. Write everything in ENGLISH.\n\n` +
     `Produce EXACTLY ${count} questions at this difficulty: ${guide}\n\n` +
     `Base every question on the notes — do not invent facts that are not supported by them. ` +
-    `Cover a spread of topics rather than clustering on one.\n\n` +
-    `Respond with ONLY a JSON object: {"questions": [{"q": "<question>", "a": "<concise answer>"}, ...]} ` +
-    `with exactly ${count} items. No prose outside the JSON.\n\n` +
+    `Cover a spread of topics rather than clustering on one.` +
+    formatBlock +
+    `\n\nRespond with ONLY a JSON object: ${schema} with exactly ${count} items. ` +
+    (hasEx ? `"options" is only for multiple-choice/true-false questions; omit it otherwise. ` : "") +
+    `No prose outside the JSON.\n\n` +
     `NOTES:\n"""\n${notes}\n"""`
   const raw = await groqChat(
     {
@@ -202,10 +272,21 @@ async function genQuiz(label, notes, count, difficulty, apiKey) {
   }
   if (!items.length) throw Object.assign(new Error("The model returned no questions — try again."), { status: 502 })
   const diffLabel = difficulty.charAt(0).toUpperCase() + difficulty.slice(1)
+  const exNote = hasEx
+    ? ` · formatted after your ${exemplars.names
+        .map((n) => n.replace(/\.pdf\.txt$|\.txt$|\.md$/i, ""))
+        .join(", ")}`
+    : ""
   const body =
-    `> [!info] Auto-generated ${diffLabel} quiz · ${items.length} questions · built from this subject's notes.\n\n` +
+    `> [!info] Auto-generated ${diffLabel} quiz · ${items.length} questions · built from this subject's notes${exNote}.\n\n` +
     items
-      .map((qa, i) => `**Q${i + 1}. ${qa.q}**\n\n> ${qa.a}\n`)
+      .map((qa, i) => {
+        const opts =
+          Array.isArray(qa.options) && qa.options.length
+            ? "\n" + qa.options.map((o) => `- ${o}`).join("\n")
+            : ""
+        return `**Q${i + 1}. ${qa.q}**${opts}\n\n> ${qa.a}\n`
+      })
       .join("\n")
   const title = `${label} — Quiz (${diffLabel}, ${items.length} Q)`
   return { title, tags: ["quiz", "auto-generated"], body }
@@ -262,10 +343,15 @@ export default async function handler(req, res) {
   count = Math.max(MIN_Q, Math.min(MAX_Q, count))
   const difficulty = ["easy", "medium", "hard"].includes(String(body.difficulty)) ? body.difficulty : "medium"
 
-  // Resolve folders + gather the subject's own notes under the char budget.
+  // Resolve folders. For a quiz, first look for the student's past
+  // exercises/exams (detected by filename) so we can mirror their formats — and
+  // trim the notes budget when we do, to stay under the Groq per-minute cap.
   const { prefixes, label } = await resolveSubject(subject, token)
   if (!prefixes.length) return res.status(400).json({ error: "Unknown subject — no note folder found." })
-  const { text: notes, count: noteCount } = await gatherNotes(prefixes, token)
+  let exemplars = { text: "", names: [] }
+  if (kind === "quiz") exemplars = await gatherExemplars(prefixes, token)
+  const noteBudget = exemplars.text ? 9000 : MAX_INPUT_CHARS
+  const { text: notes, count: noteCount } = await gatherNotes(prefixes, token, noteBudget)
   if (!notes.trim() || noteCount === 0) {
     return res.status(400).json({ error: "This subject has no notes yet — add some notes first." })
   }
@@ -276,7 +362,7 @@ export default async function handler(req, res) {
     out =
       kind === "summary"
         ? await genSummary(label, notes, apiKey)
-        : await genQuiz(label, notes, count, difficulty, apiKey)
+        : await genQuiz(label, notes, count, difficulty, apiKey, exemplars)
   } catch (e) {
     if (e.status === 429) {
       return res.status(429).json({ error: "AI is rate-limited right now — wait a few seconds and try again.", retryAfterMs: e.retryAfterMs })
@@ -308,5 +394,13 @@ export default async function handler(req, res) {
 
   // noteSlug is the site path (wiki-root-relative), for the client's link.
   const noteSlug = [primaryDir, slug].filter(Boolean).join("/")
-  return res.status(200).json({ ok: true, kind, path, noteSlug, title: out.title, notesUsed: noteCount })
+  return res.status(200).json({
+    ok: true,
+    kind,
+    path,
+    noteSlug,
+    title: out.title,
+    notesUsed: noteCount,
+    exemplarsUsed: exemplars.names,
+  })
 }

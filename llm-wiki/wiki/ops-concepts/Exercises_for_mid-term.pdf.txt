@@ -1,0 +1,392 @@
+SMU Classification: Restricted
+
+
+
+
+                                                  Exercises
+1. The ability to adjust to changes in product mix, production volume, or design is _______________.
+   (A) Flexibility
+   (B) Delivery Speed
+   (C) Customization
+   (D) Conformance quality
+   (E) More than one of the above is correct
+
+2. Taco Bell processes on average 1500 customers per day (15 hours). On average, there are 75
+   customers in the joint (waiting to place orders, waiting for the order to arrive, eating, going back to
+   the counter for another order, etc.) What is the average amount of time a customer spends at Taco
+   Bell?
+   (A) 0  X < 0.2 hours
+   (B) 0.2 hours  X < 0.4 hours
+   (C) 0.4 hours  X < 0.6 hours
+   (D) 0.6 hours  X < 0.8 hours
+   (E) 0.8 hours  X < 1 hour
+   (F) 1 hour  X < 1.2 hours
+   (G) 1.2 hours  X < 1.4 hours
+   (H) 1.4 hours  X < 1.6 hours
+   (I) 1.6 hours  X < 1.8 hours
+   (J) 1.8 hours  X < 2 hours
+   (K) X ≥ 2 hours
+
+3. Motorolla Inc. sells 300 million dollars worth of cellular equipment per year. The average amount in
+   Accounts Receivable is 45 million dollars. On average, how much time does it take from a customer
+   is billed to the time a payment is received?
+   (A) 0  T < 0.2 years
+   (B) 0.2 years  T < 0.4 years
+   (C) 0.4 years  T < 0.6 years
+   (D) 0.6 years  T < 0.8 years
+   (E) 0.8 years  T < 1 year
+   (F) 1 year  T < 1.2 years
+   (G) 1.2 years  T < 1.4 years
+   (H) 1.4 years  T < 1.6 years
+   (I) 1.6 years  T < 1.8 years
+                                          SMU Classification: Restricted
+
+
+
+
+4. An automated pizza vending machine heats and dispenses a slice of pizza in 4 minutes. Customers
+   arrive at an average rate of one every 6 minutes. On average, each customer spends about 8 minutes
+   waiting in the line. What is the average number of customers at the vending machine?
+   (A) 0  Y < 2
+   (B) 2  Y < 4
+   (C) 4  Y < 6
+   (D) 6  Y < 8
+   (E) 8  Y < 10
+   (F) 10  Y < 12
+   (G) 12  Y < 14
+   (H) 14  Y < 16
+   (I) 16  Y < 18
+   (J) 18  Y < 20
+   (K) Y ≥ 20
+
+5. Consider the baggage check-in of a small airline. Check-in data indicate that from 9 a.m. to 10 a.m.,
+   255 passengers checked in. Moreover, based on counting the number of passengers waiting in line,
+   airport management found that the average number of passengers waiting for check-in was 35. What
+   is the average waiting time in line for a passenger, T?
+   (A) T < 2 minutes
+   (B) 2 minutes  T < 4 minutes
+   (C) 4 minutes  T < 6 minutes
+   (D) 6 minutes  T < 8 minutes
+   (E) 8 minutes  T < 10 minutes
+   (F) 10 minutes  T < 12 minutes
+   (G) 12 minutes  T < 14 minutes
+   (H) 14 minutes  T < 16 minutes
+   (I) 16 minutes  T < 18 minutes
+
+6. An assembly line is to operate eight hours per day with a desired output of 240 units per day. The
+   following table contains information on this product’s task times and precedence relationships:
+                                      Time                    Immediate
+                    Task            (seconds)                Predecessor(s)
+                     A                  60                         -
+                     B                  80                         A
+                     C                  20                         A
+                     D                  50                         A
+                     E                  90                       B, C
+                     F                  30                       C, D
+                     G                  30                       E, F
+                     H                  60                         G
+
+   (a) Draw and label a precedence diagram for the above tasks.
+   (b) What is the cycle time for the line?
+   (c) Balance the line using the longest task time rule.
+   (d) What is the efficiency of your line balance in (c)?
+                                         SMU Classification: Restricted
+
+
+
+
+7. UNT Motors, Inc. wishes to design a manufacturing assembly line that operates one shift (480
+   minutes) per day and the following tasks must be performed on the line:
+                      Time        Immediate                 Task            Time       Immediate
+           Task     (seconds)    Predecessor(s)                           (seconds)   Predecessor(s)
+            A           55             -                       F              60            B
+            B           30             A                       G              40            F
+            C           40             A                       H              25          E, D
+            D          100             C                       I              60          G, H
+            E           45             C
+   (a) Draw and label a precedence diagram for the above tasks.
+   (b) What is the maximum production rate per day for UNT Motors’ production line?
+   (c) Answer each of the following.
+         (i) What output will result if the cycle time is 3.0 minutes?
+        (ii) What cycle time would provide an output of 200 units per day?
+   (d) UNT Motors, Inc. has forecasted a weekly demand of 4320 units and wants to design the
+       assembly line to meet that demand. The company has decided to have three eight-hour shifts
+       (480 minutes per shift) five days per week.
+         (i) Compute the cycle time.
+        (ii) Determine the theoretical minimum number of workstations to meet this demand.
+   (e) Assume system requirements (output desired and operating parameters) presented in part d.
+       Perform an initial balance of the assembly line for UNT Motors using the longest task time rule,
+       Inc. Show the work stations, eligible tasks for assignment, tasks actually assigned, and idle
+       times.
+   (f) What is the efficiency of the actual line balance from above?
+
+8. Suppose a process flow diagram is as follows. In step 1, the two machines (M1 & M2) are identical.
+   Assume the process is in steady state and there is no buffer between each step. Suppose the average
+   WIP inventory is 3.2 units. What is the average flow time of the process, X?
+
+                     M1
+                    10 min
+                                               M3                          M4
+                                              2 min                       4 min
+                     M2
+                    10 min
+
+   (A) X < 2 minutes
+   (B) 2 minutes  X < 4 minutes
+   (C) 4 minutes  X < 6 minutes
+   (D) 6 minutes  X < 8 minutes
+   (E) 8 minutes  X < 10 minutes
+   (F) 10 minutes  X < 12 minutes
+   (G) 12 minutes  X < 14 minutes
+   (H) 14 minutes  X < 16 minutes
+   (I) 16 minutes  X < 18 minutes
+   (J) 18 minutes  X < 20 minutes
+   (K) X ≥ 20 minutes
+                                           SMU Classification: Restricted
+
+
+
+
+9. The layout of a process consists of two welding machines in parallel, one grinding and one drilling
+   machine. Two panels are released simultaneously to two welding machines where some parts are
+   fitted to the panels using these welding machines. The fitting operation requires 20 minutes per
+   panel. The next step is grinding. Panels are placed in a buffer in front of the grinding machine if the
+   machine is busy. The grinding operation takes 15 minutes per panel. The last step is drilling. After
+   the grinding operation, panels are moved to a buffer in front of the drilling machine if the drilling
+   machine is busy. The drilling operation takes 25 Minutes per panel.
+   (a) Draw a process flow diagram.
+   (b) What’s the hourly capacity of the process?
+   (c) How long will it take to fill a rush order of one panel?
+   (d) Suppose you now have a budget of $6000 to buy additional machines to add to the process in
+       order to increase your capacity. The unit prices for the welding, grinding, and drilling machines
+       are all the same, i.e., $2000 each. How are you going to spend the money? Please explain your
+       reasons and calculate the new capacity after investment.
+
+10. A manufacturer of fiberglass fittings is planning to add a new line of smaller fittings, and you have
+    been asked to develop a balanced line given the following task times and precedence relationships:
+                                 Task               Length                   Immediate
+                                                   (minutes)                Predecessor(s)
+                                  A                   0.5                         -
+                                  B                   0.7                         A
+                                  C                   1.5                         A
+                                  D                   0.3                         C
+                                  E                   0.6                         B
+                                  F                   0.2                         C
+                                  G                   0.4                         E
+                                  H                   0.3                      D, F, G
+
+   (a) Draw and label a precedence diagram for the above tasks.
+   (b) What is the minimum cycle time
+   (c) Assuming the cycle time to be used for line-balancing is to be the minimum cycle time from part
+       (b), develop a balanced line using the largest number of followers rule. Show the work stations,
+       tasks available for assignment, tasks actually assigned, total task times assigned to work stations,
+       and idle times.
+   (d) Determine the efficiency of the initial line balance based on part (c) above.
+                                           SMU Classification: Restricted
+
+
+
+
+11. (Service Facility Design) A service organization has the following process design. There are two
+    separate but identical service centers (with one employee each) that serve two distinct geographic
+    areas. Each center has random service time with a mean of 10 minutes and a standard deviation of 10
+    minutes. Customers arrive at each center with an inter-arrival time of 12 minutes. The standard
+    deviation of this inter-arrival time is 10 minutes.
+
+            Line 1
+
+                                                                   p = 10 minutes
+                     One customer in
+                     12 minutes
+
+
+            Line 2
+
+                                                                 p = 10 minutes
+
+                  One customer in
+                  12 minutes
+
+
+   (a) What is the current average wait time in minutes?
+   (b) The organization is considering strategies to reduce wait times. In particular, it is considering
+       reducing service time from 10 minutes to 5 minutes. In this case, the standard deviation of service
+       time would also be reduced from 10 minutes to 5 minutes. What is the average wait time in minutes
+       if this strategy is implemented?
+   (c) Another strategy to reduce waiting time involves standardizing the activity, which would reduce
+       the standard deviation of the service time from 10 to 2.5 minutes. Service time of 10 minutes will
+       remain unchanged. What is the average wait time if this strategy is implemented?
+   (d) The final strategy considered is to merge the two centers as shown below (in this case, the standard
+       deviation of the inter-arrival times will be 6 minutes). What is the average wait time if this strategy
+       is implemented?
+                                      SMU Classification: Restricted
+
+
+
+
+                                              Solution
+1) (E)
+2) (D)
+   Flow rate (FR) = 1500/ 15 = 100 customers/ hour
+   Work-in-process (WIP) = 75 customers
+   FT = WIP/ FR = 75*15/1500 = ¾ hr
+3) (A)
+   WIP = $45M
+   FR = 300 million dollars/ year
+   FT = WIP/FR = 45/300 = 0.15 year (or 54.75 days)
+4) (B)        WIP = FT/CT = (8+4)/6 = 2 customers
+5) (E)
+   R = 255 per hour
+   I = 35
+   T = 35/255 = 0.137 hours = 0.13760 minutes = 8.24 minutes
+6) (a)
+
+                           B
+                           80              E
+         A
+                           C             90                       G             H
+         60
+                           20                 F                 30              60
+
+                           D                30
+
+                           50
+
+(b) CT = 8*3600/240 = 120 seconds per unit
+
+(c)
+                Workstation     Time Remaining             Eligible    Assign        Idle
+                                                                                     Time
+                     1               120                       A         A            10
+                                      60                    B, C, D      D
+                     2               120                     B, C        B            20
+                                      40                       C         C
+                     3               120                     E, F        E            0
+                                      30                       F         F
+                     4               120                       G         G            30
+                                      90                       H         H
+
+
+(d) Efficiency = T/N*C = 420/4(120) = 0.875
+                                       SMU Classification: Restricted
+
+
+
+
+7)
+(a)
+                              30                    60
+
+                               B                     F                   G
+                                                                         40
+             A                                            100                         I
+                                                      D                              60
+            55                                                            H 25
+                               C
+                              40                      E
+                                                           45
+(b) Maximum production rate per day = 480*60/100 = 288
+(c)
+      (i) Output rate with cycle time 3.0 minutes = 480/3 = 160 units/day
+      (ii) Cycle time leading to an output of 200 units per day = 480/200 = 2.4 min = 144 s
+(d)
+      (i) Total Weekly Operating Time = 3*480*5 = 7200 min  432000 s.
+          CT = 43200/4320 = 100 s.
+      (ii) Theoretical minimum number of workstations, Nmin = 455/100 = 4.55  5 workstations
+
+
+(e)     Longest task time rule:
+           Work-       Time                  Eligible                   Assign       Idle
+           station   Remaining               Task(s)
+                       100              A                                A       5
+              1
+                       45               B, C                             C
+              2        100              B, D, E                          D       0
+                       100              B,E                              E       0
+              3        55               B,H                              B
+                       25               F, H                             H
+                       100              F                                F       0
+              4
+                       40               G                                G
+              5        100              I                                I       40
+
+(f) For both heuristics,
+             Efficiency = ti / (Na * C) = 455 / (5*100) = 0.91 or 91%
+
+
+8) Stage 1 is the bottleneck with CT = 5 mins. Given that the average WIP is 3.2 units, based on
+   Little’s law, FT = WIP * CT = 3.2 * 5 = 16.
+                                        SMU Classification: Restricted
+
+
+
+
+9)
+(a)
+
+
+
+
+(b) The cycle time for the process is 25 mins per unit.
+    So capacity of the process = 60 * 1/25 = 2.4 units/hour
+(c) Time it’ll take to fill a rush order (FT) = 20 + 15 + 25 = 60 mins = 1 hour.
+(d) Initially, the bottleneck is the drilling stage, and thus we purchase a drilling machine.
+Process CT after buying a drilling machine
+= Max {20/2, 15, 25/2} = Max {10, 15, 12.5} = 15 mins
+Next, the grinding stage is the bottleneck, and we thus purchase a grinding machine.
+Process CT after buying a grinding machine
+= Max {20/2, 15/2, 25/2} = Max {10, 7.5, 12.5} = 12.5 mins
+Now, the drilling stage is still a bottleneck, and we therefore buy another drilling machine.
+                             nd
+Process CT after buying 2 drilling machine
+= Max {20/2, 15/2, 25/3} = Max {10, 7.5, 8.33} = 10 mins
+Hence the optimum (maximum) process CT is 10 minutes. The new capacity is 1/10 units per minute.
+
+10)
+(a)
+                            B               E                    G
+
+                           0.7           0.6                    0.4
+          A                                            0.3
+                                                                              H
+                                                   D
+         0.5                C                                                0.3
+
+                           1.5                     F     0.2
+(b) minimum cycle time =1.5 min = 90 s
+(c)
+      Workstation      Time Remaining                  Eligible          Assign    Idle
+          1                  1.5                          A                A        0.3
+                             1.0                        B, C               B
+               2             1.5                        C, E               C        0
+               3             1.5                       D, E, F             E        0
+                             0.9                       D, F, G             G
+                             0.5                        D, F               D
+                             0.2                          F                F
+               4             1.5                          H                H       1.2
+(d) Efficiency = T / F = 4.5 / 6 = 0.75 or 75%
+                                          SMU Classification: Restricted
+
+
+
+
+11)
+(a) u = 10/12 = 5/6
+                  /
+   Tq = 10            (      + 1) = 42.36 min
+                  /
+
+
+(b) u = 5/12
+              /
+   Tq = 5             (      + 1) = 3.026 min
+              /
+
+
+                  /              .
+(c) Tq = 10           (      +       ) = 18.92 min
+                  /
+(d) a = 6;       p = 10;             m =2;               CVA = CVP = 1
+    u=     = 5/6
+          ×
+   Tq =       (( )√       / ) (2) = 23.03 min
