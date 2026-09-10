@@ -1747,6 +1747,30 @@ textarea.sh-input {
   border-radius: 8px;
   background: var(--light);
 }
+// Extracted note body shown in the browse panel's reader.
+.sh-notes-content {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 12px 14px;
+  border: 1px solid var(--lightgray);
+  border-radius: 8px;
+  background: var(--light);
+  font-size: 0.9rem;
+  line-height: 1.6;
+
+  > :first-child {
+    margin-top: 0;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
 
 // ── Note view toggle + auto mind map (Graph view) ──────────────
 .mm-wrap {
@@ -3221,6 +3245,9 @@ a.sh-subjtab {
     height: 60vh;
     max-height: 340px;
   }
+  .sh-notes-content {
+    max-height: 60vh;
+  }
   .sh-notes-reader-bar {
     flex-wrap: wrap;
   }
@@ -3349,6 +3376,9 @@ a.sh-subjtab {
   .sh-notes-frame {
     height: 56vh;
     max-height: 300px;
+  }
+  .sh-notes-content {
+    max-height: 56vh;
   }
 
   // Inline note editor: wrap the action buttons, tighten padding.

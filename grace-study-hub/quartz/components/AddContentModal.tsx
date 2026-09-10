@@ -210,7 +210,9 @@ const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) =>
                   </button>
                   <span class="sh-notes-reader-title" data-sh-notes-reader-title></span>
                 </div>
-                <iframe class="sh-notes-frame" data-sh-notes-frame title="노트 미리보기"></iframe>
+                {/* Just the note BODY (extracted client-side), so it shows at
+                    once instead of loading the whole site chrome in an iframe. */}
+                <div class="sh-notes-content popover-hint" data-sh-notes-content></div>
               </div>
             </div>
           </div>

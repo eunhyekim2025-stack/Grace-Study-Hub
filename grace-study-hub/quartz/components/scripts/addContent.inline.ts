@@ -1781,28 +1781,62 @@ function renderBrowse(query: string) {
     subjectRow("*", "🗂", "전체 노트", notesCache.length)
 }
 
-// Open a note for READING inside the panel via <iframe> (no host navigation, so
-// the recording keeps running).
-function openNote(slug: string, title: string) {
+// Open a note for READING inside the panel. Instead of loading the whole site
+// page in an <iframe> (which showed the sidebar/search first, pushing the note
+// body far down), fetch the page and inject just its BODY — the same
+// `.popover-hint` content Quartz uses for link previews — so the note shows at
+// once. No host navigation, so an in-progress recording keeps running.
+async function openNote(slug: string, title: string) {
   const browse = document.querySelector<HTMLElement>("[data-sh-notes-browse]")
   const reader = document.querySelector<HTMLElement>("[data-sh-notes-reader]")
-  const frame = document.querySelector<HTMLIFrameElement>("[data-sh-notes-frame]")
+  const content = document.querySelector<HTMLElement>("[data-sh-notes-content]")
   const titleEl = document.querySelector<HTMLElement>("[data-sh-notes-reader-title]")
-  if (!browse || !reader || !frame) return
-  frame.src = "/" + slug.replace(/^\/+/, "")
+  if (!browse || !reader || !content) return
   if (titleEl) titleEl.textContent = title
   browse.hidden = true
   reader.hidden = false
+  content.scrollTop = 0
+  content.innerHTML = `<p class="sh-modal-hint">불러오는 중…</p>`
+  const noteUrl = new URL("/" + slug.replace(/^\/+/, ""), location.origin).toString()
+  try {
+    const res = await fetch(noteUrl)
+    if (!res.ok) throw new Error(String(res.status))
+    const doc = new DOMParser().parseFromString(await res.text(), "text/html")
+    // Resolve relative src/href against the note's own URL so images and links
+    // still work once the fragment is injected into THIS page. Internal links
+    // open in a new tab so reading never blows away an in-progress recording.
+    doc.querySelectorAll("[src]").forEach((el) => {
+      const v = el.getAttribute("src")
+      if (v) el.setAttribute("src", new URL(v, noteUrl).toString())
+    })
+    doc.querySelectorAll("a[href]").forEach((el) => {
+      const v = el.getAttribute("href")
+      if (v && !v.startsWith("#")) {
+        el.setAttribute("href", new URL(v, noteUrl).toString())
+        el.setAttribute("target", "_blank")
+        el.setAttribute("rel", "noopener")
+      }
+    })
+    const hints = Array.from(doc.getElementsByClassName("popover-hint"))
+    const nodes = hints.flatMap((h) => Array.from(h.children))
+    if (nodes.length) {
+      content.replaceChildren(...nodes.map((n) => document.importNode(n, true)))
+    } else {
+      content.innerHTML = `<p class="sh-modal-hint">본문을 찾지 못했어요.</p>`
+    }
+  } catch {
+    content.innerHTML = `<p class="sh-modal-hint">노트를 불러오지 못했어요.</p>`
+  }
 }
 
 function closeNote() {
   const browse = document.querySelector<HTMLElement>("[data-sh-notes-browse]")
   const reader = document.querySelector<HTMLElement>("[data-sh-notes-reader]")
-  const frame = document.querySelector<HTMLIFrameElement>("[data-sh-notes-frame]")
+  const content = document.querySelector<HTMLElement>("[data-sh-notes-content]")
   if (!browse || !reader) return
   reader.hidden = true
   browse.hidden = false
-  if (frame) frame.src = "about:blank" // stop the note from running in the background
+  if (content) content.innerHTML = "" // drop the note from the DOM
 }
 
 const w = window as unknown as { __shAddInit?: boolean }
