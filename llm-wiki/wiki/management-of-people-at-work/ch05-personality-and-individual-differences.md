@@ -1,10 +1,17 @@
 ---
 title: "Ch 5 — Personality and Individual Differences"
-tags: [management-of-people-at-work, mpw, textbook, chapter-5, personality, big-five, mbti, dark-triad, hexaco, ability, values, person-job-fit, situation-strength]
-sources: ["Robbins & Judge, Organizational Behavior (Pearson) — Chapter 5, pp. 170–196"]
+tags: [management-of-people-at-work, mpw, textbook, chapter-5, personality, big-five, mbti, dark-triad, hexaco, ability, values, person-job-fit, situation-strength, maturation, heritability]
+sources: ["Robbins & Judge, Organizational Behavior (Pearson) — Chapter 5, pp. 170–196", "MPW Seminar 2 in-class recording — personality segment (2026-08-25) — lecture note MPW 2-1 merged in 2026-09-10"]
 created: 2026-08-28
-updated: 2026-08-28
+updated: 2026-09-10
 kind: 교재
+relations:
+  part-of: [management-of-people-at-work/index]
+pagerank: 0.0037
+betweenness: 0.0020
+eigenvector: 0.0036
+degree: 13
+community: 0
 ---
 
 <div class="dc-view">
@@ -55,7 +62,7 @@ The chapter's five moves:
 > [!important] The corrective the chapter keeps making
 > Traits predict **averages and tendencies**, never a whole person, and their predictive power is **conditional on the situation**. The strongest single finding to carry: **conscientiousness is the best overall predictor of job performance** — and even it has pitfalls at the extreme.
 
-This is the textbook counterpart to [[management-of-people-at-work/mpw-2-1|MPW 2-1]], which covers the same MBTI-vs-Big-Five argument from the lecture.
+The lecture treatment of this same MBTI-vs-Big-Five argument (MPW Seminar 2) has been folded into this chapter.
 
 ---
 
@@ -103,6 +110,12 @@ Collectively these are **person–environment fit**. A meta-analysis across East
 > [!note] Personality itself is culturally patterned
 > Many traits emerge across cultures, but some do not, and unique ones appear. Research in Chinese contexts has uncovered distinct traits focused on **interpersonal relatedness** together with a relative **absence of openness traits**.
 
+### Stability, maturation, and heritability
+
+Traits **crystallise in adolescence** and then stay fairly stable — but not frozen. With age people tend to become **more conscientious and more agreeable** (contrary to the "grumpy old person" stereotype), and often more politically conservative — a slow **maturation effect**, not a fixed endowment.
+
+The other half of the story is inheritance: **twin studies** (including twins separated at birth) put personality at roughly **40–60% heritable** — a real, partly-inherited basis that still leaves large room for situation and development (the "nature *and* nurture" resolution this chapter reaches later).
+
 ### Measuring personality
 
 **89 of the Fortune 100** and **57% of all large US companies** use personality assessments, and an estimated 200 federal agencies pay for personality testing in training. Usage by level: executives 32%, middle managers 28%, individual contributors 20%, hourly workers 17%.
@@ -114,7 +127,7 @@ Collectively these are **person–environment fit**. A meta-analysis across East
 
 **The best answer is both.** A combination of self-report and observer report predicts performance better than either alone.
 
-AI now helps: machine learning selects the most informative items, detects fakers, infers personality from social-media language, and even scores applicants' personal essays.
+AI now helps: machine learning selects the most informative items, detects fakers, infers personality from social-media language, and even scores applicants' personal essays. The **digital footprint** is strikingly predictive: algorithms reading Facebook "likes" beat a **work colleague** at about **10 likes**, a **family member** at **150**, and a **spouse** at **300** — which is also why these signals raise real privacy concerns.
 
 ---
 
@@ -134,6 +147,9 @@ A 100-question test sorting people into 16 types across four binaries: **Extrove
 > **And the one that matters most for OB: it does not predict job performance or other important organizational outcomes.**
 
 So why the popularity? Merve Emre's account: the test is written to be so **nonjudgmental** that every result is desirable and appealing, and it satisfies the desire to know yourself in a simple way — an "appealing fantasy" of coherent self-understanding.
+
+> [!info] Why a flattering test *feels* accurate — the Barnum/Forer effect
+> Every MBTI type description is **positively valenced**, so almost everyone agrees with it — the same reason a horoscope "sounds right." Universally-flattering, vague feedback is easy to accept as personally true, lending the test a credibility its validity does not earn.
 
 ### The Big Five Model
 
@@ -161,6 +177,9 @@ Five basic dimensions encompassing most differences in human personality. Scores
 **Openness** — creative and innovative, more likely to be effective leaders, more comfortable with ambiguity, coping better with organizational change. Not related to *initial* job performance, but open individuals are **less susceptible to performance decline over time**. Also less work–family conflict.
 
 **Agreeableness** — better in interpersonally oriented jobs like customer service; less work–family conflict, less turnover, more OCB, less CWB, less likely to be ostracized. But **associated with lower career success, especially earnings**, perhaps because highly agreeable people are less willing to assert themselves. Agreeableness is a **stronger predictor of organizational commitment in collectivistic than individualistic cultures** (review of ~20,000 employees).
+
+> [!quote] Agreeableness vs leadership (George Bernard Shaw)
+> "The reasonable man adapts himself to the world; the unreasonable one persists in trying to adapt the world to himself. Therefore all progress depends on the unreasonable man." Being *too* agreeable means accepting things as they are — the flip side of the lower-earnings finding, since highly agreeable people assert themselves less.
 
 > [!tip] For expatriate assignments
 > **Extroversion** is the most important trait predicting expatriate adjustment, followed by **emotional stability** and **openness** — corroborated by a study of 2,500 international exchange students where extroversion significantly reduced the stress of a new culture.
@@ -197,6 +216,9 @@ Three socially undesirable traits everyone has to some degree. **Not clinical pa
 ---
 
 ## Personality and situations
+
+> [!note] Judging trait vs situation — the attribution trap
+> Explaining **others'** behaviour we over-weight disposition and under-weight situation (the **fundamental attribution error** — "that driver is reckless," not "probably late"); for **ourselves** we reverse it (**self-serving bias**). Because behaviour is person **×** situation, fit predicts better than either trait or situation alone — which is why "**people quit their manager, not their job**."
 
 ### Situation strength theory
 
@@ -349,7 +371,6 @@ Cohorts (baby boomers, Gen X, millennials, Gen Z) are fascinating to think about
 
 ## Related notes
 
-- [[management-of-people-at-work/mpw-2-1|MPW 2-1 — Personality & the Big Five]] — the lecture treatment of MBTI vs Big Five and person × situation
 - [[ch03-job-attitudes|Ch 3]] — CSE as a cause of job satisfaction
 - [[ch02-diversity-equity-inclusion|Ch 2]] — disparate impact from ability testing; culture and values
 - [[ch17-human-resource-systems|Ch 17]] — where selection tests are actually deployed

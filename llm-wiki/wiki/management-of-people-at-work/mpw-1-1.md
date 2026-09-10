@@ -6,6 +6,13 @@ created: 2026-08-18
 updated: 2026-08-25
 kind: 의미
 recording_folder: "recordings/critical-thinking-in-real-world/2026-08-18-mpw-1-1 (private Vercel Blob, 1 segment)"
+relations:
+  part-of: [management-of-people-at-work/index]
+pagerank: 0.0019
+betweenness: 0.0001
+eigenvector: 0.0192
+degree: 6
+community: 0
 ---
 
 # MPW 1-1 — What an organization is
@@ -26,5 +33,5 @@ Unpacking the definition:
 
 ## Related notes
 
-- [[management-of-people-at-work/mpw-2-1|MPW 2-1 — Personality & the Big Five]]
+- [[management-of-people-at-work/ch05-personality-and-individual-differences|Ch 5 — Personality & Individual Differences]]
 - [[management-of-people-at-work/mpw-2-2|MPW 2-2 — Diversity in Organizations]]

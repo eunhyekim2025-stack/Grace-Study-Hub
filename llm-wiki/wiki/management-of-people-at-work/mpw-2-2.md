@@ -6,6 +6,13 @@ created: 2026-08-25
 updated: 2026-08-25
 kind: 개념
 recording_folder: "recordings/management-of-people-at-work/2026-08-25-mpw-2-2 (private Vercel Blob, 33 segments; segment #33 failed to transcribe)"
+relations:
+  part-of: [management-of-people-at-work/index]
+pagerank: 0.0030
+betweenness: 0.0006
+eigenvector: 0.0187
+degree: 7
+community: 0
 ---
 
 <div class="dc-view">
@@ -101,5 +108,5 @@ Two error types matter: **random error** (cancels out) vs **systematic error** (
 ## Related notes
 
 - [[management-of-people-at-work/ch02-diversity-equity-inclusion|Ch 2 — Diversity, Equity, and Inclusion]] — the full textbook treatment of surface/deep diversity, stereotype threat, and inclusion
-- [[management-of-people-at-work/mpw-2-1|MPW 2-1 — Personality & the Big Five]] — the first half of this seminar
+- [[management-of-people-at-work/ch05-personality-and-individual-differences|Ch 5 — Personality & Individual Differences]] — the personality half of this seminar (lecture note merged into the chapter)
 - [[management-of-people-at-work/evidence-based-management|Evidence-Based Management]] — pay dispersion & cooperation, evidence over dogma

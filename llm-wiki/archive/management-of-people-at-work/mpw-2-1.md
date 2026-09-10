@@ -4,8 +4,16 @@ tags: [management-of-people-at-work, mpw, lecture, recording, personality, big-f
 sources: ["MPW Seminar 2 in-class recording — personality segment (2026-08-25, whisper.cpp/Groq transcript)", "management-of-people-at-work/lectures/2026-08-25-mpw-2-1-personality-transcript.txt"]
 created: 2026-08-25
 updated: 2026-08-25
+archived: "2026-09-10 — merged into management-of-people-at-work/ch05-personality-and-individual-differences; kept in the repo only (not on the site)"
 kind: 개념
 recording_folder: "recordings/management-of-people-at-work/2026-08-25-mpw-2-1 (private Vercel Blob, 45 segments)"
+relations:
+  part-of: [management-of-people-at-work/index]
+pagerank: 0.0027
+betweenness: 0.0012
+eigenvector: 0.0187
+degree: 8
+community: 0
 ---
 
 <div class="dc-view">
