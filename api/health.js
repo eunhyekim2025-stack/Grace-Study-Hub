@@ -69,8 +69,8 @@ async function checkGroq() {
 // (bad/deleted client_id), "invalid_client: Unauthorized" (bad secret) and
 // "invalid_grant" (revoked/expired refresh token) are told apart. Only the
 // non-secret SHAPE of each value is reported (length, expected prefix/suffix,
-// stray-whitespace flag) — never the secret or refresh-token values themselves;
-// the client_id head is public by design (it is sent to browsers in OAuth).
+// stray-whitespace flag, format booleans) — never any part of the values
+// themselves, since a wrong value may be some other real secret.
 async function checkCalendar() {
   const clientId = process.env.GOOGLE_CLIENT_ID || ""
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET || ""
@@ -81,7 +81,9 @@ async function checkCalendar() {
       length: clientId.length,
       trimmedLength: clientId.trim().length, // ≠ length ⇒ stray spaces/newline
       endsWithGoogleusercontent: clientId.trim().endsWith(".apps.googleusercontent.com"),
-      head: clientId.trim().slice(0, 14), // public numeric prefix e.g. "1234567890-abc"
+      looksLikeGoogleClientId: /^[0-9]+-[a-z0-9-]+\.apps\.googleusercontent\.com$/.test(
+        clientId.trim(),
+      ),
     },
     clientSecret: {
       present: !!clientSecret.trim(),
