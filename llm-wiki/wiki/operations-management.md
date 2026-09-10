@@ -39,6 +39,7 @@ community: 5
 | [[ops-concepts/ops-3-1\|Ops 3-1 — Capacity, Utilization & Break-Even]] | 2026-09-03 | Flow = min(demand, capacity) · utilization vs design capacity · yield loss · the five-step **TOC** cycle · break-even |
 | [[ops-concepts/ops-3-2\|Ops 3-2 — Mixed-Product Capacity & Line Balancing]] | 2026-09-03 | Depreciation & cost basics · weighted longest step · how product mix moves the bottleneck · line balancing · demand flexibility |
 | [[ops-concepts/oms-4-1\|OMS 4-1 — Line Balancing (OMS #4-1)]] | 2026-09-10 | Distribute tasks to workstations within target cycle time |
+| [[ops-concepts/ops-4-2\|OPS 4-2]] | 2026-09-10 | Key concepts: flow‑rate calculation, steady‑state inventory, bottleneck identification, workstation coordination |
 
 ## Sources (raw/ops/)
 | Source | Description |
