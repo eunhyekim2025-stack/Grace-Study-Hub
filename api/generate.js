@@ -19,6 +19,7 @@
 // Runtime: Node (global fetch + Buffer, no npm dependencies).
 
 import { DESIGN_SPEC, slugify, subjectDir } from "./_note.js"
+import { hubCandidates } from "./_seminars.js"
 
 const REPO = "eunhyekim2025-stack/Grace-Study-Hub"
 const BRANCH = "main"
@@ -60,6 +61,64 @@ async function getFile(path, token) {
   const data = await res.json()
   if (!data || typeof data.content !== "string") return null
   return { text: Buffer.from(data.content, "base64").toString("utf8"), sha: data.sha }
+}
+
+// Commit several files in ONE commit (Git Trees) — so a quiz note and the hub
+// row that lists it land together and trigger a single redeploy.
+async function commitFiles(files, message, token) {
+  const ref = await (await gh(`/repos/${REPO}/git/ref/heads/${BRANCH}`, token)).json()
+  const baseSha = ref?.object?.sha
+  if (!baseSha) throw new Error("could not read branch head")
+  const baseCommit = await (await gh(`/repos/${REPO}/git/commits/${baseSha}`, token)).json()
+  const treeRes = await gh(`/repos/${REPO}/git/trees`, token, {
+    method: "POST",
+    body: JSON.stringify({
+      base_tree: baseCommit.tree.sha,
+      tree: files.map((f) => ({ path: f.path, mode: "100644", type: "blob", content: f.content })),
+    }),
+  })
+  const tree = await treeRes.json()
+  if (!treeRes.ok) throw new Error(tree.message || "tree error")
+  const commitRes = await gh(`/repos/${REPO}/git/commits`, token, {
+    method: "POST",
+    body: JSON.stringify({ message, tree: tree.sha, parents: [baseSha] }),
+  })
+  const commit = await commitRes.json()
+  if (!commitRes.ok) throw new Error(commit.message || "commit error")
+  const updateRes = await gh(`/repos/${REPO}/git/refs/heads/${BRANCH}`, token, {
+    method: "PATCH",
+    body: JSON.stringify({ sha: commit.sha }),
+  })
+  if (!updateRes.ok) throw new Error((await updateRes.json())?.message || "ref update error")
+  return commit
+}
+
+// Add a bullet under the hub's "## <heading>" section (creating the section at
+// the end if it's missing). Idempotent. Because the section tab bar is built
+// from the hub's H2 headings, adding "## Quizzes" also gives the subject a
+// Quizzes tab.
+function linkInHubSection(hubText, heading, bullet) {
+  if (hubText.includes(bullet)) return hubText
+  const lines = hubText.split("\n")
+  const hIdx = lines.findIndex((l) => new RegExp(`^##\\s+${heading}\\b`, "i").test(l))
+  if (hIdx === -1) {
+    const sep = hubText.endsWith("\n") ? "" : "\n"
+    return (
+      hubText +
+      `${sep}\n## ${heading}\n> Auto-generated quizzes built from this subject's notes. New ones are added here automatically.\n\n${bullet}\n`
+    )
+  }
+  let end = lines.length
+  for (let i = hIdx + 1; i < lines.length; i++) {
+    if (/^##\s/.test(lines[i])) {
+      end = i
+      break
+    }
+  }
+  let insertAt = end
+  while (insertAt > hIdx + 1 && lines[insertAt - 1].trim() === "") insertAt--
+  lines.splice(insertAt, 0, bullet)
+  return lines.join("\n")
 }
 
 // The repo's full file list (recursive), fetched once via the Git Trees API and
@@ -393,6 +452,50 @@ export default async function handler(req, res) {
   const slug = slugify(`${label} ${kind} ${stamp}`)
   const path = [WIKI, primaryDir, slug + ".md"].filter(Boolean).join("/")
   const md = fm(out.title, out.tags, out.body + "\n")
+  // noteSlug is the site path (wiki-root-relative), for the client's link.
+  const noteSlug = [primaryDir, slug].filter(Boolean).join("/")
+
+  // A quiz is also linked into the subject hub's "## Quizzes" section (created
+  // if absent), so it's easy to find later — and the hub then shows a Quizzes
+  // tab. Note + hub go in as ONE commit. Best-effort: if the hub can't be read
+  // or updated, the quiz still saves on its own below.
+  let hubFile = null
+  if (kind === "quiz") {
+    try {
+      for (const hp of hubCandidates(WIKI, subject)) {
+        const hf = await getFile(hp, token)
+        if (hf) {
+          hubFile = {
+            path: hp,
+            content: linkInHubSection(hf.text, "Quizzes", `- [[${noteSlug}|${out.title}]]`),
+          }
+          break
+        }
+      }
+    } catch {
+      hubFile = null
+    }
+  }
+
+  if (hubFile) {
+    try {
+      const commit = await commitFiles(
+        [
+          { path, content: md },
+          { path: hubFile.path, content: hubFile.content },
+        ],
+        `Add ${kind}: ${out.title} (via site)`,
+        token,
+      )
+      return res.status(200).json({
+        ok: true, kind, path, noteSlug, title: out.title,
+        notesUsed: noteCount, exemplarsUsed: exemplars.names,
+        commit: commit.sha, linkedInHub: hubFile.path,
+      })
+    } catch {
+      // fall through to the plain single-file save (never lose the quiz)
+    }
+  }
 
   const ghPath = `/repos/${REPO}/contents/${path.split("/").map(encodeURIComponent).join("/")}`
   const put = await gh(ghPath, token, {
@@ -407,16 +510,7 @@ export default async function handler(req, res) {
   if (!put.ok) {
     return res.status(put.status).json({ error: (data.message || "GitHub commit failed"), path })
   }
-
-  // noteSlug is the site path (wiki-root-relative), for the client's link.
-  const noteSlug = [primaryDir, slug].filter(Boolean).join("/")
   return res.status(200).json({
-    ok: true,
-    kind,
-    path,
-    noteSlug,
-    title: out.title,
-    notesUsed: noteCount,
-    exemplarsUsed: exemplars.names,
+    ok: true, kind, path, noteSlug, title: out.title, notesUsed: noteCount, exemplarsUsed: exemplars.names,
   })
 }
