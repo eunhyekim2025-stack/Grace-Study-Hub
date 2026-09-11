@@ -62,18 +62,38 @@ async function getFile(path, token) {
   return { text: Buffer.from(data.content, "base64").toString("utf8"), sha: data.sha }
 }
 
-// List the markdown files directly inside one folder (non-recursive is enough —
-// subject notes live flat in their folder). Returns [] if the folder is missing.
+// The repo's full file list (recursive), fetched once via the Git Trees API and
+// cached by commit sha (so a note added between quizzes is still picked up).
+// Subject notes live under llm-wiki/wiki/<prefix>/… — often in per-chapter
+// SUBFOLDERS (law-concepts, da-concepts, fa-concepts) — so we filter this flat,
+// full-path list by prefix. This also fixes the earlier bug of listing the
+// un-prefixed path (`contents/<prefix>` 404s; the real path is `WIKI/<prefix>`).
+let _treeCache = { sha: null, paths: [] }
+async function repoTreePaths(token) {
+  const ref = await (await gh(`/repos/${REPO}/git/ref/heads/${BRANCH}`, token)).json().catch(() => null)
+  const commitSha = ref?.object?.sha
+  if (!commitSha) return _treeCache.paths
+  if (_treeCache.sha === commitSha) return _treeCache.paths
+  const commit = await (await gh(`/repos/${REPO}/git/commits/${commitSha}`, token)).json().catch(() => null)
+  const treeSha = commit?.tree?.sha
+  if (!treeSha) return _treeCache.paths
+  const t = await (await gh(`/repos/${REPO}/git/trees/${treeSha}?recursive=1`, token)).json().catch(() => null)
+  const paths = Array.isArray(t?.tree) ? t.tree.filter((e) => e.type === "blob").map((e) => e.path) : []
+  _treeCache = { sha: commitSha, paths }
+  return paths
+}
+
+// Full repo paths of files under a subject prefix (recursive).
+async function filesUnder(prefix, token) {
+  const base = `${WIKI}/${String(prefix).replace(/\/+$/, "")}/`
+  return (await repoTreePaths(token)).filter((p) => p.startsWith(base))
+}
+
+// The subject's markdown notes (recursive; skips any index.md at any level).
 async function listMarkdown(prefix, token) {
-  const dir = String(prefix).replace(/\/+$/, "")
-  if (!dir) return []
-  const res = await gh(`/repos/${REPO}/contents/${encodeURI(dir)}?ref=${BRANCH}`, token)
-  if (!res.ok) return []
-  const items = await res.json().catch(() => [])
-  if (!Array.isArray(items)) return []
-  return items
-    .filter((i) => i.type === "file" && /\.md$/i.test(i.name) && i.name.toLowerCase() !== "index.md")
-    .map((i) => i.path)
+  return (await filesUnder(prefix, token)).filter(
+    (p) => /\.md$/i.test(p) && !/\/index\.md$/i.test(p),
+  )
 }
 
 // ── Format exemplars: past exercises/exams the quiz should imitate ─────────
@@ -84,14 +104,10 @@ const EXEMPLAR_RE =
 const MAX_EXEMPLARS = 2
 const EXEMPLAR_BUDGET = 2500 // total chars of exemplar text fed to the model
 
-// Every file directly inside a folder (not just .md), so we can spot exam files.
+// Every file under a subject prefix (recursive) — {name, path} — so exam files
+// in per-chapter subfolders are found too.
 async function listFiles(prefix, token) {
-  const dir = String(prefix).replace(/\/+$/, "")
-  if (!dir) return []
-  const res = await gh(`/repos/${REPO}/contents/${encodeURI(dir)}?ref=${BRANCH}`, token)
-  if (!res.ok) return []
-  const items = await res.json().catch(() => [])
-  return Array.isArray(items) ? items.filter((i) => i.type === "file") : []
+  return (await filesUnder(prefix, token)).map((p) => ({ name: p.split("/").pop(), path: p }))
 }
 
 // Up to MAX_EXEMPLARS past exercises/exams across the subject's folders, as
