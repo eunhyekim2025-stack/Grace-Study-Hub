@@ -1721,7 +1721,19 @@ if (!w.__shAddInit) {
       count = Math.max(1, Math.min(20, count))
       const difficulty =
         document.querySelector<HTMLSelectElement>("[data-sh-quiz-difficulty]")?.value || "medium"
-      runGenerate("quiz", gen.dataset.shSubject || "", gen, { count, difficulty })
+      const qtype = document.querySelector<HTMLSelectElement>("[data-sh-quiz-type]")?.value || "auto"
+      const style = document.querySelector<HTMLSelectElement>("[data-sh-quiz-style]")?.value || "auto"
+      const focus = (document.querySelector<HTMLInputElement>("[data-sh-quiz-focus]")?.value || "").trim()
+      const explain =
+        document.querySelector<HTMLInputElement>("[data-sh-quiz-explain]")?.checked ?? true
+      runGenerate("quiz", gen.dataset.shSubject || "", gen, {
+        count,
+        difficulty,
+        qtype,
+        style,
+        focus,
+        explain,
+      })
       return
     }
     const sum = target?.closest<HTMLButtonElement>("[data-sh-summarize]")

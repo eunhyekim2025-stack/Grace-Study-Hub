@@ -77,6 +77,45 @@ const SubjectAutoBar: QuartzComponent = ({ fileData, allFiles }: QuartzComponent
             <option value="hard">Hard</option>
           </select>
         </label>
+        <label class="sh-genquiz-field">
+          <span>Type</span>
+          <select class="sh-input" data-sh-quiz-type>
+            <option value="auto" selected>
+              Auto (match past exams)
+            </option>
+            <option value="mcq">Multiple choice</option>
+            <option value="short">Short answer</option>
+            <option value="truefalse">True / False</option>
+            <option value="fill">Fill in the blank</option>
+            <option value="scenario">Scenario / essay</option>
+            <option value="mixed">Mixed</option>
+          </select>
+        </label>
+        <label class="sh-genquiz-field">
+          <span>Style</span>
+          <select class="sh-input" data-sh-quiz-style>
+            <option value="auto" selected>
+              Auto
+            </option>
+            <option value="conceptual">Conceptual</option>
+            <option value="application">Application / calc</option>
+            <option value="definitions">Definitions / recall</option>
+            <option value="exam">Exam-style (traps)</option>
+          </select>
+        </label>
+        <label class="sh-genquiz-field sh-genquiz-wide">
+          <span>Focus — topics/chapters (optional)</span>
+          <input
+            class="sh-input"
+            type="text"
+            data-sh-quiz-focus
+            placeholder="e.g. faultlines, social identity · or chapters 5–7"
+          />
+        </label>
+        <label class="sh-genquiz-check">
+          <input type="checkbox" data-sh-quiz-explain checked />
+          <span>Include answer explanations</span>
+        </label>
         <button class="sh-subjbar-btn solid" data-sh-quiz-generate data-sh-subject={subj.slug}>
           Generate
         </button>

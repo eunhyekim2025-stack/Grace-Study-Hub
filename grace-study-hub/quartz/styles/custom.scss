@@ -2607,6 +2607,26 @@ table thead tr {
     width: 90px;
   }
 }
+.sh-genquiz-field.sh-genquiz-wide {
+  flex: 1 1 260px;
+
+  input {
+    width: 100%;
+  }
+}
+.sh-genquiz-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 100%;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--darkgray);
+
+  input {
+    margin: 0;
+  }
+}
 .sh-gen-status {
   margin-top: 10px;
   font-size: 0.85rem;

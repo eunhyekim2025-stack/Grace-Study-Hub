@@ -177,15 +177,31 @@ async function listFiles(prefix, token) {
 // this then reads. A PDF without a sidecar is simply skipped (quiz falls back to
 // the plain format). The sidecar's own name still matches EXEMPLAR_RE, so it is
 // picked up here directly.
+// Our own generated quizzes are named "<subject>-quiz-<timestamp>.md" — don't
+// imitate those (self-reference), only real exams/exercises the student added.
+const AUTO_QUIZ_RE = /-quiz-\d{6,}\.(md|txt)$/i
+// Priority so the FORMAT is learned from real exams first: Midterm/Final/Exam/
+// Exercise > practice/tutorial/worksheet > a plain quiz file.
+function exemplarRank(name) {
+  const n = name.toLowerCase()
+  if (/(midterm|final|exam|exercise)/.test(n)) return 3
+  if (/(practice|tutorial|worksheet|problem|past)/.test(n)) return 2
+  if (/quiz/.test(n)) return 1
+  return 0
+}
 async function gatherExemplars(prefixes, token) {
   const found = []
   for (const p of prefixes) {
     for (const f of await listFiles(p, token)) {
       const ext = (f.name.split(".").pop() || "").toLowerCase()
-      if ((ext === "md" || ext === "txt") && EXEMPLAR_RE.test(f.name)) found.push(f)
+      if ((ext !== "md" && ext !== "txt") || !EXEMPLAR_RE.test(f.name)) continue
+      if (AUTO_QUIZ_RE.test(f.name)) continue // skip AI-generated quizzes
+      found.push(f)
     }
   }
   if (!found.length) return { text: "", names: [] }
+  // Real exams before practice before quizzes (stable within a tier).
+  found.sort((a, b) => exemplarRank(b.name) - exemplarRank(a.name))
   const parts = []
   const names = []
   let budget = EXEMPLAR_BUDGET
@@ -300,33 +316,65 @@ const fm = (title, tags, extra = "") =>
     .toISOString()
     .slice(0, 10)}\n---\n\n${extra}`
 
-async function genQuiz(label, notes, count, difficulty, apiKey, exemplars) {
+async function genQuiz(label, notes, count, difficulty, apiKey, exemplars, opts = {}) {
   const guide = DIFFICULTY[difficulty] || DIFFICULTY.medium
   const hasEx = !!(exemplars && exemplars.text)
-  // When we have the student's past exercises/exams, teach the model to imitate
-  // their formats (question types, phrasing, options) with NEW, notes-based
-  // content. Otherwise keep the plain short-answer Q&A.
-  const formatBlock = hasEx
-    ? `\n\nThe student's OWN past exercises/exams for this subject are below. Infer their ` +
-      `QUESTION FORMATS and STYLE — the mix of question types (multiple-choice, ` +
-      `true/false, fill-in-the-blank, short-answer, calculation, case/scenario), how ` +
-      `prompts are phrased, whether options are lettered, whether working is expected — ` +
-      `and write your NEW questions in the SAME formats and rough proportions. Do NOT ` +
-      `copy their questions; mirror only the format. Every fact must still come from the ` +
-      `NOTES.\n\nPAST EXERCISES/EXAMS:\n"""\n${exemplars.text}\n"""`
+  const { qtype = "auto", style = "auto", focus = "", explain = true } = opts
+
+  const TYPE_INSTR = {
+    mcq: "Make EVERY question multiple-choice: a stem plus 4–5 lettered options (A–E) with exactly ONE correct answer.",
+    short: "Make every question short-answer (a one- or two-sentence response).",
+    truefalse: "Make every question a True/False statement; the answer states True or False.",
+    fill: "Make every question a fill-in-the-blank sentence with a single missing key term.",
+    scenario: "Make every question a short scenario/case the student reasons about in a few sentences.",
+    mixed: "Use a MIX of question types — multiple-choice, true/false, fill-in-the-blank, short-answer and a scenario.",
+  }
+  const STYLE_INSTR = {
+    conceptual: "Emphasise conceptual understanding — the why, and relationships between ideas.",
+    application: "Emphasise application and calculation — apply concepts to new situations or work through numbers.",
+    definitions: "Emphasise definitions and recall of key terms.",
+    exam: "Write exam-style questions with plausible distractors and the common traps students fall for.",
+  }
+  const typeLine = qtype !== "auto" && TYPE_INSTR[qtype] ? `\nQUESTION TYPE: ${TYPE_INSTR[qtype]}` : ""
+  const styleLine = style !== "auto" && STYLE_INSTR[style] ? `\nEMPHASIS: ${STYLE_INSTR[style]}` : ""
+  const focusLine = focus
+    ? `\nFOCUS: Base the questions specifically on "${focus}". Prefer notes on these topics and skip unrelated ones.`
     : ""
-  const schema = hasEx
-    ? `{"questions": [{"type": "<mcq|truefalse|fill|short|calc|scenario>", "q": "<question>", "options": ["A. …", "B. …"], "a": "<concise answer — for choice questions name the correct option and give a brief why>"}, ...]}`
-    : `{"questions": [{"q": "<question>", "a": "<concise answer>"}, ...]}`
+  const answerLine = explain
+    ? "Each answer is concise but includes a brief reason/explanation."
+    : "Each answer is the bare correct answer, with no explanation."
+
+  // Exemplars steer FORMAT. In "auto" they set the whole format; with an explicit
+  // type they're only a phrasing reference (the chosen type wins).
+  const formatBlock = !hasEx
+    ? ""
+    : qtype === "auto"
+      ? `\n\nThe student's OWN past exercises/exams for this subject are below. Infer their ` +
+        `QUESTION FORMATS and STYLE — the mix of types (multiple-choice, true/false, ` +
+        `fill-in-the-blank, short-answer, calculation, case/scenario), phrasing, whether ` +
+        `options are lettered — and write NEW questions in the SAME formats and rough ` +
+        `proportions. Do NOT copy their questions; mirror only the format. Facts come from ` +
+        `the NOTES.\n\nPAST EXERCISES/EXAMS:\n"""\n${exemplars.text}\n"""`
+      : `\n\nThe student's past exercises/exams are below as a PHRASING reference only — ` +
+        `follow the QUESTION TYPE above for structure. Facts come from the NOTES.\n\n` +
+        `PAST EXERCISES/EXAMS:\n"""\n${exemplars.text}\n"""`
+
+  const wantStructured = hasEx || ["mcq", "truefalse", "mixed"].includes(qtype)
+  const schema = wantStructured
+    ? `{"questions": [{"type": "<mcq|truefalse|fill|short|scenario>", "q": "<question>", "options": ["A. …", "B. …"], "a": "<answer${explain ? " — for choice questions name the correct option and give a brief why" : ""}>"}, ...]}`
+    : `{"questions": [{"q": "<question>", "a": "<answer>"}, ...]}`
   const prompt =
     `You are writing a revision quiz for a student studying "${label}", based ONLY on ` +
     `their own study notes below. Write everything in ENGLISH.\n\n` +
-    `Produce EXACTLY ${count} questions at this difficulty: ${guide}\n\n` +
-    `Base every question on the notes — do not invent facts that are not supported by them. ` +
-    `Cover a spread of topics rather than clustering on one.` +
+    `Produce EXACTLY ${count} questions at this difficulty: ${guide}` +
+    typeLine +
+    styleLine +
+    focusLine +
+    `\n\nBase every question on the notes — do not invent facts that are not supported by them. ` +
+    `Cover a spread of topics rather than clustering on one. ${answerLine}` +
     formatBlock +
     `\n\nRespond with ONLY a JSON object: ${schema} with exactly ${count} items. ` +
-    (hasEx ? `"options" is only for multiple-choice/true-false questions; omit it otherwise. ` : "") +
+    (wantStructured ? `"options" is only for multiple-choice/true-false questions; omit it otherwise. ` : "") +
     `No prose outside the JSON.\n\n` +
     `NOTES:\n"""\n${notes}\n"""`
   const raw = await groqChat(
@@ -347,13 +395,29 @@ async function genQuiz(label, notes, count, difficulty, apiKey, exemplars) {
   }
   if (!items.length) throw Object.assign(new Error("The model returned no questions — try again."), { status: 502 })
   const diffLabel = difficulty.charAt(0).toUpperCase() + difficulty.slice(1)
-  const exNote = hasEx
-    ? ` · formatted after your ${exemplars.names
-        .map((n) => n.replace(/\.pdf\.txt$|\.txt$|\.md$/i, ""))
-        .join(", ")}`
-    : ""
+  const TYPE_LABEL = {
+    mcq: "multiple choice",
+    short: "short answer",
+    truefalse: "true/false",
+    fill: "fill-in-the-blank",
+    scenario: "scenario",
+    mixed: "mixed",
+  }
+  // Only credit exemplar-mirroring when it actually drove the format ("auto").
+  const exNote =
+    hasEx && qtype === "auto"
+      ? ` · formatted after your ${exemplars.names
+          .map((n) => n.replace(/\.pdf\.txt$|\.txt$|\.md$/i, ""))
+          .join(", ")}`
+      : ""
+  const metaBits = [
+    qtype !== "auto" ? TYPE_LABEL[qtype] || qtype : null,
+    style !== "auto" ? style : null,
+    focus ? `focus: ${focus}` : null,
+  ].filter(Boolean)
+  const meta = metaBits.length ? ` · ${metaBits.join(" · ")}` : ""
   const body =
-    `> [!info] Auto-generated ${diffLabel} quiz · ${items.length} questions · built from this subject's notes${exNote}.\n\n` +
+    `> [!info] Auto-generated ${diffLabel} quiz · ${items.length} questions${meta} · built from this subject's notes${exNote}.\n\n` +
     items
       .map((qa, i) => {
         const opts =
@@ -363,7 +427,7 @@ async function genQuiz(label, notes, count, difficulty, apiKey, exemplars) {
         return `**Q${i + 1}. ${qa.q}**${opts}\n\n> ${qa.a}\n`
       })
       .join("\n")
-  const title = `${label} — Quiz (${diffLabel}, ${items.length} Q)`
+  const title = `${label} — Quiz (${diffLabel}${qtype !== "auto" ? ", " + (TYPE_LABEL[qtype] || qtype) : ""}, ${items.length} Q)`
   return { title, tags: ["quiz", "auto-generated"], body }
 }
 
@@ -417,6 +481,15 @@ export default async function handler(req, res) {
   if (!Number.isFinite(count)) count = 5
   count = Math.max(MIN_Q, Math.min(MAX_Q, count))
   const difficulty = ["easy", "medium", "hard"].includes(String(body.difficulty)) ? body.difficulty : "medium"
+  // Extra quiz controls (all optional; safe defaults).
+  const qtype = ["auto", "mcq", "short", "truefalse", "fill", "scenario", "mixed"].includes(String(body.qtype))
+    ? body.qtype
+    : "auto"
+  const style = ["auto", "conceptual", "application", "definitions", "exam"].includes(String(body.style))
+    ? body.style
+    : "auto"
+  const focus = String(body.focus || "").replace(/\s+/g, " ").trim().slice(0, 200)
+  const explain = body.explain !== false // default: include a brief explanation
 
   // Resolve folders. For a quiz, first look for the student's past
   // exercises/exams (detected by filename) so we can mirror their formats — and
@@ -437,7 +510,7 @@ export default async function handler(req, res) {
     out =
       kind === "summary"
         ? await genSummary(label, notes, apiKey)
-        : await genQuiz(label, notes, count, difficulty, apiKey, exemplars)
+        : await genQuiz(label, notes, count, difficulty, apiKey, exemplars, { qtype, style, focus, explain })
   } catch (e) {
     if (e.status === 429) {
       return res.status(429).json({ error: "AI is rate-limited right now — wait a few seconds and try again.", retryAfterMs: e.retryAfterMs })
