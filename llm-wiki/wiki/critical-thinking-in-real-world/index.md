@@ -21,6 +21,7 @@ community: 6
 | Note | Date | Covers |
 |------|------|--------|
 | [[critical-thinking-in-real-world/seminar-01-what-critical-thinking-is\|Seminar 1 — What Critical Thinking Is]] | 2026-08-17 | three active moves · toolkit + attitude · domain neutrality · common sense fails (3 tests) · statements · facts vs opinions · vagueness vs ambiguity · the argument · **"got argue or not?" drill (9 passages)** |
+| [[critical-thinking-in-real-world/ctrw-2\|CTRW 2 — Definitions]] | 2026-08-24 | why a definition is owed · definiendum/definiens · **accurate + informative** · metaphor · obscurity · ambiguity · **circularity properly defined** · too broad/narrow · genus & difference · necessary **and** sufficient · stipulating by purpose · the *Yes Minister* clip |
 | [[critical-thinking-in-real-world/3-1\|CTRW 3-1 — Definition & Argument Evaluation]] | 2026-08-31 | definition disputes — case-fit vs definition-fit · charitable reconstruction · the arrow rule · the four evaluation questions · **inference strength scale** (maximal → weak) |
 | [[critical-thinking-in-real-world/3-2\|CTRW 3-2 — Validity, Soundness & Cogency]] | 2026-08-31 | validity as *guarantee* · deductive vs inductive **intention** · sound vs cogent · normative vs descriptive conclusions · the four-step evaluation sequence |
 | [[critical-thinking-in-real-world/4-1\|4-1 — Argument‑Attack Analysis]] | 2026-09-07 | How to dissect, evaluate, and counter arguments |

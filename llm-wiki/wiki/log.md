@@ -464,3 +464,12 @@ community: 2
 - 중복 회피: reliability(cogency의 세 번째 조건)는 [[critical-thinking-in-real-world/ctrw-ch01-basic-concepts-of-reasoning]]·[[critical-thinking-in-real-world/ctrw-4-2]]에 이미 있어 추가하지 않음.
 - 전사 오류 교정 2건(슬라이드가 근거): [[critical-thinking-in-real-world/ctrw-4-2]] "Reductive"→**Deductive**, "Inductive (aka gorgeous)"→**Inductive → cogent**, "finish the AC"→"finish **JC**"; [[critical-thinking-in-real-world/4-1]] Albert 예시가 뒤집혀 있던 것("Albert is blind"는 결론이 아니라 전제 (1)을 공격) 교정. 두 건 모두 `> [!note] Transcript correction` 으로 표시.
 - [[critical-thinking-in-real-world/case-drug-legalisation-grayling]]에 세미나가 실제로 다이어그램하는 **8문장 재구성**(선언삼단논법 구조)과 **공격 드릴(슬라이드 13, 진술 9–15)** 표 추가. 슬라이드가 답을 주지 않는 문제라 `> [!uncertain]`로 "수업 확인 필요" 명시.
+
+## [2026-09-14] ingest-lecture | CTRW Seminar 2 녹음 → [[critical-thinking-in-real-world/ctrw-2]]
+
+- 소스: `Singapore Management University - Yong Pung How School of Law.m4a` (76분). 이 맥은 Intel이라 Metal 가속이 없어 whisper.cpp(ggml-small)를 572초 8조각·4병렬·greedy로 돌려 전사. 전사본은 `raw/ctrw/lectures/2026-08-24-ctrw-2-definitions-transcript.txt`.
+- **전사 결손 명시**: 76분에서 4,913단어(정상 강의의 절반 수준). 0–9분과 57–66분이 거의 비었고 조각 이음새 7곳에서 단어 유실 → 노트 상단 `[!warning]`에 기록. 추측으로 메우지 않음. 오디오는 보존.
+- 수업 날짜 2026-08-24는 주간 주기(세미나 1=08-17, 3=08-31)에서 **추론한 값**임을 노트와 허브 양쪽에 명시.
+- 내용: 정의(definition) 편 — 정의가 필요한 세 상황(Emma/Gabby "evil" 논쟁) · definiendum/definiens · **정확성 + 정보성** 두 기준 · 비유/모호함(obscurity)/중의성/**순환성** · too broad/narrow · 정밀도의 대가(fetus) · ostensive · genus+difference(cat·whisky) · 필요·충분조건 · 목적에 따른 stipulation(슬리퍼 복장규정) · *Yes Minister* 클립.
+- **[[critical-thinking-in-real-world/ctrw-ch10-definitions]] 오류 교정**: 필요/충분조건 규칙이 뒤집혀 있었다("only sufficient → too broad; only necessary → too narrow"). 강의가 맞고 노트가 틀렸다 — 필요조건만 주면 **too broad**(rhombus는 사각형이다 → 정사각형·직사각형도 포함), 충분조건만 주면 **too narrow**(unclear=vague → ambiguous·obscure가 빠짐). 양쪽 노트에 교차 링크.
+- CTRW 허브 Seminars 표에 세션 순서대로 삽입(세미나 1 바로 뒤). 이로써 세미나 1→2→3 구멍이 메워짐.

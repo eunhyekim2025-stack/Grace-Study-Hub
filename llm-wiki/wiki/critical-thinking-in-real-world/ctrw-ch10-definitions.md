@@ -2,8 +2,15 @@
 title: "Ch10 — Definitions"
 tags: [critical-thinking-in-real-world, ctrw-textbook, definitions, ambiguity, vagueness, genus-species, precising-definition, stipulative-definition]
 sources: ["Mooney, Williams & Burik, An Introduction to Critical and Creative Thinking (McGraw-Hill, 2015) — Ch.10 Definitions", "Patra, CTRW Seminar 2 slides (2026) — Definitions: criteria, circularity, methods"]
-updated: 2026-08-24
+updated: 2026-09-14
 kind: 개념
+relations:
+  part-of: [critical-thinking-in-real-world/index]
+pagerank: 0.0037
+betweenness: 0.0006
+eigenvector: 0.0149
+degree: 10
+community: 6
 ---
 
 <div class="dc-view">
@@ -27,7 +34,7 @@ kind: 개념
 
 # Ch10 — Definitions
 
-> [[index|← Critical Thinking in Real World]] · Textbook Ch.10. To argue productively, parties must first **agree on the key terms** — otherwise they "talk past each other." Exercises **10.1–10.4** (private answer key held for feedback).
+> [[critical-thinking-in-real-world/index|← Critical Thinking in Real World]] · Textbook Ch.10. To argue productively, parties must first **agree on the key terms** — otherwise they "talk past each other." Exercises **10.1–10.4** (private answer key held for feedback).
 
 ---
 
@@ -69,7 +76,7 @@ Three top-level **approaches** — and the *descriptive* one has two techniques 
 |---|---|---|
 | **Ostensive** | point to an example — "*It's one of those*" | good for hard-to-verbalise terms (colours, "sepia"); but risks being read too broad/narrow, and useless in writing |
 | **Descriptive** · *genus, species & difference* | place the term as a **species** of a larger **genus**, then state the **difference** ("a cat is a *feline mammal* that is *unable to roar*") | the workhorse — pick a genus you know is too broad, then narrow in stages until neither too broad nor too narrow |
-| **Descriptive** · *necessary & sufficient conditions* | list the conditions that are individually **necessary** and jointly **sufficient** ("bachelor = unmarried **and** male **and** adult") | rigorous; ties directly to [[ctrw-ch05-forms-of-argument|Ch5]]. Only a *sufficient* condition → too broad; only a *necessary* one → too narrow |
+| **Descriptive** · *necessary & sufficient conditions* | list the conditions that are individually **necessary** and jointly **sufficient** ("bachelor = unmarried **and** male **and** adult") | rigorous; ties directly to [[ctrw-ch05-forms-of-argument|Ch5]]. Only a *necessary* condition → too **broad** (a rhombus "has four sides" lets in squares and rectangles); only a *sufficient* one → too **narrow** ("a definition is unclear if it is vague" shuts out the ambiguous and obscure ones) |
 | **Stipulative** | **assign** a meaning by decree rather than reporting existing usage ("for this policy, a *'senior'* means anyone ≥ 60") | you *set* the meaning, so it can't be "wrong" — but others need not accept it; keep it useful and non-misleading |
 
 > **Descriptive vs stipulative** is the key contrast: a *descriptive* definition tries to capture what a term is **consensually** understood to mean (and can be right or wrong); a *stipulative* one **lays down** a meaning for your own purposes.
@@ -89,9 +96,11 @@ Three top-level **approaches** — and the *descriptive* one has two techniques 
 - A good definition meets **six criteria** — clear, precise, not too broad/narrow, non-circular, not unfairly emotive.
 - **Ambiguity** = several meanings; **vagueness** = fuzzy borderline — fix vagueness with a **precising definition**, but don't over-precify into arbitrary/controversial claims.
 - Methods: **ostensive**, **descriptive** (genus+difference *or* necessary/sufficient conditions), and **stipulative** (lay down a meaning) — choose by audience, purpose, and what you're defining.
+- With necessary/sufficient conditions you need **both**: necessary-only runs **too broad**, sufficient-only **too narrow**.
 - Prefer **genus + difference** (narrow in stages); in a debate, refuse a **loaded or question-begging** definition and demand a neutral one.
 
 ## Related notes
+- [[ctrw-2]] — Seminar 2, where this chapter was taught (the *Yes Minister* clip, the slippers dress-code stipulation, and the correction to the necessary/sufficient rule)
 - [[ctrw-ch07-fallacies]] — equivocation, semantic slippery slope, begging the question, and unfairly emotive language all trace to definitions
 - [[ctrw-ch08-categorical-logic]] — genus/species is the backbone of categorical terms
 - [[ctrw-ch05-forms-of-argument]] — necessary & sufficient conditions
