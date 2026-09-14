@@ -456,3 +456,11 @@ community: 2
 - **자동화**: `api/_seminars.js` 신설(순수 문자열 헬퍼) + `api/add.js` 연결. 앞으로 사이트 녹음기로 저장하면 서버가 ① 생성된 `dc-title`을 제목에 붙이고 ② `dc-sub`을 Covers로 삼아 과목 허브 `## Seminars` 표에 행을 넣고 ③ 노트와 허브를 Git Trees API로 **한 커밋**에 올린다(재배포 1회). 허브가 없으면 섹션째 새로 만든다. 재저장 시 이미 등록돼 있으면 행을 넣지 않는다(멱등).
 - 허브 읽기/패치는 best-effort — 실패해도 노트는 기존 단일 파일 경로로 저장된다.
 - 부수 수정: `add.js`의 `aiMode` 미정의 참조(자동 정리 실패 시 500으로 죽던 경로), `_note.js`의 `SUBJECT_DIR`에 `sql → sql-concepts` 누락 추가.
+
+## [2026-09-14] enrich-notes | CTRW Lecture 4 슬라이드로 기존 노트 보강
+
+- 소스: `CTRW Lecture 4 Slides.pptx` (Sovan Patra, 44매). 새 노트를 만들지 않고 해당 내용을 이미 담고 있는 노트 4개를 보강.
+- [[critical-thinking-in-real-world/ctrw-ch04-diagramming-reasons-for-and-against]] 신규 4절: **확률 판정 테스트**(전제 `Pr(P|AS)<Pr(P)` · 결론 `Pr(C|AS)<Pr(C)` · 추론 `Pr(C|P+AS)<Pr(C|P)`, 앞의 둘은 맥락 밖·추론만 맥락 안) · **공격도 논증이다**(연역→sound / 귀납→cogent) · **공격에 적용되는 자비의 원칙 3규칙**(결론↔추론 모호하면 추론 / 규범적 결론이면 숨은 전제 / 어떻게 읽어도 실패하면 공격이 아님) · **deep diagramming**. 폴더 전체 grep으로 부재 확인 후 추가(`Prob(`·`dashed`·`deep diagram` 0건).
+- 중복 회피: reliability(cogency의 세 번째 조건)는 [[critical-thinking-in-real-world/ctrw-ch01-basic-concepts-of-reasoning]]·[[critical-thinking-in-real-world/ctrw-4-2]]에 이미 있어 추가하지 않음.
+- 전사 오류 교정 2건(슬라이드가 근거): [[critical-thinking-in-real-world/ctrw-4-2]] "Reductive"→**Deductive**, "Inductive (aka gorgeous)"→**Inductive → cogent**, "finish the AC"→"finish **JC**"; [[critical-thinking-in-real-world/4-1]] Albert 예시가 뒤집혀 있던 것("Albert is blind"는 결론이 아니라 전제 (1)을 공격) 교정. 두 건 모두 `> [!note] Transcript correction` 으로 표시.
+- [[critical-thinking-in-real-world/case-drug-legalisation-grayling]]에 세미나가 실제로 다이어그램하는 **8문장 재구성**(선언삼단논법 구조)과 **공격 드릴(슬라이드 13, 진술 9–15)** 표 추가. 슬라이드가 답을 주지 않는 문제라 `> [!uncertain]`로 "수업 확인 필요" 명시.

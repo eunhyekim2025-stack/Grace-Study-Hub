@@ -6,6 +6,7 @@ kind: 개념
 relations:
   part-of: [critical-thinking-in-real-world/index]
 created: 2026-09-07
+updated: 2026-09-14
 recording:
   - "recordings/critical-thinking-in-real-world/2026-09-07-ctrw-4-2/seg-000-Ln9YhljN194NYL8K3cjzx1it1lwC4L.webm"
   - "recordings/critical-thinking-in-real-world/2026-09-07-ctrw-4-2/seg-001-9NqoDMXTFiAZWtAGniqOs6bTiOtgdJ.webm"
@@ -74,18 +75,23 @@ recording:
 > [!warning] **Bad attack** – Replies that do not target any component (e.g., “you’re always late”) are weak and unproductive.
 
 ## 2. Types of attacks
-| Type | Goal | Success → |
-|------|------|-----------|
-| Reductive | Prove the attacked statement **must** be false | **Sound** attack |
-| Inductive (aka “gorgeous”) | Show it is **very likely** false | **Strong** attack (unsound if fails) |
+| Type | Goal | Succeeds → | Fails → |
+|------|------|-----------|---------|
+| **Deductive** | Prove the attacked statement **must** be false | **Sound** attack | unsound |
+| **Inductive** | Show it is **very likely** false | **Cogent** attack | uncogent |
 
-> [!info] **Intention rule** – Reductive: “Because the attacking statement is true, the attacked statement must be false.”  
-Inductive: “Because the attacking statement is true, it is very probable the attacked statement is false.”
+> [!info] **Intention rule** – Deductive: “Because the attacking statement is true, the attacked statement **must** be false.”  
+Inductive: “Because the attacking statement is true, it is **very probable** the attacked statement is false.”
+
+> [!note] Transcript correction
+> The recording rendered these as “reductive” and “gorgeous” — the slides say **deductive** and
+> **cogent**. An attack is an argument, so it takes the same two labels as any other argument
+> ([[ctrw-ch01-basic-concepts-of-reasoning|Ch1]]); see [[ctrw-ch04-diagramming-reasons-for-and-against#An attack is an argument|Ch4]].
 
 ## 3. Locating the target
 1. Identify **premises**, **inference**, **conclusion**.  
 2. If ambiguous, apply **charity**: assume the attack is on the inference (lower burden) unless context forces a conclusion‑attack.  
-3. Example of ambiguity: “Mona didn’t finish the AC” could attack the conclusion (Mona will go to university) or the inference (from Emma’s attendance).  
+3. Example of ambiguity: “Mona didn’t even finish **JC**” could attack the conclusion (Mona will go to university) or the inference (the two came from the same JC, so what holds for Emma holds for Mona). Charity picks the **inference** — it is the stronger attack.  
 
 ## 4. Evaluating the original argument (cogency)
 > [!info] **Cogent argument** – (1) true premises, (2) relatively strong inference, (3) **reliability** (no omitted weakening info).  

@@ -1,9 +1,16 @@
 ---
 title: "Real-World Case — 'Why a High Society Is a Free Society' (Grayling)"
 tags: [critical-thinking-in-real-world, argument-analysis, harm-principle, fallacies, op-ed]
-sources: ["A. C. Grayling, 'Why a high society is a free society', The Observer, 19 May 2002 — https://www.theguardian.com/observer/drugs/story/0,,718157,00.html"]
-updated: 2026-08-16
+sources: ["A. C. Grayling, 'Why a high society is a free society', The Observer, 19 May 2002 — https://www.theguardian.com/observer/drugs/story/0,,718157,00.html", "CTRW Lecture 4 Slides (Sovan Patra) — slides 12–13, the eight-statement reconstruction and the attack drill"]
+updated: 2026-09-14
 kind: 주장
+relations:
+  part-of: [critical-thinking-in-real-world/index]
+pagerank: 0.0066
+betweenness: 0.0148
+eigenvector: 0.0559
+degree: 13
+community: 6
 ---
 
 <div class="dc-view">
@@ -27,7 +34,7 @@ kind: 주장
 
 # Real-World Case — "Why a High Society Is a Free Society" (Grayling)
 
-> [[index|← Critical Thinking in Real World]] · **Source:** A. C. Grayling, *"Why a high society is a free society"*, The Observer, 19 May 2002. Grayling is a philosopher; the piece is a civil-liberties op-ed, not reportage.
+> [[critical-thinking-in-real-world/index|← Critical Thinking in Real World]] · **Source:** A. C. Grayling, *"Why a high society is a free society"*, The Observer, 19 May 2002. Grayling is a philosopher; the piece is a civil-liberties op-ed, not reportage.
 
 ---
 
@@ -84,6 +91,55 @@ Notice the shape: **P1 supplies the value standard**, P2–P3 apply it by consis
 
 ---
 
+## Seminar 4's version — the reconstruction the class actually diagrams
+
+The reconstruction above follows the op-ed's own order. Seminar 4 uses a **tighter eight-statement
+version**, and it is the one to know, because the exercise asks you to aim attacks at *numbered*
+components:
+
+| # | Statement | Role |
+|---|---|---|
+| (1) | Currently legal and currently illegal drugs (nicotine, ganja) are used for the same purposes and pose similar health risks | supports (2) |
+| (2) | There is **no important difference** between currently legal and currently illegal drugs | premise |
+| (3) | If there is no important difference, they should be treated identically in law | premise |
+| (4) | **Either** legalise the currently illegal drugs **or** criminalise the currently legal ones | from (2) + (3) |
+| (5) | In a liberal society we should not police private behaviour unless it damages the social fabric or harms unwilling third parties | premise (*the harm principle*) |
+| (6) | Use of currently legal drugs does not damage the social fabric or harm unwilling third parties | premise |
+| (7) | We should not (in a liberal society) criminalise the currently legal drugs | from (5) + (6) |
+| **(8)** | **∴ We should legalise the currently illegal drugs** | conclusion, from (4) + (7) |
+
+The shape is a **disjunctive syllogism**: (4) offers two options, (7) eliminates one, (8) is what is
+left. That is why (4) is the load-bearing step — see the *false dilemma* probe in Step 3 above.
+
+### The attack drill (slide 13) — what does each objection hit?
+
+> [!example] "However, Grayling…"
+> Each numbered objection below is aimed at a *specific* component. Test each with
+> [[ctrw-ch04-diagramming-reasons-for-and-against#Which target is under attack? — the probability test|the probability test]]:
+> does it lower the target's likelihood on its own, or only drain the support the premises give?
+
+| Objection | Most charitable target | Why |
+|---|---|---|
+| (9) Parking on a double yellow line harms no one, yet is rightly criminalised | **premise (5)** | A counterexample to the harm principle as stated: here is lawful coercion with no social-fabric damage and no unwilling third party |
+| (10) Second-hand smoke is a significant health hazard | **premise (6)** | Directly denies that a *currently legal* drug leaves third parties unharmed |
+| (11) Unlike nicotine, ecstasy damages nerve cells | **premise (1)**, hence (2) | Denies the "similar health risks" parity that (2) rests on — a **disanalogy** objection |
+| (12) Legalising ecstasy triggers a conservative backlash and loses the election **∴** (13) we should not legalise ecstasy | **the conclusion (8)** | A two-step attack: (12) *supports* (13), and (13) contradicts (8). Note it grants every premise and argues from a different value entirely |
+| (14) Why must all societies be liberal? | **premise (5)** | Attacks the antecedent of the harm principle, not its content — if a society need not be liberal, (5) does not bind it |
+| (15) Even liberal societies now criminalise not wearing a mask | **fails as an attack on (5)** | Not wearing a mask in a pandemic *does* harm unwilling third parties, so the example is consistent with (5). By [[ctrw-ch04-diagramming-reasons-for-and-against#Charity applies to attacks too|charity rule 3]], a would-be attack that fails on every reading is better treated as a separate observation than forced into the diagram |
+
+> [!tip] Two lessons the drill is really teaching
+> **(a)** An attack can be *supported* — (12)→(13) is an argument inside the attack, so the dashed
+> arrow into (8) has a solid arrow feeding it. **(b)** Attacks on (5) and (6) are far more damaging
+> than attacks on (1): (5) and (6) carry the whole right-hand branch, whereas (1) is one step of
+> support for (2). **Where an objection lands matters more than how clever it is.**
+
+> [!uncertain] These are worked answers, not the marked key
+> The slide poses this as an open question. The targets above are the most charitable readings; (14)
+> and (15) in particular are argued over in class. Check them against what was said before relying
+> on them.
+
+---
+
 ## Step 4 — Steelman both sides, then judge
 
 - **Steelman Grayling (charity first):** apply *one* principle consistently; use real history rather than assertion; honestly separate his own distaste from the argument; target the genuinely large harm of a criminalised black market. This is a *good* argument, not a lazy one.
@@ -118,5 +174,5 @@ Every step above generalises to **any** real-world op-ed, ad, policy memo, or vi
 
 ## Related notes
 
-- [[index|Critical Thinking in Real World — hub]] — the course's other real-world specimens
+- [[critical-thinking-in-real-world/index|Critical Thinking in Real World — hub]] — the course's other real-world specimens
 - [[law-concepts/ch06-negligence/negligence|Law · Negligence]] — the "harm to third parties" / duty-of-care line P1 leans on has a precise legal analogue
