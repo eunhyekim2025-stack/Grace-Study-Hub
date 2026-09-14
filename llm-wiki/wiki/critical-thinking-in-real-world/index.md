@@ -26,6 +26,7 @@ community: 6
 | [[critical-thinking-in-real-world/4-1\|4-1 — Argument‑Attack Analysis]] | 2026-09-07 | How to dissect, evaluate, and counter arguments |
 | [[critical-thinking-in-real-world/ctrw-4-2\|CTRW 4-2]] | 2026-09-07 | Attacks, cogency & diagramming in argument analysis |
 | [[critical-thinking-in-real-world/ctrw-5-1\|CTRW 5-1]] | 2026-09-14 |  |
+| [[critical-thinking-in-real-world/ctrw-5-2\|CTRW 5-2]] | 2026-09-14 | Core conditional inference rules & validity |
 
 ## Textbook — chapter notes
 > Mooney, Williams & Burik, *An Introduction to Critical and Creative Thinking* (McGraw-Hill, 2015). One note per chapter — concepts, procedures and worked mini-examples. Exercises are in the textbook; the answer key is held privately for feedback (solve them, then send your work).
