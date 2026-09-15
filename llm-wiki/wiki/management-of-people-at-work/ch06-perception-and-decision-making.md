@@ -1,10 +1,17 @@
 ---
 title: "Ch 6 — Perception and Individual Decision Making"
-tags: [management-of-people-at-work, mpw, textbook, chapter-6, perception, attribution, bias, decision-making, bounded-rationality, ethics, creativity]
-sources: ["Robbins & Judge, Organizational Behavior (Pearson) — Chapter 6, pp. 202–230"]
+tags: [management-of-people-at-work, mpw, textbook, chapter-6, perception, attribution, bias, decision-making, bounded-rationality, ethics, creativity, selection-bias, tight-coupling, premortem, nudging, psychological-safety]
+sources: ["Robbins & Judge, Organizational Behavior (Pearson) — Chapter 6, pp. 202–230", "OBHR101 Session 4 lecture slides — Perception, Attribution and Decision Making (SMU MPW), merged 2026-09-11"]
 created: 2026-08-28
-updated: 2026-08-28
+updated: 2026-09-11
 kind: 교재
+relations:
+  part-of: [management-of-people-at-work/index]
+pagerank: 0.0036
+betweenness: 0.0007
+eigenvector: 0.0026
+degree: 13
+community: 0
 ---
 
 <div class="dc-view">
@@ -181,7 +188,7 @@ Intuition is not inherently bad and does not always contradict rational analysis
 | **Confirmation bias** | Seeking information that reaffirms past choices, discounting what contradicts | A supervisor who sees you as unreliable notices your unreliability and not your reliability. Social media is an **echo chamber**, and ad algorithms profit by targeting people already inclined to believe. Walt Whitman's corrective: *"Listen to all sides and filter them from yourself"* |
 | **Availability bias** | Judging on readily available information — vivid, emotional or recent | Explains why appraisals overweight **recent** behaviour over that of six to nine months earlier. Also why long-tenured employees discount newer employees' experiences as "easier" — their own hard times are more salient |
 | **Escalation of commitment** *(sunk cost effect)* | Staying with a decision despite clear evidence it is wrong | Most likely when we see ourselves as responsible for the outcome or believe we will eventually succeed — **and it happens whether we chose the course or were assigned it**. Shared decision authority raises escalation. In entrepreneurial teams, **hope of attaining the goal trumps fear of failure** |
-| **Randomness error** | Believing we can predict the outcome of random events | Superstitions, either contrived ("never decide on Friday the 13th") or reinforced (Tiger Woods' red Sunday shirt). Stress reduces the sense of control, so people reach for rituals to regain it |
+| **Randomness error** | Believing we can predict the outcome of random events | Superstitions, either contrived ("never decide on Friday the 13th") or reinforced (Tiger Woods' red Sunday shirt). Stress reduces the sense of control, so people reach for rituals to regain it. A close cousin is the **illusion of control** — believing you influence a purely random outcome (in a classic study people felt they "controlled" a light that switched on and off at random, even after being told it might be unconnected) |
 | **Risk aversion** | Preferring a sure moderate gain over a riskier outcome with a higher expected payoff | Most people prefer a certain \$50 to a coin flip for \$100 — sometimes even to a flip for \$200. **Framing flips it**: positive framing (a gain of \$50) makes people risk-averse; negative framing (a loss of \$50) makes them risk-seeking. Kahneman's Nobel-winning finding. CEOs at risk of termination become **exceptionally risk averse** even when riskier strategy serves the firm |
 | **Hindsight bias** | Believing falsely, after the outcome is known, that we would have predicted it | Malcolm Gladwell: *"What is clear in hindsight is rarely clear before the fact."* |
 | **Outcome bias** | Judging decision **quality** by the desirability or believability of the **outcome** | Sales managers who fixate on increased sales may miss how it was achieved (fudged numbers, high-pressure tactics). It also lets people dismiss inconvenient evidence as "fake news." Salespeople exploit it deliberately: *"Imagine a life free of back pain"* |
@@ -189,6 +196,9 @@ Intuition is not inherently bad and does not always contradict rational analysis
 **Countermeasures.** Four suggestions from the chapter: **focus on goals** (without them you cannot know which information is relevant); **look for information that disconfirms your beliefs**; **do not create meaning out of random events**; **increase your options** (your final choice can be no better than the best option in the set you considered).
 
 Three practical additions: reflect and **reframe** the problem in different ways; train in **structured decision approaches** to rely less on fast heuristics; **set explicit standards** for decisions. Newer research locates all biases in **focusing on the most salient information and insensitivity to alternatives** — so genuinely considering non-salient options is the general antidote.
+
+> [!warning] A tenth the course stresses — selection & survivorship bias
+> **Selection bias** is error from analysing a **non-random** slice of the data — a subset systematically excluded from the sample. Its most famous form is **survivorship bias**: in WW2 the RAF wanted to armour the bullet-hole-covered areas of *returning* planes, until statistician **Abraham Wald** pointed out they were only looking at planes that *came back* — the armour belonged where the survivors were **unhit**, because hits there downed the planes that never returned. The same trap sank the **Challenger** (and the classroom "Carter Racing" case): estimate a blown-engine probability only from races that *had* gasket failures and you hide the temperatures of the races that did **not**, so the true failure rate at 40°F (≈99%) stays invisible until you **ask for the missing data**. Before trusting a number, ask *what is excluded from this sample?*
 
 ---
 
@@ -218,6 +228,29 @@ Three practical additions: reflect and **reframe** the problem in different ways
 
 > [!warning] Crisis makes all of this worse
 > During COVID-19 decision makers faced unprecedented uncertainty with rapidly incoming information — no template and no time to consider carefully. Crisis decisions are **more emotionally charged and more intuitive**, and biases distort systematically: expert credit-rating agencies issue more pessimistic ratings during crises **even when the target's creditworthiness is unaffected**. Perceptions of **justice** matter especially then, shaping both employee attitudes and customer reactions.
+
+---
+
+## Better decisions in practice — the course lens
+
+Beyond the individual biases above, the course diagnoses where a decision breaks down on **three levels**, and insists the fix be a **specific procedure**, never "just be less biased."
+
+| Level | What goes wrong | A concrete fix |
+|---|---|---|
+| **Individual** | Overconfidence, sunk-cost/escalation, illusion of control | Feedback and **training** on one's own biases; decision checklists and explicit standards |
+| **Group** | **Power distance** lowers **psychological safety** — juniors ask fewer questions and withhold dissent (power distance even predicted death rates across 4,000+ Himalayan expeditions; AIG's Joseph Cassano "bullied people who doubted him" into a \$99B loss); low team familiarity | **Have the powerless speak first**, and build **transactive memory** by training as an intact team ([[ch10-understanding-work-teams|Ch 10]]) |
+| **System** | Organizations are **complex systems** with **tight coupling** — closely linked parts where one breakdown cascades. Coupling is tight under *time dependence* (a short window to act), *one dominant path* to the goal (no alternative — e.g. a single supplier), or *little slack* (everyone maxed out) | Map the likely chain reactions and **plan contingencies in advance** |
+
+**The debiasing toolkit.** Three families of remedy the course names:
+
+- **Incentives** — people act in self-interest and are cognitively lazy, so rewards (money, recognition, and especially **accountability**) prompt more deliberate decisions. Small accuracy incentives cut partisan bias in judging news headlines by ~30%.
+- **Nudging** (Richard Thaler) — change how choices are *presented* to elicit better ones without removing options: **framing** (a food traffic-light scheme cut unhealthy picks), **changing defaults**, and **commitment devices** (auto-enrol savings, blocking distracting sites, "finish the goal or pay").
+- **Training** — feedback and practice (even instructional videos or games) reduce a person's biases over time.
+
+> [!tip] The premortem
+> The strongest system-level habit: **assume the decision has already failed, and work backwards to explain why** — a *premortem*. It surfaces the tight-coupling and blind-spot risks a hopeful team never raises, while there is still time to design in contingencies. The procedure: **identify the influencing factors → map their chain reactions → build in contingencies.**
+
+> The full lecture treatment — the "Carter Racing" expected-value exercise, the Challenger case, and the worked individual/group/system diagnostics — lives in the session notes [[management-of-people-at-work/mpw-4-1|MPW 4-1]] and [[management-of-people-at-work/mpw-4-2|MPW 4-2]].
 
 ---
 
