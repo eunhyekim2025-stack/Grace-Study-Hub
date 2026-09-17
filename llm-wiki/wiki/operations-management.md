@@ -41,6 +41,7 @@ community: 5
 | [[ops-concepts/oms-4-1\|OMS 4-1 — Line Balancing (OMS #4-1)]] | 2026-09-10 | Distribute tasks to workstations within target cycle time |
 | [[ops-concepts/ops-4-2\|OPS 4-2]] | 2026-09-10 | Key concepts: flow‑rate calculation, steady‑state inventory, bottleneck identification, workstation coordination |
 | [[ops-concepts/waiting-lint-management\|Waiting Lint Management]] | 2026-09-10 | Balancing variability, capacity, and inventory to minimize queues |
+| [[ops-concepts/ops-5-1\|OPS 5-1]] | 2026-09-17 | Queueing basics, variability, and staffing levers |
 
 ## Sources (raw/ops/)
 | Source | Description |
