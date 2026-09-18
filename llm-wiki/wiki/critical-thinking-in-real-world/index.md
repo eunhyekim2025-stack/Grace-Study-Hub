@@ -59,3 +59,4 @@ community: 6
 > Auto-generated quizzes built from this subject's notes (via the site's Build-quiz button). New ones are added here automatically.
 
 - [[critical-thinking-in-real-world/critical-thinking-in-real-world-quiz-2609110356|Critical Thinking in Real World — Quiz (Medium, 5 Q)]]
+- [[critical-thinking-in-real-world/critical-thinking-in-real-world-quiz-2609181111|Critical Thinking in Real World — Quiz (Hard, multiple choice, 21 Q)]]
