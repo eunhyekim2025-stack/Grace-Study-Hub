@@ -115,7 +115,7 @@ export const sharedPageComponents: SharedLayout = {
   ],
   // In-page "add content" modal, rendered once per page (hidden until opened
   // from the top-bar buttons).
-  afterBody: [Component.AddContentModal(), Component.TagFilter()],
+  afterBody: [Component.AddContentModal(), Component.TagFilter(), Component.QuizRunner()],
   footer: Component.Footer({
     links: {
       GitHub: "https://github.com/jackyzha0/quartz",

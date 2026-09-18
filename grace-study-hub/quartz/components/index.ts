@@ -26,6 +26,7 @@ import ConditionalRender from "./ConditionalRender"
 import SubjectNav from "./SubjectNav"
 import TopActions from "./TopActions"
 import AddContentModal from "./AddContentModal"
+import QuizRunner from "./QuizRunner"
 import Dashboard from "./Dashboard"
 import SubjectAutoBar from "./SubjectAutoBar"
 import NoteViewToggle from "./NoteViewToggle"
@@ -65,6 +66,7 @@ export {
   SubjectNav,
   TopActions,
   AddContentModal,
+  QuizRunner,
   Dashboard,
   SubjectAutoBar,
   NoteViewToggle,

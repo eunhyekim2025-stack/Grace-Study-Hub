@@ -2643,6 +2643,156 @@ table thead tr {
   }
 }
 
+// ── Interactive quiz runner (generated quiz notes) ─────────────────────────
+.sh-quiz {
+  margin: 1rem 0;
+}
+.sh-quiz-fallback {
+  color: var(--gray);
+  font-size: 0.9rem;
+}
+.sh-quiz-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: none;
+}
+.sh-quiz-q {
+  padding: 14px 16px;
+  margin: 0 0 12px;
+  border: 1px solid var(--lightgray);
+  border-radius: 12px;
+  background: var(--light);
+
+  &.correct {
+    border-color: color-mix(in srgb, #2e7d32 55%, var(--lightgray));
+    background: color-mix(in srgb, #2e7d32 7%, var(--light));
+  }
+  &.incorrect {
+    border-color: color-mix(in srgb, #c0392b 50%, var(--lightgray));
+    background: color-mix(in srgb, #c0392b 6%, var(--light));
+  }
+}
+.sh-quiz-qtext {
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+.sh-quiz-num {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--secondary) 15%, transparent);
+  color: var(--secondary);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.sh-quiz-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sh-quiz-opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 10px;
+  border: 1px solid var(--lightgray);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.92rem;
+
+  &:hover {
+    background: color-mix(in srgb, var(--secondary) 8%, transparent);
+  }
+  input {
+    margin: 3px 0 0;
+    flex: 0 0 auto;
+  }
+  &.is-correct {
+    border-color: #2e7d32;
+    background: color-mix(in srgb, #2e7d32 12%, transparent);
+    font-weight: 600;
+  }
+  &.is-picked:not(.is-correct) {
+    border-color: #c0392b;
+    background: color-mix(in srgb, #c0392b 10%, transparent);
+  }
+}
+.sh-quiz-text {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--lightgray);
+  border-radius: 8px;
+  background: var(--light);
+  color: var(--dark);
+  font: inherit;
+}
+.sh-quiz-reveal {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--lightgray);
+  font-size: 0.9rem;
+}
+.sh-quiz-ans {
+  margin-bottom: 4px;
+}
+.sh-quiz-exp {
+  color: var(--darkgray);
+}
+.sh-quiz-self {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: var(--darkgray);
+
+  button {
+    margin-left: 4px;
+    padding: 3px 10px;
+    border: 1px solid var(--lightgray);
+    border-radius: 999px;
+    background: var(--light);
+    cursor: pointer;
+    font-size: 0.82rem;
+
+    &.active {
+      border-color: var(--secondary);
+      background: color-mix(in srgb, var(--secondary) 15%, transparent);
+      font-weight: 700;
+    }
+  }
+}
+.sh-quiz-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.sh-quiz-grade,
+.sh-quiz-reset {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 8px;
+  background: var(--secondary);
+  color: var(--light);
+  font-weight: 700;
+  cursor: pointer;
+}
+.sh-quiz-reset {
+  background: transparent;
+  color: var(--secondary);
+  border: 1px solid var(--lightgray);
+}
+.sh-quiz-score {
+  font-size: 1rem;
+  color: var(--dark);
+
+  b {
+    color: var(--secondary);
+  }
+}
+
 // section tabs (Concepts / Cases / Statutes / Quizzes)
 .sh-subjtabs {
   display: flex;

@@ -359,10 +359,17 @@ async function genQuiz(label, notes, count, difficulty, apiKey, exemplars, opts 
         `follow the QUESTION TYPE above for structure. Facts come from the NOTES.\n\n` +
         `PAST EXERCISES/EXAMS:\n"""\n${exemplars.text}\n"""`
 
-  const wantStructured = hasEx || ["mcq", "truefalse", "mixed"].includes(qtype)
-  const schema = wantStructured
-    ? `{"questions": [{"type": "<mcq|truefalse|fill|short|scenario>", "q": "<question>", "options": ["A. …", "B. …"], "a": "<answer${explain ? " — for choice questions name the correct option and give a brief why" : ""}>"}, ...]}`
-    : `{"questions": [{"q": "<question>", "a": "<answer>"}, ...]}`
+  // Always structured + gradeable (the quiz is interactive): the correct option
+  // for mcq/true-false, plus a model answer and a short explanation.
+  const schema =
+    `{"questions": [{` +
+    `"type": "mcq|truefalse|fill|short|scenario", ` +
+    `"q": "the question", ` +
+    `"options": ["A. …", "B. …", "C. …", "D. …"], ` +
+    `"correct": "for mcq the correct option LETTER (e.g. \\"C\\"); for truefalse \\"True\\" or \\"False\\"; omit otherwise", ` +
+    `"answer": "the correct / model answer", ` +
+    `"explanation": "one or two sentences of why"` +
+    `}, ...]}`
   const prompt =
     `You are writing a revision quiz for a student studying "${label}", based ONLY on ` +
     `their own study notes below. Write everything in ENGLISH.\n\n` +
@@ -374,14 +381,15 @@ async function genQuiz(label, notes, count, difficulty, apiKey, exemplars, opts 
     `Cover a spread of topics rather than clustering on one. ${answerLine}` +
     formatBlock +
     `\n\nRespond with ONLY a JSON object: ${schema} with exactly ${count} items. ` +
-    (wantStructured ? `"options" is only for multiple-choice/true-false questions; omit it otherwise. ` : "") +
+    `"options" and "correct" are for multiple-choice and true/false only — omit them for other types. ` +
+    `Make multiple-choice options plausible (one clearly correct). ` +
     `No prose outside the JSON.\n\n` +
     `NOTES:\n"""\n${notes}\n"""`
   const raw = await groqChat(
     {
       messages: [{ role: "user", content: prompt }],
       response_format: { type: "json_object" },
-      max_tokens: Math.min(4000, 500 + count * 170),
+      max_tokens: Math.min(6000, 500 + count * 240),
       temperature: 0.5,
     },
     apiKey,
@@ -416,17 +424,35 @@ async function genQuiz(label, notes, count, difficulty, apiKey, exemplars, opts 
     focus ? `focus: ${focus}` : null,
   ].filter(Boolean)
   const meta = metaBits.length ? ` · ${metaBits.join(" · ")}` : ""
+  // Interactive payload — the site's quiz runner renders inputs, grades on
+  // submit, and only THEN reveals answers + explanations and the score. Answers
+  // are never shown in the static markdown.
+  const payload = {
+    difficulty: diffLabel,
+    explain,
+    questions: items.map((qa) => {
+      const hasOpts = Array.isArray(qa.options) && qa.options.length > 0
+      const type = String(
+        qa.type || (hasOpts ? "mcq" : "short"),
+      ).toLowerCase()
+      return {
+        type,
+        q: String(qa.q || ""),
+        options: hasOpts ? qa.options.map((o) => String(o)) : undefined,
+        correct: qa.correct != null && qa.correct !== "" ? String(qa.correct) : undefined,
+        answer: String(qa.answer || qa.a || ""),
+        explanation: explain ? String(qa.explanation || "") : "",
+      }
+    }),
+  }
+  const json = JSON.stringify(payload).replace(/</g, "\\u003c")
   const body =
-    `> [!info] Auto-generated ${diffLabel} quiz · ${items.length} questions${meta} · built from this subject's notes${exNote}.\n\n` +
-    items
-      .map((qa, i) => {
-        const opts =
-          Array.isArray(qa.options) && qa.options.length
-            ? "\n" + qa.options.map((o) => `- ${o}`).join("\n")
-            : ""
-        return `**Q${i + 1}. ${qa.q}**${opts}\n\n> ${qa.a}\n`
-      })
-      .join("\n")
+    `> [!info] Auto-generated ${diffLabel} quiz · ${items.length} questions${meta} · built from this subject's notes${exNote}. ` +
+    `Answer the questions, then press **Grade** to see your score and the answers.\n\n` +
+    `<div class="sh-quiz" data-sh-quiz>\n` +
+    `<script type="application/json" class="sh-quiz-data">${json}</script>\n` +
+    `<p class="sh-quiz-fallback">Enable JavaScript to take this quiz.</p>\n` +
+    `</div>\n`
   const title = `${label} — Quiz (${diffLabel}${qtype !== "auto" ? ", " + (TYPE_LABEL[qtype] || qtype) : ""}, ${items.length} Q)`
   return { title, tags: ["quiz", "auto-generated"], body }
 }
@@ -498,7 +524,10 @@ export default async function handler(req, res) {
   if (!prefixes.length) return res.status(400).json({ error: "Unknown subject — no note folder found." })
   let exemplars = { text: "", names: [] }
   if (kind === "quiz") exemplars = await gatherExemplars(prefixes, token)
-  const noteBudget = exemplars.text ? 9000 : MAX_INPUT_CHARS
+  // A big quiz needs a big JSON output; trim the notes we send so input+output
+  // stays under Groq's per-minute token ceiling.
+  let noteBudget = exemplars.text ? 9000 : MAX_INPUT_CHARS
+  if (kind === "quiz" && count >= 12) noteBudget = Math.min(noteBudget, 7000)
   const { text: notes, count: noteCount } = await gatherNotes(prefixes, token, noteBudget)
   if (!notes.trim() || noteCount === 0) {
     return res.status(400).json({ error: "This subject has no notes yet — add some notes first." })
