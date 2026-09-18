@@ -35,12 +35,21 @@ function qType(q: QItem): string {
   return String(q.type || (q.options && q.options.length ? "mcq" : "short")).toLowerCase()
 }
 
+// Quartz serialises the embedded JSON with HTML entities (&quot; etc.), and the
+// browser does NOT decode entities inside a <script> raw-text element, so
+// textContent still holds "&quot;" — decode it before JSON.parse.
+function decodeEntities(s: string): string {
+  const ta = document.createElement("textarea")
+  ta.innerHTML = s
+  return ta.value
+}
+
 function mountQuiz(root: HTMLElement) {
   if (root.dataset.shQuizReady === "1") return
   const dataEl = root.querySelector(".sh-quiz-data")
   let data: QData = {}
   try {
-    data = JSON.parse(dataEl?.textContent || "{}")
+    data = JSON.parse(decodeEntities(dataEl?.textContent || "{}"))
   } catch {
     return
   }
