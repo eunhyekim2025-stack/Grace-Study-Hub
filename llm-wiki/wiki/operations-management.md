@@ -48,3 +48,8 @@ community: 5
 | Source | Description |
 |--------|-------------|
 | OPIM 201 Sessions 1, 2, 3, 4, 6 | Process Choice & Little's Law · Process Analysis · Line Balancing · Waiting Line Management · Forecasting (Dr. Wee Kwan Eng) |
+
+## Quizzes
+> Auto-generated quizzes built from this subject's notes. New ones are added here automatically.
+
+- [[ops-concepts/operations-management-quiz-2609191552|Operations Management — Quiz (Medium, 11 Q)]]
