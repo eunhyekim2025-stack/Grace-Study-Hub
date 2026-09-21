@@ -1,7 +1,7 @@
 ---
 title: "CTRW 6 — Inductive Forms: Syllogism, Generalisation, Abduction"
-tags: [critical-thinking-in-real-world, ctrw-seminar, lecture, induction, statistical-syllogism, inductive-generalisation, abduction, sampling-bias, stereotype, llm]
-sources: ["CTRW Lecture 6 Slides (Sovan Patra, 36 slides) — inductive forms: statistical syllogism, inductive generalisation, abduction"]
+tags: [critical-thinking-in-real-world, ctrw-seminar, lecture, recording, induction, statistical-syllogism, inductive-generalisation, abduction, sampling-bias, standard-error, stereotype, llm]
+sources: ["CTRW Lecture 6 Slides (Sovan Patra, 36 slides) — inductive forms: statistical syllogism, inductive generalisation, abduction", "In-class recording — CTRW 6-1 (2026-09-21, in-site recorder / Groq transcript) — the quantitative mechanics merged in 2026-09-21"]
 created: 2026-09-21
 updated: 2026-09-21
 kind: 개념
@@ -27,7 +27,7 @@ relations:
 
 # CTRW 6 — Inductive Forms
 
-> [[critical-thinking-in-real-world/index|← Critical Thinking in Real World]] · Lecture 6 (slides). Textbook backing: **5.9.1–5.9.3** and **7.3.1–7.3.6**. The deductive counterpart is [[ctrw-5-1]] · [[ctrw-5-2]]; the reference chapter is [[ctrw-ch05-forms-of-argument|Ch5]].
+> [[critical-thinking-in-real-world/index|← Critical Thinking in Real World]] · Lecture 6 (slides + the 2026-09-21 in-class recording). Textbook backing: **5.9.1–5.9.3** and **7.3.1–7.3.6**. The deductive counterpart is [[ctrw-5-1]] · [[ctrw-5-2]]; the reference chapter is [[ctrw-ch05-forms-of-argument|Ch5]].
 
 > [!summary] Key takeaways
 > - An argument is **inductive** when the arguer wants the conclusion accepted as **highly likely, short of guaranteed**. Cogency needs a strong inference, true premises, **and reliability**.
@@ -43,6 +43,11 @@ relations:
 Lecture 5 took deductive arguments and asked whether the **form** made the inference valid. This
 lecture does the same job for induction: identify the **shape** an inductive argument takes, because
 the shape tells you exactly **what to test**.
+
+There is a deeper reason induction gets its own lecture. A valid **deductive** argument only makes
+explicit what its premises **already contain** — it re-arranges known information and never adds a
+**new fact about the world**. Everything we genuinely learn *empirically* arrives through
+**induction**, which is exactly why its faults have to be understood rather than avoided.
 
 > [!info] The standard being applied
 > An argument is **inductive** if the arguer intends the conclusion to be established with a
@@ -120,6 +125,17 @@ statistical syllogism.
 > - In research, standardised statistical technique fixes the size precisely, given a **desired
 >   strength** (e.g. 95%) and facts about the population (size, heterogeneity).
 
+> [!info] Why bigger samples help — the standard-error mechanics
+> The imprecision of a sample estimate is its **standard error**, roughly **SE ≈ σ/√N**. Because the
+> error falls with the **square root** of the sample size, there are **diminishing returns**: to
+> **halve** the error you must **quadruple N**. The **law of large numbers** is the limit of this —
+> as N grows the sample proportion converges on the true one.
+> For a *finite* population a **finite-population correction** applies, multiplying the SE by
+> **√[(N − n)/(N − 1)]**. This is why a sample of ~100 can pin down a city of 5,000 or a country of
+> 5,000,000 almost equally well: past a point the **absolute** sample size matters far more than the
+> **fraction** of the population it covers — and why the "≥ 10 %" rule of thumb only bites for *small*
+> populations.
+
 **2. Representativeness.** Attack the inference by saying *the sample was not representative*. Three
 named sources of bias:
 
@@ -128,6 +144,12 @@ named sources of bias:
 | **Environment bias** | the sample is drawn from a **specific environment** unrepresentative of the population |
 | **Self-selection bias** | the sample **chose itself**, but the population includes members who would never volunteer |
 | **Survivorship bias** | the population includes members that **did not survive**; the sample contains only survivors |
+
+Beyond how the sample is *drawn*, a generalisation can fail from **non-sampling error** — something
+unrelated to the sampling that makes the projection wrong anyway. The classic case: a perfectly
+representative pre-election poll **overtaken by an event or a policy change** between the survey and
+the vote. No sample design fixes that; it is a reminder that a strong IG only licenses a claim about
+**the population as it was sampled**.
 
 ### Bias and noise — two different sicknesses
 
