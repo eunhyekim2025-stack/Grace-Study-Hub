@@ -316,6 +316,49 @@ const fm = (title, tags, extra = "") =>
     .toISOString()
     .slice(0, 10)}\n---\n\n${extra}`
 
+// Second, corrective pass: hand the generated quiz back to the model to catch
+// the classic self-inflicted errors — an explanation that contradicts its own
+// marked answer, or a mislabelled fault (bad premise vs invalid inference).
+// It re-checks LOGIC/CONSISTENCY only (no notes re-sent, so it stays cheap and
+// TPM-safe). Best-effort: any failure returns the original questions unchanged.
+async function reviewQuiz(items, apiKey) {
+  if (!apiKey || !Array.isArray(items) || !items.length) return items
+  try {
+    const prompt =
+      `You are auditing a revision quiz for INTERNAL CONSISTENCY and logical correctness. ` +
+      `The quiz JSON is below. For EACH question:\n` +
+      `1) Ensure the "explanation" clearly justifies the marked "correct" option and does NOT ` +
+      `contradict it or argue for a different option — correct, answer and explanation must agree.\n` +
+      `2) Fix reasoning errors, especially: (a) calling a VALID argument with a bad premise "an ` +
+      `invalid inference" — such an argument fails on the PREMISE, not the inference; (b) reversing a ` +
+      `consistency / parity argument — it is strong when there is NO relevant difference between the ` +
+      `cases.\n` +
+      `3) Sharpen each explanation to say why the correct option is right, and where useful why the ` +
+      `most tempting distractor is wrong.\n` +
+      `Keep "q", "options" and "correct" the SAME unless the marked "correct" is logically wrong given ` +
+      `the options — then fix "correct" (and "answer") too. Keep the SAME number of questions.\n` +
+      `Return ONLY the corrected JSON, same shape: {"questions":[...]}. No prose.\n\n` +
+      `QUIZ:\n"""\n${JSON.stringify({ questions: items })}\n"""`
+    const raw = await groqChat(
+      {
+        messages: [{ role: "user", content: prompt }],
+        response_format: { type: "json_object" },
+        max_tokens: Math.min(6000, 600 + items.length * 240),
+        temperature: 0.2,
+      },
+      apiKey,
+    )
+    const parsed = JSON.parse(raw)
+    const out = Array.isArray(parsed) ? parsed : parsed.questions || parsed.quiz || []
+    // Only trust the review if it returned the same count (a real repair, not a
+    // truncation or a reshaped answer).
+    if (out.length === items.length) return out
+  } catch {
+    /* fall through — keep the original questions */
+  }
+  return items
+}
+
 async function genQuiz(label, notes, count, difficulty, apiKey, exemplars, opts = {}) {
   const guide = DIFFICULTY[difficulty] || DIFFICULTY.medium
   const hasEx = !!(exemplars && exemplars.text)
@@ -379,10 +422,14 @@ async function genQuiz(label, notes, count, difficulty, apiKey, exemplars, opts 
     focusLine +
     `\n\nBase every question on the notes — do not invent facts that are not supported by them. ` +
     `Cover a spread of topics rather than clustering on one. ${answerLine}` +
+    `\n\nQUALITY RULES for the answer and explanation (this is where quizzes usually go wrong):\n` +
+    `- The "explanation" must JUSTIFY the marked "correct" option. It must never contradict it or argue for a different option — the correct letter, the answer, and the explanation must all agree.\n` +
+    `- Ground the answer in the NOTES; check it is actually right before committing to it.\n` +
+    `- Reason precisely and name the fault correctly: a VALID argument form with a bad premise (e.g. an appeal to authority) fails on PREMISE ACCEPTABILITY, not on the inference; a consistency / parity argument is STRONG when there is NO relevant difference between the cases (and weak when a relevant difference exists).\n` +
+    `- For multiple-choice, make exactly one option clearly correct and the others plausible but wrong; the explanation should say WHY the correct option is right and, where it helps, why the most tempting distractor is wrong.\n` +
     formatBlock +
     `\n\nRespond with ONLY a JSON object: ${schema} with exactly ${count} items. ` +
     `"options" and "correct" are for multiple-choice and true/false only — omit them for other types. ` +
-    `Make multiple-choice options plausible (one clearly correct). ` +
     `No prose outside the JSON.\n\n` +
     `NOTES:\n"""\n${notes}\n"""`
   const raw = await groqChat(
@@ -402,6 +449,8 @@ async function genQuiz(label, notes, count, difficulty, apiKey, exemplars, opts 
     items = []
   }
   if (!items.length) throw Object.assign(new Error("The model returned no questions — try again."), { status: 502 })
+  // Corrective self-review (best-effort) — fixes answer/explanation contradictions.
+  items = await reviewQuiz(items, apiKey)
   const diffLabel = difficulty.charAt(0).toUpperCase() + difficulty.slice(1)
   const TYPE_LABEL = {
     mcq: "multiple choice",

@@ -1449,7 +1449,7 @@ async function runGenerate(
     return
   }
   btn.disabled = true
-  genStatus(kind === "quiz" ? "퀴즈 생성 중… (20~40초)" : "요약 생성 중… (20~40초)")
+  genStatus(kind === "quiz" ? "퀴즈 생성·검수 중… (30~60초)" : "요약 생성 중… (20~40초)")
   try {
     const res = await fetch("/api/generate", {
       method: "POST",
