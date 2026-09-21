@@ -2,8 +2,15 @@
 title: "Ch7 — Fallacies"
 tags: [critical-thinking-in-real-world, ctrw-textbook, fallacies, ad-hominem, straw-man, begging-the-question, false-dichotomy, weak-analogy]
 sources: ["Mooney, Williams & Burik, An Introduction to Critical and Creative Thinking (McGraw-Hill, 2015) — Ch.7 Fallacies"]
-updated: 2026-08-16
+updated: 2026-09-21
 kind: 개념
+relations:
+  part-of: [critical-thinking-in-real-world/index]
+pagerank: 0.0048
+betweenness: 0.0009
+eigenvector: 0.0160
+degree: 12
+community: 6
 ---
 
 <div class="dc-view">
@@ -28,7 +35,7 @@ kind: 개념
 
 # Ch7 — Fallacies
 
-> [[index|← Critical Thinking in Real World]] · Textbook Ch.7 (the longest). A field guide to bad reasoning. Exercises **7.1–7.3** (private answer key held for feedback — explaining *why* each is/ isn't fallacious matters as much as the label).
+> [[critical-thinking-in-real-world/index|← Critical Thinking in Real World]] · Textbook Ch.7 (the longest). A field guide to bad reasoning. Exercises **7.1–7.3** (private answer key held for feedback — explaining *why* each is/ isn't fallacious matters as much as the label).
 
 ---
 
@@ -58,6 +65,7 @@ The premises are relevant but **too thin** to make the conclusion likely.
 | **Hasty Generalisation — Biased Sample** | generalise from an **unrepresentative** sample | was sampling **random / uniformly distributed**? relate the method to what's studied |
 | **Hasty Generalisation — Small Sample** | generalise from **too few** cases (anecdote) | is *n* large enough for the population's homogeneity? anecdote supports only *modest* conclusions |
 | **Exception Proves the Rule** | "one exceptional case, so it's generally so" (the parachute survivor; the 93-year-old smoker) | a sub-case of Small Sample — one exception ≠ the general rule |
+
 | **Appeal to Unqualified Authority** (*ad verecundiam*) | "expert/celebrity says X, so X" | is the source a **genuine, on-topic, unbiased** authority? (a basketball star on cologne is neither) |
 | **Post Hoc** (*after this, so because of this*) | "B happened just after A, so A caused B" | mere temporal order isn't causation (the crow and the fall) |
 | **Cum Hoc** (*with this, so because of this*) | "A correlates with B, so A causes B" | correlation ≠ cause; could be coincidence or a third factor |
@@ -96,8 +104,30 @@ An assumption you're **not entitled to** is taken for granted.
 - **Context can redeem the "move"** — relevant character, relevant pity (to punishment), reliable absence-of-evidence, causal feedback (not circular), genuine dichotomy.
 - To flag a fallacy, **name it *and* explain why it fails here** — the explanation is the real work.
 
+## Small sample vs biased sample — noise vs bias
+
+The two hasty-generalisation rows above look like degrees of the same fault. They are not, and the
+difference decides what would fix them:
+
+| | The estimate is… | Cure |
+|---|---|---|
+| **Small sample** | **noisy** — imprecise, right on average but far off on any given draw | **more data** |
+| **Biased sample** | **biased** — systematically off in one direction | **more data changes nothing**; you must fix the sampling |
+
+Three named ways a sample stops being representative: **environment bias** (drawn from an
+unrepresentative setting), **self-selection bias** (the sample chose itself), **survivorship bias**
+(the non-survivors are missing from the sample but present in the population — the reason the
+parachute-survivor row above is so seductive).
+
+> [!important] Prejudice is a fallacy, not merely a discourtesy
+> A hasty generalisation or an uncogent statistical syllogism about a group produces an
+> **unestablished stereotype** — and **any unestablished stereotype is a prejudice**. Complimentary
+> ones ("good with computers") have exactly the same structure as insulting ones. Worked through in
+> [[ctrw-6-inductive-forms]], which also applies it to large language models.
+
 ## Related notes
-- [[ctrw-ch05-forms-of-argument]] — the *formal* fallacies (Denying the Antecedent, Affirming the Consequent) and the four inductive forms these weaken
+- [[ctrw-ch05-forms-of-argument]] — the *formal* fallacies (Denying the Antecedent, Affirming the Consequent) and the five inductive forms these weaken
+- [[ctrw-6-inductive-forms]] — Lecture 6: where these sampling failures come from, and abduction
 - [[ctrw-ch03-evaluating-arguments]] — non sequitur / biased sample as failures of *support*
 - [[ctrw-ch10-definitions]] — equivocation and semantic slippery slope trace back to unclear definitions
 - [[case-drug-legalisation-grayling]] — a real op-ed tested for false dilemma, weak analogy, and vague authority

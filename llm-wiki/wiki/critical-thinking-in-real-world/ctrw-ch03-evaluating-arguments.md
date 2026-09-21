@@ -2,8 +2,15 @@
 title: "Ch3 — Evaluating Arguments"
 tags: [critical-thinking-in-real-world, ctrw-textbook, evaluation, truth, strength-of-support, deep-assumptions, statistical-syllogism]
 sources: ["Mooney, Williams & Burik, An Introduction to Critical and Creative Thinking (McGraw-Hill, 2015) — Ch.3 Evaluating Arguments"]
-updated: 2026-08-16
+updated: 2026-09-21
 kind: 개념
+relations:
+  part-of: [critical-thinking-in-real-world/index]
+pagerank: 0.0047
+betweenness: 0.0001
+eigenvector: 0.0157
+degree: 12
+community: 6
 ---
 
 <div class="dc-view">
@@ -27,7 +34,7 @@ kind: 개념
 
 # Ch3 — Evaluating Arguments
 
-> [[index|← Critical Thinking in Real World]] · Textbook Ch.3. Takes the map from [[ctrw-ch02-diagramming-reasoning|Ch2]] and judges it. Exercises **3.1–3.4** (private answer key held for feedback).
+> [[critical-thinking-in-real-world/index|← Critical Thinking in Real World]] · Textbook Ch.3. Takes the map from [[ctrw-ch02-diagramming-reasoning|Ch2]] and judges it. Exercises **3.1–3.4** (private answer key held for feedback).
 
 ---
 
@@ -75,7 +82,7 @@ Strength runs from **no support → valid**, judged *as if the reasons were true
 - Validity is also **required for proof** and lets you **establish what's possible/impossible**.
 
 ### Two clean inductive forms (measurable-ish)
-- **Statistical syllogism:** *n% of Fs are Gs; X is an F; so X is a G.* Strength tracks *n* (n = 100 → valid; n = 0 → no support).
+- **Statistical syllogism:** *n% of Fs are Gs; X is an F; so X is a G.* Strength tracks *n* (n = 100 → valid; n = 0 → no support). Strength also tracks the **narrowness of the reference class F** — if X belongs to a narrower class whose frequency points the other way, that syllogism wins (the **reference-class problem**, [[ctrw-6-inductive-forms]]).
 - **Inductive generalisation:** *n% of a representative sample of S is F; so ≈ n% of S is F.* Needs a **random, large-enough, unbiased** sample; carries a **margin of error** ("probably about"). Vaguer than a statistical syllogism — and *more precise conclusions are actually weaker* (see [[ctrw-ch07-fallacies|Ch7]] small/biased sample).
 
 ### Problems with the percentage heuristic
@@ -94,4 +101,5 @@ A **valid** argument can have **false premises and even a false conclusion** —
 - [[ctrw-ch02-diagramming-reasoning]] — build the map this chapter evaluates
 - [[ctrw-ch04-diagramming-reasons-for-and-against]] — evaluate by diagramming objections
 - [[ctrw-ch07-fallacies]] — named failures of support (non sequitur, biased sample…)
+- [[ctrw-6-inductive-forms]] — the inductive forms in full, and what attacks each one
 - [[case-drug-legalisation-grayling]] — the "deep assumptions" move applied to a real op-ed

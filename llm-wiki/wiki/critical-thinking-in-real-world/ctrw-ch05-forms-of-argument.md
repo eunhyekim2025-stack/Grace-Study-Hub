@@ -2,8 +2,15 @@
 title: "Ch5 — Forms of Argument"
 tags: [critical-thinking-in-real-world, ctrw-textbook, categorical-syllogism, propositional-logic, modus-ponens, necessary-sufficient, valid-forms]
 sources: ["Mooney, Williams & Burik, An Introduction to Critical and Creative Thinking (McGraw-Hill, 2015) — Ch.5 Forms of Argument"]
-updated: 2026-08-16
+updated: 2026-09-21
 kind: 개념
+relations:
+  part-of: [critical-thinking-in-real-world/index]
+pagerank: 0.0063
+betweenness: 0.0002
+eigenvector: 0.0148
+degree: 15
+community: 6
 ---
 
 <div class="dc-view">
@@ -28,7 +35,7 @@ kind: 개념
 
 # Ch5 — Forms of Argument
 
-> [[index|← Critical Thinking in Real World]] · Textbook Ch.5. The reference chapter for [[ctrw-ch01-basic-concepts-of-reasoning|validity]]. Full rigour comes in [[ctrw-ch08-categorical-logic|Ch8]] (Venn) and [[ctrw-ch09-propositional-logic|Ch9]] (truth tables). Exercises **5.1–5.2** (private answer key held for feedback).
+> [[critical-thinking-in-real-world/index|← Critical Thinking in Real World]] · Textbook Ch.5. The reference chapter for [[ctrw-ch01-basic-concepts-of-reasoning|validity]]. Full rigour comes in [[ctrw-ch08-categorical-logic|Ch8]] (Venn) and [[ctrw-ch09-propositional-logic|Ch9]] (truth tables). Exercises **5.1–5.2** (private answer key held for feedback).
 
 ---
 
@@ -103,25 +110,41 @@ Validity here depends on **operators** joining propositions: *not* (negation), *
 - **Sufficient ≠ necessary** and vice versa: being a man is *necessary* but not *sufficient* for being a bachelor; having wings is *neither* necessary nor sufficient for flight.
 - **The trap:** treating a *necessary* condition as if it were *sufficient*. "Jack apologised only if Tom did; Tom apologised; so Jack did" — invalid, because Tom's apology is only necessary, not sufficient. Structurally this is **affirming the consequent** ([AC], #12).
 
-## Four common inductive forms
+## Five common inductive forms
 
 | Form | Shape | What makes it strong |
 |---|---|---|
-| **Statistical syllogism** | *n% of Fs are Gs; X is an F; so probably X is a G* | high *n*; reliable (no known info about X that lowers the odds). n=100 → deductively valid |
+| **Statistical syllogism** | *n% of Fs are Gs; X is an F; so probably X is a G* | high *n*; a **narrow reference class**; reliable (no known info about X that lowers the odds). n=100 → deductively valid |
 | **Inductive generalisation** | *n% of a sample of S is F; so ≈ n% of S is F* | sample **unbiased + large enough**; note the "**about**" (margin of error) — vaguer conclusions are *stronger* |
+| **Abduction** | *O is observed; of E₁…Eₙ, E₁ best explains O; so E₁ is true* | E₁ really is the **best** explanation — the only form here **not** justified by a frequency |
 | **Argument from (inductive) analogy** | *X has a,b,c,z; Y has a,b,c; so probably Y has z* | shared properties are **relevant** and numerous |
 | **Argument from authority** | *Authority A says P; so probably P* | A is a **genuine, relevant, unbiased** expert |
 
 (What makes analogies and authority *reliable* — and their failure modes — is [[ctrw-ch07-fallacies|Ch7]].)
+
+> [!important] The two directions, and the two questions that attack them
+> A **statistical syllogism** runs population → member; an **inductive generalisation** runs sample →
+> population. They fail differently, so they are attacked differently:
+> - Against an **SS**: name a **narrower reference class** the member also belongs to whose frequency
+>   runs the other way. *(Most smokers die before 60 · Sovan smokes — against — most philosophers live
+>   till 90 · Sovan is a philosopher. The narrower class wins.)* This is the **reference-class problem**.
+> - Against an **IG**: the sample was **too small** (a *noisy* estimate) or **unrepresentative** (a
+>   *biased* one) — environment, self-selection or survivorship bias. Both make it **hasty**.
+>
+> **Abduction takes neither attack**, because no frequency is doing the work. You attack it by
+> producing a **better explanation**. Worked in full, with the Holmes case and the LLM application:
+> [[ctrw-6-inductive-forms]].
 
 ## Key takeaways
 - **Categorical** = classes (A/E/I/O; S/P/M); five valid templates; "some" = "at least one."
 - **Propositional** = operators; know **MP, MT, HS, DS, DM** (valid) vs **DA, AC, FD, FT** (the fallacies) cold.
 - **"if" = sufficient, "only if" = necessary** — confusing them is the affirming-the-consequent trap.
 - A valid **form** gives validity for free; **soundness still needs true premises**, which no form supplies.
+- The **inductive** forms divide by what justifies them: frequency (syllogism, generalisation) vs **explanatory fit** (abduction).
 
 ## Related notes
 - [[ctrw-ch01-basic-concepts-of-reasoning]] — validity, soundness, counterexamples
 - [[ctrw-ch08-categorical-logic]] — the Venn-diagram decision procedure for syllogisms
 - [[ctrw-ch09-propositional-logic]] — truth tables that decide *any* propositional argument
 - [[ctrw-ch07-fallacies]] — DA/AC and the inductive-form failure modes as named fallacies
+- [[ctrw-6-inductive-forms]] — Lecture 6: the three inductive forms in full, with sampling bias, prejudice, and abduction

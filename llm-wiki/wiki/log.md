@@ -473,3 +473,14 @@ community: 2
 - 내용: 정의(definition) 편 — 정의가 필요한 세 상황(Emma/Gabby "evil" 논쟁) · definiendum/definiens · **정확성 + 정보성** 두 기준 · 비유/모호함(obscurity)/중의성/**순환성** · too broad/narrow · 정밀도의 대가(fetus) · ostensive · genus+difference(cat·whisky) · 필요·충분조건 · 목적에 따른 stipulation(슬리퍼 복장규정) · *Yes Minister* 클립.
 - **[[critical-thinking-in-real-world/ctrw-ch10-definitions]] 오류 교정**: 필요/충분조건 규칙이 뒤집혀 있었다("only sufficient → too broad; only necessary → too narrow"). 강의가 맞고 노트가 틀렸다 — 필요조건만 주면 **too broad**(rhombus는 사각형이다 → 정사각형·직사각형도 포함), 충분조건만 주면 **too narrow**(unclear=vague → ambiguous·obscure가 빠짐). 양쪽 노트에 교차 링크.
 - CTRW 허브 Seminars 표에 세션 순서대로 삽입(세미나 1 바로 뒤). 이로써 세미나 1→2→3 구멍이 메워짐.
+
+## [2026-09-21] ingest + enrich-notes | CTRW Lecture 6 (Inductive Forms)
+
+- 소스: `CTRW Lecture 6 Slides.pptx` (Sovan Patra, 36매). 신규 노트 [[critical-thinking-in-real-world/ctrw-6-inductive-forms]] 생성 — **녹음 없음, 슬라이드만**이라 노트와 허브 양쪽에 명시.
+- 폴더 grep으로 부재 확인 후 신규 수록: **abduction**(0건) · **reference class / 참조집합 문제**(0건) · environment·self-selection·**survivorship** bias(0건) · **bias vs noise**(estimator/estimand, 젤리빈 연습)(0건) · 표본 크기 기준·law of large numbers(0건) · **prejudice = 미확립 스테레오타입**(0건) · LLM을 귀납 일반화 기계로 읽기(0건).
+- 겹치는 기존 노트 3개 보강(/enrich-notes):
+  - [[critical-thinking-in-real-world/ctrw-ch05-forms-of-argument]] — 귀납 형식 표 4종 → **5종**(abduction 추가), SS/IG의 공격 방식 차이(참조집합 좁히기 vs 표본 크기·대표성)를 `[!important]`로.
+  - [[critical-thinking-in-real-world/ctrw-ch07-fallacies]] — small sample와 biased sample이 "정도 차이"가 아니라 **noise vs bias**(전자는 데이터 추가로 고쳐지고 후자는 안 고쳐짐)라는 절 추가 + 3종 편향 + prejudice.
+  - [[critical-thinking-in-real-world/ctrw-ch03-evaluating-arguments]] — SS 강도에 **참조집합 좁기**가 N과 함께 작동한다는 한 줄.
+- 중복 회피: SS·IG의 기본 형식과 hasty generalisation 2종은 ch03·ch05·ch07에 이미 있어 다시 쓰지 않고 링크로 연결.
+- 슬라이드가 빈칸으로 남긴 문항(젤리빈 편향/노이즈, 세미나 19쪽 판별, "best explanation"의 정의)은 풀이를 쓰되 확정적인 것과 아닌 것을 나눠 후자는 `[!uncertain]`로 표시.

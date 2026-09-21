@@ -2,7 +2,7 @@
 title: "📓 Critical Thinking in Real World"
 tags: [moc]
 created: 2026-07-12
-updated: 2026-09-06
+updated: 2026-09-21
 kind: 주제
 pagerank: 0.0139
 betweenness: 0.0066
@@ -16,7 +16,7 @@ community: 6
 > [[index|← Subjects]] · Taking real-world texts — op-eds, ads, policy claims — apart and judging the reasoning on its own terms.
 
 ## Seminars
-> Notes reconstructed from the in-class recordings — what was actually said and shown, chapter notes as the backing reference.
+> Notes reconstructed from the in-class recordings and lecture decks — what was actually said and shown, chapter notes as the backing reference.
 
 | Note | Date | Covers |
 |------|------|--------|
@@ -28,6 +28,7 @@ community: 6
 | [[critical-thinking-in-real-world/ctrw-4-2\|CTRW 4-2]] | 2026-09-07 | Attacks, cogency & diagramming in argument analysis |
 | [[critical-thinking-in-real-world/ctrw-5-1\|CTRW 5-1]] | 2026-09-14 |  |
 | [[critical-thinking-in-real-world/ctrw-5-2\|CTRW 5-2]] | 2026-09-14 | Core conditional inference rules & validity |
+| [[critical-thinking-in-real-world/ctrw-6-inductive-forms\|CTRW 6 — Inductive Forms]] | 2026-09-21 | **statistical syllogism** (high N · narrow reference class · the **reference-class problem**) · **inductive generalisation** (sample size · the three sampling biases · **noise vs bias**) · prejudice as a fallacy · LLMs as generalisation machines · **abduction** — inference to the best explanation *(slides only — no recording)* |
 
 ## Textbook — chapter notes
 > Mooney, Williams & Burik, *An Introduction to Critical and Creative Thinking* (McGraw-Hill, 2015). One note per chapter — concepts, procedures and worked mini-examples. Exercises are in the textbook; the answer key is held privately for feedback (solve them, then send your work).
