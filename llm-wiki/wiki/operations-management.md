@@ -55,3 +55,4 @@ community: 5
 - [[ops-concepts/operations-management-quiz-2609191552|Operations Management — Quiz (Medium, 11 Q)]]
 - [[ops-concepts/operations-management-quiz-2609191554|Operations Management — Quiz (Hard, 10 Q)]]
 - [[ops-concepts/operations-management-quiz-2609220733|Operations Management — Quiz (Medium, multiple choice, 10 Q)]]
+- [[ops-concepts/operations-management-quiz-2609220759|Operations Management — Quiz (Hard, 9 Q)]]
