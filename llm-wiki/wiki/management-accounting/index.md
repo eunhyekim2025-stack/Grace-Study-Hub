@@ -80,3 +80,4 @@ the whole arc runs [[m02-cost-concepts-job-order-costing|Module 2]] → [[m06-cv
 | [[management-accounting/ma-4-2\|MA 4-2]] | 2026-09-09 | Overhead allocation: POHR methods & job‑order costing |
 | [[management-accounting/ma-5-1\|MA 5-1]] | 2026-09-15 | Cost behavior, overhead, absorption vs. variable costing, and reconciliation |
 | [[management-accounting/ma-5-2\|MA 5-2]] | 2026-09-15 |  |
+| [[management-accounting/ma-6-1\|MA 6-1]] | 2026-09-22 | Cost allocation, costing systems, and weighted‑average process costing |
