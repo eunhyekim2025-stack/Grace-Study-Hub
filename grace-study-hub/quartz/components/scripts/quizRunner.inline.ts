@@ -46,16 +46,22 @@ function decodeEntities(s: string): string {
 
 function mountQuiz(root: HTMLElement) {
   if (root.dataset.shQuizReady === "1") return
-  const dataEl = root.querySelector(".sh-quiz-data")
-  let data: QData = {}
-  try {
-    data = JSON.parse(decodeEntities(dataEl?.textContent || "{}"))
-  } catch {
-    return
+  // Reuse the parsed questions if we've mounted before: the first render replaces
+  // root.innerHTML, which removes the <script class="sh-quiz-data"> element — so
+  // "Try again" must rebuild from this cache, not from the (now-gone) script.
+  let qs = quizData.get(root)
+  if (!qs) {
+    const dataEl = root.querySelector(".sh-quiz-data")
+    let data: QData = {}
+    try {
+      data = JSON.parse(decodeEntities(dataEl?.textContent || "{}"))
+    } catch {
+      return
+    }
+    qs = Array.isArray(data.questions) ? data.questions : []
+    if (!qs.length) return
+    quizData.set(root, qs)
   }
-  const qs = Array.isArray(data.questions) ? data.questions : []
-  if (!qs.length) return
-  quizData.set(root, qs)
   root.dataset.shQuizReady = "1"
 
   const rows = qs
