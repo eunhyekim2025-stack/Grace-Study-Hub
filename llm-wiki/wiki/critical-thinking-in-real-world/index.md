@@ -62,3 +62,4 @@ community: 6
 
 - [[critical-thinking-in-real-world/critical-thinking-in-real-world-quiz-2609181135|Critical Thinking in Real World — Quiz (Hard, multiple choice, 24 Q)]]
 - [[critical-thinking-in-real-world/critical-thinking-in-real-world-quiz-2609181137|Critical Thinking in Real World — Quiz (Hard, multiple choice, 21 Q)]]
+- [[critical-thinking-in-real-world/critical-thinking-in-real-world-quiz-2609220857|Critical Thinking in Real World — Quiz (Hard, multiple choice, 17 Q)]]
