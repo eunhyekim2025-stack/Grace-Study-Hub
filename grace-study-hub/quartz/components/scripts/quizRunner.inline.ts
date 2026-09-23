@@ -35,6 +35,49 @@ function qType(q: QItem): string {
   return String(q.type || (q.options && q.options.length ? "mcq" : "short")).toLowerCase()
 }
 
+// Normalise an option/answer string for loose comparison: drop a leading
+// "C." / "(C)" / "C:" label and collapse to lowercase alphanumerics.
+function normText(s: string): string {
+  return String(s || "")
+    .replace(/^\s*\(?[A-Za-z][).:]\s*/, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+}
+
+// Resolve which option is correct, robust to how the model wrote `correct`:
+// a letter ("C"), the full option text ("C. 0.20 hour"), a bare value
+// ("0.20 hour"), or only present in `answer`. Returns the option index, or -1
+// if it cannot be resolved (then we DON'T auto-grade — never mark a right pick
+// wrong just because `correct` was malformed).
+function resolveCorrectIndex(q: QItem): number {
+  const opts = qType(q) === "truefalse" ? ["True", "False"] : Array.isArray(q.options) ? q.options : []
+  if (!opts.length) return -1
+  const letters = opts.map((o, j) => optionLetter(o, j))
+  const texts = opts.map((o) => normText(o))
+  const tryMatch = (candRaw: string | undefined): number => {
+    if (candRaw == null) return -1
+    const cand = String(candRaw).trim()
+    if (!cand) return -1
+    // 1) a single letter (A–E), possibly wrapped like "(C)" / "C."
+    const ltr = cand.toUpperCase().replace(/[^A-Z]/g, "")
+    if (ltr.length === 1) {
+      const i = letters.indexOf(ltr)
+      if (i >= 0) return i
+    }
+    // 2) match by option text — exact, then containment either way
+    const cn = normText(cand)
+    if (!cn) return -1
+    let i = texts.indexOf(cn)
+    if (i >= 0) return i
+    i = texts.findIndex((t) => t && (t === cn || t.includes(cn) || cn.includes(t)))
+    return i
+  }
+  let i = tryMatch(q.correct)
+  if (i < 0) i = tryMatch(q.answer) // sometimes the letter only lives in `answer`
+  return i
+}
+
 // Quartz serialises the embedded JSON with HTML entities (&quot; etc.), and the
 // browser does NOT decode entities inside a <script> raw-text element, so
 // textContent still holds "&quot;" — decode it before JSON.parse.
@@ -69,19 +112,19 @@ function mountQuiz(root: HTMLElement) {
       const type = qType(q)
       let input = ""
       if (type === "mcq" && q.options?.length) {
+        // value = option INDEX (grading matches the resolved correct index, so it
+        // is robust to whatever form the model wrote `correct` in).
         input = q.options
           .map(
             (o, j) =>
-              `<label class="sh-quiz-opt"><input type="radio" name="q${i}" value="${qEsc(
-                optionLetter(o, j),
-              )}"><span>${qEsc(o)}</span></label>`,
+              `<label class="sh-quiz-opt"><input type="radio" name="q${i}" value="${j}"><span>${qEsc(o)}</span></label>`,
           )
           .join("")
       } else if (type === "truefalse") {
         input = ["True", "False"]
           .map(
-            (o) =>
-              `<label class="sh-quiz-opt"><input type="radio" name="q${i}" value="${o}"><span>${o}</span></label>`,
+            (o, j) =>
+              `<label class="sh-quiz-opt"><input type="radio" name="q${i}" value="${j}"><span>${o}</span></label>`,
           )
           .join("")
       } else if (type === "scenario") {
@@ -143,20 +186,23 @@ function gradeQuiz(root: HTMLElement) {
     const type = qType(q)
     const reveal = li.querySelector<HTMLElement>(".sh-quiz-reveal")
     if (!reveal) return
-    const gradeable = AUTO.has(type) && q.correct != null && q.correct !== ""
+    const correctIdx = AUTO.has(type) ? resolveCorrectIndex(q) : -1
+    const gradeable = correctIdx >= 0
     if (gradeable) {
       li.dataset.gradeable = "1"
-      const picked = root.querySelector<HTMLInputElement>(`input[name="q${i}"]:checked`)?.value || ""
-      const want = String(q.correct).trim().toLowerCase()
-      const ok = !!picked && picked.trim().toLowerCase() === want
+      const pickedEl = root.querySelector<HTMLInputElement>(`input[name="q${i}"]:checked`)
+      const pickedIdx = pickedEl ? parseInt(pickedEl.value, 10) : -1
+      const ok = pickedIdx === correctIdx
       li.dataset.right = ok ? "1" : "0"
       li.classList.add(ok ? "correct" : "incorrect")
-      li.querySelectorAll<HTMLElement>(".sh-quiz-opt").forEach((lab) => {
-        const val = lab.querySelector<HTMLInputElement>("input")?.value || ""
-        if (val.trim().toLowerCase() === want) lab.classList.add("is-correct")
-        else if (val === picked) lab.classList.add("is-picked")
+      li.querySelectorAll<HTMLElement>(".sh-quiz-opt").forEach((lab, j) => {
+        if (j === correctIdx) lab.classList.add("is-correct")
+        else if (j === pickedIdx) lab.classList.add("is-picked")
       })
     } else {
+      // Open-ended, or `correct` couldn't be resolved to an option → reveal the
+      // answer and let the student self-mark. We never auto-mark a pick wrong
+      // against a malformed answer key.
       li.dataset.gradeable = "0"
     }
     const ans = q.answer ? `<div class="sh-quiz-ans"><b>Answer:</b> ${qEsc(q.answer)}</div>` : ""

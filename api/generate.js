@@ -359,6 +359,52 @@ async function reviewQuiz(items, apiKey) {
   return items
 }
 
+// Defensive cleanup so a broken answer key never ships: for each multiple-choice
+// / true-false question, resolve `correct` to the actual option LETTER — whether
+// the model wrote a letter, the option's value, its full text, or put it only in
+// `answer`. If it still can't be matched to an option, drop `correct` so the quiz
+// runner treats that question as self-check instead of grading a right pick wrong.
+function normalizeCorrect(items) {
+  const strip = (s) =>
+    String(s || "")
+      .replace(/^\s*\(?[A-Za-z][).:]\s*/, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim()
+  const letterOf = (opt, j) => {
+    const m = String(opt).match(/^\s*\(?([A-Za-z])[).:]/)
+    return (m ? m[1] : String.fromCharCode(65 + j)).toUpperCase()
+  }
+  for (const q of items) {
+    const type = String(q.type || (Array.isArray(q.options) && q.options.length ? "mcq" : "short")).toLowerCase()
+    const opts = type === "truefalse" ? ["True", "False"] : Array.isArray(q.options) ? q.options : []
+    if (!opts.length) continue
+    const letters = opts.map(letterOf)
+    const texts = opts.map(strip)
+    const match = (cand) => {
+      if (cand == null) return -1
+      const c = String(cand).trim()
+      if (!c) return -1
+      const l = c.toUpperCase().replace(/[^A-Z]/g, "")
+      if (l.length === 1) {
+        const i = letters.indexOf(l)
+        if (i >= 0) return i
+      }
+      const cn = strip(c)
+      if (!cn) return -1
+      let i = texts.indexOf(cn)
+      if (i >= 0) return i
+      i = texts.findIndex((t) => t && (t === cn || t.includes(cn) || cn.includes(t)))
+      return i
+    }
+    let idx = match(q.correct)
+    if (idx < 0) idx = match(q.answer)
+    if (idx >= 0) q.correct = letters[idx]
+    else delete q.correct
+  }
+  return items
+}
+
 async function genQuiz(label, notes, count, difficulty, apiKey, exemplars, opts = {}) {
   const guide = DIFFICULTY[difficulty] || DIFFICULTY.medium
   const hasEx = !!(exemplars && exemplars.text)
@@ -451,6 +497,7 @@ async function genQuiz(label, notes, count, difficulty, apiKey, exemplars, opts 
   if (!items.length) throw Object.assign(new Error("The model returned no questions — try again."), { status: 502 })
   // Corrective self-review (best-effort) — fixes answer/explanation contradictions.
   items = await reviewQuiz(items, apiKey)
+  items = normalizeCorrect(items) // clean answer key so grading never mis-fires
   const diffLabel = difficulty.charAt(0).toUpperCase() + difficulty.slice(1)
   const TYPE_LABEL = {
     mcq: "multiple choice",

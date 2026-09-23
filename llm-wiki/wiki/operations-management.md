@@ -3,11 +3,11 @@ title: ⚙️ Operations Management
 tags: [ops, moc, index]
 updated: 2026-09-06
 kind: 주제
-pagerank: 0.0049
-betweenness: 0.0019
-eigenvector: 0.0343
-degree: 13
-community: 5
+pagerank: 0.0042
+betweenness: 0.0037
+eigenvector: 0.0408
+degree: 16
+community: 1
 ---
 
 # ⚙️ Operations Management
@@ -40,7 +40,7 @@ community: 5
 | [[ops-concepts/ops-3-2\|Ops 3-2 — Mixed-Product Capacity & Line Balancing]] | 2026-09-03 | Depreciation & cost basics · weighted longest step · how product mix moves the bottleneck · line balancing · demand flexibility |
 | [[ops-concepts/oms-4-1\|OMS 4-1 — Line Balancing (OMS #4-1)]] | 2026-09-10 | Distribute tasks to workstations within target cycle time |
 | [[ops-concepts/ops-4-2\|OPS 4-2]] | 2026-09-10 | Key concepts: flow‑rate calculation, steady‑state inventory, bottleneck identification, workstation coordination |
-| [[ops-concepts/waiting-lint-management\|Waiting Lint Management]] | 2026-09-10 | Balancing variability, capacity, and inventory to minimize queues |
+| [[ops-concepts/waiting-line-management-seminar\|Waiting Line Management — Seminar Notes]] | 2026-09-10 | Balancing variability, capacity, and inventory to minimize queues |
 | [[ops-concepts/ops-5-1\|OPS 5-1]] | 2026-09-17 | Queueing basics, variability, and staffing levers |
 | [[ops-concepts/ops-5-2\|OPS 5-2]] | 2026-09-17 | Queueing, capacity, and service‑design fundamentals |
 
@@ -49,10 +49,12 @@ community: 5
 |--------|-------------|
 | OPIM 201 Sessions 1, 2, 3, 4, 6 | Process Choice & Little's Law · Process Analysis · Line Balancing · Waiting Line Management · Forecasting (Dr. Wee Kwan Eng) |
 
-## Quizzes
-> Auto-generated quizzes built from this subject's notes. New ones are added here automatically.
+## Revision summaries
+> Condensed one-page recaps generated from this subject's notes.
 
-- [[ops-concepts/operations-management-quiz-2609191552|Operations Management — Quiz (Medium, 11 Q)]]
-- [[ops-concepts/operations-management-quiz-2609191554|Operations Management — Quiz (Hard, 10 Q)]]
-- [[ops-concepts/operations-management-quiz-2609220733|Operations Management — Quiz (Medium, multiple choice, 10 Q)]]
-- [[ops-concepts/operations-management-quiz-2609220759|Operations Management — Quiz (Hard, 9 Q)]]
+- [[ops-concepts/operations-management-summary-2609150552|Operations Management — Revision summary]]
+
+## Homework
+> Practice sets and assignments. Full readings stay off the public site — only citations and my own working.
+
+- [[ops-homework/ops-practice-set-1|OPS Practice Set 1]] — Little's Law drills (I = R × T)
