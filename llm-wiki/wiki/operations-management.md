@@ -45,6 +45,7 @@ community: 1
 | [[ops-concepts/ops-5-2\|OPS 5-2]] | 2026-09-17 | Queueing, capacity, and service‑design fundamentals |
 | [[ops-concepts/ops-6-1\|OPS 6-1 — OPS #6-1 Forecasting Fundamentals]] | 2026-09-24 | From data to decisions: tools, error metrics, and operational impact |
 | [[ops-concepts/ops-6-2\|OPS 6-2 — OPS #6-2 Forecasting Overview]] | 2026-09-24 | Stationary, Seasonal, Trend methods & key calculations |
+| [[ops-concepts/test\|test]] | 2026-09-24 |  |
 
 ## Sources (raw/ops/)
 | Source | Description |
