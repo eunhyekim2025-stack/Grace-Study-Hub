@@ -43,6 +43,7 @@ community: 1
 | [[ops-concepts/waiting-line-management-seminar\|Waiting Line Management — Seminar Notes]] | 2026-09-10 | Balancing variability, capacity, and inventory to minimize queues |
 | [[ops-concepts/ops-5-1\|OPS 5-1]] | 2026-09-17 | Queueing basics, variability, and staffing levers |
 | [[ops-concepts/ops-5-2\|OPS 5-2]] | 2026-09-17 | Queueing, capacity, and service‑design fundamentals |
+| [[ops-concepts/ops-6-1\|OPS 6-1 — OPS #6-1 Forecasting Fundamentals]] | 2026-09-24 | From data to decisions: tools, error metrics, and operational impact |
 
 ## Sources (raw/ops/)
 | Source | Description |
