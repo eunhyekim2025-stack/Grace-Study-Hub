@@ -66,3 +66,4 @@ community: 1
 > Auto-generated quizzes built from this subject's notes. New ones are added here automatically.
 
 - [[ops-concepts/operations-management-quiz-2609250346|Operations Management — Quiz (Medium, 4 Q)]]
+- [[ops-concepts/operations-management-quiz-2609250348|Operations Management — Quiz (Medium, 4 Q)]]
