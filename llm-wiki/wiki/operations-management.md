@@ -61,3 +61,8 @@ community: 1
 > Practice sets and assignments. Full readings stay off the public site — only citations and my own working.
 
 - [[ops-homework/ops-practice-set-1|OPS Practice Set 1]] — Little's Law drills (I = R × T)
+
+## Quizzes
+> Auto-generated quizzes built from this subject's notes. New ones are added here automatically.
+
+- [[ops-concepts/operations-management-quiz-2609250346|Operations Management — Quiz (Medium, 4 Q)]]
