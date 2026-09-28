@@ -30,6 +30,7 @@ community: 6
 | [[critical-thinking-in-real-world/ctrw-5-2\|CTRW 5-2]] | 2026-09-14 | Core conditional inference rules & validity |
 | [[critical-thinking-in-real-world/ctrw-6-inductive-forms\|CTRW 6 — Inductive Forms]] | 2026-09-21 | **statistical syllogism** (high N · narrow reference class · the **reference-class problem**) · **inductive generalisation** (sample size · the three sampling biases · **noise vs bias** · **SE ≈ σ/√N · law of large numbers · finite-population correction**) · prejudice as a fallacy · LLMs as generalisation machines · **abduction** — inference to the best explanation *(slides + the CTRW 6-1 recording, merged)* |
 | [[critical-thinking-in-real-world/ctrw-6-2\|CTRW 6-2]] | 2026-09-21 | Evaluating sample‑based generalizations & bias |
+| [[critical-thinking-in-real-world/ctrw-7-1\|CTRW 7-1]] | 2026-09-28 | AI inference, bias, and abductive reasoning |
 
 ## Textbook — chapter notes
 > Mooney, Williams & Burik, *An Introduction to Critical and Creative Thinking* (McGraw-Hill, 2015). One note per chapter — concepts, procedures and worked mini-examples. Exercises are in the textbook; the answer key is held privately for feedback (solve them, then send your work).
