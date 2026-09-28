@@ -4,11 +4,11 @@ tags: [moc]
 created: 2026-07-12
 updated: 2026-09-21
 kind: 주제
-pagerank: 0.0139
-betweenness: 0.0066
-eigenvector: 0.0450
-degree: 32
-community: 6
+pagerank: 0.0125
+betweenness: 0.0071
+eigenvector: 0.1092
+degree: 37
+community: 4
 ---
 
 # 📓 Critical Thinking in Real World
@@ -24,12 +24,12 @@ community: 6
 | [[critical-thinking-in-real-world/ctrw-2\|CTRW 2 — Definitions]] | 2026-08-24 | why a definition is owed · definiendum/definiens · **accurate + informative** · metaphor · obscurity · ambiguity · **circularity properly defined** · too broad/narrow · genus & difference · necessary **and** sufficient · stipulating by purpose · the *Yes Minister* clip |
 | [[critical-thinking-in-real-world/3-1\|CTRW 3-1 — Definition & Argument Evaluation]] | 2026-08-31 | definition disputes — case-fit vs definition-fit · charitable reconstruction · the arrow rule · the four evaluation questions · **inference strength scale** (maximal → weak) |
 | [[critical-thinking-in-real-world/3-2\|CTRW 3-2 — Validity, Soundness & Cogency]] | 2026-08-31 | validity as *guarantee* · deductive vs inductive **intention** · sound vs cogent · normative vs descriptive conclusions · the four-step evaluation sequence |
-| [[critical-thinking-in-real-world/4-1\|4-1 — Argument‑Attack Analysis]] | 2026-09-07 | How to dissect, evaluate, and counter arguments |
+| [[critical-thinking-in-real-world/4-1\|CTRW 4-1 — Argument‑Attack Analysis]] | 2026-09-07 | How to dissect, evaluate, and counter arguments |
 | [[critical-thinking-in-real-world/ctrw-4-2\|CTRW 4-2]] | 2026-09-07 | Attacks, cogency & diagramming in argument analysis |
 | [[critical-thinking-in-real-world/ctrw-5-1\|CTRW 5-1]] | 2026-09-14 |  |
 | [[critical-thinking-in-real-world/ctrw-5-2\|CTRW 5-2]] | 2026-09-14 | Core conditional inference rules & validity |
 | [[critical-thinking-in-real-world/ctrw-6-inductive-forms\|CTRW 6 — Inductive Forms]] | 2026-09-21 | **statistical syllogism** (high N · narrow reference class · the **reference-class problem**) · **inductive generalisation** (sample size · the three sampling biases · **noise vs bias** · **SE ≈ σ/√N · law of large numbers · finite-population correction**) · prejudice as a fallacy · LLMs as generalisation machines · **abduction** — inference to the best explanation *(slides + the CTRW 6-1 recording, merged)* |
-| [[critical-thinking-in-real-world/ctrw-6-2\|CTRW 6-2]] | 2026-09-21 | Evaluating sample‑based generalizations & bias |
+| [[critical-thinking-in-real-world/ctrw-6-2\|CTRW 6-2]] | 2026-09-21 | **abduction, part 2** — the criteria for the "best" explanation (**coherence** & its subjectivity · **predictive power**) · **confirmation bias** and the Wason 2-4-6 task · **appeal to ignorance** as an abduction (Iraq WMD, God) · **burden of proof** (Russell) · conspiracy theories |
 | [[critical-thinking-in-real-world/ctrw-7-1\|CTRW 7-1]] | 2026-09-28 | AI inference, bias, and abductive reasoning |
 
 ## Textbook — chapter notes
@@ -57,6 +57,11 @@ community: 6
 | [[case-drug-legalisation-grayling]] | Reconstructing an argument · descriptive vs normative claims · testing analogies · false dilemma · steelmanning — worked on Grayling's drug-legalisation op-ed |
 | [[what-is-mark-zuckerberg-confused-about]] | Intention vs outcome · when "simplifying" a system masks the errors it makes — read against Meta's fact-checking policy shift |
 | [[when-is-a-claim-worth-considering-as-maybe-fact]] | The line between claim and fact · "universal truth" as a persuasion device · why appeals to the undeniable still need scrutiny |
+
+## Revision summaries
+> Condensed one-page recaps generated from this subject's notes.
+
+- [[critical-thinking-in-real-world/critical-thinking-in-real-world-summary-2609110630|Critical Thinking in Real World — Revision summary]]
 
 ## Quizzes
 > Auto-generated quizzes built from this subject's notes (via the site's Build-quiz button). New ones are added here automatically.
