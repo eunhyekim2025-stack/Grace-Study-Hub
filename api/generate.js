@@ -18,7 +18,7 @@
 // Required Vercel env vars: GITHUB_TOKEN, ADD_SECRET, GROQ_API_KEY.
 // Runtime: Node (global fetch + Buffer, no npm dependencies).
 
-import { DESIGN_SPEC, slugify, subjectDir } from "./_note.js"
+import { slugify, subjectDir } from "./_note.js"
 import { hubCandidates } from "./_seminars.js"
 
 const REPO = "eunhyekim2025-stack/Grace-Study-Hub"
@@ -555,15 +555,24 @@ async function genQuiz(label, notes, count, difficulty, apiKey, exemplars, opts 
 
 async function genSummary(label, notes, apiKey) {
   const prompt =
-    `You are writing a concise REVISION SUMMARY of the subject "${label}" for a student, ` +
-    `based ONLY on their own study notes below. Write everything in ENGLISH. Distil the ` +
-    `whole subject into a compact, high-yield summary a student can revise from quickly — ` +
-    `the core concepts, the key rules/formulas, and how the topics fit together. Do not ` +
-    `invent facts that are not present in the notes.` +
-    DESIGN_SPEC +
-    `\n\nNOTES:\n"""\n${notes}\n"""`
+    `You are writing a REVISION SUMMARY of the subject "${label}" for a student, based ONLY on ` +
+    `their own study notes below. Write everything in ENGLISH.\n\n` +
+    `Goal: a clean, scannable recap the student can revise from quickly — the core concepts, the ` +
+    `key rules and formulas, and how the topics connect.\n\n` +
+    `STRUCTURE — plain Markdown only. Do NOT output any raw-HTML / "dc-view" block, no frontmatter, ` +
+    `no top-level "# title", no code fences:\n` +
+    `1. Open with a "> [!summary] Key takeaways" callout — 5–8 one-line bullets covering the biggest ideas of the whole subject.\n` +
+    `2. Then one "## <Topic>" section per MAJOR topic, in a sensible order. Each: a one-line intro, then TIGHT bullets (≤ 2 lines each) of the must-know points. Put each key rule or definition in a "> [!info]" callout and each caution in "> [!warning]".\n` +
+    `3. Use a Markdown TABLE whenever you compare things or list term→meaning or attribute→value pairs.\n` +
+    `4. If the subject uses formulas, add a "## Key formulas" section that states each one explicitly.\n` +
+    `5. End with a "## Key terms" table (| Term | Meaning |) of the most important terms.\n\n` +
+    `COVERAGE RULES — this is where auto-summaries usually fail, so follow them exactly:\n` +
+    `- Some notes below appear as just a "## <title>" with little or no body (they were truncated to fit). Do NOT invent content for them, and do NOT create an empty or one-line section for a topic you have no real material on — simply OMIT it. A shorter summary that is fully filled in is far better than a long one full of empty headings.\n` +
+    `- Cover the topics you DO have substance for thoroughly and accurately; never fabricate facts not in the notes.\n` +
+    `- GROUP closely related notes into a single topic section rather than making one section per note.\n\n` +
+    `NOTES:\n"""\n${notes}\n"""`
   const body = await groqChat(
-    { messages: [{ role: "user", content: prompt }], max_tokens: 3500, temperature: 0.4 },
+    { messages: [{ role: "user", content: prompt }], max_tokens: 4000, temperature: 0.35 },
     apiKey,
   )
   if (!body.trim()) throw Object.assign(new Error("The model returned an empty summary — try again."), { status: 502 })
@@ -624,6 +633,10 @@ export default async function handler(req, res) {
   // stays under Groq's per-minute token ceiling.
   let noteBudget = exemplars.text ? 9000 : MAX_INPUT_CHARS
   if (kind === "quiz" && count >= 12) noteBudget = Math.min(noteBudget, 7000)
+  // A summary has a single (~4k-token) output, so it can afford more note input
+  // than a quiz — fewer notes get truncated to title-only, which is what left
+  // some concepts empty. Kept under Groq's per-minute token ceiling.
+  if (kind === "summary") noteBudget = 14000
   const { text: notes, count: noteCount } = await gatherNotes(prefixes, token, noteBudget)
   if (!notes.trim() || noteCount === 0) {
     return res.status(400).json({ error: "This subject has no notes yet — add some notes first." })
