@@ -8,7 +8,8 @@
     "prefixes": [
       "law-concepts/",
       "cases/",
-      "statutes/"
+      "statutes/",
+      "law-homework/"
     ]
   },
   {
@@ -18,7 +19,8 @@
     "hue": 150,
     "term": "2026 Semester 1",
     "prefixes": [
-      "da-concepts/"
+      "da-concepts/",
+      "da-homework/"
     ]
   },
   {
@@ -28,7 +30,8 @@
     "hue": 85,
     "term": "2026 Semester 1",
     "prefixes": [
-      "fa-concepts/"
+      "fa-concepts/",
+      "fa-homework/"
     ]
   },
   {
@@ -38,7 +41,8 @@
     "hue": 25,
     "term": "2026 Semester 2",
     "prefixes": [
-      "ops-concepts/"
+      "ops-concepts/",
+      "ops-homework/"
     ]
   },
   {
@@ -48,7 +52,8 @@
     "hue": 180,
     "term": "2026 Semester 2",
     "prefixes": [
-      "management-accounting/"
+      "management-accounting/",
+      "management-accounting-homework/"
     ]
   },
   {
@@ -58,7 +63,8 @@
     "hue": 300,
     "term": "2026 Semester 2",
     "prefixes": [
-      "critical-thinking-in-real-world/"
+      "critical-thinking-in-real-world/",
+      "critical-thinking-in-real-world-homework/"
     ]
   },
   {
@@ -68,7 +74,8 @@
     "hue": 120,
     "term": "2026 Semester 2",
     "prefixes": [
-      "management-of-people-at-work/"
+      "management-of-people-at-work/",
+      "management-of-people-at-work-homework/"
     ]
   },
   {
@@ -78,7 +85,8 @@
     "hue": 210,
     "term": "Self-study",
     "prefixes": [
-      "sql-concepts/"
+      "sql-concepts/",
+      "sql-homework/"
     ]
   }
 ]

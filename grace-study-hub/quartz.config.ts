@@ -20,6 +20,9 @@ const config: QuartzConfig = {
       "templates",
       ".obsidian",
       "log.md",
+      // SMU-Restricted team-project annex (contribution dispute / peer review) —
+      // kept private, never published. Other *-homework notes still build.
+      "management-accounting-homework/acct102-team-project-annexes.md",
       // "More" areas — kept in the Obsidian vault, excluded from the site.
       // Cross-Domain
       "cross-domain/**",
