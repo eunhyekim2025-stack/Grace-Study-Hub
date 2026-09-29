@@ -1,9 +1,16 @@
 ---
 title: "Forecasting — Time-Series Demand Methods"
-tags: [operations-management, opim201, forecasting, time-series, exponential-smoothing, seasonality, linear-regression]
-sources: ["SMU OPIM 201 Session 6 — Forecasting"]
-updated: 2026-08-19
+tags: [operations-management, opim201, forecasting, time-series, exponential-smoothing, seasonality, linear-regression, mape, error-metrics]
+sources: ["SMU OPIM 201 Session 6 — Forecasting", "OPIM 201 course study sheet (ops.pdf) — forecast error metrics (MAPE, MAD/MSE relative-vs-absolute), merged 2026-09-29"]
+updated: 2026-09-29
 kind: 개념
+relations:
+  part-of: [operations-management]
+pagerank: 0.0025
+betweenness: 0.0009
+eigenvector: 0.0081
+degree: 8
+community: 1
 ---
 
 <div class="dc-view">
@@ -91,9 +98,16 @@ $$F_{2007} = 471.07 + 0.05\,(468.96-471.07) = 471.07 - 0.11 = \mathbf{470.96}$$
 
 ### Choosing a method — forecast error
 
-$$e_t = A_t - F_t, \qquad MAD = \frac{1}{n}\sum|e_t|, \qquad MSE = \frac{1}{n}\sum e_t^{2}$$
+$$e_t = A_t - F_t, \qquad MAD = \frac{1}{n}\sum|e_t|, \qquad MSE = \frac{1}{n}\sum e_t^{2}, \qquad MAPE = \frac{1}{n}\sum\frac{|e_t|}{|A_t|}\times100\%$$
+
+Never use the **raw error** $\frac{1}{n}\sum e_t$ to judge accuracy: overshoots and undershoots **cancel**, so a wildly inaccurate forecast can score near zero. Taking the absolute value (MAD) or squaring (MSE) removes the cancellation — the raw mean error measures **bias** (does the forecast systematically run high or low?), which is a different question.
 
 MAD is the average size of the miss; **MSE squares the errors so it punishes large misses** harder. Pick the method/parameter with the **lowest** MAD or MSE (e.g. an ES with $\alpha=0.05$, MAD ≈ 8.3, beats $\alpha=0.2$, MAD ≈ 8.7).
+
+> [!tip] Which error metric, and why they can disagree
+> - **MAD and MSE are scale-dependent** (in the same units as demand), so they only mean something *relative* — use them to **compare two forecasts on the same series** ("which method is better here?"). MAD weights every miss equally; MSE lets one large miss dominate.
+> - **MAPE is a percentage**, so it is scale-free — use it to judge **absolute performance** ("how well am I doing?") and to **compare accuracy across different products/series** whose demand levels differ.
+> - The metrics **can rank the same two methods differently**. A forecast that is *usually* accurate but has *one* big miss gets a **low MAD** (most misses are small) yet a **high MSE** (the one big error is squared). So decide first what you care about — robustness to the typical miss (MAD) or protection against the occasional large one (MSE) — and let that pick the metric, not the other way round.
 
 ---
 

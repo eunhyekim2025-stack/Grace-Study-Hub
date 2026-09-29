@@ -1,9 +1,16 @@
 ---
 title: "Process Analysis — Process Choice, Flow Metrics & the Bottleneck"
-tags: [operations-management, opim201, process-analysis, process-choice, job-shop, batch-flow, line-flow, product-process-matrix, order-winners, flow-unit, littles-law, inventory-turns, bottleneck, capacity, throughput, theory-of-constraints]
-sources: ["SMU OPIM 201 Session 1 — Process Choice & Little's Law (Cachon & Terwiesch, Ch. 1 & 2)", "SMU OPIM 201 Session 2 — Process Analysis (Cachon & Terwiesch, Ch. 3)"]
-updated: 2026-08-19
+tags: [operations-management, opim201, process-analysis, process-choice, job-shop, batch-flow, line-flow, product-process-matrix, order-winners, flow-unit, littles-law, inventory-turns, bottleneck, capacity, throughput, theory-of-constraints, implied-utilization]
+sources: ["SMU OPIM 201 Session 1 — Process Choice & Little's Law (Cachon & Terwiesch, Ch. 1 & 2)", "SMU OPIM 201 Session 2 — Process Analysis (Cachon & Terwiesch, Ch. 3)", "OPIM 201 course study sheet (ops.pdf) — implied utilization for multi-product bottleneck ID, merged 2026-09-29"]
+updated: 2026-09-29
 kind: 개념
+relations:
+  part-of: [operations-management]
+pagerank: 0.0071
+betweenness: 0.0083
+eigenvector: 0.0163
+degree: 14
+community: 1
 ---
 
 <div class="dc-view">
@@ -494,6 +501,20 @@ $$\text{Effective PT} = \sum_i (\text{mix share}_i \times \text{PT}_i), \qquad \
 *Example.* Products X, Y with Step I times 2 and 3 min. If mix is 80% X / 20% Y, effective PT = 0.8×2 + 0.2×3 = **2.2 min**; change the mix to 40% X / 60% Y and it becomes 2.6 min — a **different mix can shift which step is the bottleneck**.
 
 **Non-identical parallel machines** at one stage: add their *capacities* (not their times). Two machines at 10 and 5 min/unit give 6 + 12 = **18 units/hr**; the stage's effective processing time is 1 ÷ 18 hr.
+
+### Implied utilization — the metric that finds the bottleneck under a demand load
+
+Ordinary **utilization** = busy time ÷ available time (equivalently flow rate ÷ capacity) and is capped at **100%** — a resource cannot be busy more than all the time it has. That cap hides *how badly* a resource is overloaded, so to locate the bottleneck under a given demand you use **implied utilization** instead:
+
+$$\text{Implied utilization} = \frac{\text{capacity requested by demand (workload)}}{\text{available capacity}}$$
+
+Unlike realized utilization it **can exceed 100%**, and that is the point:
+
+- The resource with the **highest implied utilization is the bottleneck** — it is the one demand strains hardest, whether or not it happens to be the slowest in isolation.
+- **Implied utilization > 100% at any resource ⟹ that resource cannot meet demand** on its own; the process is capacity-constrained and the system flow rate falls to $\min\{\text{demand},\ \text{system capacity}\}$. Below 100% everywhere, the process is demand-constrained (it *could* serve more, but no more is asked).
+
+> [!tip] Utilization vs implied utilization
+> Realized **utilization** describes what a resource *is* doing (≤ 100%, an outcome). **Implied utilization** describes what demand *would require* of it (unbounded, a diagnosis). With several products flowing through shared resources, compute each resource's implied utilization from the mix — the largest one names the bottleneck, and any value over 100% flags demand that cannot be served without adding capacity.
 
 ---
 
