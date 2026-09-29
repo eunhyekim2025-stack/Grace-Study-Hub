@@ -81,6 +81,7 @@ the whole arc runs [[m02-cost-concepts-job-order-costing|Module 2]] → [[m06-cv
 | [[management-accounting/ma-5-1\|MA 5-1]] | 2026-09-15 | Cost behavior, overhead, absorption vs. variable costing, and reconciliation |
 | [[management-accounting/ma-5-2\|MA 5-2]] | 2026-09-15 |  |
 | [[management-accounting/ma-6-1\|MA 6-1]] | 2026-09-22 | Cost allocation, costing systems, and weighted‑average process costing |
+| [[management-accounting/ma-7-1\|MA 7-1 — Activity‑Based Costing (ABC)]] | 2026-09-29 | Link costs to the activities that drive them |
 
 ## Quizzes
 > Auto-generated quizzes built from this subject's notes. New ones are added here automatically.
