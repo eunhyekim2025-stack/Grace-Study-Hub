@@ -62,3 +62,4 @@ community: 0
 | [[management-of-people-at-work/mpw-5-2\|MPW 5-2]] | 2026-09-15 | Exam & project blueprint for success |
 | [[management-of-people-at-work/mpw-6-1\|MPW 6-1]] | 2026-09-22 | Team dynamics, influence, and decision‑making shortcuts |
 | [[management-of-people-at-work/mpw-6-2\|MPW 6-2]] | 2026-09-22 | Jury deliberation, persuasion tactics, and evidence reliability |
+| [[management-of-people-at-work/mpw-7-1\|MPW 7-1]] | 2026-09-29 | Negotiation fundamentals, traps, and preparation |
