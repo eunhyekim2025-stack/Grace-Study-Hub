@@ -63,6 +63,12 @@ function initSubjectTabs() {
     const id = (t.getAttribute("href") || "").replace(/^#/, "")
     t.addEventListener("click", (e) => {
       e.preventDefault()
+      // Stop the click from bubbling up to Quartz's SPA router, which has a
+      // window-level listener that treats a same-page "#section" link as an
+      // anchor jump and calls el.scrollIntoView() — scrolling DOWN to the
+      // heading and overriding our scrollTo(top:0). Without this, every subject
+      // hub scrolls down instead of switching sections at the top.
+      e.stopPropagation()
       if (sections.has(id)) show(id)
     })
   }
