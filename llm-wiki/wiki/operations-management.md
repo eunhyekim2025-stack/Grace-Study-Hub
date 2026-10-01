@@ -48,6 +48,7 @@ community: 1
 | [[ops-concepts/test\|test]] | 2026-09-24 |  |
 | [[ops-concepts/ops-7-1\|OPS 7-1 — Seasonal Forecasting Workflow]] | 2026-10-01 | Isolate trend, handle seasonality, produce final forecast |
 | [[ops-concepts/ops-7-2\|OPS 7-2 — EOQ & Order Planning]] | 2026-10-01 | Balancing ordering & holding costs, accounting for MOQ, ROP and supplier dynamics |
+| [[ops-concepts/ops-7-3\|OPS 7-3]] | 2026-10-01 | Reorder‑point inventory control – from demand to order trigger |
 
 ## Sources (raw/ops/)
 | Source | Description |
