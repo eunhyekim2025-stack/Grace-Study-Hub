@@ -46,6 +46,7 @@ community: 1
 | [[ops-concepts/ops-6-1\|OPS 6-1 — OPS #6-1 Forecasting Fundamentals]] | 2026-09-24 | From data to decisions: tools, error metrics, and operational impact |
 | [[ops-concepts/ops-6-2\|OPS 6-2 — OPS #6-2 Forecasting Overview]] | 2026-09-24 | Stationary, Seasonal, Trend methods & key calculations |
 | [[ops-concepts/test\|test]] | 2026-09-24 |  |
+| [[ops-concepts/ops-7-1\|OPS 7-1 — Seasonal Forecasting Workflow]] | 2026-10-01 | Isolate trend, handle seasonality, produce final forecast |
 
 ## Sources (raw/ops/)
 | Source | Description |
