@@ -37,6 +37,7 @@ const SubjectAutoBar: QuartzComponent = ({ fileData, allFiles }: QuartzComponent
     }))
 
   return (
+    <>
     <div class="sh-subjbar-wrap">
       <div class="sh-subjbar">
         <div class="sh-subjbar-left">
@@ -121,17 +122,22 @@ const SubjectAutoBar: QuartzComponent = ({ fileData, allFiles }: QuartzComponent
         </button>
       </div>
       <div class="sh-gen-status" data-sh-gen-status hidden></div>
-
-      {tabs.length > 0 && (
-        <div class="sh-subjtabs">
-          {tabs.map((t, i) => (
-            <a class={i === 0 ? "sh-subjtab active" : "sh-subjtab"} href={`#${t.slug}`}>
-              {t.label}
-            </a>
-          ))}
-        </div>
-      )}
     </div>
+
+    {/* Tabs live OUTSIDE sh-subjbar-wrap so their containing block is the tall
+        content column — otherwise `position: sticky` would have no room to stick
+        (a sticky element only sticks within its parent's box). Kept sticky so
+        the user can keep switching sections after scrolling into one. */}
+    {tabs.length > 0 && (
+      <div class="sh-subjtabs">
+        {tabs.map((t, i) => (
+          <a class={i === 0 ? "sh-subjtab active" : "sh-subjtab"} href={`#${t.slug}`}>
+            {t.label}
+          </a>
+        ))}
+      </div>
+    )}
+    </>
   )
 }
 

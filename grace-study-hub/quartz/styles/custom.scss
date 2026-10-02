@@ -2798,8 +2798,16 @@ table thead tr {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-top: 14px;
-  padding-bottom: 4px;
+  margin: 0 0 16px;
+  padding: 10px 0;
+  // Pin the tab row just below the fixed top bar so it stays reachable while a
+  // section is scrolled to the top. Works because the tabs sit directly in the
+  // tall content column (moved out of sh-subjbar-wrap). The opaque canvas
+  // background keeps section content from showing through while it scrolls past.
+  position: sticky;
+  top: var(--sh-topbar-h);
+  z-index: 10;
+  background: var(--sh-canvas);
 }
 a.sh-subjtab {
   padding: 7px 14px;
