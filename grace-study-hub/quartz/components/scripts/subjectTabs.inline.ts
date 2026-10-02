@@ -52,11 +52,15 @@ function initSubjectTabs() {
     for (const t of tabs) {
       t.classList.toggle("active", (t.getAttribute("href") || "").replace(/^#/, "") === id)
     }
-    // Jump to the top INSTANTLY. Using "auto" here inherits the page's
-    // `html { scroll-behavior: smooth }`, which on a tall hub (a long dc-view
-    // intro, e.g. Management Accounting) animates a long slow scroll and feels
-    // like the page is scrolling rather than switching. "instant" overrides it.
-    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior })
+    // Jump to the top. Hiding/showing the sections reflows the page, which
+    // triggers a competing *synchronous* scroll (the clicked heading ends up
+    // ~130px down) that overrides an immediate scrollTo here. Scrolling again on
+    // the next animation frame — after that reflow scroll has settled — makes
+    // the top-jump authoritative. Verified across every subject hub: without the
+    // rAF the page sits scrolled down; with it, scrollY lands at 0.
+    const toTop = () => window.scrollTo({ top: 0, left: 0 })
+    toTop()
+    requestAnimationFrame(toTop)
   }
 
   for (const t of tabs) {
