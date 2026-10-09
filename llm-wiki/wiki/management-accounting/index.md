@@ -92,3 +92,4 @@ the whole arc runs [[m02-cost-concepts-job-order-costing|Module 2]] → [[m06-cv
 - [[management-accounting/management-accounting-quiz-2610081150|Management accounting — Quiz (Hard, 1 Q)]]
 - [[management-accounting/management-accounting-quiz-2610081205|Management accounting — Quiz (Hard, 4 Q)]]
 - [[management-accounting/management-accounting-quiz-2610081215|Management accounting — Quiz (Hard, 10 Q)]]
+- [[management-accounting/management-accounting-quiz-2610090041|Management accounting — Quiz (Hard, 10 Q)]]
