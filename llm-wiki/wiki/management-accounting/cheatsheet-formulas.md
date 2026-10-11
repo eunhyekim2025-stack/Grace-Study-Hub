@@ -1,8 +1,15 @@
 ---
 title: "Formula Cheat Sheet & Glossary (Modules 1–12)"
-tags: [management-accounting, cheatsheet, formulas, glossary, exam-prep]
-sources: ["Managerial Accounting: Comprehensive Study Guide (Modules 1–12)", "SMU ACCT102 (BT) Week 1 — Cost concepts and Cost flows", "SMU ACCT102 (BT) Week 2 & 3 — Cost behaviour", "SMU ACCT102 (BT) Week 2 & 3 — CVP Analysis"]
-updated: 2026-08-25
+tags: [management-accounting, cheatsheet, formulas, glossary, exam-prep, abc, activity-rate, variance-analysis, budgeting, cost-hierarchy]
+sources: ["Managerial Accounting: Comprehensive Study Guide (Modules 1–12)", "SMU ACCT102 (BT) Week 1 — Cost concepts and Cost flows", "SMU ACCT102 (BT) Week 2 & 3 — Cost behaviour", "SMU ACCT102 (BT) Week 2 & 3 — CVP Analysis", "Cross-note enrichment from the subject's own module notes (m03 process costing, m04 ABC, m07 variable vs absorption, m08 budgeting, m09–12 performance management), 2026-10-11"]
+updated: 2026-10-11
+relations:
+  part-of: [management-accounting/index]
+pagerank: 0.0107
+betweenness: 0.0007
+eigenvector: 0.0165
+degree: 21
+community: 1
 ---
 
 <div class="dc-view">
@@ -36,7 +43,10 @@ updated: 2026-08-25
 | Name | Formula | How to remember it |
 |---|---|---|
 | **Predetermined Overhead Rate (POHR)** | Estimated total MO ÷ estimated total allocation base | You cannot wait for the utility bill, so you fix a rate in advance |
+| **Activity Rate (ABC)** | Total activity cost pool ÷ total activity for that pool | The ABC generalisation of POHR — [[m04-activity-based-costing\|one rate per activity]] instead of one plantwide rate |
+| **ABC overhead applied** | Activity rate × the object's use of that activity | The *second-stage* allocation — overhead flows to the product/customer by what it actually consumed |
 | **Equivalent Units (EU)** | Physical units × percentage complete | Materials and conversion **separately** |
+| **Cost per Equivalent Unit** | Total cost to account for ÷ equivalent units | Step 3 ÷ step 2 of the [[m03-process-costing\|five-step report]] — "what did one unit of *work* cost?" |
 | **Conversion Cost** | Direct Labour + Manufacturing Overhead | What it costs to *convert* materials into product |
 | **Prime Cost** | Direct Materials + Direct Labour | Only the directly traceable costs |
 | **Cost equation** | $Y = a + bX$ | Total cost = total fixed ($a$) + variable per unit ($b$) × activity. The study guide writes the same line as $Y = mX + b$ |
@@ -60,6 +70,8 @@ updated: 2026-08-25
 | **Using DOL** | %Δ Profit = %Δ Sales × DOL | +10% sales × DOL 5 = **+50% profit** |
 | **Overall CM Ratio (multi-product)** | Total CM ÷ Total sales | Weighted by **revenue**, not a plain average of the products' ratios |
 | **Weighted Average CM** | Σ (sales-mix share × CM per unit) | Treat several products as one |
+| **Unit product cost (absorption)** | Variable production cost per unit + (Fixed MO ÷ units **produced**) | Divide by units *made*, not sold — fewer units made ⇒ more fixed MO loaded onto each. The lever behind the [[m07-variable-vs-absorption-costing\|overproduction trap]] |
+| **Fixed MO deferred in inventory** | (Units produced − units sold) × Fixed MO per unit | The exact gap between absorption and variable net income when production ≠ sales |
 | **Inventory equation** | Beginning + added − ending = what left | Applies to raw materials, WIP and finished goods alike |
 
 ---
@@ -88,6 +100,12 @@ updated: 2026-08-25
 | **Activity-Based Costing (ABC)** | Allocating overhead through multiple activity rates |
 | **Plantwide Rate** | A single overhead rate for the whole factory |
 | **Cost Driver / Activity Base** | The activity that causes a cost to be incurred — units produced, machine hours, miles driven, labour hours. Nothing is "variable" until you say *variable with respect to what* |
+| **Activity Cost Pool** | The bucket that accumulates the cost of one activity before it is divided by the activity to get a rate |
+| **First-stage / Second-stage allocation** | First: overhead → activity cost pools. Second: pooled overhead → products/customers. A plantwide rate collapses both into one step with one driver — which is what distorts the numbers |
+| **Cost Hierarchy** | ABC's five levels of activity, each allocated on its own kind of measure: **unit**-level · **batch**-level · **product**-level · **customer**-level · **organization-sustaining** |
+| **Transaction vs Duration Driver** | A **transaction** driver counts *how many times* an activity happens (inspections, setups); a **duration** driver measures *how long* it takes (inspection hours) — more accurate, costlier to track |
+| **Organization-sustaining Cost** | Incurred to run the company regardless of products/customers (plant security, the manager's salary) — **not** assigned to products under ABC; charged to the period, like idle-capacity cost |
+| **Product / Customer Margin** | What ABC reports — revenue less the ABC costs traced to a product, or to a customer. Both reconcile back to company net operating income |
 | **Relevant / Irrelevant Cost** | Differs between alternatives (use it) / is the same under each (ignore it) |
 | **Differential (Incremental) Cost** | The difference in cost between two alternatives — always relevant |
 | **Opportunity Cost** | The benefit given up by choosing one alternative over another (never in the books) |
@@ -118,8 +136,15 @@ updated: 2026-08-25
 | **Absorption Costing** | Fixed MO treated as a product cost (GAAP) |
 | **Variable (Marginal) Costing** | Fixed MO treated as a period cost (internal) |
 | **Master Budget** | The full set of coordinated budgets for the period |
-| **Variance Analysis** | Explaining the gap between budget and actual |
+| **Sales Budget** | The starting point of the master budget — the "north star." You cannot build the production, materials, labour or cash budgets until you know how much will sell |
+| **Operating vs Financial Budgets** | Operating = production · materials · labour · overhead → budgeted income statement. Financial = cash budget · budgeted balance sheet |
+| **Cash Budget** | Planned cash receipts and payments. Gets its own budget because a *profitable* company still dies if it runs out of cash — profit ≠ cash |
+| **Variance Analysis** | Explaining the gap between budget and actual by **splitting a total variance by cause** |
+| **Price Variance** | The part of a variance from **paying more/less per unit of input** than planned — usually **purchasing's** responsibility |
+| **Quantity / Efficiency Variance** | The part from **using more/less input** than planned (waste, scrap) — usually **production's** responsibility. Splitting price from quantity is what makes a variance actionable |
 | **Responsibility Accounting** | Evaluating managers only on what they control |
+| **Controllability Principle** | A manager should be judged only on items **within their control** — charging a store manager for the CEO's salary destroys the measure's value as an incentive |
+| **Segment Reporting** | Performance seen segment by segment (product line, region, division) rather than only company-wide |
 
 ---
 
@@ -142,8 +167,10 @@ updated: 2026-08-25
 - [ ] After-tax targets convert with **÷ (1 − tax rate)** *first*
 - [ ] High leverage means **high amplitude**, not high profitability — and DOL is measured **at a given sales level**, not fixed
 - [ ] Multi-product: sales mix **in dollars ≠ in units**; use the one matching what you are splitting
-- [ ] Production > sales → **absorption** income is higher
-- [ ] Every budget starts from the **sales budget**
+- [ ] Production > sales → **absorption** income is higher; the gap = (units made − sold) × fixed MO per unit
+- [ ] ABC replaces the one plantwide rate with **one activity rate per pool** (pool cost ÷ activity); org-sustaining and idle capacity are **not** loaded onto products
+- [ ] A total variance is useless until you **split price from quantity** — price is usually purchasing's, quantity is production's
+- [ ] Every budget starts from the **sales budget**; cash gets its own budget because **profit ≠ cash**
 
 ---
 
