@@ -32,6 +32,7 @@ community: 4
 | [[critical-thinking-in-real-world/ctrw-6-2\|CTRW 6-2]] | 2026-09-21 | **abduction, part 2** — the criteria for the "best" explanation (**coherence** & its subjectivity · **predictive power**) · **confirmation bias** and the Wason 2-4-6 task · **appeal to ignorance** as an abduction (Iraq WMD, God) · **burden of proof** (Russell) · conspiracy theories |
 | [[critical-thinking-in-real-world/ctrw-7-1\|CTRW 7-1]] | 2026-09-28 | AI inference, bias, and abductive reasoning |
 | [[critical-thinking-in-real-world/ctrw-9-1\|CTRW 9-1]] | 2026-10-12 | Conspiracy theories, cognitive biases, and causal inference |
+| [[critical-thinking-in-real-world/ctrw-9-2\|CTRW 9-2]] | 2026-10-12 | Appeal to authority & analogical reasoning |
 
 ## Textbook — chapter notes
 > Mooney, Williams & Burik, *An Introduction to Critical and Creative Thinking* (McGraw-Hill, 2015). One note per chapter — concepts, procedures and worked mini-examples. Exercises are in the textbook; the answer key is held privately for feedback (solve them, then send your work).
