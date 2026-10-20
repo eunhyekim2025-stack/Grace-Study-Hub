@@ -66,3 +66,4 @@ community: 0
 | [[management-of-people-at-work/mpw-7-2\|MPW 7-2]] | 2026-09-29 | Multi‑issue negotiation fundamentals & tactics |
 | [[management-of-people-at-work/mpw-9-1\|MPW 9-1]] | 2026-10-13 | Negotiation prep & leadership styles |
 | [[management-of-people-at-work/mpw-9-2\|MPW 9-2 — Power in Organizations]] | 2026-10-13 | Forms, sources, effects, and ways to build personal power |
+| [[management-of-people-at-work/mpw-10-1\|MPW 10-1 — MPW #10‑1]] | 2026-10-20 | Leadership, Power, and Culture – core concepts & practical takeaways |
