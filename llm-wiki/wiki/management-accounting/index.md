@@ -84,6 +84,7 @@ the whole arc runs [[m02-cost-concepts-job-order-costing|Module 2]] → [[m06-cv
 | [[management-accounting/ma-7-1\|MA 7-1 — Activity‑Based Costing (ABC)]] | 2026-09-29 | Link costs to the activities that drive them |
 | [[management-accounting/ma-7-2\|MA 7-2 — ABC Costing vs Traditional]] | 2026-09-29 | Accurate product costs, strategic decisions, implementation roadmap |
 | [[management-accounting/ma-10-1\|MA 10-1]] | 2026-10-20 |  |
+| [[management-accounting/ma-10-2\|MA 10-2]] | 2026-10-20 | Master budget components, cost allocation, cash budgeting, service‑industry nuances |
 
 ## Quizzes
 > Auto-generated quizzes built from this subject's notes. New ones are added here automatically.
