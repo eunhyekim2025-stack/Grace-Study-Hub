@@ -50,6 +50,7 @@ community: 1
 | [[ops-concepts/ops-7-2\|OPS 7-2 — EOQ & Order Planning]] | 2026-10-01 | Balancing ordering & holding costs, accounting for MOQ, ROP and supplier dynamics |
 | [[ops-concepts/ops-7-3\|OPS 7-3]] | 2026-10-01 | Reorder‑point inventory control – from demand to order trigger |
 | [[ops-concepts/ops-10-1\|OPS 10-1]] | 2026-10-22 | Inventory ordering – EOQ, fixed costs, newsvendor, safety stock |
+| [[ops-concepts/ops-10-2\|OPS 10-2]] | 2026-10-22 | Cost‑minimisation & revenue‑management fundamentals |
 
 ## Sources (raw/ops/)
 | Source | Description |
