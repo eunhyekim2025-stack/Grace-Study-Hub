@@ -68,3 +68,4 @@ community: 0
 | [[management-of-people-at-work/mpw-9-2\|MPW 9-2 — Power in Organizations]] | 2026-10-13 | Forms, sources, effects, and ways to build personal power |
 | [[management-of-people-at-work/mpw-10-1\|MPW 10-1 — MPW #10‑1]] | 2026-10-20 | Leadership, Power, and Culture – core concepts & practical takeaways |
 | [[management-of-people-at-work/mpw-10-2\|MPW 10-2]] | 2026-10-20 | Change management: barriers, diffusion, and practical tactics |
+| [[management-of-people-at-work/11-2\|11-2]] | 2026-10-27 | Psychology of AI adoption & future‑ready preparation |
