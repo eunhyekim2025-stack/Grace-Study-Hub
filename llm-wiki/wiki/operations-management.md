@@ -16,14 +16,18 @@ community: 1
 > goods and services — **Content → Sources**
 
 ## Content — Concepts (ops-concepts/)
-> SMU **OPIM 201** (Cachon & Terwiesch). The four core process topics build on one idea: find the bottleneck, then manage it under real-world variability and demand.
+> SMU **OPIM 201** (Cachon & Terwiesch). The process topics build on one idea — find the bottleneck, then manage it under variability and demand — and the course then extends to **inventory, planning, quality and sustainability**.
 
 | # | Page | Description |
 |---|------|-------------|
 | 1 | [[ops-concepts/process-analysis]] | **Process choice** (job shop/batch/line · MTS-ATO-MTO · product–process matrix · order winners) · flow unit · **Little's Law** · inventory turns · capacity · utilization · **bottleneck** · Theory of Constraints |
 | 2 | [[ops-concepts/line-balancing]] | Assign tasks to workstations to meet the target rate — LTT/LNF heuristics, efficiency |
 | 3 | [[ops-concepts/waiting-line-management]] | Variability → queues · **Kingman's formula** · Little's Law · pooling |
-| 4 | [[ops-concepts/forecasting]] | Time-series demand — moving averages, exponential smoothing, seasonality, regression, MAD/MSE |
+| 4 | [[ops-concepts/forecasting]] | Time-series demand — moving averages, exponential smoothing, seasonality, regression, MAD/MSE/MAPE |
+| 5 | [[ops-concepts/newsvendor]] | **Newsvendor** — single-season inventory under uncertainty · overage/underage · **critical ratio** C<sub>u</sub>/(C<sub>u</sub>+C<sub>o</sub>) · Q* = μ + zσ · overbooking & revenue management |
+| 6 | [[ops-concepts/mrp-erp]] | **MRP** — dependent-demand planning from MPS + BOM + item master · lot-sizing (L4L/FOQ) · explosion (GR/NR/PR/POR) · **ERP** evolution, benefits, pitfalls, trends |
+| 7 | [[ops-concepts/spc]] | **Statistical Process Control** — common vs assignable cause · x̄ & R control charts · **process capability** C<sub>p</sub> = (USL−LSL)/6σ · Six Sigma |
+| 8 | [[ops-concepts/esg-supply-chain]] | **ESG in supply chains** — moral hazard · supplier audits · disclosure law · penalty schemes · joint vs shared auditing |
 
 > Full index: [[ops-concepts/README]]
 
@@ -45,7 +49,6 @@ community: 1
 | [[ops-concepts/ops-5-2\|OPS 5-2]] | 2026-09-17 | Queueing, capacity, and service‑design fundamentals |
 | [[ops-concepts/ops-6-1\|OPS 6-1 — OPS #6-1 Forecasting Fundamentals]] | 2026-09-24 | From data to decisions: tools, error metrics, and operational impact |
 | [[ops-concepts/ops-6-2\|OPS 6-2 — OPS #6-2 Forecasting Overview]] | 2026-09-24 | Stationary, Seasonal, Trend methods & key calculations |
-| [[ops-concepts/test\|test]] | 2026-09-24 |  |
 | [[ops-concepts/ops-7-1\|OPS 7-1 — Seasonal Forecasting Workflow]] | 2026-10-01 | Isolate trend, handle seasonality, produce final forecast |
 | [[ops-concepts/ops-7-2\|OPS 7-2 — EOQ & Order Planning]] | 2026-10-01 | Balancing ordering & holding costs, accounting for MOQ, ROP and supplier dynamics |
 | [[ops-concepts/ops-7-3\|OPS 7-3]] | 2026-10-01 | Reorder‑point inventory control – from demand to order trigger |
