@@ -1,8 +1,15 @@
 ---
 title: "Modules 9–12 — Advanced Performance Management"
-tags: [management-accounting, module-9, module-10, module-11, module-12, variance-analysis, responsibility-accounting, segment-reporting]
-sources: ["Managerial Accounting: Comprehensive Study Guide (Modules 1–12)"]
-updated: 2026-08-12
+tags: [management-accounting, module-9, module-10, module-11, module-12, variance-analysis, flexible-budget, standard-costs, price-quantity-variance, fixed-overhead-variance, responsibility-accounting, segment-reporting]
+sources: ["Managerial Accounting: Comprehensive Study Guide (Modules 1–12)", "SMU ACCT102 (BT) Week 11 — Flexible Budget (adapted from McGraw-Hill)", "SMU ACCT102 (BT) Week 11 — Standard Costs and Variances (adapted from McGraw-Hill); worked figures from the deck's Glacier Peak / Hanson examples"]
+updated: 2026-10-29
+relations:
+  part-of: [management-accounting/index]
+pagerank: 0.0044
+betweenness: 0.0000
+eigenvector: 0.0091
+degree: 9
+community: 1
 ---
 
 <div class="dc-view">
@@ -25,34 +32,108 @@ updated: 2026-08-12
 <div class="dc-card"><div class="dc-eyebrow">The rule</div>A manager should be evaluated only on items <b>within their control</b></div>
 <div class="dc-card"><div class="dc-eyebrow">Why it matters</div>Charging a store manager for the CEO's salary is unfair — and destroys the measure's value as an incentive</div>
 </div>
-<div class="dc-callout warn">Connects back to [[m07-variable-vs-absorption-costing|Module 7]] — evaluate managers on absorption income and you hand them an incentive to <b>overproduce</b>. Internal evaluation therefore uses variable costing income.</div>
+<div class="dc-callout warn">Connects back to <b>Module 7</b> — evaluate managers on absorption income and you hand them an incentive to <b>overproduce</b>. Internal evaluation therefore uses variable costing income.</div>
 </div>
 
 # Modules 9–12 — Advanced Performance Management
 
 > [[management-accounting/index|← Management Accounting]] · Previous: [[m08-budgeting|Module 8 — Budgeting]]
 
-> [!note] Scope of this note
-> The source study guide covers Modules 9–12 as a single heading — **"Advanced Performance Management —
-> variance analysis, responsibility accounting, and segment reporting"** — with an outline only.
-> This note captures that outline and how it connects to the rest of the course; detailed formulas go in
-> here once the lecture material arrives.
-
 ---
 
 ## Variance Analysis
 
-Compare the budgets built in [[m08-budgeting|Module 8]] against **actual results**, then work out **why** they differ.
+Compare the budgets built in [[m08-budgeting|Module 8]] against **actual results**, then work out **why** they differ. Two nested breakdowns do this: first flex the budget to the actual activity level, then split each spending gap into **price** and **quantity**.
 
-The essential move is **splitting a total variance by cause**:
+### Step 1 — flex the budget (compare apples with apples)
 
-- **Price variance** — did we pay more or less per unit of input than planned? Usually purchasing's responsibility
-- **Quantity / efficiency variance** — did we use more or less input than planned? Usually production's responsibility
+A **static planning budget** is built for a *single* planned activity level. If actual activity differs, comparing actual costs to it is misleading — "apples vs oranges." *(Budget 100 units / $5,000 expense vs actual 120 units / $7,000 — is the manager overspending, or just busier?)*
 
-> [!example] Why splitting matters
-> "Materials cost £5,000 more than budget" supports no decision at all.
-> If it is a **price variance**, you renegotiate supply terms. If it is a **quantity variance**, you go after
-> waste and scrap on the line. Completely different responses.
+A **flexible budget** restates the budget at the **actual** activity level — showing what costs *should have been* for that activity (variable costs flex in proportion; fixed costs stay constant within the [[m05-cost-behaviour-estimation|relevant range]]). Laying the three columns side by side splits the total gap:
+
+$$\underbrace{\text{Static planning budget}}_{}\ \xrightarrow{\textbf{Activity variance}}\ \underbrace{\text{Flexible budget}}_{\text{same activity as actual}}\ \xrightarrow{\textbf{Revenue \& spending variances}}\ \underbrace{\text{Actual results}}_{}$$
+
+| Variance | Compares | Caused by |
+|---|---|---|
+| **Activity variance** | Flexible budget − Static planning budget | the activity level differing from plan (not cost control) |
+| **Revenue variance** *(revenue price variance)* | Actual revenue − Flexible-budget revenue | selling price ≠ planned |
+| **Spending variance** | Actual cost − Flexible-budget cost | input prices/usage ≠ planned |
+
+> [!tip] Label every variance **F** or **U**
+> **Favourable (F)**: actual revenue > budget, or actual cost < budget. **Unfavourable (U)**: the reverse. A favourable *cost* variance is not automatically "good news" — flex first, then judge.
+
+### Step 2 — standard costs and the standard cost card
+
+A **standard** is a benchmark: a **quantity standard** (how much input *should* be used) and a **price standard** (how much *should* be paid per unit of input). Together, for one unit of output, they give the **standard cost card**:
+
+| Input | Standard Qty (A) | Standard Price (B) | Standard cost (A×B) |
+|---|---|---|---|
+| Direct materials | 3.0 lbs | $4.00 / lb | $12.00 |
+| Direct labour | 2.5 hrs | $14.00 / hr | $35.00 |
+| Variable mfg. overhead | 2.5 hrs | $3.00 / hr | $7.50 |
+| **Total standard unit cost** | | | **$54.50** |
+
+### Step 3 — the general variance model (split spending into price × quantity)
+
+Four quantities, evaluated **at the actual output**:
+
+- **AQ** actual quantity of input used · **AP** actual price paid
+- **SQ** standard quantity *allowed for the actual output* · **SP** standard price
+
+$$\boxed{\text{Price variance} = AQ(AP - SP)} \qquad \boxed{\text{Quantity variance} = SP(AQ - SQ)}$$
+
+Read as a three-row ladder — the gaps between the rungs are the variances:
+
+| Row | Value | Gap |
+|---|---|---|
+| AQ × AP | actual cost | ↕ **Price variance** = AQ(AP − SP) |
+| AQ × SP | | ↕ **Quantity variance** = SP(AQ − SQ) |
+| SQ × SP | standard cost allowed | |
+
+The same model, renamed by input:
+
+| Input | "Price" side | "Quantity" side |
+|---|---|---|
+| Direct materials | **Materials price variance** | **Materials quantity variance** |
+| Direct labour | **Labour rate variance** | **Labour efficiency variance** |
+| Variable MOH | VMOH rate variance | VMOH efficiency variance *(calc not examinable)* |
+
+> [!example] Glacier Peak Outfitters — materials & labour
+> **Materials:** standard 0.1 kg/parka @ $5; actual 210 kg @ $4.90 to make 2,000 parkas → SQ = 0.1×2,000 = 200 kg.
+> Price = 210($4.90−$5) = **$21 F**; Quantity = $5(210−200) = **$50 U**; total **$29 U**.
+>
+> **Labour:** standard 1.2 hr/parka @ $10; actual 2,500 hr costing $26,250 (⇒ AP = $10.50) for 2,000 parkas → SQ = 1.2×2,000 = 2,400 hr.
+> Rate = 2,500($10.50−$10) = **$1,250 U**; Efficiency = $10(2,500−2,400) = **$1,000 U**; total **$2,250 U**.
+
+### Who owns it, and when it is isolated
+
+- **Materials price variance → purchasing manager**; **materials quantity variance → production manager**. The **standard** price is used in the quantity variance *on purpose*, so production is not blamed for purchasing's price result.
+- **Labour variances → production managers** (they control skill mix, motivation, supervision, training).
+- Variances are **not fully controllable by one person** — cheap material (price F) can cause more usage or more labour time (quantity/efficiency U), so causes interlink.
+- **Timing / isolation:** the **price variance is computed on the entire quantity *purchased*** (so purchasing problems surface early, even before use); the **quantity variance only on the quantity *used***.
+
+> [!example] Why "purchased vs used" matters
+> Standard 1.5 lb @ $4/Zippy; **purchased** 2,800 lb @ $3.90, **used** 1,700 lb to make 1,000 Zippies (SQ = 1,500 lb).
+> Price var (on purchased) = 2,800($3.90−$4) = **$280 F**. Quantity var (on used) = $4(1,700−1,500) = **$800 U**.
+
+### Fixed overhead — budget and volume variances
+
+Fixed overhead splits differently (there is no "price × quantity"):
+
+$$\text{Budget variance} = \text{Actual FOH} - \text{Budget FOH} \qquad \text{Volume variance} = \text{Budget FOH} - \text{Applied FOH} = FPOHR\,(DH - SH)$$
+
+where **Applied FOH** (standard costing) = fixed POHR × **standard hours allowed for actual output**, **DH** = denominator (budgeted) hours, **SH** = standard hours allowed, **FPOHR** = fixed portion of the predetermined overhead rate.
+
+> [!important] The volume variance is about *utilisation, not spending*
+> It is **favourable when actual activity exceeds planned** (you spread the same fixed cost over more output) and **does not measure over/under-spending** — only how fully the facility's capacity was used.
+
+> [!example] Fixed overhead
+> Budget FOH $270,000 over 30,000 units × 3 MH = 90,000 denominator hrs ⇒ FPOHR = $3/MH. Actual FOH $280,000; actual 28,000 units ⇒ SH allowed = 3×28,000 = 84,000.
+> Budget var = $280,000 − $270,000 = **$10,000 U**; Volume var = $3(90,000 − 84,000) = **$18,000 U**; total **$28,000 U**.
+
+### Which variances to investigate — management by exception
+
+Investigate the **largest** variances first, by **dollar amount or as a % of standard** (a 40%-of-standard oil variance beats a 1% flour variance even if smaller in dollars). Plotting variances on a **statistical control chart** flags those outside the normal band of random fluctuation — the same logic as [[ops-concepts/spc|statistical process control]] in Operations.
 
 ---
 

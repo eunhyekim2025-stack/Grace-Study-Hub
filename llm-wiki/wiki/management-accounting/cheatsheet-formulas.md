@@ -1,8 +1,8 @@
 ---
 title: "Formula Cheat Sheet & Glossary (Modules 1–12)"
 tags: [management-accounting, cheatsheet, formulas, glossary, exam-prep, abc, activity-rate, variance-analysis, budgeting, cost-hierarchy]
-sources: ["Managerial Accounting: Comprehensive Study Guide (Modules 1–12)", "SMU ACCT102 (BT) Week 1 — Cost concepts and Cost flows", "SMU ACCT102 (BT) Week 2 & 3 — Cost behaviour", "SMU ACCT102 (BT) Week 2 & 3 — CVP Analysis", "Cross-note enrichment from the subject's own module notes (m03 process costing, m04 ABC, m07 variable vs absorption, m08 budgeting, m09–12 performance management), 2026-10-11"]
-updated: 2026-10-11
+sources: ["Managerial Accounting: Comprehensive Study Guide (Modules 1–12)", "SMU ACCT102 (BT) Week 1 — Cost concepts and Cost flows", "SMU ACCT102 (BT) Week 2 & 3 — Cost behaviour", "SMU ACCT102 (BT) Week 2 & 3 — CVP Analysis", "Cross-note enrichment from the subject's own module notes (m03 process costing, m04 ABC, m07 variable vs absorption, m08 budgeting, m09–12 performance management), 2026-10-11", "SMU ACCT102 (BT) Week 11 — Flexible Budget & Standard Costs/Variances: price/quantity & fixed-overhead variance formulas, 2026-10-29"]
+updated: 2026-10-29
 relations:
   part-of: [management-accounting/index]
 pagerank: 0.0107
@@ -73,6 +73,11 @@ community: 1
 | **Unit product cost (absorption)** | Variable production cost per unit + (Fixed MO ÷ units **produced**) | Divide by units *made*, not sold — fewer units made ⇒ more fixed MO loaded onto each. The lever behind the [[m07-variable-vs-absorption-costing\|overproduction trap]] |
 | **Fixed MO deferred in inventory** | (Units produced − units sold) × Fixed MO per unit | The exact gap between absorption and variable net income when production ≠ sales |
 | **Inventory equation** | Beginning + added − ending = what left | Applies to raw materials, WIP and finished goods alike |
+| **Price variance** (M9–12) | $AQ(AP - SP)$ | "change in price × actual quantity." Materials **price** / labour **rate** variance. Computed on quantity **purchased** for materials |
+| **Quantity variance** (M9–12) | $SP(AQ - SQ)$ | "change in quantity × standard price." Materials **quantity** / labour **efficiency** variance. SQ = standard allowed for actual output; on quantity **used** |
+| **Flexible-budget chain** | Static → (activity var.) → **Flexible** → (revenue & spending var.) → Actual | Flex first, then judge. Activity var. = flexible − static; spending var. = actual − flexible cost |
+| **Fixed OH budget variance** | Actual FOH − Budget FOH | The pure over/under-spend on fixed overhead |
+| **Fixed OH volume variance** | Budget FOH − Applied FOH $= FPOHR(DH - SH)$ | Measures **utilisation**, not spending — favourable when activity > plan. Applied FOH = fixed POHR × standard hrs allowed |
 
 ---
 
