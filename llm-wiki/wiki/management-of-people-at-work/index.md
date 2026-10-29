@@ -4,10 +4,10 @@ tags: [moc]
 created: 2026-07-12
 updated: 2026-09-06
 kind: 주제
-pagerank: 0.0086
-betweenness: 0.0005
-eigenvector: 0.0116
-degree: 20
+pagerank: 0.0081
+betweenness: 0.0004
+eigenvector: 0.0388
+degree: 21
 community: 0
 ---
 
@@ -58,12 +58,13 @@ community: 0
 | [[management-of-people-at-work/mpw-3-2\|MPW 3-2 — Motivation & Performance]] | 2026-09-01 | Intensity/direction/persistence, expectancy theory, organizational justice, the dealership reward case |
 | [[management-of-people-at-work/mpw-4-1\|MPW 4-1]] | 2026-09-08 | Motivation, decision‑making models, biases, case studies |
 | [[management-of-people-at-work/mpw-4-2\|MPW 4-2]] | 2026-09-08 | Decision‑making biases across individual, group, and system levels |
-| [[management-of-people-at-work/5-1\|5-1 — Decision & Team Dynamics]] | 2026-09-15 | How defaults, biases, and group structures shape outcomes |
+| [[management-of-people-at-work/5-1\|MPW 5-1 — Decision & Team Dynamics]] | 2026-09-15 | How defaults, biases, and group structures shape outcomes |
 | [[management-of-people-at-work/mpw-5-2\|MPW 5-2]] | 2026-09-15 | Exam & project blueprint for success |
 | [[management-of-people-at-work/mpw-6-1\|MPW 6-1]] | 2026-09-22 | Team dynamics, influence, and decision‑making shortcuts |
 | [[management-of-people-at-work/mpw-6-2\|MPW 6-2]] | 2026-09-22 | Jury deliberation, persuasion tactics, and evidence reliability |
 | [[management-of-people-at-work/mpw-7-1\|MPW 7-1]] | 2026-09-29 | Negotiation fundamentals, traps, and preparation |
 | [[management-of-people-at-work/mpw-7-2\|MPW 7-2]] | 2026-09-29 | Multi‑issue negotiation fundamentals & tactics |
+| [[management-of-people-at-work/ai-and-the-future-of-work\|AI and the Future of Work]] | 2026-10-27 | What makes AI different (3 types · exponential vs linear) · trust (anthropomorphism · hallucination · **sycophancy**) · Kurzweil vs Narayanan · the **"perfect AI" (Spark)** thought experiment · learning/creativity/isolation tensions |
 | [[management-of-people-at-work/mpw-9-1\|MPW 9-1]] | 2026-10-13 | Negotiation prep & leadership styles |
 | [[management-of-people-at-work/mpw-9-2\|MPW 9-2 — Power in Organizations]] | 2026-10-13 | Forms, sources, effects, and ways to build personal power |
 | [[management-of-people-at-work/mpw-10-1\|MPW 10-1 — MPW #10‑1]] | 2026-10-20 | Leadership, Power, and Culture – core concepts & practical takeaways |
