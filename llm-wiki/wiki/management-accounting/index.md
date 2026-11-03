@@ -87,6 +87,7 @@ the whole arc runs [[m02-cost-concepts-job-order-costing|Module 2]] → [[m06-cv
 | [[management-accounting/ma-10-2\|MA 10-2]] | 2026-10-20 | Master budget components, cost allocation, cash budgeting, service‑industry nuances |
 | [[management-accounting/ma-11-1\|MA 11-1 — Variance Analysis Cycle]] | 2026-10-27 | From static budget to flexible budget, then decompose variances |
 | [[management-accounting/ma-11-2\|MA 11-2 — Variance Analysis Overview]] | 2026-10-28 | Calculate price & quantity variances to spot cost deviations |
+| [[management-accounting/ma-12-1\|MA 12-1 — Differential‑Cost Decision Analysis]] | 2026-11-03 | Identify alternatives, isolate relevant items, compare net outcomes |
 
 ## Quizzes
 > Auto-generated quizzes built from this subject's notes. New ones are added here automatically.
