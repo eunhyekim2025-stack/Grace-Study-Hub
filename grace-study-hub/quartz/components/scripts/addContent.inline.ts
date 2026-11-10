@@ -1644,6 +1644,15 @@ const w = window as unknown as { __shAddInit?: boolean }
 if (!w.__shAddInit) {
   w.__shAddInit = true
   document.addEventListener("click", onClick)
+  // Auto-attach: picking a file in the upload panel immediately uploads & saves
+  // it — no separate "첨부" button click needed. Runs the same submitFile path
+  // (password prompt + duplicate warning still apply).
+  document.addEventListener("change", (e) => {
+    const input = (e.target as HTMLElement)?.closest<HTMLInputElement>("#sh-file-input")
+    if (!input || !input.files || input.files.length === 0) return
+    const btn = document.querySelector<HTMLButtonElement>('[data-add-submit="file"]')
+    if (btn) submitFile(btn)
+  })
   document.addEventListener("click", (e) => {
     const btn = (e.target as HTMLElement)?.closest<HTMLButtonElement>(".sh-edit-btn")
     if (!btn) return

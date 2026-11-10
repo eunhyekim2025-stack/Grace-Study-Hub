@@ -190,7 +190,7 @@ const AddContentModal: QuartzComponent = ({ allFiles }: QuartzComponentProps) =>
 
           {/* ④ Attach an image/audio asset that notes embed with ![[...]] */}
           <div class="sh-field">
-            <label for="sh-file-input">파일</label>
+            <label for="sh-file-input">파일 — 선택하면 자동 첨부·저장</label>
             <input id="sh-file-input" class="sh-input" type="file" />
           </div>
           <p class="sh-modal-hint">
