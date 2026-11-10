@@ -1653,6 +1653,38 @@ if (!w.__shAddInit) {
     const btn = document.querySelector<HTMLButtonElement>('[data-add-submit="file"]')
     if (btn) submitFile(btn)
   })
+  // Drag & drop onto the (visible) upload panel: drop a file and it uploads &
+  // saves immediately — same submitFile path as selecting one.
+  const uploadPanel = (t: EventTarget | null): HTMLElement | null => {
+    const el = t as HTMLElement
+    const p = el?.closest?.('[data-panel="upload"]') as HTMLElement | null
+    return p && !p.hidden ? p : null
+  }
+  document.addEventListener("dragover", (e) => {
+    const p = uploadPanel(e.target)
+    if (!p) return
+    e.preventDefault() // required so the drop fires
+    if (e.dataTransfer) e.dataTransfer.dropEffect = "copy"
+    p.classList.add("sh-drop-hover")
+  })
+  document.addEventListener("dragleave", (e) => {
+    const p = uploadPanel(e.target)
+    if (p && !p.contains(e.relatedTarget as Node)) p.classList.remove("sh-drop-hover")
+  })
+  document.addEventListener("drop", (e) => {
+    const p = uploadPanel(e.target)
+    if (!p) return
+    e.preventDefault()
+    p.classList.remove("sh-drop-hover")
+    const file = e.dataTransfer?.files?.[0]
+    const input = document.getElementById("sh-file-input") as HTMLInputElement | null
+    if (!file || !input) return
+    const dt = new DataTransfer()
+    dt.items.add(file)
+    input.files = dt.files // show the name in the picker (does NOT fire change)
+    const btn = document.querySelector<HTMLButtonElement>('[data-add-submit="file"]')
+    if (btn) submitFile(btn)
+  })
   document.addEventListener("click", (e) => {
     const btn = (e.target as HTMLElement)?.closest<HTMLButtonElement>(".sh-edit-btn")
     if (!btn) return

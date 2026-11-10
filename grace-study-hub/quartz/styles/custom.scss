@@ -183,6 +183,12 @@ body[data-slug="index"] {
   border-radius: 16px;
   padding: 20px 22px;
 }
+// Drag-over highlight for the file upload panel (drop a file to auto-attach).
+.sh-panel.sh-drop-hover {
+  outline: 2px dashed var(--secondary);
+  outline-offset: -6px;
+  background: color-mix(in srgb, var(--secondary) 8%, var(--light));
+}
 .sh-dash-side {
   display: flex;
   flex-direction: column;
