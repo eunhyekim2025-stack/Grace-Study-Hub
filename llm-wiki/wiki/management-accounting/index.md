@@ -89,6 +89,7 @@ the whole arc runs [[m02-cost-concepts-job-order-costing|Module 2]] → [[m06-cv
 | [[management-accounting/ma-11-2\|MA 11-2 — Variance Analysis Overview]] | 2026-10-28 | Calculate price & quantity variances to spot cost deviations |
 | [[management-accounting/ma-12-1\|MA 12-1 — Differential‑Cost Decision Analysis]] | 2026-11-03 | Identify alternatives, isolate relevant items, compare net outcomes |
 | [[management-accounting/ma-12-2\|MA 12-2]] | 2026-11-03 | Managerial accounting: relevant‑cost analysis for special orders & further processing |
+| [[management-accounting/13-1\|13-1 — Capacity & Transfer Pricing Decision Framework]] | 2026-11-10 | Allocate scarce resources & set internal prices for profit maximization |
 
 ## Quizzes
 > Auto-generated quizzes built from this subject's notes. New ones are added here automatically.
