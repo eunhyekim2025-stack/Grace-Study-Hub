@@ -57,6 +57,7 @@ community: 1
 | [[ops-concepts/ops-12-1\|OPS 12-1]] | 2026-11-05 | Link design & performance quality, cost of quality, and SPC control |
 | [[ops-concepts/ops-12-2\|OPS 12-2]] | 2026-11-05 | SPC control‑chart & capability fundamentals |
 | [[ops-concepts/ops-13-2\|OPS 13-2]] | 2026-11-12 |  |
+| [[ops-concepts/ops-13-1\|OPS 13-1]] | 2026-11-12 | Sustainability in supply chains: ESG scope, sense‑response, and governance levers |
 
 ## Sources (raw/ops/)
 | Source | Description |
