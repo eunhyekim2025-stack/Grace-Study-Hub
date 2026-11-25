@@ -15,6 +15,11 @@ community: 0
 
 > [[index|← Subjects]]
 
+## Revision reference
+> One-stop chapter-by-chapter recap — theory · terms · cases · beyond-the-textbook (PPT, AI lecture, seminars).
+
+- [[management-of-people-at-work/mpw-chapter-reference|MPW — Chapter-by-Chapter Reference (all 18 chapters)]]
+
 ## Textbook chapters
 
 > Robbins & Judge, *Organizational Behavior* — one note per chapter: core summary + detail.
