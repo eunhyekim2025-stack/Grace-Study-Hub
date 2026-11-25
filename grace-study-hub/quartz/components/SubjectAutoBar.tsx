@@ -47,7 +47,12 @@ const SubjectAutoBar: QuartzComponent = ({ fileData, allFiles }: QuartzComponent
           </span>
         </div>
         <div class="sh-subjbar-actions">
-          <button class="sh-subjbar-btn ghost" data-sh-summarize data-sh-subject={subj.slug}>
+          <button
+            class="sh-subjbar-btn ghost"
+            data-sh-summary-toggle
+            data-sh-subject={subj.slug}
+            aria-expanded="false"
+          >
             Summarize subject
           </button>
           <button
@@ -59,6 +64,39 @@ const SubjectAutoBar: QuartzComponent = ({ fileData, allFiles }: QuartzComponent
             Build quiz →
           </button>
         </div>
+      </div>
+
+      {/* Revision-summary options — pick all chapters or specific ones. */}
+      <div class="sh-genquiz" data-sh-summary-panel hidden>
+        <label class="sh-genquiz-field">
+          <span>Scope</span>
+          <select class="sh-input" data-sh-summary-scope>
+            <option value="all" selected>
+              All chapters
+            </option>
+            <option value="specific">Specific chapters</option>
+          </select>
+        </label>
+        <label class="sh-genquiz-field sh-genquiz-wide">
+          <span>Chapters / topics (for "Specific chapters")</span>
+          <input
+            class="sh-input"
+            type="text"
+            data-sh-summary-chapters
+            placeholder="e.g. modules 9-12 · or newsvendor, SPC, MRP"
+          />
+        </label>
+        <p class="sh-modal-hint" style="grid-column:1/-1;margin:0">
+          All chapters = a broad recap of the whole subject. Specific chapters = a deeper, more detailed
+          summary of just the ones you name (drawn from their recordings, decks and notes).
+        </p>
+        <button
+          class="sh-subjbar-btn solid"
+          data-sh-summary-generate
+          data-sh-subject={subj.slug}
+        >
+          Generate summary
+        </button>
       </div>
 
       {/* Quiz options — opens under the bar (does NOT reuse the add-note modal).

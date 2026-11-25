@@ -249,7 +249,24 @@ function base64FromBytes(bytes: Uint8Array): string {
   return btoa(bin)
 }
 
+// One pick = one upload. The submit button is only disabled once post() runs,
+// but submitFile does a file read, a duplicate-check round trip and maybe a
+// confirm() first — a wide window in which a second trigger (auto-attach on
+// change, a drop, an impatient click on 첨부) starts a parallel upload. Both
+// then read the same branch head and the slower one's commit is rejected.
+let fileSubmitBusy = false
+
 async function submitFile(btn: HTMLButtonElement) {
+  if (fileSubmitBusy) return
+  fileSubmitBusy = true
+  try {
+    await submitFileInner(btn)
+  } finally {
+    fileSubmitBusy = false
+  }
+}
+
+async function submitFileInner(btn: HTMLButtonElement) {
   const input = document.getElementById("sh-file-input") as HTMLInputElement | null
   const file = input?.files?.[0]
   if (!file) {
@@ -307,7 +324,7 @@ async function submitFile(btn: HTMLButtonElement) {
     // where the server's name-clash guard still protects against overwrites.
   }
 
-  post(
+  await post(
     { type: "file", filename: file.name, subject, dataBase64: base64FromBytes(bytes), uploadAnyway },
     btn,
   )
@@ -1777,11 +1794,30 @@ if (!w.__shAddInit) {
       })
       return
     }
-    const sum = target?.closest<HTMLButtonElement>("[data-sh-summarize]")
-    if (sum) {
+    const sumToggle = target?.closest<HTMLElement>("[data-sh-summary-toggle]")
+    if (sumToggle) {
       e.preventDefault()
-      if (!confirm("이 과목의 노트로 복습 요약 노트를 생성할까요? (20~40초)")) return
-      runGenerate("summary", sum.dataset.shSubject || "", sum, {})
+      const panel = document.querySelector<HTMLElement>("[data-sh-summary-panel]")
+      if (panel) {
+        panel.hidden = !panel.hidden
+        sumToggle.setAttribute("aria-expanded", String(!panel.hidden))
+      }
+      return
+    }
+    const sumGen = target?.closest<HTMLButtonElement>("[data-sh-summary-generate]")
+    if (sumGen) {
+      e.preventDefault()
+      const scope = document.querySelector<HTMLSelectElement>("[data-sh-summary-scope]")?.value || "all"
+      const chapters = (
+        document.querySelector<HTMLInputElement>("[data-sh-summary-chapters]")?.value || ""
+      ).trim()
+      // Specific scope needs chapters named; "all" ignores the field (focus="").
+      if (scope === "specific" && !chapters) {
+        genStatus('어느 챕터인지 입력하거나 "All chapters"를 선택하세요.', "err")
+        return
+      }
+      const focus = scope === "specific" ? chapters : ""
+      runGenerate("summary", sumGen.dataset.shSubject || "", sumGen, { focus })
     }
   })
   // ── In-recording panels: calendar + note review (never touch REC) ────────

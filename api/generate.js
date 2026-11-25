@@ -65,32 +65,46 @@ async function getFile(path, token) {
 
 // Commit several files in ONE commit (Git Trees) — so a quiz note and the hub
 // row that lists it land together and trigger a single redeploy.
+// A concurrent site write (an upload, another save) can move the branch head
+// between reading it and pushing, which GitHub rejects with "<branch> is at
+// <sha> but expected <sha>". Rebuild on the new head and push again — see the
+// same loop in /api/add.
+const COMMIT_ATTEMPTS = 3
+
 async function commitFiles(files, message, token) {
-  const ref = await (await gh(`/repos/${REPO}/git/ref/heads/${BRANCH}`, token)).json()
-  const baseSha = ref?.object?.sha
-  if (!baseSha) throw new Error("could not read branch head")
-  const baseCommit = await (await gh(`/repos/${REPO}/git/commits/${baseSha}`, token)).json()
-  const treeRes = await gh(`/repos/${REPO}/git/trees`, token, {
-    method: "POST",
-    body: JSON.stringify({
-      base_tree: baseCommit.tree.sha,
-      tree: files.map((f) => ({ path: f.path, mode: "100644", type: "blob", content: f.content })),
-    }),
-  })
-  const tree = await treeRes.json()
-  if (!treeRes.ok) throw new Error(tree.message || "tree error")
-  const commitRes = await gh(`/repos/${REPO}/git/commits`, token, {
-    method: "POST",
-    body: JSON.stringify({ message, tree: tree.sha, parents: [baseSha] }),
-  })
-  const commit = await commitRes.json()
-  if (!commitRes.ok) throw new Error(commit.message || "commit error")
-  const updateRes = await gh(`/repos/${REPO}/git/refs/heads/${BRANCH}`, token, {
-    method: "PATCH",
-    body: JSON.stringify({ sha: commit.sha }),
-  })
-  if (!updateRes.ok) throw new Error((await updateRes.json())?.message || "ref update error")
-  return commit
+  let lastConflict = null
+  for (let attempt = 1; attempt <= COMMIT_ATTEMPTS; attempt++) {
+    const ref = await (await gh(`/repos/${REPO}/git/ref/heads/${BRANCH}`, token)).json()
+    const baseSha = ref?.object?.sha
+    if (!baseSha) throw new Error("could not read branch head")
+    const baseCommit = await (await gh(`/repos/${REPO}/git/commits/${baseSha}`, token)).json()
+    const treeRes = await gh(`/repos/${REPO}/git/trees`, token, {
+      method: "POST",
+      body: JSON.stringify({
+        base_tree: baseCommit.tree.sha,
+        tree: files.map((f) => ({ path: f.path, mode: "100644", type: "blob", content: f.content })),
+      }),
+    })
+    const tree = await treeRes.json()
+    if (!treeRes.ok) throw new Error(tree.message || "tree error")
+    const commitRes = await gh(`/repos/${REPO}/git/commits`, token, {
+      method: "POST",
+      body: JSON.stringify({ message, tree: tree.sha, parents: [baseSha] }),
+    })
+    const commit = await commitRes.json()
+    if (!commitRes.ok) throw new Error(commit.message || "commit error")
+    const updateRes = await gh(`/repos/${REPO}/git/refs/heads/${BRANCH}`, token, {
+      method: "PATCH",
+      body: JSON.stringify({ sha: commit.sha }),
+    })
+    if (updateRes.ok) return commit
+
+    const err = (await updateRes.json().catch(() => ({})))?.message || "ref update error"
+    if (!/but expected|fast forward/i.test(err)) throw new Error(err)
+    lastConflict = err
+    if (attempt < COMMIT_ATTEMPTS) await new Promise((r) => setTimeout(r, 400 * attempt))
+  }
+  throw new Error(`${lastConflict} — the branch kept moving under us; try again.`)
 }
 
 // Add a bullet under the hub's "## <heading>" section (creating the section at
@@ -260,7 +274,11 @@ function titleOf(md, path) {
 // Concatenate the subject's notes under a hard char budget. Fully includes notes
 // while budget remains; once spent, later notes contribute only their title, so
 // the model still knows the full scope of the subject.
-async function gatherNotes(prefixes, token, maxChars = MAX_INPUT_CHARS) {
+// `filterTokens` (optional): when set, keep only notes whose filename or title
+// contains one of the tokens — used by the summary's "specific chapters" scope,
+// which concentrates the whole budget on the chosen notes so they are sent in
+// FULL (not truncated to a title) and the summary can carry real detail.
+async function gatherNotes(prefixes, token, maxChars = MAX_INPUT_CHARS, filterTokens = null) {
   const paths = []
   for (const p of prefixes) {
     for (const fp of await listMarkdown(p, token)) {
@@ -269,14 +287,21 @@ async function gatherNotes(prefixes, token, maxChars = MAX_INPUT_CHARS) {
     }
     if (paths.length >= MAX_FILES) break
   }
-  if (!paths.length) return { text: "", count: 0 }
+  if (!paths.length) return { text: "", count: 0, matched: 0 }
 
+  const toks = Array.isArray(filterTokens) ? filterTokens.filter(Boolean) : null
   let budget = maxChars
   const parts = []
+  let matched = 0
   for (const fp of paths) {
     const file = await getFile(fp, token)
     if (!file) continue
     const title = titleOf(file.text, fp)
+    if (toks && toks.length) {
+      const hay = `${fp} ${title}`.toLowerCase()
+      if (!toks.some((t) => hay.includes(t))) continue // skip notes outside the chosen chapters
+    }
+    matched++
     const bodyFull = stripFrontmatter(file.text)
     if (budget <= 0) {
       parts.push(`## ${title}`) // outline only — out of budget
@@ -286,7 +311,7 @@ async function gatherNotes(prefixes, token, maxChars = MAX_INPUT_CHARS) {
     budget -= body.length
     parts.push(`## ${title}\n\n${body}`)
   }
-  return { text: parts.join("\n\n---\n\n"), count: paths.length }
+  return { text: parts.join("\n\n---\n\n"), count: matched, matched }
 }
 
 async function groqChat(payload, apiKey) {
@@ -553,30 +578,37 @@ async function genQuiz(label, notes, count, difficulty, apiKey, exemplars, opts 
   return { title, tags: ["quiz", "auto-generated"], body }
 }
 
-async function genSummary(label, notes, apiKey) {
+async function genSummary(label, notes, apiKey, focus = "") {
+  const scopeLine = focus
+    ? `SCOPE: Summarise ONLY the chapters/topics the student asked for: "${focus}". The notes below have ` +
+      `already been narrowed to these — cover them in real DEPTH.\n\n`
+    : ``
   const prompt =
     `You are writing a REVISION SUMMARY of the subject "${label}" for a student, based ONLY on ` +
-    `their own study notes below. Write everything in ENGLISH.\n\n` +
-    `Goal: a clean, scannable recap the student can revise from quickly — the core concepts, the ` +
-    `key rules and formulas, and how the topics connect.\n\n` +
+    `their own study notes below (lecture recordings, slide decks and other notes). Write everything in ENGLISH.\n\n` +
+    scopeLine +
+    `Goal: a recap the student can revise from — the core concepts AND the important details: key rules, ` +
+    `formulas, definitions, the specific numbers/steps of worked examples, and how the topics connect. ` +
+    `**Length is not a constraint — prefer completeness over brevity.** Do not drop a detail just to keep it short; ` +
+    `if a note gives a worked example, a formula, or a concrete figure, carry it through.\n\n` +
     `STRUCTURE — plain Markdown only. Do NOT output any raw-HTML / "dc-view" block, no frontmatter, ` +
     `no top-level "# title", no code fences:\n` +
-    `1. Open with a "> [!summary] Key takeaways" callout — 5–8 one-line bullets covering the biggest ideas of the whole subject.\n` +
-    `2. Then one "## <Topic>" section per MAJOR topic, in a sensible order. Each: a one-line intro, then TIGHT bullets (≤ 2 lines each) of the must-know points. Put each key rule or definition in a "> [!info]" callout and each caution in "> [!warning]".\n` +
+    `1. Open with a "> [!summary] Key takeaways" callout — 5–8 one-line bullets covering the biggest ideas.\n` +
+    `2. Then one "## <Topic>" section per MAJOR topic, in a sensible order. Each: a one-line intro, then bullets of the must-know points — include the supporting detail (the formula, the example's numbers, the exception). Put each key rule or definition in a "> [!info]" callout, each caution in "> [!warning]", and a short worked example in a "> [!example]" callout when the notes have one.\n` +
     `3. Use a Markdown TABLE whenever you compare things or list term→meaning or attribute→value pairs.\n` +
-    `4. If the subject uses formulas, add a "## Key formulas" section that states each one explicitly.\n` +
+    `4. If the material uses formulas, add a "## Key formulas" section that states each one explicitly (with what each symbol means).\n` +
     `5. End with a "## Key terms" table (| Term | Meaning |) of the most important terms.\n\n` +
     `COVERAGE RULES — this is where auto-summaries usually fail, so follow them exactly:\n` +
-    `- Some notes below appear as just a "## <title>" with little or no body (they were truncated to fit). Do NOT invent content for them, and do NOT create an empty or one-line section for a topic you have no real material on — simply OMIT it. A shorter summary that is fully filled in is far better than a long one full of empty headings.\n` +
+    `- Some notes below may appear as just a "## <title>" with little or no body (truncated to fit). Do NOT invent content for them, and do NOT create an empty or one-line section for a topic you have no real material on — simply OMIT it.\n` +
     `- Cover the topics you DO have substance for thoroughly and accurately; never fabricate facts not in the notes.\n` +
     `- GROUP closely related notes into a single topic section rather than making one section per note.\n\n` +
     `NOTES:\n"""\n${notes}\n"""`
   const body = await groqChat(
-    { messages: [{ role: "user", content: prompt }], max_tokens: 4000, temperature: 0.35 },
+    { messages: [{ role: "user", content: prompt }], max_tokens: 5200, temperature: 0.35 },
     apiKey,
   )
   if (!body.trim()) throw Object.assign(new Error("The model returned an empty summary — try again."), { status: 502 })
-  const title = `${label} — Revision summary`
+  const title = focus ? `${label} — Revision summary (${focus})` : `${label} — Revision summary`
   return { title, tags: ["summary", "auto-generated"], body }
 }
 
@@ -637,9 +669,24 @@ export default async function handler(req, res) {
   // than a quiz — fewer notes get truncated to title-only, which is what left
   // some concepts empty. Kept under Groq's per-minute token ceiling.
   if (kind === "summary") noteBudget = 14000
-  const { text: notes, count: noteCount } = await gatherNotes(prefixes, token, noteBudget)
+  // Summary "specific chapters" scope: focus becomes a filter so only the chosen
+  // notes are gathered (and the whole budget concentrates on them → more detail).
+  const summaryTokens =
+    kind === "summary" && focus
+      ? focus.toLowerCase().split(/[,\s]+/).map((t) => t.trim()).filter((t) => t.length >= 2)
+      : null
+  const { text: notes, count: noteCount } = await gatherNotes(
+    prefixes,
+    token,
+    noteBudget,
+    summaryTokens,
+  )
   if (!notes.trim() || noteCount === 0) {
-    return res.status(400).json({ error: "This subject has no notes yet — add some notes first." })
+    const msg =
+      summaryTokens && summaryTokens.length
+        ? `No notes matched "${focus}". Check the chapter/topic names, or leave it blank to summarise all chapters.`
+        : "This subject has no notes yet — add some notes first."
+    return res.status(400).json({ error: msg })
   }
 
   // Generate.
@@ -647,7 +694,7 @@ export default async function handler(req, res) {
   try {
     out =
       kind === "summary"
-        ? await genSummary(label, notes, apiKey)
+        ? await genSummary(label, notes, apiKey, focus)
         : await genQuiz(label, notes, count, difficulty, apiKey, exemplars, { qtype, style, focus, explain })
   } catch (e) {
     if (e.status === 429) {
