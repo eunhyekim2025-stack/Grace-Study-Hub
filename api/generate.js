@@ -584,27 +584,28 @@ async function genSummary(label, notes, apiKey, focus = "") {
       `already been narrowed to these — cover them in real DEPTH.\n\n`
     : ``
   const prompt =
-    `You are writing a REVISION SUMMARY of the subject "${label}" for a student, based ONLY on ` +
-    `their own study notes below (lecture recordings, slide decks and other notes). Write everything in ENGLISH.\n\n` +
+    `You are writing a DEEP REVISION REFERENCE for the subject "${label}" for a student, based ONLY on ` +
+    `their own study notes below (lecture recordings, slide decks, textbook notes and other notes). Write everything in ENGLISH.\n\n` +
     scopeLine +
-    `Goal: a recap the student can revise from — the core concepts AND the important details: key rules, ` +
-    `formulas, definitions, the specific numbers/steps of worked examples, and how the topics connect. ` +
-    `**Length is not a constraint — prefer completeness over brevity.** Do not drop a detail just to keep it short; ` +
-    `if a note gives a worked example, a formula, or a concrete figure, carry it through.\n\n` +
-    `STRUCTURE — plain Markdown only. Do NOT output any raw-HTML / "dc-view" block, no frontmatter, ` +
-    `no top-level "# title", no code fences:\n` +
-    `1. Open with a "> [!summary] Key takeaways" callout — 5–8 one-line bullets covering the biggest ideas.\n` +
-    `2. Then one "## <Topic>" section per MAJOR topic, in a sensible order. Each: a one-line intro, then bullets of the must-know points — include the supporting detail (the formula, the example's numbers, the exception). Put each key rule or definition in a "> [!info]" callout, each caution in "> [!warning]", and a short worked example in a "> [!example]" callout when the notes have one.\n` +
-    `3. Use a Markdown TABLE whenever you compare things or list term→meaning or attribute→value pairs.\n` +
-    `4. If the material uses formulas, add a "## Key formulas" section that states each one explicitly (with what each symbol means).\n` +
-    `5. End with a "## Key terms" table (| Term | Meaning |) of the most important terms.\n\n` +
+    `#1 RULE — EXPLAIN, DON'T JUST LIST. Never output a bare list of bold terms with no explanation. ` +
+    `Every concept must be *explained* in a sentence or two: what it is, the mechanism / how it works, and why it matters. ` +
+    `A reader who has never seen the term should understand it from your line. Carry through the supporting detail — ` +
+    `the specific numbers and steps of worked examples, formulas, named studies, exceptions. **Length is not a constraint; prefer completeness.**\n\n` +
+    `STRUCTURE — plain Markdown only (no raw-HTML / "dc-view", no frontmatter, no top-level "# title", no code fences):\n` +
+    `1. Open with a "> [!summary] Key takeaways" callout — 5–8 one-line bullets of the biggest ideas.\n` +
+    `2. Then ONE "## <Topic / Chapter>" section per major topic, in a sensible order. Inside each section, use these labelled parts (skip a part only if the notes truly have nothing for it):\n` +
+    `   - **Theory & concepts** — the frameworks, each EXPLAINED in 1–2 sentences (not just named). Use bullets.\n` +
+    `   - **Key terms** — a Markdown table "| Term | Meaning |" giving the real DEFINITION of each important term (this is the part students most need; never replace it with a bare bold list).\n` +
+    `   - **Cases & examples** — the named examples/studies the notes mention, each with one line on what it shows.\n` +
+    `   - **Beyond the textbook** — anything non-textbook the notes contain for this topic (lecture recordings, slide-deck specifics, AI material, real-world cases). Omit if none.\n` +
+    `3. If the subject uses formulas, state each one explicitly with what every symbol means (inside the relevant section or a "## Key formulas" section).\n\n` +
     `COVERAGE RULES — this is where auto-summaries usually fail, so follow them exactly:\n` +
-    `- Some notes below may appear as just a "## <title>" with little or no body (truncated to fit). Do NOT invent content for them, and do NOT create an empty or one-line section for a topic you have no real material on — simply OMIT it.\n` +
-    `- Cover the topics you DO have substance for thoroughly and accurately; never fabricate facts not in the notes.\n` +
-    `- GROUP closely related notes into a single topic section rather than making one section per note.\n\n` +
+    `- Some notes below may appear as just a "## <title>" with little or no body (truncated to fit). Do NOT invent content for them, and do NOT create an empty or one-line section for a topic you have no real material on — simply OMIT it. A shorter reference that is fully explained beats a long one full of empty headings.\n` +
+    `- Never fabricate facts, numbers or definitions not supported by the notes.\n` +
+    `- GROUP closely related notes into one topic section (e.g. a chapter note + its lecture recording) rather than one section per note.\n\n` +
     `NOTES:\n"""\n${notes}\n"""`
   const body = await groqChat(
-    { messages: [{ role: "user", content: prompt }], max_tokens: 5200, temperature: 0.35 },
+    { messages: [{ role: "user", content: prompt }], max_tokens: 5600, temperature: 0.3 },
     apiKey,
   )
   if (!body.trim()) throw Object.assign(new Error("The model returned an empty summary — try again."), { status: 502 })
