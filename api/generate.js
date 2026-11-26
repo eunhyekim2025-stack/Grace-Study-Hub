@@ -278,6 +278,25 @@ function titleOf(md, path) {
 // contains one of the tokens — used by the summary's "specific chapters" scope,
 // which concentrates the whole budget on the chosen notes so they are sent in
 // FULL (not truncated to a title) and the summary can carry real detail.
+// Derive a course-order sort key from a note's filename so a revision summary
+// comes out chapter-by-chapter in the order the subject is taught. Reads the
+// chapter / module / week / session number encoded in the name (ch01, module 7,
+// m09-12, week-5, or a seminar "3-1" / "ops-5-2"). Unnumbered notes (cheatsheets,
+// readings, index) sort last.
+function courseOrderKey(fp) {
+  const base = String(fp).split("/").pop().toLowerCase().replace(/\.md$/, "")
+  let m
+  if ((m = base.match(/\b(?:ch(?:apter)?|m(?:odule)?|wk|week|unit|session|sess)[-_ ]?0*(\d+)/))) {
+    const sec = base.match(/\b(?:ch(?:apter)?|m(?:odule)?|wk|week|unit|session|sess)[-_ ]?0*\d+[-_]0*(\d+)/)
+    return [parseInt(m[1], 10), sec ? parseInt(sec[1], 10) : 0]
+  }
+  if ((m = base.match(/(?:^|[-_])(\d+)[-_](\d+)(?:$|[-_])/))) {
+    return [parseInt(m[1], 10), parseInt(m[2], 10)]
+  }
+  if ((m = base.match(/(?:^|[-_])(\d+)(?:$|[-_])/))) return [parseInt(m[1], 10), 0]
+  return [999, 0]
+}
+
 async function gatherNotes(prefixes, token, maxChars = MAX_INPUT_CHARS, filterTokens = null) {
   const paths = []
   for (const p of prefixes) {
@@ -288,6 +307,14 @@ async function gatherNotes(prefixes, token, maxChars = MAX_INPUT_CHARS, filterTo
     if (paths.length >= MAX_FILES) break
   }
   if (!paths.length) return { text: "", count: 0, matched: 0 }
+
+  // Order notes by course sequence (chapter/module/week asc) so the summary is
+  // laid out in teaching order, with unnumbered notes trailing.
+  paths.sort((a, b) => {
+    const ka = courseOrderKey(a)
+    const kb = courseOrderKey(b)
+    return ka[0] - kb[0] || ka[1] - kb[1] || a.localeCompare(b)
+  })
 
   const toks = Array.isArray(filterTokens) ? filterTokens.filter(Boolean) : null
   let budget = maxChars
@@ -591,9 +618,13 @@ async function genSummary(label, notes, apiKey, focus = "") {
     `Every concept must be *explained* in a sentence or two: what it is, the mechanism / how it works, and why it matters. ` +
     `A reader who has never seen the term should understand it from your line. Carry through the supporting detail — ` +
     `the specific numbers and steps of worked examples, formulas, named studies, exceptions. **Length is not a constraint; prefer completeness.**\n\n` +
+    `ORDER — organise the whole summary CHAPTER BY CHAPTER, in the order the subject is taught. ` +
+    `The notes below are already arranged in course order (by chapter / module / week number). ` +
+    `Make ONE section per chapter/module and keep that ascending teaching order; put any ` +
+    `general/cross-chapter material (cheat-sheets, key formulas, overarching terms) AFTER the chapters, at the end.\n\n` +
     `STRUCTURE — plain Markdown only (no raw-HTML / "dc-view", no frontmatter, no top-level "# title", no code fences):\n` +
     `1. Open with a "> [!summary] Key takeaways" callout — 5–8 one-line bullets of the biggest ideas.\n` +
-    `2. Then ONE "## <Topic / Chapter>" section per major topic, in a sensible order. Inside each section, use these labelled parts (skip a part only if the notes truly have nothing for it):\n` +
+    `2. Then ONE "## <Chapter N — Title>" section per chapter/module, IN ASCENDING COURSE ORDER (chapter 1 first). Lead each heading with its chapter/module/week number when the notes give one. Inside each section, use these labelled parts (skip a part only if the notes truly have nothing for it):\n` +
     `   - **Theory & concepts** — the frameworks, each EXPLAINED in 1–2 sentences (not just named). Use bullets.\n` +
     `   - **Key terms** — a Markdown table "| Term | Meaning |" giving the real DEFINITION of each important term (this is the part students most need; never replace it with a bare bold list).\n` +
     `   - **Cases & examples** — the named examples/studies the notes mention, each with one line on what it shows.\n` +
