@@ -66,30 +66,36 @@ const SubjectAutoBar: QuartzComponent = ({ fileData, allFiles }: QuartzComponent
         </div>
       </div>
 
-      {/* Revision-summary options — pick all chapters or specific ones. */}
-      <div class="sh-genquiz" data-sh-summary-panel hidden>
-        <label class="sh-genquiz-field">
+      {/* Revision-summary options — pick all chapters or specific ones.
+          The "Specific chapters" input only appears when that scope is chosen,
+          so "All chapters" stays a clean one-choice panel. */}
+      <div class="sh-genquiz sh-genquiz-summary" data-sh-summary-panel hidden>
+        <div class="sh-genquiz-head">Revision summary</div>
+        <label class="sh-genquiz-field sh-genquiz-wide">
           <span>Scope</span>
           <select class="sh-input" data-sh-summary-scope>
             <option value="all" selected>
-              All chapters
+              All chapters — broad recap of the whole subject
             </option>
-            <option value="specific">Specific chapters</option>
+            <option value="specific">Specific chapters — deeper, detailed</option>
           </select>
         </label>
-        <label class="sh-genquiz-field sh-genquiz-wide">
-          <span>Chapters / topics (for "Specific chapters")</span>
+        <label
+          class="sh-genquiz-field sh-genquiz-wide"
+          data-sh-summary-chapters-field
+          hidden
+        >
+          <span>Which chapters / topics?</span>
           <input
             class="sh-input"
             type="text"
             data-sh-summary-chapters
             placeholder="e.g. modules 9-12 · or newsvendor, SPC, MRP"
           />
+          <small class="sh-modal-hint" style="margin:0;font-weight:400">
+            Pulls from these chapters' recordings, decks and notes for a more detailed summary.
+          </small>
         </label>
-        <p class="sh-modal-hint" style="grid-column:1/-1;margin:0">
-          All chapters = a broad recap of the whole subject. Specific chapters = a deeper, more detailed
-          summary of just the ones you name (drawn from their recordings, decks and notes).
-        </p>
         <button
           class="sh-subjbar-btn solid"
           data-sh-summary-generate

@@ -1657,6 +1657,17 @@ function closeNote() {
   if (content) content.innerHTML = "" // drop the note from the DOM
 }
 
+// Show/hide the revision-summary "which chapters" field based on the scope
+// choice, so "All chapters" shows just one control and nothing irrelevant.
+function setSummaryScope(specific: boolean) {
+  const field = document.querySelector<HTMLElement>("[data-sh-summary-chapters-field]")
+  if (field) field.hidden = !specific
+  if (specific) {
+    const input = document.querySelector<HTMLInputElement>("[data-sh-summary-chapters]")
+    if (input) input.focus()
+  }
+}
+
 const w = window as unknown as { __shAddInit?: boolean }
 if (!w.__shAddInit) {
   w.__shAddInit = true
@@ -1666,9 +1677,16 @@ if (!w.__shAddInit) {
   // (password prompt + duplicate warning still apply).
   document.addEventListener("change", (e) => {
     const input = (e.target as HTMLElement)?.closest<HTMLInputElement>("#sh-file-input")
-    if (!input || !input.files || input.files.length === 0) return
-    const btn = document.querySelector<HTMLButtonElement>('[data-add-submit="file"]')
-    if (btn) submitFile(btn)
+    if (input && input.files && input.files.length > 0) {
+      const btn = document.querySelector<HTMLButtonElement>('[data-add-submit="file"]')
+      if (btn) submitFile(btn)
+      return
+    }
+    // Revision-summary scope: show the "which chapters" field only for "Specific".
+    const scope = (e.target as HTMLElement)?.closest<HTMLSelectElement>("[data-sh-summary-scope]")
+    if (scope) {
+      setSummaryScope(scope.value === "specific")
+    }
   })
   // Drag & drop onto the (visible) upload panel: drop a file and it uploads &
   // saves immediately — same submitFile path as selecting one.
@@ -1801,6 +1819,12 @@ if (!w.__shAddInit) {
       if (panel) {
         panel.hidden = !panel.hidden
         sumToggle.setAttribute("aria-expanded", String(!panel.hidden))
+        // Open on the clean "All chapters" state each time.
+        if (!panel.hidden) {
+          const sel = panel.querySelector<HTMLSelectElement>("[data-sh-summary-scope]")
+          if (sel) sel.value = "all"
+          setSummaryScope(false)
+        }
       }
       return
     }

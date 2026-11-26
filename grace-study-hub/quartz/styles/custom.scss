@@ -2597,6 +2597,21 @@ table thead tr {
   border-radius: 12px;
   background: var(--light);
 }
+// Revision-summary panel reads as a clean vertical card (one control per row)
+// rather than a wrapping row of inline fields.
+.sh-genquiz-summary {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+.sh-genquiz-head {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--dark);
+}
+.sh-genquiz-summary .sh-subjbar-btn.solid {
+  align-self: flex-start;
+}
 .sh-genquiz-field {
   display: flex;
   flex-direction: column;
