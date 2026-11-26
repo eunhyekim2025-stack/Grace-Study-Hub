@@ -66,43 +66,50 @@ const SubjectAutoBar: QuartzComponent = ({ fileData, allFiles }: QuartzComponent
         </div>
       </div>
 
-      {/* Revision-summary options — pick all chapters or specific ones.
-          The "Specific chapters" input only appears when that scope is chosen,
-          so "All chapters" stays a clean one-choice panel. */}
-      <div class="sh-genquiz sh-genquiz-summary" data-sh-summary-panel hidden>
-        <div class="sh-genquiz-head">Revision summary</div>
-        <label class="sh-genquiz-field sh-genquiz-wide">
-          <span>Scope</span>
-          <select class="sh-input" data-sh-summary-scope>
-            <option value="all" selected>
-              All chapters — broad recap of the whole subject
-            </option>
-            <option value="specific">Specific chapters — deeper, detailed</option>
-          </select>
-        </label>
-        <label
-          class="sh-genquiz-field sh-genquiz-wide"
-          data-sh-summary-chapters-field
-          hidden
-        >
-          <span>Which chapters / topics?</span>
-          <input
-            class="sh-input"
-            type="text"
-            data-sh-summary-chapters
-            placeholder="e.g. modules 9-12 · or newsvendor, SPC, MRP"
-          />
-          <small class="sh-modal-hint" style="margin:0;font-weight:400">
-            Pulls from these chapters' recordings, decks and notes for a more detailed summary.
-          </small>
-        </label>
-        <button
-          class="sh-subjbar-btn solid"
-          data-sh-summary-generate
-          data-sh-subject={subj.slug}
-        >
-          Generate summary
-        </button>
+      {/* Revision-summary options open as a MODAL (own window), not an inline
+          panel. Scope picks all chapters or specific ones; the "Specific
+          chapters" input only appears when that scope is chosen. */}
+      <div class="sh-modal" data-sh-summary-modal hidden>
+        <div class="sh-modal-backdrop" data-sh-summary-close></div>
+        <div class="sh-modal-card" role="dialog" aria-modal="true" aria-label="Revision summary">
+          <div class="sh-modal-tabs">
+            <span class="sh-modal-title">✦ Revision summary</span>
+            <button class="sh-modal-x" data-sh-summary-close aria-label="닫기">
+              ✕
+            </button>
+          </div>
+          <div class="sh-field">
+            <label>Scope</label>
+            <select class="sh-input" data-sh-summary-scope>
+              <option value="all" selected>
+                All chapters — broad recap of the whole subject
+              </option>
+              <option value="specific">Specific chapters — deeper, detailed</option>
+            </select>
+          </div>
+          <div class="sh-field" data-sh-summary-chapters-field hidden>
+            <label>Which chapters / topics?</label>
+            <input
+              class="sh-input"
+              type="text"
+              data-sh-summary-chapters
+              placeholder="e.g. modules 9-12 · or newsvendor, SPC, MRP"
+            />
+            <p class="sh-modal-hint" style="margin:6px 0 0">
+              Pulls from these chapters' recordings, decks and notes for a more detailed summary.
+            </p>
+          </div>
+          <div class="sh-modal-actions">
+            <button
+              class="sh-subjbar-btn solid"
+              data-sh-summary-generate
+              data-sh-subject={subj.slug}
+            >
+              Generate summary
+            </button>
+          </div>
+          <div class="sh-gen-status" data-sh-summary-status hidden></div>
+        </div>
       </div>
 
       {/* Quiz options — opens under the bar (does NOT reuse the add-note modal).

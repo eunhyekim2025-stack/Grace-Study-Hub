@@ -1442,6 +1442,12 @@ function genSecret(): string {
 }
 
 function genStatusEl(): HTMLElement | null {
+  // While the revision-summary modal is open, show progress inside it.
+  const modal = document.querySelector<HTMLElement>("[data-sh-summary-modal]")
+  if (modal && !modal.hidden) {
+    const inModal = modal.querySelector<HTMLElement>("[data-sh-summary-status]")
+    if (inModal) return inModal
+  }
   return document.querySelector<HTMLElement>("[data-sh-gen-status]")
 }
 
@@ -1815,17 +1821,30 @@ if (!w.__shAddInit) {
     const sumToggle = target?.closest<HTMLElement>("[data-sh-summary-toggle]")
     if (sumToggle) {
       e.preventDefault()
-      const panel = document.querySelector<HTMLElement>("[data-sh-summary-panel]")
-      if (panel) {
-        panel.hidden = !panel.hidden
-        sumToggle.setAttribute("aria-expanded", String(!panel.hidden))
-        // Open on the clean "All chapters" state each time.
-        if (!panel.hidden) {
-          const sel = panel.querySelector<HTMLSelectElement>("[data-sh-summary-scope]")
-          if (sel) sel.value = "all"
-          setSummaryScope(false)
+      const modal = document.querySelector<HTMLElement>("[data-sh-summary-modal]")
+      if (modal) {
+        modal.hidden = false
+        sumToggle.setAttribute("aria-expanded", "true")
+        // Open on the clean "All chapters" state with a fresh status line.
+        const sel = modal.querySelector<HTMLSelectElement>("[data-sh-summary-scope]")
+        if (sel) sel.value = "all"
+        setSummaryScope(false)
+        const st = modal.querySelector<HTMLElement>("[data-sh-summary-status]")
+        if (st) {
+          st.hidden = true
+          st.textContent = ""
         }
       }
+      return
+    }
+    const sumClose = target?.closest<HTMLElement>("[data-sh-summary-close]")
+    if (sumClose) {
+      e.preventDefault()
+      const modal = document.querySelector<HTMLElement>("[data-sh-summary-modal]")
+      if (modal) modal.hidden = true
+      document
+        .querySelector<HTMLElement>("[data-sh-summary-toggle]")
+        ?.setAttribute("aria-expanded", "false")
       return
     }
     const sumGen = target?.closest<HTMLButtonElement>("[data-sh-summary-generate]")
@@ -1911,7 +1930,16 @@ if (!w.__shAddInit) {
   })
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeModal()
+    if (e.key !== "Escape") return
+    const sumModal = document.querySelector<HTMLElement>("[data-sh-summary-modal]")
+    if (sumModal && !sumModal.hidden) {
+      sumModal.hidden = true
+      document
+        .querySelector<HTMLElement>("[data-sh-summary-toggle]")
+        ?.setAttribute("aria-expanded", "false")
+      return
+    }
+    closeModal()
   })
   window.addEventListener("hashchange", initFromHash)
 }
