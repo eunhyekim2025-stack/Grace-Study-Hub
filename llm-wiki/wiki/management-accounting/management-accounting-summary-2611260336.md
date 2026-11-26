@@ -2,141 +2,216 @@
 title: "Management accounting — Revision summary"
 tags: [summary, auto-generated]
 created: 2026-11-26
+updated: 2026-11-26
 ---
 
-> [!summary] Key takeaways  
-- Rank products by **contribution margin per constrained‑resource unit**; allocate the scarce resource to the highest‑ranked product first.  
-- A transfer‑price negotiation is feasible only when the seller’s minimum price (its opportunity cost) and the buyer’s maximum price (the cheaper of external purchase or total internal cost) overlap.  
-- Only **avoidable (relevant) costs** should be used in both capacity and transfer‑price decisions; sunk or allocated fixed costs are ignored.  
-- Relieve a bottleneck by subcontracting, adding capacity, or redesigning the process; otherwise the firm may have to turn down profitable internal sales.  
-- Mis‑aligned internal prices can turn a firm‑wide optimal plan into a sub‑optimal one, even when each division acts rationally.  
+> [!summary] Key takeaways
+> - The course is one arc in **teaching order**: **① what did it cost to make? (M1–4) → ② how many must we sell to break even? (M5–7) → ③ did it go to plan, and what should we decide? (M8–12)**.
+> - **Managerial** accounting is for insiders, future-focused, segmented and rule-free; **financial** accounting is for outsiders, past-focused and GAAP-bound — *different purpose, different answer*.
+> - Product cost = **DM + DL + MOH**; overhead is applied with a **predetermined overhead rate (POHR)**, refined by **ABC** when products consume resources unevenly.
+> - **Cost behaviour** (fixed/variable/mixed) feeds **CVP**: contribution margin drives break-even, target profit, margin of safety and operating leverage.
+> - Control closes the loop: **budgets → variances (price × quantity) → responsibility & segment reporting**, and **relevant-cost / transfer-price** logic guides the final decisions.
 
-## Capacity‑constrained product selection  
+## Module 1 — Introduction to Management Accounting
 
-**Theory & concepts**  
-- Identify the **constrained resource** (e.g., machine minutes, labor hours, on‑hand inventory parts) that limits overall output.  
-- Compute each product’s **contribution margin (CM)** per unit: Sales − Variable costs.  
-- Determine how many units of the constrained resource each product consumes.  
-- Derive **CM per resource unit** = CM ÷ resource use; this normalises profit contribution to the scarce factor.  
-- Rank products by this per‑unit figure and allocate the limited capacity from the highest rank down until the resource is exhausted or demand is satisfied.  
+**Theory & concepts**
+- Accounting splits on one question — *who is the number for?* **Financial** serves outsiders (investors, lenders, government) making decisions *about* the firm; **managerial** serves insiders making decisions *for* the firm.
+- Managerial reports are **segmented, fast, detailed and format-free** by design: managers need to *decide*, not to be comparable across firms. "No rules" is a feature — the report takes whatever shape the decision requires.
 
-**Key terms**  
+**Key terms**
 
 | Term | Meaning |
 |------|---------|
-| Constraint | Any limited resource (machine time, labor, inventory) that caps total production. |
-| Contribution margin per resource unit | CM ÷ amount of the constrained resource used; the basis for ranking products when capacity is scarce. |
-| Bottleneck | The specific constraint that determines the maximum possible output of the whole system. |
-| Relevant cost | Cost that changes with the decision; excludes sunk or unavoidable fixed costs. |
-| Opportunity cost | The benefit foregone by not using a resource in its next best alternative use. |
+| Financial accounting | Past-focused, GAAP/IFRS-regulated reporting for external users; whole-company scope. |
+| Managerial accounting | Future-and-present, unregulated, segmented reporting built for internal decisions. |
+| Decision *about* vs *for* | Buying/selling the firm's shares (financial) vs running the firm — staffing, pricing, placement (managerial). |
 
-**Cases & examples**  
-- **Tutoring example** – 6 h of tutor time available. Company A pays $20 for 2 h ($10 / h) and Company B pays $24 for 3 h ($8 / h). Allocate the time to Company A first to maximise earnings.  
-- **Production‑capacity example**  
+## Module 2 — Cost Concepts & Job Order Costing (POHR)
 
-| Product | CM/unit | Minutes/unit | CM/min |
-|---------|--------|--------------|--------|
-| 1 | $24 | 1 | $24 |
-| 2 | $15 | 0.5 | $30 |
+**Theory & concepts**
+- The **product-cost trinity**: **Direct Materials + Direct Labour + Manufacturing Overhead**. These are *product (inventoriable)* costs that sit in inventory until the goods sell, then flow to **COGS**; **period costs** (selling & admin) expense immediately.
+- Overhead can't be traced to a job, so it is **applied** using a **Predetermined Overhead Rate** set *before* the period — "normal costing". Because the rate is an estimate, actual overhead ends the period **under- or over-applied**, which is then closed out.
+- **Job-order costing** accumulates cost per distinct job (custom work); **process costing** (M3) averages cost over mass-identical units.
 
-  Product 2 yields a higher $/minute, so it is produced first; any remaining minutes go to Product 1.  
-
-**Beyond the textbook**  
-- Lecture recording emphasized the warning: *use “per‑resource‑unit” contribution, not raw CM, for all allocation decisions*.  
-- Slide deck listed three practical bottleneck‑relief options: subcontract the constrained operation, add machines or labor, or redesign the process to move/eliminate the bottleneck.  
-
-## Transfer pricing fundamentals  
-
-**Theory & concepts**  
-- A **transfer price** is the internal price at which one division sells a good or service to another division.  
-- Three common bases:  
-  1. **Market‑based** – use the prevailing external price.  
-  2. **Negotiated** – divisions agree on a price within a mutually acceptable interval.  
-  3. **Cost‑based** – start from the seller’s production cost and add a markup; beware of including irrelevant fixed costs.  
-- Decision‑making hinges on **relevant (avoidable) costs** only. The seller will not accept a price below its opportunity cost; the buyer will not pay more than its cheapest alternative (external purchase or internal total cost).  
-
-**Key terms**  
+**Key terms**
 
 | Term | Meaning |
 |------|---------|
-| Transfer price | Internal price for inter‑division sales of goods or services. |
-| Seller’s minimum price | The lowest price the selling division will accept, usually its opportunity cost (often the external market price). |
-| Buyer’s maximum price | The highest price the buying division will pay, typically the lower of external purchase cost or total internal cost (including downstream processing). |
-| Negotiation interval | The overlap between seller’s minimum and buyer’s maximum; any price inside this range can be agreed. |
-| Cost‑based transfer pricing | Pricing method that starts with the seller’s cost and adds a markup; must exclude irrelevant fixed costs to keep the price incentive‑compatible. |
+| Product cost | DM + DL + MOH; capitalised in inventory, expensed as COGS when sold. |
+| Period cost | Selling and administrative cost; expensed in the period incurred. |
+| POHR | Estimated total overhead ÷ estimated total allocation base, set before the period. |
+| Applied overhead | POHR × actual activity of the job. |
+| Under-/over-applied overhead | Applied minus actual overhead; the estimation error, adjusted at period end. |
 
-**Cases & examples**  
-- **Company Z internal vs. external sourcing** – Division X’s relevant unit cost = $6. External market price = $50. Division Y can (a) buy externally for $12 + $2 shipping = $14, or (b) buy internally at TP = $X, add $10 processing, and sell for $30. Y will choose the lower total cost; X will accept only if TP ≥ its opportunity cost.  
-- **Threshold tables** (illustrative):  
+## Module 3 — Process Costing & Equivalent Units
 
-| Division | Situation | Minimum TP (seller) | Maximum TP (buyer) |
-|----------|-----------|---------------------|--------------------|
-| X (no excess) | Must sell externally | $15 (external price) | – |
-| X (excess) | Only internal demand | $6 (incremental cost) | – |
-| Y (can buy externally) | Choose cheapest source | – | $12 (external price) |
-| Y (only internal) | Must cover processing | – | $20 (30‑10) |
+**Theory & concepts**
+- When output is a continuous stream of identical units, cost is **averaged** per unit rather than tracked per job.
+- Partly finished units are converted to **Equivalent Units (EU)** — e.g. 400 units 50% complete = 200 EU ("the half-baked cookie"). Costs are spread over EU, not physical units.
+- The **five-step production report**: (1) physical flow, (2) equivalent units, (3) cost per EU, (4) assign cost to completed & to ending WIP, (5) reconcile.
 
-- **Overlap cases** –  
-  *Case 1*: X has excess capacity (≥ $6) and Y can buy externally (≤ $12) → feasible range **$6–$12**.  
-  *Case 2*: X has no excess (≥ $15) and Y must buy internally (≤ $20) → feasible range **$15–$20**.  
-
-**Beyond the textbook**  
-- Lecture notes highlighted that a corporate‑set transfer price above the seller’s opportunity cost (e.g., $15 when the external price is $12) can block a mutually beneficial internal trade, leading to a firm‑wide loss.  
-- Recent regulatory discussion (global minimum tax) may force multinational firms to justify transfer‑price policies more rigorously, influencing the choice of market‑based or cost‑plus methods.  
-
-## Relevant cost considerations  
-
-**Theory & concepts**  
-- **Relevant cost** = any cost that will change as a result of the decision; it includes variable production costs and any incremental costs directly tied to the alternative.  
-- **Irrelevant cost** = sunk costs or allocated fixed overhead that will be incurred regardless of the choice; these must be excluded from the analysis.  
-- When comparing internal vs. external sourcing, add any variable downstream costs (e.g., processing, shipping) to the internal option, but omit them for the external option if they are avoided.  
-
-**Key terms**  
+**Key terms**
 
 | Term | Meaning |
 |------|---------|
-| Variable production cost | Cost that varies directly with output (e.g., $6 per unit); relevant for internal transfer decisions. |
-| Allocated fixed cost | Fixed overhead spread across units (e.g., $1 per unit) that does not change with the decision; irrelevant for marginal analysis. |
-| Additional variable selling expense | Costs such as shipping or handling that are incurred only when a product is sold externally; affect the buyer’s maximum price. |
+| Equivalent units | Partially complete units restated as a number of fully complete units. |
+| Conversion cost | Direct labour + manufacturing overhead (often added evenly through the process). |
+| Production report | The five-step schedule that assigns period cost to finished units and ending WIP. |
 
-**Cases & examples**  
-- **Cost comparison table**  
+## Module 4 — Activity-Based Costing (ABC)
 
-| Cost element | External purchase | Internal purchase |
-|--------------|-------------------|-------------------|
-| Unit price   | $12               | $6                |
-| Shipping     | $2                | $0                |
-| **Total**    | **$14**           | **$6**            |
+**Theory & concepts**
+- A single plant-wide rate **over-costs high-volume** products and **under-costs low-volume / complex** ones, distorting margins and pricing decisions.
+- **ABC** uses a **two-stage** allocation: resources → **activity cost pools** → products, via an **activity rate** (pool cost ÷ activity driver) for each activity.
+- Activities sit in a **five-level hierarchy** — unit, batch, product, customer, facility — so costs that don't scale with volume (batch/product-level) are assigned correctly. Drivers are *transaction* or *duration* based.
 
-  The $1 allocated fixed cost per unit is ignored because it does not change with the decision.  
+**Key terms**
 
-**Beyond the textbook**  
-- Slide deck warned that using **full cost** (including allocated fixed overhead) in a cost‑plus transfer price inflates the internal price, discouraging beneficial internal trade.  
+| Term | Meaning |
+|------|---------|
+| Activity cost pool | Costs grouped by the activity that causes them. |
+| Activity rate | Pool cost ÷ total activity driver; applied by each product's driver usage. |
+| Cost hierarchy | Unit / batch / product / customer / facility levels of cost causation. |
+| Cost driver | Transaction-based (count) or duration-based (time) measure of activity. |
 
-## Practical tips & power dynamics  
+## Module 5 — Cost Behaviour & Estimation
 
-**Theory & concepts**  
-- Sketch a simple two‑division flow diagram (showing costs, transfer price, and resulting profits) before performing any calculation; visualising the cash‑flow helps spot hidden incentives.  
-- Recognise that divisions with stronger bargaining power may push for a higher transfer price to boost their own profit, while corporate leadership may impose caps to protect overall cost efficiency.  
+**Theory & concepts**
+- Costs are **variable** (change with activity), **fixed** (constant within the **relevant range**), or **mixed**. Fixed costs split into **committed** (hard to change) and **discretionary**.
+- A **mixed cost** is modelled as **Y = a + bX** (a = fixed, b = variable per unit, X = activity).
+- Three ways to split a mixed cost from one dataset: **scattergraph** (visual), **high-low** (two extreme points), **least-squares regression** (best statistical fit). Regression is most accurate; high-low is quickest but noise-sensitive.
 
-**Beyond the textbook**  
-- Lecture emphasized that “power dynamics” can be managed by setting corporate‑wide transfer‑price policies (e.g., a band around market price) to balance division incentives with firm‑wide optimality.  
+**Key terms**
 
-## Key formulas  
+| Term | Meaning |
+|------|---------|
+| Relevant range | The activity band over which fixed-cost and linear assumptions hold. |
+| Mixed cost | Cost with both a fixed and a variable component (Y = a + bX). |
+| High-low method | Estimates b from (cost change ÷ activity change) between highest and lowest activity points. |
+| Least-squares regression | Statistical line of best fit giving a and b with the smallest squared error. |
 
-| Formula | Symbol definition | When to use |
-|---------|-------------------|-------------|
-| **Contribution Margin (CM)** | CM = Sales − Variable Costs | Base figure for profitability and for per‑resource calculations. |
-| **CM per resource unit** | CM / Resource‑use = (Sales − Variable Costs) ÷ Units of constrained resource | Rank products when a bottleneck exists. |
-| **Seller’s minimum transfer price** | TP_min = Opportunity cost = External market price (if no excess capacity) or Incremental cost (if excess capacity) | Determines the lowest price the seller will accept. |
-| **Buyer’s maximum transfer price** | TP_max = min(External purchase cost, Internal total cost) | Determines the highest price the buyer will pay. |
-| **Negotiation interval condition** | TP_min ≤ TP_max → internal transfer feasible | Checks whether divisions can agree on a price. |
-| **Relevant cost** | RC = Σ (costs that change with the decision) | Use in any make‑or‑buy, keep‑or‑drop, or transfer‑price analysis. |
-| **Predetermined Overhead Rate (POHR)** | POHR = Estimated total manufacturing overhead ÷ Estimated total allocation base | From the Formula Cheat Sheet; needed when overhead is allocated to products. |
-| **Cost equation** | Y = a + bX | Total cost (Y) equals fixed cost (a) plus variable cost per unit (b) times activity level (X). |
-| **Break‑even (units)** | BE_units = Fixed Expenses ÷ CM per unit | Determines the sales volume at which profit is zero. |
-| **Degree of Operating Leverage (DOL)** | DOL = CM ÷ Operating Income | Shows how a % change in sales translates into % change in profit. |
+## Module 6 — Cost-Volume-Profit (CVP) Analysis
 
----  
+**Theory & concepts**
+- The **contribution-margin** income statement (Sales − Variable = CM − Fixed = Profit) is the engine of CVP. **CM per unit** and the **CM ratio** show how each sale/each sales-dollar contributes to covering fixed cost and then profit.
+- **Break-even** and **target profit** solve three ways: equation, contribution-margin, and graph. Taxes convert after-tax targets to before-tax.
+- Risk measures: **margin of safety** (how far sales can fall before a loss) and **operating leverage** (CM ÷ operating income — how sharply profit swings with sales). A higher fixed-cost structure raises both reward and risk.
+- **Multi-product CVP** weights the CM ratio by the **sales mix**; mix in dollars differs from mix in units.
 
-*All explanations, examples, and formulas are drawn directly from the provided study notes; no external information has been added.*
+**Key terms**
+
+| Term | Meaning |
+|------|---------|
+| Contribution margin | Sales − variable costs; covers fixed costs, then profit. |
+| CM ratio | CM ÷ sales; the profit per extra sales-dollar. |
+| Break-even point | Sales where profit = 0 (Fixed ÷ CM per unit, or Fixed ÷ CM ratio). |
+| Margin of safety | Budgeted sales − break-even sales; the cushion before losses. |
+| Operating leverage | CM ÷ operating income; the % profit change per 1% sales change. |
+| Sales mix | The proportions in which products are sold; shifts the blended CM. |
+
+## Module 7 — Variable vs Absorption Costing
+
+**Theory & concepts**
+- **Absorption** costing (GAAP) puts **fixed MOH into the product**, so it sits in inventory; **variable (marginal)** costing expenses fixed MOH as a period cost.
+- When production ≠ sales, the two give **different profit**: producing more than you sell **defers fixed cost in inventory under absorption**, flattering profit — the **overproduction trap**.
+- Variable costing exists precisely because it ties profit to **sales**, not production, so it can't be gamed by building inventory — a *different purpose, different answer* echo of Module 1.
+
+**Key terms**
+
+| Term | Meaning |
+|------|---------|
+| Absorption costing | Product cost = DM + DL + variable MOH + **fixed MOH**; required for external reporting. |
+| Variable costing | Product cost = variable manufacturing cost only; fixed MOH expensed as a period cost. |
+| Overproduction trap | Boosting reported profit under absorption by producing more than is sold. |
+
+## Module 8 — Budgeting (The Master Budget)
+
+**Theory & concepts**
+- The **master budget** is built in **three tiers**: the **sales budget** (the driver of everything), the **operating budgets** (production, materials, labour, overhead, S&A), and the **financial budgets** (cash budget, budgeted income statement and balance sheet).
+- It is the **plan** half of the plan→control loop; Modules 9–12 compare actuals back to it.
+
+**Key terms**
+
+| Term | Meaning |
+|------|---------|
+| Master budget | The integrated set of operating and financial budgets for the period. |
+| Sales budget | The starting point; all downstream budgets flow from forecast sales. |
+| Cash budget | Projected receipts and disbursements that test liquidity. |
+
+## Modules 9–12 — Advanced Performance Management (variances · responsibility · segments)
+
+**Theory & concepts**
+- Control compares actual to plan, but first the budget is **flexed** to actual volume so you compare like with like (flexible-budget vs static-budget variance).
+- The **general variance model** splits each input variance into **price (rate)** and **quantity (efficiency)**: Price = AQ(AP − SP), Quantity = SP(AQ − SQ). Fixed overhead splits into a **budget** and a **volume** variance.
+- **Management by exception** investigates only large/unusual variances. **Responsibility accounting** holds each manager accountable only for what they control (cost / profit / investment centres), and **segment reporting** traces costs to segments while keeping **common fixed costs** unallocated.
+
+**Key terms**
+
+| Term | Meaning |
+|------|---------|
+| Flexible budget | The budget restated at the *actual* activity level, for a fair comparison. |
+| Price (rate) variance | AQ × (AP − SP) — paying more/less per input unit. |
+| Quantity (efficiency) variance | SP × (AQ − SQ) — using more/less input than standard. |
+| Fixed-OH budget / volume variance | Spending vs budget, and under/over-absorption from activity ≠ denominator. |
+| Responsibility centre | Cost, profit or investment centre; a manager is judged only on what they control. |
+| Segment margin | Segment revenue − its traceable variable and fixed costs (common costs excluded). |
+
+## Weeks 11–13 — Decision Making: Relevant Costs & Constrained Resources
+
+**Theory & concepts**
+- A decision turns only on **relevant costs** — those that *change* with the choice; **sunk costs** and **allocated fixed overhead** are irrelevant and must be excluded.
+- Under a **constraint** (scarce machine minutes, labour hours, parts), rank products by **contribution margin per unit of the constrained resource**, not by raw CM, and fill capacity from the top down.
+- A bottleneck is relieved by **subcontracting, adding capacity, or redesigning the process**; otherwise profitable sales are turned away.
+
+**Key terms**
+
+| Term | Meaning |
+|------|---------|
+| Relevant cost | A cost that changes with the decision (incremental/avoidable). |
+| Sunk cost | Already incurred; never relevant to a future decision. |
+| CM per constrained-resource unit | CM ÷ resource used; the ranking basis when capacity is scarce. |
+| Bottleneck | The constraint that caps the whole system's output. |
+
+**Cases & examples**
+- *Tutoring*: 6 h of tutor time — Company A pays $20 for 2 h ($10/h), Company B $24 for 3 h ($8/h); serve A first (higher $/h).
+- *Capacity*: Product 2 at $30/min beats Product 1 at $24/min, so Product 2 is made first; leftover minutes go to Product 1.
+
+## Weeks 12–13 — Transfer Pricing
+
+**Theory & concepts**
+- A **transfer price** is the internal price when one division sells to another. Bases: **market**, **negotiated**, or **cost-based** (cost + markup — beware embedding irrelevant fixed cost).
+- An internal trade is feasible only when the **seller's minimum** (its opportunity cost: external price if at capacity, else incremental cost) is **≤ the buyer's maximum** (the cheaper of external purchase or total internal cost). Any price in that overlap works.
+- A corporate price set **above** the seller's opportunity cost can **block a mutually beneficial trade**, making the firm worse off even when each division acts rationally — the core "power dynamics" warning.
+
+**Key terms**
+
+| Term | Meaning |
+|------|---------|
+| Transfer price | Internal price for inter-division transfers. |
+| Seller's minimum price | Opportunity cost — external price at full capacity, incremental cost with spare capacity. |
+| Buyer's maximum price | The lower of external purchase cost or total internal cost. |
+| Negotiation interval | The overlap between seller minimum and buyer maximum; a deal exists only inside it. |
+
+**Cases & examples**
+- *Division X→Y*: X's relevant cost $6, external price $12 (+$2 shipping). With spare capacity X accepts ≥ $6 and Y (buying externally) pays ≤ $12 → feasible **$6–$12**; with no spare capacity X needs ≥ $15 and Y (must buy internally) pays ≤ $20 → feasible **$15–$20**.
+
+## Key formulas (all chapters)
+
+| Formula | Definition | When to use |
+|---------|------------|-------------|
+| POHR | Estimated total overhead ÷ estimated total allocation base | Apply overhead under normal costing (M2). |
+| Activity rate | Activity pool cost ÷ total activity driver | Assign overhead under ABC (M4). |
+| Mixed cost | Y = a + bX (a fixed, b variable/unit, X activity) | Estimate & split costs (M5). |
+| Contribution margin | CM = Sales − Variable costs | Base of CVP (M6). |
+| CM ratio | CM ÷ Sales | Profit per sales-dollar; multi-product CVP. |
+| Break-even (units) | Fixed costs ÷ CM per unit | Volume for zero profit (M6). |
+| Margin of safety | Budgeted sales − Break-even sales | Risk cushion (M6). |
+| Operating leverage | CM ÷ Operating income | % profit change per 1% sales change (M6). |
+| Price variance | AQ × (AP − SP) | Input rate variance (M9–12). |
+| Quantity variance | SP × (AQ − SQ) | Input efficiency variance (M9–12). |
+| CM per resource unit | CM ÷ units of constrained resource | Rank products under a bottleneck (decisions). |
+| Seller min / Buyer max TP | Opportunity cost / min(external, internal total) | Test transfer-price feasibility. |
+
+---
+
+*Reorganised chapter-by-chapter in teaching order (Modules 1 → 12 → decisions). Content distilled from this subject's module notes and seminars.*
