@@ -79,3 +79,4 @@ community: 1
 
 - [[ops-concepts/operations-management-quiz-2609250346|Operations Management — Quiz (Medium, 4 Q)]]
 - [[ops-concepts/operations-management-quiz-2609250348|Operations Management — Quiz (Medium, 4 Q)]]
+- [[ops-concepts/operations-management-quiz-2611270435|Operations Management — Quiz (Medium, 10 Q)]]
