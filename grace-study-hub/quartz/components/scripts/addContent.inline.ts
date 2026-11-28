@@ -1489,10 +1489,13 @@ async function runGenerate(
     const el = genStatusEl()
     if (el) {
       const href = "/" + String(data.noteSlug || "")
+      const parts = Number(data.parts || 1)
+      const partNote = parts > 1 ? ` · 분량이 많아 ${parts}개 챕터 묶음으로 나눠 생성했습니다` : ""
       el.hidden = false
       el.className = "sh-gen-status ok"
       el.innerHTML =
         `생성됨 → <a href="${escHtml(href)}">${escHtml(String(data.title || "노트"))}</a>` +
+        partNote +
         ` · 1–2분 뒤 사이트에 반영됩니다.`
     }
   } catch {

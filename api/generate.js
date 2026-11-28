@@ -35,6 +35,18 @@ const MAX_FILES = 40 // don't fan out to hundreds of tiny requests
 const MIN_Q = 1
 const MAX_Q = 20
 
+// A revision summary over a big subject is generated in multiple chapter
+// batches (see the handler), so the function needs more than the default
+// 10s wall-clock. 60s matches the other long endpoints (transcribe/tidy).
+export const config = { maxDuration: 60 }
+
+// Chapter-batching for summaries. When the subject's notes would overflow a
+// single pass (SUMMARY_PASS_CHARS), split them into consecutive chapter
+// batches and summarise each, then merge — so later chapters are never dropped
+// to title-only. Capped at SUMMARY_MAX_PASSES to stay within maxDuration.
+const SUMMARY_PASS_CHARS = 9000
+const SUMMARY_MAX_PASSES = 4
+
 // Concrete guidance per difficulty so the level actually changes the questions.
 const DIFFICULTY = {
   easy: "EASY — recall and definitions. One concept per question. Answers are a single fact or a short definition a student can recall directly from the notes.",
@@ -341,7 +353,74 @@ async function gatherNotes(prefixes, token, maxChars = MAX_INPUT_CHARS, filterTo
   return { text: parts.join("\n\n---\n\n"), count: matched, matched }
 }
 
-async function groqChat(payload, apiKey) {
+// Like gatherNotes, but returns the ORDERED list of notes as full items
+// ({ title, body }) with NO budget truncation — the summary batcher packs these
+// into chapter passes itself. `filterTokens` applies the same specific-chapter
+// filter as gatherNotes.
+async function gatherNoteItems(prefixes, token, filterTokens = null) {
+  const paths = []
+  for (const p of prefixes) {
+    for (const fp of await listMarkdown(p, token)) {
+      if (!paths.includes(fp)) paths.push(fp)
+      if (paths.length >= MAX_FILES) break
+    }
+    if (paths.length >= MAX_FILES) break
+  }
+  paths.sort((a, b) => {
+    const ka = courseOrderKey(a)
+    const kb = courseOrderKey(b)
+    return ka[0] - kb[0] || ka[1] - kb[1] || a.localeCompare(b)
+  })
+  const toks = Array.isArray(filterTokens) ? filterTokens.filter(Boolean) : null
+  const items = []
+  for (const fp of paths) {
+    const file = await getFile(fp, token)
+    if (!file) continue
+    const title = titleOf(file.text, fp)
+    if (toks && toks.length) {
+      const hay = `${fp} ${title}`.toLowerCase()
+      if (!toks.some((t) => hay.includes(t))) continue
+    }
+    items.push({ title, body: stripFrontmatter(file.text).trim() })
+  }
+  return items
+}
+
+// Pack ordered note items into consecutive chapter batches, each ~<= passChars,
+// never exceeding maxPasses. If the notes would need more passes than maxPasses,
+// the batches simply grow (a bigger pass may still truncate a little, but no
+// chapter is dropped entirely). Keeps chapter order intact across batches.
+function packBatches(items, passChars = SUMMARY_PASS_CHARS, maxPasses = SUMMARY_MAX_PASSES) {
+  const total = items.reduce((n, it) => n + it.title.length + it.body.length + 8, 0)
+  if (total <= passChars || items.length <= 1) return [items.slice()]
+  // Number of passes, hard-capped at maxPasses; spread the notes evenly across
+  // them (target chars per pass). The guard below guarantees ≤ nBatches passes.
+  const nBatches = Math.min(maxPasses, Math.ceil(total / passChars))
+  const target = Math.ceil(total / nBatches)
+  const batches = []
+  let cur = []
+  let curLen = 0
+  for (const it of items) {
+    const len = it.title.length + it.body.length + 8
+    // Open a new batch when the current one is full — but once we're filling the
+    // last allowed batch, keep every remaining note there (never exceed nBatches).
+    if (cur.length && curLen + len > target && batches.length < nBatches - 1) {
+      batches.push(cur)
+      cur = []
+      curLen = 0
+    }
+    cur.push(it)
+    curLen += len
+  }
+  if (cur.length) batches.push(cur)
+  return batches
+}
+
+const batchText = (items) => items.map((it) => `## ${it.title}\n\n${it.body}`).join("\n\n---\n\n")
+
+// Full Groq call: returns the message content AND the finish_reason, so callers
+// can detect output truncation ("length" = the model hit max_tokens mid-answer).
+async function groqComplete(payload, apiKey) {
   const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
     headers: { "content-type": "application/json", authorization: `Bearer ${apiKey}` },
@@ -360,7 +439,13 @@ async function groqChat(payload, apiKey) {
     err.status = 502
     throw err
   }
-  return data.choices?.[0]?.message?.content || ""
+  const choice = data.choices?.[0] || {}
+  return { content: choice.message?.content || "", finishReason: choice.finish_reason || "" }
+}
+
+async function groqChat(payload, apiKey) {
+  const { content } = await groqComplete(payload, apiKey)
+  return content
 }
 
 const fm = (title, tags, extra = "") =>
@@ -605,15 +690,29 @@ async function genQuiz(label, notes, count, difficulty, apiKey, exemplars, opts 
   return { title, tags: ["quiz", "auto-generated"], body }
 }
 
-async function genSummary(label, notes, apiKey, focus = "") {
+async function genSummary(label, notes, apiKey, opts = {}) {
+  const { focus = "", part = null, maxTokens = 5600 } = typeof opts === "string" ? { focus: opts } : opts
+  const batched = part && part.total > 1
   const scopeLine = focus
     ? `SCOPE: Summarise ONLY the chapters/topics the student asked for: "${focus}". The notes below have ` +
       `already been narrowed to these — cover them in real DEPTH.\n\n`
+    : ``
+  // When the subject is too big for one pass, it is split into chapter batches.
+  // Part 1 writes the overall "Key takeaways"; later parts begin straight at
+  // their first chapter so the merged note reads as one continuous reference.
+  const partLine = batched
+    ? `BATCH: This is PART ${part.index} OF ${part.total} of one continuous chapter-by-chapter revision ` +
+      `summary. Cover ONLY the notes given below (they are the chapters for this part), keeping course order. ` +
+      (part.index === 1
+        ? `Write the "> [!summary] Key takeaways" callout first (for the WHOLE subject, from these opening chapters), then the chapter sections. `
+        : `Do NOT write a "Key takeaways" callout or any intro — begin directly with the first "## <Chapter>" section. `) +
+      `Do NOT write a standalone "## Key formulas" section; fold any formulas into the chapter they belong to.\n\n`
     : ``
   const prompt =
     `You are writing a DEEP REVISION REFERENCE for the subject "${label}" for a student, based ONLY on ` +
     `their own study notes below (lecture recordings, slide decks, textbook notes and other notes). Write everything in ENGLISH.\n\n` +
     scopeLine +
+    partLine +
     `#1 RULE — EXPLAIN, DON'T JUST LIST. Never output a bare list of bold terms with no explanation. ` +
     `Every concept must be *explained* in a sentence or two: what it is, the mechanism / how it works, and why it matters. ` +
     `A reader who has never seen the term should understand it from your line. Carry through the supporting detail — ` +
@@ -635,13 +734,86 @@ async function genSummary(label, notes, apiKey, focus = "") {
     `- Never fabricate facts, numbers or definitions not supported by the notes.\n` +
     `- GROUP closely related notes into one topic section (e.g. a chapter note + its lecture recording) rather than one section per note.\n\n` +
     `NOTES:\n"""\n${notes}\n"""`
-  const body = await groqChat(
-    { messages: [{ role: "user", content: prompt }], max_tokens: 5600, temperature: 0.3 },
+  const { content: body, finishReason } = await groqComplete(
+    { messages: [{ role: "user", content: prompt }], max_tokens: maxTokens, temperature: 0.3 },
     apiKey,
   )
   if (!body.trim()) throw Object.assign(new Error("The model returned an empty summary — try again."), { status: 502 })
   const title = focus ? `${label} — Revision summary (${focus})` : `${label} — Revision summary`
-  return { title, tags: ["summary", "auto-generated"], body }
+  // finishReason "length" ⇒ the model's own OUTPUT was cut off mid-answer.
+  return { title, tags: ["summary", "auto-generated"], body, truncated: finishReason === "length" }
+}
+
+// One genSummary call that absorbs a single 429 (TPM burst) with a short wait —
+// used between chapter batches, where a few calls land in the same minute.
+async function genSummaryWithRetry(label, notes, apiKey, opts) {
+  try {
+    return await genSummary(label, notes, apiKey, opts)
+  } catch (e) {
+    if (e.status !== 429) throw e
+    await new Promise((r) => setTimeout(r, Math.min(e.retryAfterMs || 7000, 7000)))
+    return await genSummary(label, notes, apiKey, opts) // if it 429s again, caller surfaces it
+  }
+}
+
+// Drop a non-first batch's leading intro (a "> [!summary]" callout or preamble)
+// so the merged note has exactly one "Key takeaways" and starts each later part
+// at its first chapter heading.
+function stripLeadingTakeaways(body) {
+  const h = body.search(/^##\s/m)
+  return h > 0 ? body.slice(h).trimStart() : body.trimStart()
+}
+
+// Summarise a set of ordered note items across the given chapter batches,
+// merging into one continuous note (one "Key takeaways", chapters in order).
+async function runBatched(label, batches, apiKey) {
+  const bodies = []
+  for (let i = 0; i < batches.length; i++) {
+    // Each batch covers only a few chapters, so a smaller output budget keeps
+    // every call fast enough that up-to-4 sequential passes fit in maxDuration.
+    const out = await genSummaryWithRetry(label, batchText(batches[i]), apiKey, {
+      part: { index: i + 1, total: batches.length },
+      maxTokens: 4200,
+    })
+    bodies.push(i === 0 ? out.body.trim() : stripLeadingTakeaways(out.body))
+  }
+  return {
+    title: `${label} — Revision summary`,
+    tags: ["summary", "auto-generated"],
+    body: bodies.join("\n\n").trim(),
+    parts: batches.length,
+  }
+}
+
+// Build a revision summary, auto-splitting a large subject into chapter batches.
+// Splits when it would truncate — either the notes overflow one pass (input), or
+// a single pass comes back cut off mid-answer (output, finish_reason "length").
+// Returns { title, tags, body, parts, notesUsed } ready to commit as one note.
+async function buildSummary(label, prefixes, token, apiKey, { focus, summaryTokens }) {
+  const items = await gatherNoteItems(prefixes, token, summaryTokens)
+  if (!items.length) {
+    const msg =
+      summaryTokens && summaryTokens.length
+        ? `No notes matched "${focus}". Check the chapter/topic names, or leave it blank to summarise all chapters.`
+        : "This subject has no notes yet — add some notes first."
+    throw Object.assign(new Error(msg), { status: 400 })
+  }
+  const totalChars = items.reduce((n, it) => n + it.title.length + it.body.length + 8, 0)
+
+  // All-chapters scope that overflows a single pass → split by input size.
+  if (!(summaryTokens && summaryTokens.length)) {
+    const batches = packBatches(items)
+    if (batches.length > 1) return { ...(await runBatched(label, batches, apiKey)), notesUsed: items.length }
+  }
+
+  // One pass (specific scope, or an all-chapters subject that fits).
+  const out = await genSummary(label, batchText(items), apiKey, summaryTokens && summaryTokens.length ? { focus } : {})
+  // Output got cut off even though the input fit → force a 2-way split and merge.
+  if (out.truncated && items.length >= 2) {
+    const forced = packBatches(items, Math.ceil(totalChars / 2))
+    if (forced.length > 1) return { ...(await runBatched(label, forced, apiKey)), notesUsed: items.length }
+  }
+  return { ...out, parts: 1, notesUsed: items.length }
 }
 
 export default async function handler(req, res) {
@@ -707,28 +879,28 @@ export default async function handler(req, res) {
     kind === "summary" && focus
       ? focus.toLowerCase().split(/[,\s]+/).map((t) => t.trim()).filter((t) => t.length >= 2)
       : null
-  const { text: notes, count: noteCount } = await gatherNotes(
-    prefixes,
-    token,
-    noteBudget,
-    summaryTokens,
-  )
-  if (!notes.trim() || noteCount === 0) {
-    const msg =
-      summaryTokens && summaryTokens.length
-        ? `No notes matched "${focus}". Check the chapter/topic names, or leave it blank to summarise all chapters.`
-        : "This subject has no notes yet — add some notes first."
-    return res.status(400).json({ error: msg })
-  }
 
-  // Generate.
+  // Generate. A summary auto-splits into chapter batches when the subject is too
+  // big for one pass (so later chapters are never dropped); a quiz is a single
+  // pass over the gathered notes.
   let out
+  let notesUsed = 0
+  let parts = 1
   try {
-    out =
-      kind === "summary"
-        ? await genSummary(label, notes, apiKey, focus)
-        : await genQuiz(label, notes, count, difficulty, apiKey, exemplars, { qtype, style, focus, explain })
+    if (kind === "summary") {
+      out = await buildSummary(label, prefixes, token, apiKey, { focus, summaryTokens })
+      notesUsed = out.notesUsed || 0
+      parts = out.parts || 1
+    } else {
+      const { text: notes, count: noteCount } = await gatherNotes(prefixes, token, noteBudget, null)
+      if (!notes.trim() || noteCount === 0) {
+        return res.status(400).json({ error: "This subject has no notes yet — add some notes first." })
+      }
+      notesUsed = noteCount
+      out = await genQuiz(label, notes, count, difficulty, apiKey, exemplars, { qtype, style, focus, explain })
+    }
   } catch (e) {
+    if (e.status === 400) return res.status(400).json({ error: e.message })
     if (e.status === 429) {
       return res.status(429).json({ error: "AI is rate-limited right now — wait a few seconds and try again.", retryAfterMs: e.retryAfterMs })
     }
@@ -779,7 +951,7 @@ export default async function handler(req, res) {
       )
       return res.status(200).json({
         ok: true, kind, path, noteSlug, title: out.title,
-        notesUsed: noteCount, exemplarsUsed: exemplars.names,
+        notesUsed, parts, exemplarsUsed: exemplars.names,
         commit: commit.sha, linkedInHub: hubFile.path,
       })
     } catch {
@@ -801,6 +973,6 @@ export default async function handler(req, res) {
     return res.status(put.status).json({ error: (data.message || "GitHub commit failed"), path })
   }
   return res.status(200).json({
-    ok: true, kind, path, noteSlug, title: out.title, notesUsed: noteCount, exemplarsUsed: exemplars.names,
+    ok: true, kind, path, noteSlug, title: out.title, notesUsed, parts, exemplarsUsed: exemplars.names,
   })
 }
